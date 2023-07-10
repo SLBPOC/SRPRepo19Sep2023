@@ -15,6 +15,18 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { BsModalService} from 'ngx-bootstrap/modal';
 import { YesterdayCycleBarChartComponent } from './components/yesterdays-cycle-count/components/yesterday-cycle-bar-chart/yesterday-cycle-bar-chart.component';
 import {HttpClientModule} from '@angular/common/http'
+import { SaveTreeStateDialog, WellTreeSearchComponent } from './components/well-list/well-tree-search/well-tree-search.component';
+import { WellTreeView } from './components/well-list/well-tree-view/well-tree-view.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,13 +41,26 @@ import {HttpClientModule} from '@angular/common/http'
     DashboardComponent,
     ParameterChartComponent,
     ModalContentComponent,
-    YesterdayCycleBarChartComponent
+    YesterdayCycleBarChartComponent,
+    WellTreeSearchComponent,
+    SaveTreeStateDialog,
+    WellTreeView
   ],
   imports: [
     CommonModule,
     FeatureRoutingModule,
     HighchartsChartModule,
-    HttpClientModule
+    FormsModule,
+    HttpClientModule,
+    MatTreeModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService]
