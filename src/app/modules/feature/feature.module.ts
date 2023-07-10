@@ -16,6 +16,10 @@ import { BsModalService} from 'ngx-bootstrap/modal';
 import { YesterdayCycleBarChartComponent } from './components/yesterdays-cycle-count/components/yesterday-cycle-bar-chart/yesterday-cycle-bar-chart.component';
 import {HttpClientModule} from '@angular/common/http'
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 @NgModule({
   declarations: [
     FeatureComponent,
@@ -35,7 +39,11 @@ import {HttpClientModule} from '@angular/common/http'
     CommonModule,
     FeatureRoutingModule,
     HighchartsChartModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule  
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService]
