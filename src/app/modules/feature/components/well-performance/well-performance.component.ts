@@ -1,6 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
+require('highcharts/modules/exporting')(Highcharts);
+
 @Component({
   selector: 'app-well-performance',
   templateUrl: './well-performance.component.html',
