@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import * as Highcharts from 'highcharts';
-require('highcharts/modules/exporting')(Highcharts);
 
 @Component({
   selector: 'app-classification-summary',

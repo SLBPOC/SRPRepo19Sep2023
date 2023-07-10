@@ -1,34 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { Subscription } from 'rxjs';
+import { DashboardService } from 'src/app/modules/feature/services/dashboard.service';
 
 @Component({
   selector: 'app-yesterday-cycle-bar-chart',
   templateUrl: './yesterday-cycle-bar-chart.component.html',
   styleUrls: ['./yesterday-cycle-bar-chart.component.css']
 })
-export class YesterdayCycleBarChartComponent {
+export class YesterdayCycleBarChartComponent implements OnDestroy{
   series: any;
+  chartData!: any;
+  Highcharts: typeof Highcharts = Highcharts;
+  chartOptions!: Highcharts.Options;
+  chartSubscription!: Subscription;
 
+  constructor(private service: DashboardService) {}
   public ngAfterViewInit(): void {
-     this.createChartLine();
+     this.getData();
   }
 
-  private getRandomNumber(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1) + min)
+  getData() {
+    this.chartSubscription! = this.service.getYesterdayCycleCountBarData().subscribe((data: any) => {
+      this.chartData = data;
+      this.drawChart();
+    })
   }
 
-  private createChartLine(): void {
-    let date = new Date();
-
+  private drawChart(): void {
     const data: any[] = [];
-    for (let i = 0; i < 10; i++) {
-      // date.setDate(new Date().getDate() + i);
-      // data.push([`Well Name ${this.getRandomNumber(0, 100)}`, this.getRandomNumber(0, 500)])
-      data.push([`Well Name ${this.getRandomNumber(0, 100)}`, this.getRandomNumber(0, 500), {marker: {fill: '#ededed'}}])
-
-    }
-
-    const chart = Highcharts.chart('chart-column', {
+    Highcharts.chart('chart-column', {
       // colors: ['lightblue', 'orange'],
       // colors: ['#811010', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
       chart: {
@@ -85,8 +86,6 @@ export class YesterdayCycleBarChartComponent {
             }
           },
           events: {
-            mouseOver: (e: any) => {              
-            }
           }
       }
     },
@@ -100,42 +99,17 @@ export class YesterdayCycleBarChartComponent {
         shared: true,
         useHTML: true,
       },
-      // ------------------------option 1
       series: [{
         name: 'Wells',
-        // data: [['21/6', 500], ['22/6', 500], ['23/6', 700], ['24/6', 500], ['25/6', 500], ['26/6', 500], ['27/6', 500]]
-        data,
+        data: this.chartData,
         showInLegend: true,
-        mouseOver: (e: any) => {          
-        }
-
-
-      },
-      // {
-      //   name: 'Product',
-      //   data: data2,
-      //   yAxis: 1
-
-      // }
-
+      }
     ],
-
-      // ------------------------option 2
-    //   series: [{  
-    //     name: 'Quantity',  
-    //     data: [500, 700, 555, 444, 777, 877, 944, 567, 666, 789, 456, 654]  
-    //  },{  
-    //     name: 'Price',  
-    //     data: [677, 455, 677, 877, 455, 778, 888, 567, 785, 488, 567, 654]  
-    //  }]
     } as any);
 
-    // setInterval(() => {
-    //   chart.series[0].addPoint(this.getRandomNumber(0, 1000), true, true);
-    // }, 1500)
+  }
 
-    // setInterval(() => {
-    //   chart.series[0].addPoint([`Well Name ${this.getRandomNumber(0, 100)}`, this.getRandomNumber(0, 500)], true, true);
-    // }, 1500)
+  ngOnDestroy(): void {
+      this.chartSubscription.unsubscribe();
   }
 }
