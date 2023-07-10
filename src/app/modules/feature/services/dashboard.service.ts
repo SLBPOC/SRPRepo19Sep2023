@@ -11,21 +11,15 @@ import {ParameterGraphModel } from 'src/app/modules/feature/model/parameterGraph
 export class DashboardService {
 
   yesterdayCycleCountJson = '../../../../assets/json/yesterday-cycle-count-data.json';
-  CounterJsonUrl='../../../../assets/json/cyclecounter.json';
-  runtimeJsonUrl='../../../../assets/json/cycleruntime.json';
-
+  yesterdayCycleCountBarJson = '../../../../assets/json/yesterday-cycle-count-bar-data.json'
   constructor(private http: HttpClient) { }
 
-  getYesterdayCycleCountData(): Observable<any> |null{
-    return this.http.get(this.yesterdayCycleCountJson);    
+  getYesterdayCycleCountData(): Observable<any>{
+    return this.http.get(this.yesterdayCycleCountJson);
   }
 
-  GetCycleCounter(): Observable<ParameterGraphModel[]> {   
-    return this.http.get<ParameterGraphModel[]>(this.CounterJsonUrl); 
-  }
-
-  GetCycleRun(): Observable<ParameterGraphModel[]> {   
-    return this.http.get<ParameterGraphModel[]>(this.runtimeJsonUrl);          
+  getYesterdayCycleCountBarData(): Observable<any>{
+    return this.http.get(this.yesterdayCycleCountBarJson);
   }
   
 }
