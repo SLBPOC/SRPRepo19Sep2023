@@ -27,6 +27,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DashboardAlertsComponent } from './components/dashboard-alerts/dashboard-alerts.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { DatePipe, NgIf } from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -44,7 +55,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     YesterdayCycleBarChartComponent,
     WellTreeSearchComponent,
     SaveTreeStateDialog,
-    WellTreeView
+    WellTreeView,
+    DashboardAlertsComponent
   ],
   imports: [
     CommonModule,
@@ -63,6 +75,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatRadioModule,
     MatButtonModule,
     MatDialogModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    DragDropModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService]
