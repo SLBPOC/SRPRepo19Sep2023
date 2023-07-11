@@ -5,7 +5,8 @@
     .yesterday-cycle-count, 
     .yesterday-percent-run, 
     .classification-summary,
-    .parameter-chart {
+    .parameter-chart,
+    .dashboard-alerts {
         background-color: white;
     }
 
@@ -19,7 +20,9 @@
     .parameter-chart {
         min-height: 280px;
     }
-
+    .dashboard-alerts{
+        height: 460px;
+    }
     [class^="col-"], [class*=" col-"] {
         border: none !important;
         margin-bottom: 15px;
