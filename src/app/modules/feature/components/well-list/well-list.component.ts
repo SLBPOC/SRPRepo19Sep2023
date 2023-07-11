@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./well-list.component.scss']
 })
 export class WellListComponent {
+  searchObjC:any;
+  userSearchChange(obj:any){
+    this.searchObjC = obj;
+  }
+
 
 }

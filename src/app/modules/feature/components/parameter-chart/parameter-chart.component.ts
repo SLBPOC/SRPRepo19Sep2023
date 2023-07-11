@@ -15,14 +15,14 @@ export class ParameterChartComponent {
   variables = new FormControl();
 
   variableList = ['Yesterday Cycle Counter', 'Yesterday Cycle Run', 'Average Pump Fillage', 'Average SPM', 'Production Index', 'Load'];
-  selectedVariables ;
+  selectedVariables:any;
 
 
   toogle:boolean=false;
   
-  public ChartOptions;
+  public ChartOptions:any;
   Highcharts: typeof Highcharts = Highcharts;
-  chartRef;
+  chartRef:any;
 
   legends:any[]=[];
 
@@ -248,7 +248,7 @@ BindChart()
             legendItemClick: function (e:Highcharts.SeriesLegendItemClickEventObject) {
               that.HideSeries(e.target.name) ;     
             },           
-            mouseOver: function(e) {
+            mouseOver: function(e:any) {
               //that.HideSeries(e.target.name) ;
               //alert(e.target.name);
             },          
