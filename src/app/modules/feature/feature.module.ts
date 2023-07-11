@@ -62,7 +62,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatRadioModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService]
