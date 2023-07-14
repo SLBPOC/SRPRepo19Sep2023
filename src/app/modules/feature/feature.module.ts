@@ -39,6 +39,20 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 
+// UI
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { AlertListComponent } from './components/alert-list/alert-list.component';
+// import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+
 @NgModule({
   declarations: [
     FeatureComponent,
@@ -56,7 +70,9 @@ import {MatNativeDateModule} from '@angular/material/core';
     WellTreeSearchComponent,
     SaveTreeStateDialog,
     WellTreeView,
-    DashboardAlertsComponent
+    DashboardAlertsComponent,
+    SidenavComponent,
+    AlertListComponent,
   ],
   imports: [
     CommonModule,
@@ -83,7 +99,14 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatMenuModule,
     MatSlideToggleModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    
+    // UI
+    MatSidenavModule,
+    MatTabsModule,
+    MatListModule,
+    MatGridListModule,
+    MatToolbarModule
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService]
