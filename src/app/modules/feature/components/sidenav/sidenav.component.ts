@@ -18,6 +18,7 @@ export class SidenavComponent implements OnInit {
   isExpanded = true;
   showSubmenu: boolean = false;
   showSubmenuReport: boolean = false;
+  showSubmenuWellList: boolean = false;
   isShowing = false;
   showSubSubMenu: boolean = false;
   elem: any;
