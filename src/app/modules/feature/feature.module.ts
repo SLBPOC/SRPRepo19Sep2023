@@ -52,6 +52,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AlertListComponent } from './components/alert-list/alert-list.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -100,13 +101,16 @@ import { AlertListComponent } from './components/alert-list/alert-list.component
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule, 
+    MatButtonModule,
     
     // UI
     MatSidenavModule,
     MatTabsModule,
     MatListModule,
     MatGridListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatExpansionModule
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService]

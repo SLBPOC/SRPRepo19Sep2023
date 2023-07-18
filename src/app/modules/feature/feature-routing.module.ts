@@ -17,7 +17,7 @@ const routes: Routes = [
       ]
     },
     {path: 'well-performance', component: WellPerformanceComponent},
-    {path: 'algorithm-mitigations', component: AlgorithmsAndMitigationComponent}
+    {path: 'algorithms-and-mitigations', component: AlgorithmsAndMitigationComponent}
 
   ]},
   
