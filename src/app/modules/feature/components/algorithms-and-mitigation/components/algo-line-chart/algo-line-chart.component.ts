@@ -1,5 +1,7 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import theme from 'highcharts/themes/brand-dark';
+theme(Highcharts);
 import { Subscription } from 'rxjs';
 import { AlgorithmsAndMitigationsService } from 'src/app/modules/feature/services/algorithms-and-mitigations.service';
 
@@ -8,7 +10,7 @@ import { AlgorithmsAndMitigationsService } from 'src/app/modules/feature/service
   templateUrl: './algo-line-chart.component.html',
   styleUrls: ['./algo-line-chart.component.scss']
 })
-export class AlgoLineChartComponent implements AfterViewInit, OnInit{
+export class AlgoLineChartComponent implements OnInit, OnDestroy{
 
   series: any = [];
   chartData!: any;
@@ -17,14 +19,6 @@ export class AlgoLineChartComponent implements AfterViewInit, OnInit{
   chartSubscription!: Subscription;
 
   constructor(private service: AlgorithmsAndMitigationsService) {}
-
-  public ngAfterViewInit(): void {
-    this.createChartLine();
- }
-
- private getRandomNumber(min: number, max: number): number {
-   return Math.floor(Math.random() * (max - min + 1) + min)
- }
 
  ngOnInit(): void {
     this.getChartData();
@@ -39,7 +33,7 @@ export class AlgoLineChartComponent implements AfterViewInit, OnInit{
  }
 
  drawChart(): void {
-  const chart = Highcharts.chart('line-chart', {
+  Highcharts.chart('line-chart', {
     chart: {
       type: 'line'
     },
@@ -51,33 +45,22 @@ export class AlgoLineChartComponent implements AfterViewInit, OnInit{
     },
     legend: {
       enabled: true,
+      layout: 'horizontal',
+            verticalAlign: 'top',
+          
     },
-    // yAxis: {
-    //   title: {
-    //     text: null,
-    //   },
-    // },
     yAxis: [{
       lineWidth: 1,
       title: {
-          text: 'Primary Axis'
+          text: ''
       }
   }, 
-  // {
-  //     lineWidth: 1,
-  //     opposite: true,        
-  //     title: {
-  //         text: 'Secondary Axis',
-  //     },
-  //     gridLineWidth: 2
-  // }
 ],
   plotOptions: {
     series: {
         marker: {
             symbol: 'circle'
         }
-
     }
   },
     xAxis: {
@@ -90,44 +73,12 @@ export class AlgoLineChartComponent implements AfterViewInit, OnInit{
       shared: true,
       useHTML: true,
     },
-    // ------------------------option 1
- //    series: [{
- //      name: 'Amount',
- //      // data: [['21/6', 500], ['22/6', 500], ['23/6', 700], ['24/6', 500], ['25/6', 500], ['26/6', 500], ['27/6', 500]]
- //      data1,
- //    },
- //    {
- //      name: 'Product',
- //      data: data2,
- //      yAxis: 1
-
- //    }
-
- //  ],
-
-    // ------------------------option 2
     series: this.series
   } as any);
  }
- private createChartLine(): void {
-   let date = new Date();
-   let date2 = new Date();
 
-   const data1: any[] = [];
-   const data2: any[] = [];
-
-   for (let i = 0; i < 10; i++) {
-
-     date.setDate(new Date().getDate() + i);
-     date2.setDate(new Date().getDate() + i );
-
-     data1.push([`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`, this.getRandomNumber(0, 1000)]);
-     data2.push([`${date2.getDate()}/${date2.getMonth() + 1}/${date.getFullYear()}`, this.getRandomNumber(0, 1000)]);
-
-   }
-
-   
-
+ ngOnDestroy(): void {
+     this.chartSubscription.unsubscribe();
  }
 
 }
