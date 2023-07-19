@@ -53,6 +53,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AlertListComponent } from './components/alert-list/alert-list.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/components/algo-line-chart/algo-line-chart.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DashboardAlertsComponent,
     SidenavComponent,
     AlertListComponent,
+    AlgoLineChartComponent,
   ],
   imports: [
     CommonModule,

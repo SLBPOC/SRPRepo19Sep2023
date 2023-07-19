@@ -11,6 +11,7 @@ export class AlgorithmsAndMitigationsService {
   private controllersSelectOptions = '../../../../assets/json/controllers.json';
   private tagSelectOptions = '../../../../assets/json/tags.json';
   private tagDetails = '../../../../assets/json/tag-data.json';
+  private algoLineChartJson = '../../../../assets/json/algo-line-chart.json';
   private applyTagUrl = 'http://10.17.12.1:9090/api/v1/applyTags';
   private saveTagsUrl = 'http://10.17.12.1:9090/api/v1/saveTags/';
 
@@ -41,6 +42,9 @@ export class AlgorithmsAndMitigationsService {
         headers: {
         }
     })
+  }
+  getAlgorithmsAndMitigationsChartData(): Observable<any> {
+    return this.http.get(this.algoLineChartJson)
   }
   
 }
