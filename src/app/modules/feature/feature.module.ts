@@ -12,10 +12,13 @@ import { ParameterChartComponent } from './components/parameter-chart/parameter-
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ModalContentComponent } from './components/yesterdays-cycle-count/components/modal-content/modal-content.component';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { BsModalService} from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { YesterdayCycleBarChartComponent } from './components/yesterdays-cycle-count/components/yesterday-cycle-bar-chart/yesterday-cycle-bar-chart.component';
-import {HttpClientModule} from '@angular/common/http'
-import { SaveTreeStateDialog, WellTreeSearchComponent } from './components/well-list/well-tree-search/well-tree-search.component';
+import { HttpClientModule } from '@angular/common/http';
+import {
+  SaveTreeStateDialog,
+  WellTreeSearchComponent,
+} from './components/well-list/well-tree-search/well-tree-search.component';
 import { WellTreeView } from './components/well-list/well-tree-view/well-tree-view.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
@@ -29,15 +32,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardAlertsComponent } from './components/dashboard-alerts/dashboard-alerts.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
+import { MatSortModule, MatSort, Sort } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DatePipe, NgIf } from '@angular/common';
-import { DragDropModule } from '@angular/cdk/drag-drop'
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 
 // UI
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -51,6 +54,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AlertListComponent } from './components/alert-list/alert-list.component';
+import { EventListComponent } from './components/event-list/event-list.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
@@ -73,6 +77,7 @@ import { AlertListComponent } from './components/alert-list/alert-list.component
     DashboardAlertsComponent,
     SidenavComponent,
     AlertListComponent,
+    EventListComponent,
   ],
   imports: [
     CommonModule,
@@ -100,16 +105,15 @@ import { AlertListComponent } from './components/alert-list/alert-list.component
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    
+
     // UI
     MatSidenavModule,
     MatTabsModule,
     MatListModule,
     MatGridListModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
   entryComponents: [ModalContentComponent],
-  providers: [BsModalService]
-
+  providers: [BsModalService],
 })
-export class FeatureModule { }
+export class FeatureModule {}
