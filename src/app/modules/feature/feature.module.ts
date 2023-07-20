@@ -55,6 +55,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AlertListComponent } from './components/alert-list/alert-list.component';
 import { EventListComponent } from './components/event-list/event-list.component';
+import { WellsComponent } from './components/wells/wells.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
@@ -78,6 +79,7 @@ import { EventListComponent } from './components/event-list/event-list.component
     SidenavComponent,
     AlertListComponent,
     EventListComponent,
+    WellsComponent,
   ],
   imports: [
     CommonModule,

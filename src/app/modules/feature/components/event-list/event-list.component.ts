@@ -66,9 +66,9 @@ export class EventListComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'stat',
     'wellName',
-    'eventLevel',
-    'date',
-    'desc',
+    'priority',
+    'creationDateTime',
+    'eventDescription',
   ];
   alertTypes = ['High', 'Medium', 'Low'];
   statuses = ['Completed', 'In Progress'];

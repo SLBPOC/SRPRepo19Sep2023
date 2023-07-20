@@ -9,3 +9,4 @@ const routes: Routes = [{ path: '', component: DashboardComponent }];
   exports: [RouterModule]
 })
 export class DashboardRoutingModule { }
+  

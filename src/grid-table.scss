@@ -273,13 +273,13 @@
 
               &.medium {
                 &:before {
-                  background-color: rgba(135, 234, 45, 1);
+                  background-color: rgba(255, 162, 32, 1);
                 }
               }
 
               &.low {
                 &:before {
-                  background-color: rgba(255, 162, 32, 1);
+                  background-color:rgba(135, 234, 45, 1); 
                 }
               }
             }
@@ -354,7 +354,7 @@
   .med-priorityline {
     width: 4px;
     height: 42px;
-    background-color: rgba(135, 234, 45, 1);
+    background-color: rgba(255, 162, 32, 1);
     border-radius: 8px;
     display: block;
   }
@@ -362,7 +362,7 @@
   .low-priorityline {
     width: 4px;
     height: 42px;
-    background-color: rgba(255, 162, 32, 1);
+    background-color: rgba(135, 234, 45, 1); 
     border-radius: 8px;
     display: block;
   }

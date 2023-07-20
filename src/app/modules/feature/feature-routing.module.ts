@@ -7,6 +7,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AlertListComponent } from './components/alert-list/alert-list.component';
 import { EventListComponent } from './components/event-list/event-list.component';
+import { WellsComponent } from './components/wells/wells.component';
 import { CommonModule } from '@angular/common';
 import { EventsRoutingModule } from '../events/events-routing.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +27,7 @@ const routes: Routes = [
           { path: 'dashboard', component: DashboardComponent },
           { path: 'alert-list', component: AlertListComponent },
           { path: 'event-list', component: EventListComponent },
+          { path: 'wells', component: WellsComponent },
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },

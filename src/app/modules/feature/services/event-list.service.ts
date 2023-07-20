@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders
+ } from '@angular/common/http';
 import { EventList } from '../model/event-list';
 import { Observable, map, tap } from 'rxjs';
 import { SLBSearchParams, SortOptions } from 'src/app/models/slb-params';
@@ -10,13 +11,26 @@ const eventsData = '../../../../assets/json/events-data.json';
   providedIn: 'root',
 })
 export class EventListService {
+  private apiUrl: string="http://localhost:61209/api/";
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  };
+
   constructor(private http: HttpClient) {}
+
+
+  getWellEventfromDB(): Observable<any> {
+    return this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions);          
+  }
 
   getWellEvents(params: SLBSearchParams): Observable<EventList[]> {
     //when you get api call this
     //return this.http.post<AlertList[]>("url", params);
     //this is local setup
-    return this.http.get<EventList[]>(eventsData).pipe(
+    //var eventList= this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions);  
+    return this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions).pipe(
       map((x) => {
         return this.filterData(params, x);
       })
@@ -27,7 +41,9 @@ export class EventListService {
       res = res.filter(
         (x) =>
           x.wellName.toLowerCase().includes(params.searchTerm.toLowerCase()) ||
-          x.desc.toLowerCase().includes(params.searchTerm.toLowerCase())
+          x.eventDescription.toLowerCase().includes(params.searchTerm.toLowerCase())  // ||
+          // x.eventType.toLowerCase().includes(params.searchTerm.toLowerCase()) ||
+          // x.eventStatus.toLowerCase().includes(params.searchTerm.toLowerCase())
       );
     }
     if (params.sort && params.sort.active) {
@@ -37,7 +53,7 @@ export class EventListService {
       params.params.forEach((value, key) => {
         if (key == 'eventType') {
           res = res.filter(
-            (c) => c.eventLevel.toLowerCase() == value?.toLowerCase()
+            (c) => c.Priority.toLowerCase() == value?.toLowerCase()
           );
         }
         // if (key == 'status') {
@@ -51,8 +67,8 @@ export class EventListService {
             end = dates[1];
           res = res.filter(
             (c) =>
-              new Date(c.date).getTime() >= new Date(start).getTime() &&
-              new Date(c.date).getTime() <= new Date(end).getTime()
+              new Date(c.creationDateTime).getTime() >= new Date(start).getTime() &&
+              new Date(c.creationDateTime).getTime() <= new Date(end).getTime()
           );
         }
       });

@@ -190,13 +190,8 @@
           >Dashboard</span
         >
       </mat-list-item>
-      <mat-list-item
-        (click)="showSubmenu = !showSubmenu"
-        class="parent navcontenttxt"
-      >
-        <span class="full-width menutxt" *ngIf="isExpanded || isShowing"
-          >Well List</span
-        >
+      <mat-list-item  (click)="showSubmenu = !showSubmenu" routerLink="wells" lass="parent navcontenttxt" >
+        <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
 
         <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}"
           *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon> -->
