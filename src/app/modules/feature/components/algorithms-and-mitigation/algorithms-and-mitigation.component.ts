@@ -26,7 +26,7 @@ interface Controller {
 export class AlgorithmsAndMitigationComponent implements OnInit{
 
   controllerSelectOptions: string[] = [];
-  tagControl = new FormControl('');
+  tagControl: any = new FormControl(null);
   tagSelectOptions: string[] = [];
   panelOpenState = true;
   tagsDetailsData: Tag[] = [];
@@ -51,19 +51,16 @@ export class AlgorithmsAndMitigationComponent implements OnInit{
     this.service.getTagSelectOptions().subscribe((data: TagSelect[]) => {
       this.tagsTotal = data.length;
       this.tagSelectOptions = data.map((value: TagSelect) => value.tag);
-      console.log('tagSelectOptions:- ', this.tagSelectOptions)
     })
   }
 
   getTagData() {
     this.service.getTagsData().subscribe((data: any) => {
       this.tagsDetailsData = data;
-      console.log('tagData:- ', this.tagsDetailsData)
     })
   }
 
   onTagSelectionChanged(event: any) {
-    console.log('on tag selection changed:- ', this.tagControl)
     this.tagsSelected = this.tagControl.value?.length
   }
 
@@ -72,7 +69,6 @@ export class AlgorithmsAndMitigationComponent implements OnInit{
       tags: this.tagControl.value
     }
     this.service.applyTags(payload).subscribe((data: any) => {
-      console.log('tag applied.');
     })
   }
 
@@ -80,9 +76,31 @@ export class AlgorithmsAndMitigationComponent implements OnInit{
     const payload = {
       tags: this.tagControl.value
     }
-    this.service.applyTags(payload).subscribe((data: any) => {
-      console.log('tag saved.');
+    this.service.saveTags(payload).subscribe((data: any) => {
     })
   }
 
+  refreshTags() {
+    const payload = {
+      tags: this.tagControl.value
+    }
+    this.service.refreshTags(payload).subscribe((data: any) => {
+    })
+  }
+
+  networkTags() {
+    const payload = {
+      tags: this.tagControl.value
+    }
+    this.service.networkTags(payload).subscribe((data: any) => {
+    })
+  }
+
+  syncTags() {
+    const payload = {
+      tags: this.tagControl.value
+    }
+    this.service.syncTags(payload).subscribe((data: any) => {
+    })
+  }
 }

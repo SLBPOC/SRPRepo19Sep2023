@@ -13,7 +13,10 @@ export class AlgorithmsAndMitigationsService {
   private tagDetails = '../../../../assets/json/tag-data.json';
   private algoLineChartJson = '../../../../assets/json/algo-line-chart.json';
   private applyTagUrl = 'http://10.17.12.1:9090/api/v1/applyTags';
-  private saveTagsUrl = 'http://10.17.12.1:9090/api/v1/saveTags/';
+  private saveTagsUrl = 'http://10.17.12.1:9090/api/v1/saveTags';
+  private refreshTagsJson = 'http://10.17.12.1:9090/api/v1/refreshTags';
+  private networkTagsJson = 'http://10.17.12.1:9090/api/v1/networkTags';
+  private syncTagsJson = 'http://10.17.12.1:9090/api/v1/syncTags';
 
 
   constructor(private http: HttpClient) { }
@@ -39,6 +42,27 @@ export class AlgorithmsAndMitigationsService {
 
   saveTags(payload: any): Observable<any> {
     return this.http.post(this.saveTagsUrl, payload, {
+        headers: {
+        }
+    })
+  }
+
+  refreshTags(payload: any): Observable<any> {
+    return this.http.post(this.refreshTagsJson, payload, {
+        headers: {
+        }
+    })
+  }
+  
+  networkTags(payload: any): Observable<any> {
+    return this.http.post(this.networkTagsJson, payload, {
+        headers: {
+        }
+    })
+  }
+
+  syncTags(payload: any): Observable<any> {
+    return this.http.post(this.syncTagsJson, payload, {
         headers: {
         }
     })

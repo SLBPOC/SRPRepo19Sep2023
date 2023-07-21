@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { YesterdayCycleBarChartComponent } from './yesterday-cycle-bar-chart.component';
 
 
 describe('ParameterChartComponent', () => {

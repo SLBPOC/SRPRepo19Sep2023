@@ -25,7 +25,7 @@ export class AlgoLineChartComponent implements OnInit, OnDestroy{
  }
 
  getChartData(): void{
-  this.service.getAlgorithmsAndMitigationsChartData().subscribe((data: any) => {
+  this.chartSubscription = this.service.getAlgorithmsAndMitigationsChartData().subscribe((data: any) => {
     this.series = data;
     this.drawChart();
 

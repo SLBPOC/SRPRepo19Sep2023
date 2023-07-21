@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SideNavComponent } from './well-list.component';
+import { WellListComponent } from './well-list.component';
 
-describe('SideNavComponent', () => {
-  let component: SideNavComponent;
-  let fixture: ComponentFixture<SideNavComponent>;
+describe('WellListComponent', () => {
+  let component: WellListComponent;
+  let fixture: ComponentFixture<WellListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SideNavComponent ]
+      declarations: [ WellListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SideNavComponent);
+    fixture = TestBed.createComponent(WellListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
