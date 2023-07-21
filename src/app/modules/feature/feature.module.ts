@@ -57,6 +57,8 @@ import { AlertListComponent } from './components/alert-list/alert-list.component
 import { EventListComponent } from './components/event-list/event-list.component';
 import { WellsComponent } from './components/wells/wells.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/components/algo-line-chart/algo-line-chart.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,7 @@ import { WellsComponent } from './components/wells/wells.component';
     AlertListComponent,
     EventListComponent,
     WellsComponent,
+    AlgoLineChartComponent,
   ],
   imports: [
     CommonModule,
@@ -108,12 +111,16 @@ import { WellsComponent } from './components/wells/wells.component';
     MatDatepickerModule,
     MatNativeDateModule,
 
+    MatCardModule, 
+    MatButtonModule,
+    
     // UI
     MatSidenavModule,
     MatTabsModule,
     MatListModule,
     MatGridListModule,
     MatToolbarModule,
+    MatExpansionModule
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService],
