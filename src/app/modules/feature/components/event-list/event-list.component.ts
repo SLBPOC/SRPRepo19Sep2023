@@ -72,6 +72,9 @@ export class EventListComponent implements AfterViewInit {
   ];
   alertTypes = ['High', 'Medium', 'Low'];
   statuses = ['Completed', 'In Progress'];
+  highCount = 0;
+  medCount = 0;
+  lowCount = 0;
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
@@ -99,8 +102,22 @@ export class EventListComponent implements AfterViewInit {
   bindGridData(res: EventList[]) {
     this.wellList = res;
     this.dataSource = new MatTableDataSource<EventList>(this.wellList);
-    //this.dataSource.paginator = this.paginator;
+    this.getLegendCount();
+    this.dataSource.paginator = this.paginator;
   }
+
+  getLegendCount(){
+    let high = this.wellList.filter(alert => alert.priority == "High");
+    // console.log("getLegendCount--> "+ high.length);
+    this.highCount = high.length;
+
+    let med = this.wellList.filter(alert => alert.priority == "Medium");
+    this.medCount = med.length;
+
+    let low = this.wellList.filter(alert => alert.priority == "Low");
+    this.lowCount = low.length;
+  }
+
   search(data: Event) {
     const val = (data.target as HTMLInputElement).value;
     this.dataSource.filter = val;
