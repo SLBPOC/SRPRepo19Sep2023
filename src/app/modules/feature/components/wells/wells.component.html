@@ -159,7 +159,7 @@
            <!-- Time and date -->
            <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Time & Date </th>
-            <td mat-cell *matCellDef="let element" class="align-col"> {{element.updatedDateTime | date:'yyyy-MM-dd HH:MM:ss'}} </td>
+            <td mat-cell *matCellDef="let element" class="align-col"> {{element.createdDateTime | date:'yyyy-MM-dd HH:MM:ss'}} </td>
          </ng-container>
           <!-- Comms Status -->
          <ng-container matColumnDef="commsstatus">
@@ -175,12 +175,12 @@
            <!-- SPM -->
           <ng-container matColumnDef="spm">
             <th mat-sort-header mat-header-cell *matHeaderCellDef>SPM</th>
-            <td mat-cell *matCellDef="let element">{{ element.avgSPM }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.strPM }}</td>
           </ng-container>
            <!-- Pump Fillage -->
           <ng-container matColumnDef="pumpfillage">
             <th mat-sort-header mat-header-cell *matHeaderCellDef>Pump Fillage</th>
-            <td mat-cell *matCellDef="let element">{{ element.AvgSPM }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.pumpFillage }}</td>
           </ng-container>
             <!-- Inferred Production -->
           <ng-container matColumnDef="inferredproduction">
