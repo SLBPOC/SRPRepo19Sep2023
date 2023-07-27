@@ -1,56 +1,23 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, Renderer2, ElementRef, ViewChild } from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { DateRange } from '@angular/material/datepicker';
-import { FormBuilder } from '@angular/forms';
-
 import { AlertListService } from '../../services/alert-list.service';
 import { AlertList } from '../../model/alert-list';
 import { MatSort } from '@angular/material/sort';
-import { ThemePalette } from '@angular/material/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
-interface Food {
+interface Option {
+  id: string;
   value: string;
-  viewValue: string;
 }
 
-export interface PeriodicElement {
-  status: string;
-  well_name: String;
-  pump_status: String;
-  time_data: number;
-  structural_load: string;
-  avg_hrs:number;
-  infered_prod:number;
-  pump_fillage:number;
-  mode_operation:number;
-  stat:number;
-
-  
+enum DateRanges {
+  DAY = 1,
+  WEEK = 2,
+  MONTH = 3,
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { status:'high', well_name: 'Apache1', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '30%',avg_hrs:1, infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'low', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '60%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'med', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '10%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'high', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '50%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'low', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '90%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'high', well_name: 'Apache1', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '30%',avg_hrs:1, infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'low', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '60%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'med', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '10%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'high', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '50%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1},
-  { status:'low', well_name: 'Apache2', pump_status : 'Hydrogen', time_data: 1.0079, structural_load: '90%',avg_hrs:1,infered_prod:1,pump_fillage:1, mode_operation:1, stat:1}
-  // {status:'', well_name: 2, 'Pump Status': 'Helium', weight: 4.0026, symbol: 'He'},
-  // {status:'', well_name: 3, 'Pump Status': 'Lithium', weight: 6.941, symbol: 'Li'},
-  // {status:'', well_name: 4, 'Pump Status': 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  // {status:'', well_name: 5, 'Pump Status': 'Boron', weight: 10.811, symbol: 'B'},
-  // {status:'', well_name: 6, 'Pump Status': 'Carbon', weight: 12.0107, symbol: 'C'},
-  // {status:'', well_name: 7, 'Pump Status': 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  // {status:'', well_name: 8, 'Pump Status': 'Oxygen', weight: 15.9994, symbol: 'O'},
-  
-];
 
 @Component({
   selector: 'app-alert-list',
@@ -61,102 +28,166 @@ export class AlertListComponent {
   wellList!: AlertList[];
   dataSource: any;
   displayedColumns: string[] = ["stat", "wellName", "alertLevel", "date", "desc", "status", "action"]
-  alertTypes = ["High", "Medium", "Low"];
-  statuses = ["Completed", "In Progress"];
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
-  });
+  alertTypes: Option[] = [
+    { id: '1', value: 'High' },
+    { id: '2', value: 'Medium' },
+    { id: '3', value: 'Low' }
+  ];
+  statuses: Option[] = [
+    { id: '1', value: 'Completed' },
+    { id: '2', value: 'In Progress' }
+  ];
+  highCount = 0;
+  medCount = 0;
+  lowCount = 0;
+  selectedStatus: any;
+  selectedAlert: any;
+  daysSelected: any[] = [];
+  event: any;
+  todayDate: Date = new Date();
   pipe!: DatePipe;
 
+  @Input() selectedRangeValue: DateRange<Date>;
+  @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  // displayedColumns: string[] = ['status','well_name', 'pump_status', 'time_data', 'structural_load','avg_hrs','infered_prod','pump_fillage','mode_operation','stat'];
-  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  constructor(private service: AlertListService) { }
 
-  // @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  constructor( private service: AlertListService ){}
-
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  // }
-
-  ngOnInit(){
+  ngOnInit() {
+    let dte = new Date();
+    dte.setDate(dte.getDate() - 1);
     this.service.getWellAlerts().subscribe((resp) => {
       this.wellList = resp;
       this.dataSource = new MatTableDataSource<AlertList>(this.wellList);
+      this.getLegendCount();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
   }
 
-  search(data: Event){
+  getLegendCount(){
+    let high = this.wellList.filter(alert => alert.alertLevel == "High");
+    this.highCount = high.length;
+
+    let med = this.wellList.filter(alert => alert.alertLevel == "Medium");
+    this.medCount = med.length;
+
+    let low = this.wellList.filter(alert => alert.alertLevel == "Low");
+    this.lowCount = low.length;
+  }
+
+  search(data: Event) {
     const val = (data.target as HTMLInputElement).value;
     this.dataSource.filter = val;
 
   }
 
-  alertChange(event: any){
+  alertChange(event: any) {
     let filterValue;
     filterValue = event.value.trim(); // Remove whitespace
     filterValue = event.value.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
-  statusChange(event: any){
+  statusChange(event: any) {
     let filterValue;
     filterValue = event.value.trim(); // Remove whitespace
     filterValue = event.value.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
-  selectDate(date: any){
-    // this.pipe = new DatePipe('en');
-    // this.dataSource.filterPredicate = (data, filter) =>{
-    //   if (this.fromDate && this.toDate) {
-    //     return data.created >= this.fromDate && data.created <= this.toDate;
-    //   }
-    //   return true;
-    // }
-    console.log("Selelcted date range --> "+date.value)
-    let fromDate = date.value.start.toISOString();
-    let startDate = this.range.get('start')?.value; 
-    let endDate = this.range.get('end')?.value; 
-    let toDate = date.value.end.toISOString()
-    this.dataSource.filterPredicate = (data: any, filter: any) =>{
+  applyFilter(){
+    this.dataSource.filterPredicate = (data: any) => {
+      if (this.selectedStatus && this.selectedAlert) {
+        return data.status == this.selectedStatus && data.alertLevel == this.selectedAlert;
+      }
+      return true;
+    }
+  }
+
+  setDateSelected(option: any) {
+    this.resetDateRangeFilters();
+    switch (option) {
+      case DateRanges.DAY:
+        let today = (new Date()).toISOString();
+        const filterValue = today.substring(0,10);
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+        // let previous = new Date();
+        // previous.setDate(previous.getDate() - 1);
+        // let yes = previous.toISOString();
+        // this.dataSource.filterPredicate = (data: any) => {
+        //   if (today) {
+        //     return (data.date).toString() == today;
+        //   }
+        //   return true;
+        // }
+        // this.dataSource.filter = '' + Math.random();
+        break;
+
+      case DateRanges.WEEK:
+        let curr = new Date(); // get current date
+        let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+        let last = first + 6; // last day is the first day + 6
+        let firstday = (new Date(curr.setDate(first))).toISOString();
+        let lastday = (new Date(curr.setDate(last))).toISOString();
+        this.dataSource.filterPredicate = (data: any) => {
+          if (firstday && lastday) {
+            return data.date >= firstday && data.date <= lastday;
+          }
+          return true;
+        }
+        this.dataSource.filter = '' + Math.random();
+        break;
+
+      case DateRanges.MONTH:
+        let date = new Date();
+        let firstDay = (new Date(date.getFullYear(), date.getMonth(), 1)).toISOString();
+        let lastDay = (new Date(date.getFullYear(), date.getMonth() + 1, 0)).toISOString();
+        this.dataSource.filterPredicate = (data: any) => {
+          if (firstDay && lastDay) {
+            return data.date >= firstDay && data.date <= lastDay;
+          }
+          return true;
+        }
+        this.dataSource.filter = '' + Math.random();
+        break;
+    }
+
+  }
+
+  resetDateRangeFilters(){
+    this.dataSource.filter = '';
+    let todaysDate = new Date();
+    this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
+    this.selectedRangeValueChange.emit(this.selectedRangeValue);
+ }
+
+  applyDateRangeFilter() {
+    let fromDate = this.selectedRangeValue.start?.toISOString();
+    let toDate = this.selectedRangeValue.end?.toISOString()
+    this.dataSource.filterPredicate = (data: any) => {
       if (fromDate && toDate) {
         return data.date >= fromDate && data.date <= toDate;
       }
       return true;
     }
-    this.dataSource.filter = ''+Math.random();
+    this.dataSource.filter = '' + Math.random();
   }
 
-
-  @Input() selectedRangeValue: DateRange<Date> | undefined;
-    @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
-
-    selectedChange(m: any) {
-        if (!this.selectedRangeValue?.start || this.selectedRangeValue?.end) {
-            this.selectedRangeValue = new DateRange<Date>(m, null);
-        } else {
-            const start = this.selectedRangeValue.start;
-            const end = m;
-            if (end < start) {
-                this.selectedRangeValue = new DateRange<Date>(end, start);
-            } else {
-                this.selectedRangeValue = new DateRange<Date>(start, end);
-            }
-        }
-        this.selectedRangeValueChange.emit(this.selectedRangeValue);
+  selectedChange(m: any) {
+    if (!this.selectedRangeValue?.start || this.selectedRangeValue?.end) {
+      this.selectedRangeValue = new DateRange<Date>(m, null);
+    } else {
+      const start = this.selectedRangeValue.start;
+      const end = m;
+      if (end < start) {
+        this.selectedRangeValue = new DateRange<Date>(end, start);
+      } else {
+        this.selectedRangeValue = new DateRange<Date>(start, end);
+      }
     }
+    this.selectedRangeValueChange.emit(this.selectedRangeValue);
+  }
 
-    
-    foods: Food[] = [
-      {value: 'steak-0', viewValue: 'Steak'},
-      {value: 'pizza-1', viewValue: 'Pizza'},
-      {value: 'tacos-2', viewValue: 'Tacos'},
-    ];
 }

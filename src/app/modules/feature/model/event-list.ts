@@ -4,7 +4,7 @@ export interface EventList {
   eventType: string;
   eventStatus: string;
   eventDescription: string;
-  Priority: string;
+  priority: string;
   creationDateTime:Date;
 }
 

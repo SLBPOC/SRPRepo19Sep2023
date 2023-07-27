@@ -58,6 +58,8 @@ import { EventListComponent } from './components/event-list/event-list.component
 import { WellsComponent } from './components/wells/wells.component';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/components/algo-line-chart/algo-line-chart.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,7 @@ import { ParChartComponent } from './components/par-chart/par-chart.component';
     AlertListComponent,
     EventListComponent,
     WellsComponent,
-    ParChartComponent,
+    AlgoLineChartComponent,
   ],
   imports: [
     CommonModule,
@@ -110,12 +112,16 @@ import { ParChartComponent } from './components/par-chart/par-chart.component';
     MatDatepickerModule,
     MatNativeDateModule,
 
+    MatCardModule, 
+    MatButtonModule,
+    
     // UI
     MatSidenavModule,
     MatTabsModule,
     MatListModule,
     MatGridListModule,
     MatToolbarModule,
+    MatExpansionModule
   ],
   entryComponents: [ModalContentComponent],
   providers: [BsModalService],

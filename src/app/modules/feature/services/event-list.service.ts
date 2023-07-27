@@ -53,7 +53,7 @@ export class EventListService {
       params.params.forEach((value, key) => {
         if (key == 'eventType') {
           res = res.filter(
-            (c) => c.Priority.toLowerCase() == value?.toLowerCase()
+            (c) => c.priority.toLowerCase() == value?.toLowerCase()
           );
         }
         // if (key == 'status') {
