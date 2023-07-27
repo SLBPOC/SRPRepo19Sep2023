@@ -41,6 +41,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 // UI
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,6 +58,7 @@ import { AlertListComponent } from './components/alert-list/alert-list.component
 import { EventListComponent } from './components/event-list/event-list.component';
 import { WellsComponent } from './components/wells/wells.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { MtxTooltipModule } from '@ng-matero/extensions/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/components/algo-line-chart/algo-line-chart.component';
 
@@ -110,9 +112,10 @@ import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/c
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
+    MatTooltipModule,
     MatCardModule, 
     MatButtonModule,
+    MtxTooltipModule,
     
     // UI
     MatSidenavModule,
