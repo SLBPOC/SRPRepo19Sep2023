@@ -56,6 +56,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AlertListComponent } from './components/alert-list/alert-list.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { WellsComponent } from './components/wells/wells.component';
+import { ParChartComponent } from './components/par-chart/par-chart.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
@@ -80,6 +81,7 @@ import { WellsComponent } from './components/wells/wells.component';
     AlertListComponent,
     EventListComponent,
     WellsComponent,
+    ParChartComponent,
   ],
   imports: [
     CommonModule,
