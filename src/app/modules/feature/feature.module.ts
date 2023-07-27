@@ -57,6 +57,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AlertListComponent } from './components/alert-list/alert-list.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { WellsComponent } from './components/wells/wells.component';
+import { ParChartComponent } from './components/par-chart/par-chart.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { MtxTooltipModule } from '@ng-matero/extensions/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -85,6 +86,7 @@ import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/c
     EventListComponent,
     WellsComponent,
     AlgoLineChartComponent,
+    ParChartComponent
   ],
   imports: [
     CommonModule,
