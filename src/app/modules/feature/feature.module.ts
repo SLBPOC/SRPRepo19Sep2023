@@ -84,6 +84,7 @@ import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/c
     EventListComponent,
     WellsComponent,
     AlgoLineChartComponent,
+    ParChartComponent
   ],
   imports: [
     CommonModule,
