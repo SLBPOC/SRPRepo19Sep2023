@@ -3,7 +3,8 @@ export interface WellModel {
      wellName:string;
      status:string;
      location:string;
-     avgSPM:number;
+     strPM:number;
+     pumpFillage:number;
      wellState:string;
      pumpCardDiagnostics:string;
      motorCurrent:number;

@@ -59,6 +59,7 @@ ngOnInit()
 {
   this.GetCycleCounterDetails();
   this.GetCycleRunDetails();  
+  //this.GetGraphDetails();
 }
 
 cleardata()
@@ -66,6 +67,13 @@ cleardata()
   this.cyclerCounterData=[];
   this.graphXAxis=[];
   this.graphYAxisCycleCounter=[];
+}
+
+GetGraphDetails()
+{
+  this._parameterGraphService.GetParameterChart(1).subscribe((response: any) => {
+    this.cyclerCounterData=response;
+  });
 }
 
 

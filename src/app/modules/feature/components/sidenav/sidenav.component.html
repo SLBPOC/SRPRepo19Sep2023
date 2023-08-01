@@ -201,6 +201,9 @@
       <div class="submenu" [ngClass]="{'expanded' : showSubmenuWellList}" *ngIf="isShowing || isExpanded">
         <a mat-list-item  routerLink="algorithm-mitigations">Algorithms and Mitigations</a>
       </div>
+      <div class="submenu" [ngClass]="{'expanded' : showSubmenuWellList}" *ngIf="isShowing || isExpanded">
+        <a mat-list-item  routerLink="wells">Well List</a>
+      </div>
 
       <mat-list-item class="navcontenttxt" routerLink="alert-list">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing"

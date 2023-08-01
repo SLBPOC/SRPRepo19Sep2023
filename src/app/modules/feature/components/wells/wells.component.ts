@@ -41,7 +41,7 @@ export class WellsComponent {
  dataSource:any =[];
  //wellList!: WellName[];
  WellModel!:WellModel[];
- displayedColumns: string[] = [ 'wellname', 'date','commsstatus','controllerstatus','spm','pumpfillage','inferredproduction','noofalerts'];
+ displayedColumns: string[] = [ 'wellName', 'updatedDateTime','communicationStatus','controllerStatus','avgSPM','AvgSPM','inferredProduction','yesterdayCycle'];
  displayableExtraColumns: {label: string, accessor: string}[] = [];
  extraColumnsCtrl: any = new FormControl('');
  extraColumnsList: {label: string, accessor: string}[] = [
@@ -68,15 +68,15 @@ ngOnInit(): void {
   this.service.getWellDetails().subscribe((response:any) => {
     this.WellModel = response;
     this.dataSource = new MatTableDataSource<WellModel>(this.WellModel);
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   })
   
 }
 
-search(data: Event){
+search(data: Event) {
   const val = (data.target as HTMLInputElement).value;
-  //this.dataSource.filter = val;
+  this.dataSource.filter = val;
 
 }
  

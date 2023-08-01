@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ParChartComponent } from './components/par-chart/par-chart.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -28,6 +30,7 @@ const routes: Routes = [
           { path: 'alert-list', component: AlertListComponent },
           { path: 'event-list', component: EventListComponent },
           { path: 'wells', component: WellsComponent },
+          { path: 'Parameter', component: ParChartComponent },
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },

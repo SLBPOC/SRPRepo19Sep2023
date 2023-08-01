@@ -26,9 +26,9 @@
       <div class="righthead">
         <div class="prioritywrapper">
           <ul>
-            <li class="priority high">High</li>
-            <li class="priority medium">Medium</li>
-            <li class="priority low">Low</li>
+            <li class="priority high">High({{this.highCount}})</li>
+            <li class="priority medium">Medium({{this.medCount}})</li>
+            <li class="priority low">Low({{this.lowCount}})</li>
           </ul>
         </div>
         <div class="searchBar">
@@ -36,7 +36,7 @@
             id="searchQueryInput"
             type="text"
             name="searchQueryInput"
-            matInput
+            placeholder="Search"
             (keyup)="applyFilterSearch($event)"
             value=""
           />
@@ -331,15 +331,15 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <mat-paginator
-      [pageSizeOptions]="[2, 5, 10]"
+      [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
       aria-label="Select page of periodic elements"
     >
     </mat-paginator>
 
-    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu">
       <mat-icon>calendar_today</mat-icon>
-    </button>
+    </button> -->
     <mat-menu #appMenu="matMenu">
       <div (click)="$event.stopPropagation()">
         <mat-calendar
