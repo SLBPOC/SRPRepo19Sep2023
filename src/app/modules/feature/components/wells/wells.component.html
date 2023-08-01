@@ -154,7 +154,9 @@
           <!-- Wells Name -->
           <ng-container matColumnDef="wellName">
              <th mat-header-cell *matHeaderCellDef mat-sort-header> Well Name</th>
-             <td mat-cell *matCellDef="let element" id="well_name" class="align-col"> {{element.wellName}} </td>
+            <td mat-cell *matCellDef="let element" id="well_name" class="align-col">
+               <a href="javascript:void(0)">{{element.wellName}}</a>
+            </td>
           </ng-container>
            <!-- Time and date -->
            <ng-container matColumnDef="updatedDateTime">
