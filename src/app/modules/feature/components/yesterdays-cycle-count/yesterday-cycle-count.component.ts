@@ -48,7 +48,8 @@ export class YesterdayCycleCountComponent implements OnInit, OnDestroy {
     this.chartOptions = {
       chart: {
         plotShadow: true,
-        renderTo: 'container'
+        renderTo: 'container',
+        backgroundColor:undefined
       },
       title: {
         text: ``,

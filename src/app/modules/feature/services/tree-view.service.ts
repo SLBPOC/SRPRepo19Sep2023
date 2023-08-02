@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {Node,NodeType, SavedState} from './models'
+// import { FeatureModule } from '../feature.module';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+
 export class TreeViewService {
   public selectedNodes : BehaviorSubject<Node[]> = new BehaviorSubject<Node[]>([]);
 

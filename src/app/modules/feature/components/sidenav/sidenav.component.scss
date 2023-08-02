@@ -73,7 +73,7 @@ $main-color: #e9f1f4;
   cursor: pointer;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background: url(/src/assets/images/search.png) no-repeat;
+  background: url(../../../../../assets/images/search.png) no-repeat;
 
   &:focus {
     border-bottom-color: #ccc;
@@ -228,7 +228,7 @@ mat-toolbar {
     border-color: #8B90AD;
     font-size: 16px;
     color: $color_8;
-    background-image: url(/src/assets/images/search.png);
+    background-image: url(../../../../../assets/images/search.png);
     background-repeat: no-repeat;
     background-position: 12px 10px;
   }
@@ -268,7 +268,7 @@ mat-toolbar {
   .myAppbutton {
     margin: 0px 15px 0px 0px;
     padding: 0px;
-    background-image: url(/src/assets/images/arrow-down.svg);
+    background-image: url(../../../../../assets/images/arrow-down.svg);
     background-repeat: no-repeat;
     background-position: center right;
     width: 145px;
@@ -319,7 +319,7 @@ mat-toolbar {
       }
 
       .mat-mdc-select-arrow {
-        background-image: url(/src/assets/images/arrow-down.svg);
+        background-image: url(../../../../../assets/images/arrow-down.svg);
         background-repeat: no-repeat;
         background-position: center right;
         height: 12px;

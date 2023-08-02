@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  searchObjC:any;
+  userSearchChange(obj:any){
+    this.searchObjC = obj;
+  }
 }

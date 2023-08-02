@@ -208,9 +208,12 @@ BindChart()
   var that = this;
   this.ChartOptions = {      
     chart: {
+        width: 730,
+        height: 300,
+        backgroundColor:undefined,
         renderTo: 'container',
         type: 'line',
-        margin: 80,      
+        // margin: 80,      
         events: {
           load: function() {
             var chart : any = this;

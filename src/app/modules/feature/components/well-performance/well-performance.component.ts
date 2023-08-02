@@ -21,6 +21,7 @@ export class WellPerformanceComponent implements AfterViewInit {
       plotShadow: false,
       type: 'pie',
       height: (18 / 18) * 100 + '%', // 16:9 ratio
+      backgroundColor:undefined
     },
     plotOptions: {
       pie: {

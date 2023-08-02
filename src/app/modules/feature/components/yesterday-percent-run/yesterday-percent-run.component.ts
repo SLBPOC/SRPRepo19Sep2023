@@ -18,7 +18,8 @@ getPieChart()
     
     this.pieChartOptions = {
       chart : {
-        plotShadow: false
+        plotShadow: false,
+        backgroundColor:undefined
      },
      title : {
         text: ''   
