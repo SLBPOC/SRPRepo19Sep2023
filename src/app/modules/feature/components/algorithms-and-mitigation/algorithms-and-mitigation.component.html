@@ -1,15 +1,4 @@
-<div class="header border">
-    <h4 class="text-left title p-2">
-        <span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
-                viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-            </svg>
-        </span>
-        Algorithms & mitigations & Mitigations KPI
-    </h4>
-</div>
+<app-navigation>Algorithms & mitigations & Mitigations KPI</app-navigation>
 <div class="container-fluid">
 
     <div class="row border m-2 p-3">
@@ -28,7 +17,7 @@
                 <mat-select [formControl]="tagControl" multiple (selectionChange)="onTagSelectionChanged($event)">
                   <mat-select-trigger>
                     {{tagControl.value?.[0] || ''}}
-                    <span *ngIf="(tagControl.value?.length || 0) > 1" class="example-additional-selection">
+                    <span *ngIf="(tagControl?.value?.length || 0) > 1" class="example-additional-selection">
                       (+{{(tagControl.value?.length || 0) - 1}} {{tagControl.value?.length === 2 ? 'other' : 'others'}})
                     </span>
                   </mat-select-trigger>
@@ -100,3 +89,5 @@
     </div>
 
 </div>
+
+<app-algo-filter></app-algo-filter>

@@ -3,7 +3,7 @@ import * as Highcharts from 'highcharts';
 import theme from 'highcharts/themes/brand-dark';
 theme(Highcharts);
 import { Subscription } from 'rxjs';
-import { AlgorithmsAndMitigationsService } from 'src/app/modules/feature/services/algorithms-and-mitigations.service';
+import { AlgorithmsAndMitigationsService } from '../../../../services/algorithms-and-mitigations.service';
 
 @Component({
   selector: 'app-algo-line-chart',
@@ -26,6 +26,7 @@ export class AlgoLineChartComponent implements OnInit, OnDestroy{
 
  getChartData(): void{
   this.chartSubscription = this.service.getAlgorithmsAndMitigationsChartData().subscribe((data: any) => {
+    console.log('algolinechart', data)
     this.series = data;
     this.drawChart();
 

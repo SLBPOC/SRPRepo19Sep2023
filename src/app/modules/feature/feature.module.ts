@@ -64,6 +64,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/components/algo-line-chart/algo-line-chart.component';
 import { WellViewParametersComponent } from './components/well-view-parameters/well-view-parameters.component';
 import { TreeViewService } from './services/tree-view.service';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { AlgoFilterComponent } from './components/algorithms-and-mitigation/components/algo-filter/algo-filter.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,8 @@ import { TreeViewService } from './services/tree-view.service';
     ParChartComponent,
     WellViewParametersComponent,
     DashboardComponent,
+    NavigationComponent,
+    AlgoFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -127,6 +131,8 @@ import { TreeViewService } from './services/tree-view.service';
     MatTabsModule,
     MatListModule,
     MatGridListModule,
+    MatToolbarModule,
+    MatExpansionModule,
     MatToolbarModule,
     MatExpansionModule
   ],
