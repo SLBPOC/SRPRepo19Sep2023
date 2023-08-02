@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AlgorithmsAndMitigationsService } from '../../services/algorithms-and-mitigations.service';
 
@@ -23,27 +23,32 @@ interface Controller {
   templateUrl: './algorithms-and-mitigation.component.html',
   styleUrls: ['./algorithms-and-mitigation.component.scss']
 })
-export class AlgorithmsAndMitigationComponent implements OnInit{
+export class AlgorithmsAndMitigationComponent implements OnInit, AfterViewInit{
 
   controllerSelectOptions: string[] = [];
   tagControl: any = new FormControl(null);
   tagSelectOptions: string[] = [];
   panelOpenState = true;
   tagsDetailsData: Tag[] = [];
-  tagsTotal:number;
+  tagsTotal!:number;
   tagsSelected: number | undefined;
 
   constructor(private service: AlgorithmsAndMitigationsService) {}
 
   ngOnInit(): void {
-    this.getControllerSelectOptions();
-    this.getTagSelectOptions();
-    this.getTagData();
+
   }
 
+  ngAfterViewInit(): void {
+    this.getTagData();
+    this.getControllerSelectOptions();
+    this.getTagSelectOptions();
+  }
   getControllerSelectOptions() {
     this.service.getControllerSelectOptionsData().subscribe((data: Controller[]) => {
       this.controllerSelectOptions = data.map((value: Controller) => value.controller)
+      console.log('controller select option data:- ', this.controllerSelectOptions)
+
     })
   }
 
@@ -51,6 +56,8 @@ export class AlgorithmsAndMitigationComponent implements OnInit{
     this.service.getTagSelectOptions().subscribe((data: TagSelect[]) => {
       this.tagsTotal = data.length;
       this.tagSelectOptions = data.map((value: TagSelect) => value.tag);
+      console.log('tagSelectOptions data:- ', this.tagSelectOptions)
+
     })
   }
 

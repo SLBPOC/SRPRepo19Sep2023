@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class AlgorithmsAndMitigationsService {
 
   private controllersSelectOptions = '../../../../assets/json/controllers.json';
+  private agorithmsAndMitigationsFilterDataJson = '../../../../assets/json/algo-mit-filter-data.json';
   private tagSelectOptions = '../../../../assets/json/tags.json';
   private tagDetails = '../../../../assets/json/tag-data.json';
   private algoLineChartJson = '../../../../assets/json/algo-line-chart.json';
@@ -17,7 +18,7 @@ export class AlgorithmsAndMitigationsService {
   private refreshTagsJson = 'http://10.17.12.1:9090/api/v1/refreshTags';
   private networkTagsJson = 'http://10.17.12.1:9090/api/v1/networkTags';
   private syncTagsJson = 'http://10.17.12.1:9090/api/v1/syncTags';
-
+  private algorithmsAndMitigationsFilterJson = 'http://10.17.12.1:9090/api/v1/applyAlgoFilter';
 
   constructor(private http: HttpClient) { }
 
@@ -71,4 +72,15 @@ export class AlgorithmsAndMitigationsService {
     return this.http.get(this.algoLineChartJson)
   }
   
+  setAlgoMitFilter(payload: any): Observable<any> {
+    return this.http.post(this.algorithmsAndMitigationsFilterJson, payload, {
+      headers: {
+      }
+  })
+  }
+
+  getAlgoMitFilterData(): Observable<any> {
+    return this.http.get(this.agorithmsAndMitigationsFilterDataJson)
+  }
+
 }
