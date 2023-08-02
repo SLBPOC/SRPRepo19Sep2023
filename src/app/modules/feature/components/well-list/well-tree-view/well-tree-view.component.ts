@@ -369,10 +369,9 @@ export class ChecklistDatabase {
  * @title Tree with checkboxes
  */
 @Component({
-  selector: 'well-tree-view',
+  selector: 'app-well-tree-view',
   templateUrl: 'well-tree-view.component.html',
-  styleUrls: ['well-tree-view.component.css'],
-  providers: [ChecklistDatabase]
+  styleUrls: ['well-tree-view.component.scss']
 })
 export class WellTreeView implements OnChanges {
   /** Map from flat node to nested node. This helps us finding the nested node to be modified */
@@ -461,7 +460,7 @@ export class WellTreeView implements OnChanges {
   @Input()
   searchObj: any;
 
-  // getLevel = (node: FlatNode) => node.level;
+  // getLevel = (node: FlatNode) => node.levZel;
 
   // isExpandable = (node: FlatNode) => node.expandable;
 

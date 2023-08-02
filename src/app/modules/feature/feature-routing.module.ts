@@ -18,10 +18,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: FeatureComponent,
-    children: [
+  // {
+  //   path: '',
+  //   component: FeatureComponent,
+  //   children: [
       {
         path: '',
         component: SidenavComponent,
@@ -31,6 +31,7 @@ const routes: Routes = [
           { path: 'event-list', component: EventListComponent },
           { path: 'wells', component: WellsComponent },
           { path: 'Parameter', component: ParChartComponent },
+          // { path:'',redirectTo:'/dashboard',pathMatch:'full'}
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },
@@ -38,8 +39,10 @@ const routes: Routes = [
         path: 'algorithm-mitigations',
         component: AlgorithmsAndMitigationComponent,
       },
-    ],
-  },
+      
+  //   ],
+  // },
+  
 ];
 
 @NgModule({

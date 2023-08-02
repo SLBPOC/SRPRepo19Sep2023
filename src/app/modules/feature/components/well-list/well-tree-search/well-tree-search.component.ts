@@ -51,14 +51,15 @@ export class WellTreeSearchComponent {
     this.treeViewService.setSelectedSavedTreeState(null);
     this.userChanged.emit({ clear: true });
   }
-  private save() {
-    console.log(this.selectedNodes);
+  public save() {
+    // console.log(this.selectedNodes);
     this.treeViewService.SaveState({
       Name: this.savedStateName,
       SavedOption: this.option,
       SavedText: this.searchText,
       SelectedNode: this.selectedNodes
     });
+    this.isSaveEnabled = false;
   }
   openSaveDialog(): void {
     const dialogRef = this.dialog.open(SaveTreeStateDialog, {

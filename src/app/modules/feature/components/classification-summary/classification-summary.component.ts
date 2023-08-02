@@ -16,6 +16,7 @@ export class ClassificationSummaryComponent {
     chart: {
       plotShadow: true,
       renderTo: 'container',
+      backgroundColor:undefined
     },
 
     xAxis: {

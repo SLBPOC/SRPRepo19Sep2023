@@ -1,4 +1,5 @@
-import { Component, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import { Router } from '@angular/router'
 import { MatSidenav } from '@angular/material/sidenav';
 import { DOCUMENT } from '@angular/common';
 
@@ -25,7 +26,7 @@ export class SidenavComponent implements OnInit {
   renderer: any;
   constructor(
     @Inject(DOCUMENT) private document: any, render: Renderer2
-
+    ,private router:Router
   ) {
   }
 
@@ -81,6 +82,10 @@ export class SidenavComponent implements OnInit {
       /* IE/Edge */
       this.document.msExitFullscreen();
     }
+  }
+
+  navigateToDashboard(){
+    this.router.navigateByUrl('/srp/dashboard');
   }
 
 }

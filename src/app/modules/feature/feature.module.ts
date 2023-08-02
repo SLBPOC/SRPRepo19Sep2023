@@ -19,7 +19,7 @@ import {
   SaveTreeStateDialog,
   WellTreeSearchComponent,
 } from './components/well-list/well-tree-search/well-tree-search.component';
-import { WellTreeView } from './components/well-list/well-tree-view/well-tree-view.component';
+import { ChecklistDatabase, WellTreeView } from './components/well-list/well-tree-view/well-tree-view.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -62,6 +62,8 @@ import { ParChartComponent } from './components/par-chart/par-chart.component';
 import { MtxTooltipModule } from '@ng-matero/extensions/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/components/algo-line-chart/algo-line-chart.component';
+import { WellViewParametersComponent } from './components/well-view-parameters/well-view-parameters.component';
+import { TreeViewService } from './services/tree-view.service';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,6 @@ import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/c
     YesterdayPercentRunComponent,
     ClassificationSummaryComponent,
     ParameterChartComponent,
-    DashboardComponent,
     ParameterChartComponent,
     ModalContentComponent,
     YesterdayCycleBarChartComponent,
@@ -86,7 +87,9 @@ import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/c
     EventListComponent,
     WellsComponent,
     AlgoLineChartComponent,
-    ParChartComponent
+    ParChartComponent,
+    WellViewParametersComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -127,7 +130,8 @@ import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/c
     MatToolbarModule,
     MatExpansionModule
   ],
-  entryComponents: [ModalContentComponent],
-  providers: [BsModalService],
+  providers: [BsModalService,
+    ChecklistDatabase,
+    TreeViewService],
 })
 export class FeatureModule {}
