@@ -136,8 +136,15 @@
       </mat-list-item>
       <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent navcontenttxt" routerLink='/well-list'>
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
-      </mat-list-item>
 
+        <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}"
+          *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon> -->
+          <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenuWellList}"
+          *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon>
+      </mat-list-item>
+      <div class="submenu" [ngClass]="{'expanded' : showSubmenuWellList}" *ngIf="isShowing || isExpanded">
+        <a mat-list-item  routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
+      </div>
 
       <mat-list-item class="navcontenttxt" routerLinkActive="active" routerLink="/srp/alert-list">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Alerts</span>

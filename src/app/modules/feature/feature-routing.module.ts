@@ -18,6 +18,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
 import { DynaCardComponent } from './components/dyna-card/dyna-card.component';
 
+import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 const routes: Routes = [
   // {
   //   path: '',
@@ -27,6 +28,7 @@ const routes: Routes = [
         path: '',
         component: SidenavComponent,
         children: [
+          { path:'',redirectTo:'/dashboard',pathMatch:'full'},
           { path: 'dashboard', component: DashboardComponent },
           { path: 'alert-list', component: AlertListComponent },
           { path: 'event-list', component: EventListComponent },
@@ -34,13 +36,18 @@ const routes: Routes = [
           { path: 'Parameter', component: ParChartComponent },
           { path: 'dyna-card', component: DynaCardComponent },
           // { path:'',redirectTo:'/dashboard',pathMatch:'full'}
+          {
+            path: 'algorithms-and-mitigations',
+            component: AlgorithmsAndMitigationComponent,
+          },
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },
+      
       {
-        path: 'algorithm-mitigations',
-        component: AlgorithmsAndMitigationComponent,
-      },
+        path: 'scatter-chart',
+        component: ScatterChartComponent,
+      }
       
   //   ],
   // },

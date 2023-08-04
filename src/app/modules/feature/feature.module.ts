@@ -67,6 +67,7 @@ import { TreeViewService } from './services/tree-view.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AlgoFilterComponent } from './components/algorithms-and-mitigation/components/algo-filter/algo-filter.component';
 import { DynaCardComponent } from './components/dyna-card/dyna-card.component';
+import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { DynaCardComponent } from './components/dyna-card/dyna-card.component';
     NavigationComponent,
     AlgoFilterComponent,
     DynaCardComponent,
+    ScatterChartComponent,
   ],
   imports: [
     CommonModule,
