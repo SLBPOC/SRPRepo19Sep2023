@@ -19,6 +19,8 @@ export class AlgorithmsAndMitigationsService {
   private networkTagsJson = 'http://10.17.12.1:9090/api/v1/networkTags';
   private syncTagsJson = 'http://10.17.12.1:9090/api/v1/syncTags';
   private algorithmsAndMitigationsFilterJson = 'http://10.17.12.1:9090/api/v1/applyAlgoFilter';
+  private scatterChartDataJson = '../../../../assets/json/scatter-chart-data.json';
+  private scatterChartDataTestJson = '../../../../assets/json/scatter-chart-data-test.json';
 
   constructor(private http: HttpClient) { }
 
@@ -82,5 +84,10 @@ export class AlgorithmsAndMitigationsService {
   getAlgoMitFilterData(): Observable<any> {
     return this.http.get(this.agorithmsAndMitigationsFilterDataJson)
   }
+
+  getScatterChartData(): Observable<any>{
+    return this.http.get(this.scatterChartDataJson);
+  }
+
 
 }

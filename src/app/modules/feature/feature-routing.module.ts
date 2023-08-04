@@ -16,7 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
-
+import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 const routes: Routes = [
   // {
   //   path: '',
@@ -31,14 +31,21 @@ const routes: Routes = [
           { path: 'event-list', component: EventListComponent },
           { path: 'wells', component: WellsComponent },
           { path: 'Parameter', component: ParChartComponent },
-          // { path:'',redirectTo:'/dashboard',pathMatch:'full'}
+          {
+            path: 'algorithms-and-mitigations',
+            component: AlgorithmsAndMitigationComponent,
+          },
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },
+      // {
+      //   path: 'algorithms-and-mitigations',
+      //   component: AlgorithmsAndMitigationComponent,
+      // },
       {
-        path: 'algorithm-mitigations',
-        component: AlgorithmsAndMitigationComponent,
-      },
+        path: 'scatter-chart',
+        component: ScatterChartComponent,
+      }
       
   //   ],
   // },

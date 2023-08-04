@@ -11,18 +11,7 @@
       <mat-option value="exact">Gas Lift</mat-option>
     </mat-select>
   </mat-form-field>
-  <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="myAppbutton">
-    <span class="mdc-button__label"><span _ngcontent-qeb-c370="" class="m-x-8">Sucker Rod Pump</span></span>
-  </button>
-  <mat-menu #menu="matMenu" class="panelMenu">
-    <ul class="appnamelist">
-      <li>
-        <div class="notification-text">
-          Gas Lift
-        </div>
-      </li>
-    </ul> 
-  </mat-menu>-->
+
   <img _ngcontent-qeb-c370="" matbuttonicon="" alt="avatar" class="" src="./assets/images/icon-home.svg">
   <span class="flex-fill"></span>
   <div class="rFloat rightSec">
@@ -37,9 +26,6 @@
           </div>
         </div>
       </li>
-      <!-- <li>
-        <img _ngcontent-qeb-c370="" matbuttonicon="" alt="" class="" src="./assets/images/search.png">
-      </li> -->
       <li>
         <img matbuttonicon="" alt="" class="" src="./assets/images/workspace.svg">
       </li>
@@ -102,16 +88,6 @@
       </div>
     </mat-menu>
 
-
-    <!-- <button mat-icon-button class="mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"><mat-icon
-        class="screen" (click)="openFullscreen()">fullscreen</mat-icon></button> -->
-    <!-- <button mat-icon-button class="mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"><mat-icon
-        class="screen" (click)="right.open()">notifications</mat-icon></button> -->
-    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="userbutton">
-      <img _ngcontent-qeb-c370="" matbuttonicon="" width="24" alt="menu" src="./assets/avatar.jpg">
-      <span class="mdc-button__label"><span _ngcontent-qeb-c370="" class="m-x-8">Zongbin</span></span>
-    </button> -->
-
     <!-- <mat-icon class="screen" (click)="closeFullscreen()">fullscreen_exit</mat-icon> -->
     <mat-menu #menuprofile="matMenu" class="panelMenu profileMenu">
       <button mat-menu-item>
@@ -131,22 +107,28 @@
   <mat-sidenav #sidenav mode="side" class="example-sidenav open" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true"
     id="navopen">
     <mat-nav-list>
-      <mat-list-item class="navcontenttxt" (click)="navigateToDashboard()">
-        <span class="full-width menutxt" *ngIf="isExpanded || isShowing"> Dashboard</span>
+      <mat-list-item class="navcontenttxt" routerLink="dashboard" routerLinkActive="active">
+        <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Dashboard</span>
       </mat-list-item>
-      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent navcontenttxt" [routerLink]="'/well-list'">
+      <mat-list-item (click)="showSubmenuWellList = !showSubmenuWellList" class="parent navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
+
+        <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}"
+          *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon> -->
+          <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenuWellList}"
+          *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon>
       </mat-list-item>
+      <div class="submenu" [ngClass]="{'expanded' : showSubmenuWellList}" *ngIf="isShowing || isExpanded">
+        <a mat-list-item  routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
+      </div>
 
-
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp/alert-list'">
+      <mat-list-item class="navcontenttxt" routerLink="alert-list">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Alerts</span>
       </mat-list-item>
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp/event-list'">
+      <mat-list-item class="navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Events</span>
       </mat-list-item>
-      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" class="parent navcontenttxt"
-        [routerLink]="'/srp-reports'">
+      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" class="parent navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Reports</span>
         <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenuReport}"
           *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon>
@@ -155,10 +137,10 @@
         <a mat-list-item href="...">Submenu Item 1</a>
         <a mat-list-item href="...">Submenu Item 2</a>
       </div>
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp-slb-cust-admin'">
+      <mat-list-item class="navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Customer Admin</span>
       </mat-list-item>
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp-slb-admin'">
+      <mat-list-item class="navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">SLB Admin</span>
       </mat-list-item>
     </mat-nav-list>
@@ -174,13 +156,6 @@
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
-
-  <!-- <mat-sidenav #right position="end">
-    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-      <mat-tab label="Today">Today Alert</mat-tab>
-      <mat-tab label="Notifications">Notifications list</mat-tab>
-    </mat-tab-group>
-  </mat-sidenav> -->
 
 </mat-sidenav-container>
 <mat-sidenav #left position="start" class="panel-sec">
