@@ -26,6 +26,7 @@ const routes: Routes = [
         path: '',
         component: SidenavComponent,
         children: [
+          { path:'',redirectTo:'/dashboard',pathMatch:'full'},
           { path: 'dashboard', component: DashboardComponent },
           { path: 'alert-list', component: AlertListComponent },
           { path: 'event-list', component: EventListComponent },
@@ -38,10 +39,7 @@ const routes: Routes = [
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },
-      // {
-      //   path: 'algorithms-and-mitigations',
-      //   component: AlgorithmsAndMitigationComponent,
-      // },
+      
       {
         path: 'scatter-chart',
         component: ScatterChartComponent,
