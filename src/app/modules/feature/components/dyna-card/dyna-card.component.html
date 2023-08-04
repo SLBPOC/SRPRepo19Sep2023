@@ -1,0 +1,7 @@
+<input type="file" name="csvFile" [(ngModel)]="csvFile" (change)="updateChart($event)" />
+<div class="row">
+    <div class="col-9">
+        <highcharts-chart [Highcharts]="Highcharts" [options]="options" [(update)]="updateHighChartFlag"
+                            [oneToOne]="true" style="width: 100%; min-height: 700px; display: block"></highcharts-chart>
+    </div>
+</div>

@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
+import { DynaCardComponent } from './components/dyna-card/dyna-card.component';
 
 const routes: Routes = [
   // {
@@ -31,6 +32,7 @@ const routes: Routes = [
           { path: 'event-list', component: EventListComponent },
           { path: 'wells', component: WellsComponent },
           { path: 'Parameter', component: ParChartComponent },
+          { path: 'dyna-card', component: DynaCardComponent },
           // { path:'',redirectTo:'/dashboard',pathMatch:'full'}
         ],
       },

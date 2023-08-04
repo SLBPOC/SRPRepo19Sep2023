@@ -208,8 +208,6 @@ BindChart()
   var that = this;
   this.ChartOptions = {      
     chart: {
-        width: 730,
-        height: 300,
         backgroundColor:undefined,
         renderTo: 'container',
         type: 'line',
