@@ -66,6 +66,7 @@ import { WellViewParametersComponent } from './components/well-view-parameters/w
 import { TreeViewService } from './services/tree-view.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AlgoFilterComponent } from './components/algorithms-and-mitigation/components/algo-filter/algo-filter.component';
+import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { AlgoFilterComponent } from './components/algorithms-and-mitigation/comp
     DashboardComponent,
     NavigationComponent,
     AlgoFilterComponent,
+    ScatterChartComponent,
   ],
   imports: [
     CommonModule,
