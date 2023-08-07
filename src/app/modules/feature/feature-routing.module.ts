@@ -17,6 +17,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { WellInfoComponent } from './components/well-info/well-info.component';
+import { WellDetailsDynacardCardDetailsComponent } from './components/well-details-dynacard/well-details-dynacard-card-details/well-details-dynacard-card-details.component';
+import { WellDetailsDynacardComponent } from './components/well-details-dynacard/well-details-dynacard.component';
 const routes: Routes = [
   // {
   //   path: '',
@@ -31,10 +34,15 @@ const routes: Routes = [
           { path: 'event-list', component: EventListComponent },
           { path: 'wells', component: WellsComponent },
           { path: 'Parameter', component: ParChartComponent },
+          {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
           {
             path: 'algorithms-and-mitigations',
             component: AlgorithmsAndMitigationComponent,
           },
+          {
+            path: 'well-info',
+            component: WellInfoComponent,
+          }
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },
@@ -45,7 +53,8 @@ const routes: Routes = [
       {
         path: 'scatter-chart',
         component: ScatterChartComponent,
-      }
+      },
+      
       
   //   ],
   // },
