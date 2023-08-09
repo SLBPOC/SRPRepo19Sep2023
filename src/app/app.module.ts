@@ -12,9 +12,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { DatePipe } from '@angular/common';
+import { BubbleChartComponent } from './modules/feature/components/bubble-chart/bubble-chart.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BubbleChartComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
