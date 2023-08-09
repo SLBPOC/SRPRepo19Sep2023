@@ -136,7 +136,8 @@ import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.
     MatToolbarModule,
     MatExpansionModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+
   ],
   providers: [BsModalService,
     ChecklistDatabase,

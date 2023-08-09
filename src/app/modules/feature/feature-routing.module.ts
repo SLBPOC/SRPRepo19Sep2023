@@ -17,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { BubbleChartComponent } from './components/bubble-chart/bubble-chart.component';
 const routes: Routes = [
   // {
   //   path: '',
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: 'scatter-chart',
         component: ScatterChartComponent,
+      },
+      {
+        path: 'bubble-chart',
+        component: BubbleChartComponent,
       }
       
   //   ],
