@@ -20,7 +20,8 @@ export class AlgorithmsAndMitigationsService {
   private syncTagsJson = 'http://10.17.12.1:9090/api/v1/syncTags';
   private algorithmsAndMitigationsFilterJson = 'http://10.17.12.1:9090/api/v1/applyAlgoFilter';
   private scatterChartDataJson = '../../../../assets/json/scatter-chart-data.json';
-  private scatterChartDataTestJson = '../../../../assets/json/scatter-chart-data-test.json';
+  private bubbleChartDataJson = '../../../../assets/json/bubble-chart-data.json';
+  private scatterChartInfoJson = '../../../../assets/json/scatter-chart-info.json';
 
   constructor(private http: HttpClient) { }
 
@@ -89,5 +90,12 @@ export class AlgorithmsAndMitigationsService {
     return this.http.get(this.scatterChartDataJson);
   }
 
+  getBubbleChartData(): Observable<any>{
+    return this.http.get(this.bubbleChartDataJson);
+  }
+
+  getChartInfo(): Observable<any> {
+    return this.http.get(this.scatterChartInfoJson);
+  }
 
 }

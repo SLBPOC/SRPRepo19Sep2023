@@ -14,43 +14,33 @@ export class ScatterChartComponent implements OnInit, OnDestroy{
 
   series: any = [];
   chartData!: any;
+  chartInfo!: any;
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions!: Highcharts.Options;
   chartSubscription!: Subscription;
+  chartInfoSubscription!: Subscription;
 
   constructor(private service: AlgorithmsAndMitigationsService) {}
 
  ngOnInit(): void {
     this.getChartData();
+    this.getChartInfo();
  }
 
  getChartData(): void{
-  // this.chartSubscription = this.service.getScatterChartData().subscribe((data: any) => {
-  //   this.series = data;
-  //   this.drawChart();
-  // })
-  this.series = [
-    {
-      "name": "Basketball",
-      "marker": {
-       "symbol": "circle"
-   },
-      "color": "rgba(223, 83, 83, .5)",
-      "data": [[161.2, 51.6], [167.5, 59.0], [159.5, 49.2], [157.0, 63.0]]
-    },
-    {
-      "name": "VolleyBall",
-      "marker": {
-       "symbol": "triangle"
-   },
-   "color": "rgba(119, 152, 191, .5)",
-   "data": [[174.0, 65.6], [175.3, 71.8], [193.5, 80.7], [186.5, 72.6],
-      [187.2, 78.8], [181.5, 74.8], [184.0, 86.4], [184.5, 78.4]]
-    },
-  ]
+  this.chartSubscription = this.service.getScatterChartData().subscribe((data: any) => {
+    this.series = data;
+    this.drawChart();
+  })
   this.drawChart();
  }
 
+ getChartInfo() {
+  this.chartInfoSubscription = this.service.getChartInfo().subscribe((data: any) => {
+    this.chartInfo = data;
+    console.log(this.chartInfo)
+  })
+ }
 
   drawChart() {
     Highcharts.setOptions({
@@ -127,6 +117,7 @@ export class ScatterChartComponent implements OnInit, OnDestroy{
   }
  ngOnDestroy(): void {
      this.chartSubscription.unsubscribe();
+     this.chartInfoSubscription.unsubscribe();
  }
 
 }

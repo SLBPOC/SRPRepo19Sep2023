@@ -142,6 +142,11 @@
           <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenuWellList}"
           *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon>
       </mat-list-item>
+
+      <mat-list-item class="navcontenttxt" routerLink="well-info">
+        <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well Info</span>
+      </mat-list-item>
+
       <div class="submenu" [ngClass]="{'expanded' : showSubmenuWellList}" *ngIf="isShowing || isExpanded">
         <a mat-list-item  routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
       </div>
