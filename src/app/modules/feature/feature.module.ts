@@ -67,6 +67,18 @@ import { TreeViewService } from './services/tree-view.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AlgoFilterComponent } from './components/algorithms-and-mitigation/components/algo-filter/algo-filter.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { WellInfoComponent } from './components/well-info/well-info.component';
+import { CreateCustomFeedComponent } from './components/well-info/create-custom-feed/create-custom-feed.component';
+//Dynacard
+import { WellDetailsDynacardComponent } from './components/well-details-dynacard/well-details-dynacard.component';
+import { WellDetailsDynacardBarchartComponent } from './components/well-details-dynacard/components/well-details-dynacard-barchart/well-details-dynacard-barchart.component';
+import { WellDetailsDynacardCardTableComponent } from './components/well-details-dynacard/well-details-dynacard-card-table/well-details-dynacard-card-table.component';
+import { WellDetailsDynacardCardDetailsComponent } from './components/well-details-dynacard/well-details-dynacard-card-details/well-details-dynacard-card-details.component';
+import { WellDetailsDynacardCardLegendComponent } from './components/well-details-dynacard/well-details-dynacard-card-legend/well-details-dynacard-card-legend.component';
+import { WellDetailsDynacardCardDatagridComponent } from './components/well-details-dynacard/well-details-dynacard-card-datagrid/well-details-dynacard-card-datagrid.component';
+import { WellDetailsDynacardViewDataComponent } from './components/well-details-dynacard/well-details-dynacard-view-data/well-details-dynacard-view-data.component';
+import { WellDetailsDynacardViewGraphComponent } from './components/well-details-dynacard/well-details-dynacard-view-graph/well-details-dynacard-view-graph.component';
+import { DynacardChipsComponent } from './components/well-details-dynacard/dynacard-chips/dynacard-chips.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +108,18 @@ import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.
     NavigationComponent,
     AlgoFilterComponent,
     ScatterChartComponent,
+    WellInfoComponent,
+    CreateCustomFeedComponent,
+    WellDetailsDynacardComponent,
+    WellDetailsDynacardBarchartComponent,
+    WellDetailsDynacardCardTableComponent,
+    WellDetailsDynacardCardDetailsComponent,
+    WellDetailsDynacardCardLegendComponent,
+    WellDetailsDynacardCardDatagridComponent,
+    WellDetailsDynacardViewDataComponent,
+    WellDetailsDynacardViewGraphComponent,
+    DynacardChipsComponent,
+  
   ],
   imports: [
     CommonModule,
