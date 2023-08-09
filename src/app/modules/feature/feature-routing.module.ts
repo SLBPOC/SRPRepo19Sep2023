@@ -28,18 +28,17 @@ const routes: Routes = [
         path: '',
         component: SidenavComponent,
         children: [
-          { path:'',redirectTo:'/dashboard',pathMatch:'full'},
           { path: 'dashboard', component: DashboardComponent },
           { path: 'alert-list', component: AlertListComponent },
           { path: 'event-list', component: EventListComponent },
           { path: 'wells', component: WellsComponent },
           { path: 'Parameter', component: ParChartComponent },
           { path: 'dyna-card', component: DynaCardComponent },
-          // { path:'',redirectTo:'/dashboard',pathMatch:'full'}
           {
             path: 'algorithms-and-mitigations',
             component: AlgorithmsAndMitigationComponent,
           },
+          { path:'',redirectTo:'/dashboard',pathMatch:'full'},
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },

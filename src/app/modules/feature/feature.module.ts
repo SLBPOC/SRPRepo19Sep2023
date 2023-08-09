@@ -68,6 +68,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { AlgoFilterComponent } from './components/algorithms-and-mitigation/components/algo-filter/algo-filter.component';
 import { DynaCardComponent } from './components/dyna-card/dyna-card.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { DynacardService } from './services/dynacard.service';
+import { ListOfTimeComponent } from './components/list-of-time/list-of-time.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +100,7 @@ import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.
     AlgoFilterComponent,
     DynaCardComponent,
     ScatterChartComponent,
+    ListOfTimeComponent,
   ],
   imports: [
     CommonModule,
@@ -142,6 +145,7 @@ import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.
   ],
   providers: [BsModalService,
     ChecklistDatabase,
-    TreeViewService],
+    TreeViewService,
+    DynacardService],
 })
 export class FeatureModule {}
