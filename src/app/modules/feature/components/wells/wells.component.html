@@ -143,7 +143,7 @@
          <!-- Dynamic Columns -->
       <ng-container *ngFor="let eClumn of displayableExtraColumns" [matColumnDef]="eClumn.accessor">
          <th mat-sort-header mat-header-cell *matHeaderCellDef>{{ eClumn.label }}</th>
-         <td mat-cell *matCellDef="let element">{{ element[eClumn.accessor] }} <span *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Effective Runtime(%)'">%</span>
+         <td mat-cell *matCellDef="let element">{{ element[eClumn.accessor] }} <span *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span>
          </td>
        </ng-container>
        <!-- Header -->
