@@ -20,6 +20,7 @@ import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.
 import { WellInfoComponent } from './components/well-info/well-info.component';
 import { WellDetailsDynacardCardDetailsComponent } from './components/well-details-dynacard/well-details-dynacard-card-details/well-details-dynacard-card-details.component';
 import { WellDetailsDynacardComponent } from './components/well-details-dynacard/well-details-dynacard.component';
+import { BubbleChartComponent } from './components/bubble-chart/bubble-chart.component';
 const routes: Routes = [
   // {
   //   path: '',
@@ -29,6 +30,7 @@ const routes: Routes = [
         path: '',
         component: SidenavComponent,
         children: [
+          { path:'',redirectTo:'/dashboard',pathMatch:'full'},
           { path: 'dashboard', component: DashboardComponent },
           { path: 'alert-list', component: AlertListComponent },
           { path: 'event-list', component: EventListComponent },
@@ -46,15 +48,15 @@ const routes: Routes = [
         ],
       },
       { path: 'well-performance', component: WellPerformanceComponent },
-      // {
-      //   path: 'algorithms-and-mitigations',
-      //   component: AlgorithmsAndMitigationComponent,
-      // },
+      
       {
         path: 'scatter-chart',
         component: ScatterChartComponent,
       },
-      
+      {
+        path: 'bubble-chart',
+        component: BubbleChartComponent,
+      }
       
   //   ],
   // },

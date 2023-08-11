@@ -160,7 +160,8 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
     MatToolbarModule,
     MatExpansionModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+
   ],
   providers: [BsModalService,
     ChecklistDatabase,
