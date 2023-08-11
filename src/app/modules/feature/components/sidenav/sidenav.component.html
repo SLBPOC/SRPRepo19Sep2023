@@ -131,13 +131,10 @@
   <mat-sidenav #sidenav mode="side" class="example-sidenav open" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true"
     id="navopen">
     <mat-nav-list>
-      <mat-list-item class="navcontenttxt" (click)="navigateToDashboard()">
-        <span class="full-width menutxt" *ngIf="isExpanded || isShowing"> Dashboard</span>
+      <mat-list-item class="navcontenttxt" routerLink="dashboard" routerLinkActive="active">
+        <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Dashboard</span>
       </mat-list-item>
-      <!-- <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent navcontenttxt" [routerLink]="'/well-list'">
-        <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
-      </mat-list-item> -->
-      <mat-list-item (click)="showSubmenuWellList = !showSubmenuWellList" class="parent navcontenttxt">
+      <mat-list-item routerLink="wells" class="parent navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
 
         <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}"
@@ -154,14 +151,13 @@
         <a mat-list-item  routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
       </div>
 
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp/alert-list'">
+      <mat-list-item class="navcontenttxt" routerLink="alert-list">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Alerts</span>
       </mat-list-item>
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp/event-list'">
+      <mat-list-item class="navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Events</span>
       </mat-list-item>
-      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" class="parent navcontenttxt"
-        [routerLink]="'/srp-reports'">
+      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" class="parent navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Reports</span>
         <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenuReport}"
           *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon>
@@ -170,10 +166,10 @@
         <a mat-list-item href="...">Submenu Item 1</a>
         <a mat-list-item href="...">Submenu Item 2</a>
       </div>
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp-slb-cust-admin'">
+      <mat-list-item class="navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Customer Admin</span>
       </mat-list-item>
-      <mat-list-item class="navcontenttxt" [routerLink]="'/srp-slb-admin'">
+      <mat-list-item class="navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">SLB Admin</span>
       </mat-list-item>
     </mat-nav-list>
