@@ -110,7 +110,7 @@
       <mat-list-item class="navcontenttxt" routerLink="dashboard" routerLinkActive="active">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Dashboard</span>
       </mat-list-item>
-      <mat-list-item (click)="showSubmenuWellList = !showSubmenuWellList" class="parent navcontenttxt">
+      <mat-list-item routerLink="wells" class="parent navcontenttxt">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
 
         <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}"

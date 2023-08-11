@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,10 +10,7 @@ import { WellModel } from '../../model/wellModel'
 import { WellsService } from '../../services/wells.service';
 import {FormControl} from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
-interface Food {
-  value: string;
-  viewValue: string;
-}
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 
 @Component({
@@ -23,55 +20,119 @@ interface Food {
 })
 export class WellsComponent {
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-
-  ///////////////////////////////////////////////
-  // toppings = this._formBuilder.group({
-  //   EffectiveRunTime: false,
-  //   CyclesToday: false,
-  //   StructuralLoad: false,
-  //   MinMaxLoad: false,
-  //   GearboxLoad: false,
-  //   RodStress: false
-  // });
  dataSource:any =[];
- //wellList!: WellName[];
- WellModel!:WellModel[];
- displayedColumns: string[] = [ 'wellName', 'updatedDateTime','communicationStatus','controllerStatus','avgSPM','AvgSPM','inferredProduction','yesterdayCycle'];
- displayableExtraColumns: {label: string, accessor: string}[] = [];
+ WellList!:WellModel[];
+ selectedColumn: string[] =[];
+ displayedColumns: string[] = [ 'WellStatus','WellName', 'DateAndTime','CommStatus','ControllerStatus','SPM','PumpFillage','InferredProduction','NoOfAlerts'];
+ displayableExtraColumns: {label: string, accessor: string,header:string}[] = [];
  extraColumnsCtrl: any = new FormControl('');
- extraColumnsList: {label: string, accessor: string}[] = [
-  { label: 'Effective Runtime', accessor: 'effectiveRuntime'}, 
-  { label: 'Cycles Today', accessor: 'cycleToday'}, 
-  { label: 'Structural Load', accessor: 'structuralLoad'}, 
-  { label: 'MinMax Load', accessor: 'minMaxLoad'}, 
-  { label: 'Gearbox Load', accessor: 'gearBoxLoad'}, 
-  { label: 'Rod Stress', accessor: 'rodStress'}
+ extraColumnsList: {label: string, accessor: string,header:string}[] = [
+  { label: 'Effective Runtime(%)', accessor: 'effectiveRunTime',header:'EffectiveRunTime'}, 
+  { label: 'Cycles Today', accessor: 'cyclesToday',header:'CyclesToday'}, 
+  { label: 'Structural Load(%)', accessor: 'structuralLoad',header:'StructuralLoad'}, 
+  { label: 'MinMax Load(%)', accessor: 'minMaxLoad',header:'MinMaxLoad'}, 
+  { label: 'Gearbox Load(%)', accessor: 'gearboxLoad',header:'GearboxLoad'}, 
+  { label: 'Rod Stress(%)', accessor: 'rodStress',header:'RodStress'}
 ];
 @ViewChild(MatPaginator)
 paginator!: MatPaginator;
 @ViewChild(MatSort) sort!: MatSort;
 @ViewChild('extraColumns', {static: true}) private extraColumns!: MatSelect;
-constructor(  private _liveAnnouncer: LiveAnnouncer, private service: WellsService) { }
-ngOnInit(): void {
-  // this.service.getWellAlerts().subscribe((response:any) => {
-  //   this.wellList = response;
-  //   this.dataSource = new MatTableDataSource<WellName>(this.wellList);
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // })
 
+searchText:string="";
+sortDirection: string = "";
+sortColumn:string="";
+pageSize: number = 5;
+pageNumber = 1;
+currentPage = 0;
+totalCount = 0;
+model: any = {};
+seachByStatus:string="";
+
+TotalCount:number=0;
+OverPumping:number=0;
+OptimalPumping:number=0;
+UnderPumping:number=0;
+
+
+
+constructor(  private _liveAnnouncer: LiveAnnouncer, private service: WellsService ) { }
+
+
+ngAfterViewInit() {
+  this.dataSource.paginator = this.paginator;
+}
+
+ngOnInit(): void {
+   this.GetWellDetailsWithFilters(); 
+  
+}
+
+GetWellDetails()
+{
   this.service.getWellDetails().subscribe((response:any) => {
-    this.WellModel = response;
-    this.dataSource = new MatTableDataSource<WellModel>(this.WellModel);
+    this.WellList = response;
+    this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   })
+}
+
+// GetWellDetailsWithFilters()
+// {
+//   var SearchModel = this.createModel();
+//   this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
+//     if(response.hasOwnProperty('data')) {
+//       this.WellList = response.data;    
+//       this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+//       this.dataSource.paginator = this.paginator;
+//       this.dataSource.sort = this.sort;
+//       this.dataSource.length= response.totalCount;
   
+//       this.TotalCount=response.totalCount;
+//       this.OverPumping=response.totalOverpumping;
+//       this.OptimalPumping=response.totalOptimalPumping;
+//       this.UnderPumping=response.totalUnderpumping;
+//     }
+    
+//   });
+// }
+
+GetWellDetailsWithFilters()
+{
+  var SearchModel = this.createModel();
+  this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
+    if(response.hasOwnProperty('data')) {
+      this.WellList = response.data;    
+      this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+      setTimeout(() => {
+        this.paginator.pageIndex = this.currentPage;
+        this.paginator.length = response.totalCount;
+      });
+  
+      this.TotalCount=response.totalCount;
+      this.OverPumping=response.totalOverpumping;
+      this.OptimalPumping=response.totalOptimalPumping;
+      this.UnderPumping=response.totalUnderpumping;
+    }
+    
+  });
+}
+
+
+
+//Create Model for search
+createModel(this: any) {
+  this.model.pageSize = this.pageSize;
+  this.model.pageNumber = this.pageNumber;
+  this.model.searchText = this.searchText ? this.searchText : "";  
+  this.model.sortColumn = this.sortColumn ? this.sortColumn : ""; 
+  this.model.sortDirection = this.sortDirection ? this.sortDirection : ""; 
+  this.model.searchStatus= this.seachByStatus? this.seachByStatus:"";
+
+  return this.model;
+
+
 }
 
 search(data: Event) {
@@ -79,34 +140,82 @@ search(data: Event) {
   this.dataSource.filter = val;
 
 }
- 
-// statusChange(event: any){
-//   let filterValue;
-//   filterValue = event.value.trim(); // Remove whitespace
-//   filterValue = event.value.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-//   this.dataSource.filter = filterValue;
+
+ClearSearch() {
+  this.pageNumber = 1;
+  this.seachByStatus="";
+  this.searchText="";
+  this.GetWellDetailsWithFilters();  
+}
+
+RefreshGrid() { 
+  this.pageNumber = 1;
+  this.seachByStatus="";
+  this.searchText="";
+  this.GetWellDetailsWithFilters();  
+}
+
+// getSelectedValues(): void {
+//   this.extraColumns.close();
+//   const selectedColumns: string[] = this.extraColumnsCtrl.value ;
+//   this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({accessor}) => accessor === column)), ...selectedColumns];
+//   this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: {label: string, accessor: string}) => selectedColumns.includes(extraColumn.accessor));
 // }
 
-
-alertChange(event: any){
-  let filterValue;
-  filterValue = event.value.trim(); // Remove whitespace
-  filterValue = event.value.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-  this.dataSource.filter = filterValue;
+onChangeDemo(event:any){
+  if(event.checked){
+    if(this.selectedColumn.filter(resp=> event.source.value === resp)){
+      this.selectedColumn.push(event.source.value)
+      this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({accessor}) => accessor === column)), ...[...new Set(this.selectedColumn)]];
+      this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: {label: string, accessor: string}) => [...new Set(this.selectedColumn)].includes(extraColumn.accessor));
+    }
+  }else{
+    this.selectedColumn =  this.selectedColumn.filter(function(e) { return e !== event.source.value })
+    this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({accessor}) => accessor === column)), ...this.selectedColumn];
+    this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: {label: string, accessor: string}) => this.selectedColumn.includes(extraColumn.accessor));
+  }
 }
 
-getSelectedValues(): void {
-  this.extraColumns.close();
-  const selectedColumns: string[] = this.extraColumnsCtrl.value;
-  this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({accessor}) => accessor === column)), ...selectedColumns];
-  this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: {label: string, accessor: string}) => selectedColumns.includes(extraColumn.accessor));
+// PaginationCalled(event :any) // (click)="PaginationCalled($event)" working when we change page index but not on pageSizeOption change
+// {
+//   var a= this.paginator.pageIndex;
+//   var b= this.paginator.pageSize;
+//   var c= this.sort.direction;
+//   var d= this.sort.active;c
+// }
+
+public handlePage(e: any) {
+  this.pageNumber = e.pageIndex;
+  this.pageSize = e.pageSize;
+  this.sortDirection= this.sort.direction;
+  this.sortColumn= (typeof this.sort.active !== "undefined") ? this.sort.active : "";
+  this.GetWellDetailsWithFilters();
 }
 
-onChange($event:any){
-  // let filteredData = _.filter(this.wellList,(item) =>{
-  //   return item.gender.toLowerCase() ==  $event.value.toLowerCase();
-  // })
-  // this.dataSource = new MatTableDataSource(filteredData);
+pageChanged(event: PageEvent) {
+  console.log({ event });
+  this.pageSize = event.pageSize;
+  this.currentPage = event.pageIndex;
+  this.pageNumber = event.pageIndex+1;
+  this.GetWellDetailsWithFilters();
 }
+
+public onSortChanged(e: any) {
+  this.pageNumber = this.pageNumber;
+  this.pageSize = this.pageSize;
+  this.sortDirection= this.sort.direction;
+  this.sortColumn= (typeof this.sort.active !== "undefined") ? this.sort.active : "";
+  this.GetWellDetailsWithFilters();
+}
+
+SeachByStatus(status:string)
+{
+  this.seachByStatus=status;
+  this.pageNumber=1;
+  this.GetWellDetailsWithFilters();
+}
+
+
+
 }
 
