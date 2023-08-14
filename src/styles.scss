@@ -694,3 +694,8 @@ body {
         }
     }   
 }
+
+.highcharts-tooltip-container:has(.highchart-elevate-tooltip )
+{
+    z-index: 1020 !important;
+}
