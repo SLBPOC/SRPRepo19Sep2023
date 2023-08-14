@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 //import { WellModel } from '../model/wellModel';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
+import { WellModel } from '../model/wellModel';
 
 const wellData = '../../assets/json-data/welllist-data.json';
 
@@ -11,7 +12,7 @@ const wellData = '../../assets/json-data/welllist-data.json';
 })
 export class WellsService {
 
-  private apiUrl: string="https://localhost:50282/api/";
+  private apiUrl: string="http://localhost:5000/api/";
     httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -26,6 +27,6 @@ export class WellsService {
   }
 
   getWellDetailsWithFilters(searchModel:any): Observable<any> {
-    return this.http.post<any[]>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);          
+    return this.http.post<WellModel[]>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);          
   }
 }
