@@ -1,49 +1,41 @@
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
+<div class="mat-elevation-z8 tableContainer">
+    <table mat-table [dataSource]="listOfTime | async ">
     
      
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let element"> 
+            <mat-checkbox class="checklist-leaf-node" [checked]="selectionTimeModel.isSelected(element)"
+            (change)="selectTime(element)">
           </mat-checkbox>
         </td>
-      </ng-container>
-    
+    </ng-container>
       
       <ng-container matColumnDef="card">
         <th mat-header-cell *matHeaderCellDef>Card</th>
-        <td mat-cell *matCellDef="let element"> {{element.card}} </td>
+        <td mat-cell *matCellDef="let element"> pumptagging </td>
       </ng-container>
     
       
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef> Time</th>
-        <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+        <td mat-cell *matCellDef="let element"> {{element}} </td>
       </ng-container>
     
       
       <ng-container matColumnDef="minimunpolishedrodload">
         <th mat-header-cell *matHeaderCellDef> Minimum Polishedrodload </th>
-        <td mat-cell *matCellDef="let element"> {{element.minimunpolishedrodload}} </td>
+        <td mat-cell *matCellDef="let element"> 1.0079 </td>
       </ng-container>
     
      
       <ng-container matColumnDef="peakpolishedrod">
         <th mat-header-cell *matHeaderCellDef>Peak Polishedrod</th>
-        <td mat-cell *matCellDef="let element"> {{element.peakpolishedrod}} </td>
+        <td mat-cell *matCellDef="let element"> 30,310 lbs </td>
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-          (click)="selection.toggle(row)">
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
       </tr>
     </table>
       

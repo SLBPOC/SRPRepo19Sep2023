@@ -9,55 +9,72 @@ import * as Highcharts from 'highcharts';
 export class WellDetailsDynacardBarchartComponent {
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {
-    title:{
-      text:''
-  },
+    title: {
+      text: ''
+    },
     chart: {
       plotShadow: true,
       renderTo: 'container',
+      backgroundColor:undefined
     },
 
     xAxis: {
-      categories: ['Runtime(%) 23-06-20','Inferred Production(bpd) 23-06-21'],
-    
+      categories: ['Runtime(%) 23-06-20', 'Inferred Production(bpd) 23-06-21'],
+      // labels:{
+      //   enabled:false
+      // }
     },
-  
+
     yAxis: {
-      allowDecimals: false,
-      min: 100,
+      // allowDecimals: false,
+      // min: 100,
+      labels:{
+        enabled:false
+      },
+      title:{
+        text:''
+      },
+      tickLength:0,
+      gridLineWidth:0
+    },
+    legend:{
+      enabled:false
     },
 
     tooltip: {
-      
-      headerFormat: '<b>{point.x}</b><br/>',pointFormat:
-      
-        '{series.name}:</b> Total: {point.stackTotal}',
+      enabled:false,
+      // headerFormat: '<b>{point.x}</b><br/>', pointFormat:
+
+      //   '{series.name}:</b> Total: {point.stackTotal}',
     },
 
     plotOptions: {
-      column: {
-        stacking: 'normal',
-        allowPointSelect: true,
-      },
+      // column: {
+      //   stacking: 'normal',
+      //   allowPointSelect: true,
+      // },
     },
 
     series: [
-       
-      { 
+
+      {
         name: "",
         data: [40, 55],
         type: 'column',
         color: '#3097A7',
-        pointWidth: 40
+        pointWidth: 40,
+        dataLabels:{
+          enabled:true,
+        }
       },
-      {
-        name: "",
-        data: [78,68,],
-        type: 'column',
-        color: '#3097A7',
-        pointWidth: 40
-      },
-     
+      // {
+      //   name: "",
+      //   data: [78, 68],
+      //   type: 'column',
+      //   color: '#3097A7',
+      //   pointWidth: 40
+      // },
+
     ],
   };
 

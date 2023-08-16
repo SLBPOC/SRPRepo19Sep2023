@@ -1,61 +1,78 @@
 
-import {SelectionModel} from '@angular/cdk/collections';
-import {Component,ViewChild} from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Component, ViewChild } from '@angular/core';
 // import {MatTableDataSource} from '@angular/material';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Observable, map,switchMap,BehaviorSubject } from 'rxjs';
+import { DynacardService } from '../../../services/dynacard.service';
 
-export interface PeriodicElement {
-  card: string ;
-  time: string;
-  minimunpolishedrodload:number;
-  peakpolishedrod:string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 1.0079, peakpolishedrod: '30,310 lbs'},
-  {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 4.0026, peakpolishedrod: '30,310 lbs'},
-  {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 6.941, peakpolishedrod:'30,310 lbs'},
-  {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 9.0122, peakpolishedrod: '30,310 lbs'},
-  {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 10.811, peakpolishedrod: '30,310 lbs'},
-  
+// export interface PeriodicElement {
+//   card: string ;
+//   time: string;
+//   minimunpolishedrodload:number;
+//   peakpolishedrod:string;
+// }
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 1.0079, peakpolishedrod: '30,310 lbs'},
+//   {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 4.0026, peakpolishedrod: '30,310 lbs'},
+//   {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 6.941, peakpolishedrod:'30,310 lbs'},
+//   {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 9.0122, peakpolishedrod: '30,310 lbs'},
+//   {card: 'pumptagging', time: "2020-04-14 13:14:59", minimunpolishedrodload: 10.811, peakpolishedrod: '30,310 lbs'},
 
-  
-];
+// ];
 @Component({
   selector: 'app-well-details-dynacard-card-table',
   templateUrl: './well-details-dynacard-card-table.component.html',
   styleUrls: ['./well-details-dynacard-card-table.component.scss']
 })
 export class WellDetailsDynacardCardTableComponent {
-  data: any[] = [];
-  displayedColumns: string[] = ['select', 'card', 'time', 'minimunpolishedrodload', 'peakpolishedrod'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
-  isChecked: boolean = false;
+  displayedColumns: string[] = ['#', 'card', 'time', 'minimunpolishedrodload', 'peakpolishedrod'];
+  listOfTime: Observable<string[]>;
+  selectedClassification = new BehaviorSubject<number>(0);
+  // displayedColumns: string[] = ['#', 'Name', 'Change', 'Classfication'];
 
-  constructor() {}
+  constructor(private dynaService: DynacardService) {
+    this.dynaService.selectedClassification.subscribe(
+      (x) => {
+        this.selectedClassification.next(x % 8);
+        this.dynaService.selectedTime.next({addedOrRemoved:false,selected:'all'});
+        this.selectionTimeModel.clear();
+        // console.log(this.selectedClassification)
+      }
+    )
+  }
 
- ngOnInit() {
-    
+  randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
 
+  ngOnDestroy(): void {
 
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach((row: PeriodicElement)=> this.selection.select(row));
+  ngOnInit(): void {
+    this.listOfTime = this.dynaService.getListOfTime()
+      .pipe(
+        switchMap(x=> this.selectedClassification.pipe(map(
+          v => {
+            var result =x != undefined ? x.filter((t, i) => (i+1) % v) : [];
+            return result;
+          }
+        )))
+      );
   }
 
-  
+  selectionTimeModel = new SelectionModel<string>(true);
+
+  selectTime(item: string) {
+    this.selectionTimeModel.toggle(item);
+    this.dynaService.selectedTime.next({
+      addedOrRemoved: this.selectionTimeModel.isSelected(item),
+      selected: item
+    })
+  }
+
 
 
 }
