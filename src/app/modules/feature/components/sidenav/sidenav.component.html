@@ -131,8 +131,8 @@
   <mat-sidenav #sidenav mode="side" class="example-sidenav open" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true"
     id="navopen">
     <mat-nav-list>
-      <mat-list-item class="navcontenttxt" routerLink="dashboard" routerLinkActive="active">
-        <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Dashboard</span>
+      <mat-list-item class="navcontenttxt" routerLinkActive="active" routerLink="/dashboard">
+        <span class="full-width menutxt" *ngIf="isExpanded || isShowing"> Dashboard</span>
       </mat-list-item>
       <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent navcontenttxt" routerLink='wells'>
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
@@ -149,13 +149,17 @@
         <a mat-list-item  routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
       </div>
 
-      <mat-list-item class="navcontenttxt" routerLink="alert-list">
+      <mat-list-item class="navcontenttxt" routerLinkActive="active" routerLink="/alert-list">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Alerts</span>
       </mat-list-item>
-      <mat-list-item class="navcontenttxt" routerLink="event-list">
+      <mat-list-item class="navcontenttxt" routerLinkActive="active" routerLink="/event-list">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Events</span>
       </mat-list-item>
-      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" class="parent navcontenttxt">
+      <!-- <mat-list-item class="navcontenttxt" routerLinkActive="active" routerLink="/dyna-card">
+        <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Dynacard</span>
+      </mat-list-item> -->
+      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" class="parent navcontenttxt"
+        [routerLink]="'/srp-reports'">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Reports</span>
         <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenuReport}"
           *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon>
@@ -164,10 +168,10 @@
         <a mat-list-item href="...">Submenu Item 1</a>
         <a mat-list-item href="...">Submenu Item 2</a>
       </div>
-      <mat-list-item class="navcontenttxt">
+      <mat-list-item class="navcontenttxt" routerLink="/srp-slb-cust-admin">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Customer Admin</span>
       </mat-list-item>
-      <mat-list-item class="navcontenttxt">
+      <mat-list-item class="navcontenttxt" routerLink="/srp-slb-admin">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">SLB Admin</span>
       </mat-list-item>
     </mat-nav-list>

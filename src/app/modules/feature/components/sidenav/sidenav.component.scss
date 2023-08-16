@@ -500,7 +500,7 @@ mat-toolbar {
   }
 
   .mdc-list-item {
-    &:hover {
+    &:hover,&.active {
       span.mdc-list-item__content {
         border-left: 2px solid #FABB42;
       }

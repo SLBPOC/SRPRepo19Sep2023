@@ -1,17 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, map, of, switchMap, takeUntil } from 'rxjs';
-import { DynacardService } from '../../../services/dynacard.service';
-import { DynaCardModel, DynacardModel2 } from '../../../model/dyna-card.model';
+import { Component, OnInit,OnDestroy } from '@angular/core';
+import { DynaCardModel, DynacardModel2 } from '../../model/dyna-card.model';
+import * as d3 from 'd3';
 import * as Highcharts from 'highcharts';
+import { YAxisOptions } from 'highcharts';
+import { DynacardService } from '../../services/dynacard.service';
+import { Subject, switchMap,of,map,takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-well-details-dynacard-view-graph',
-  templateUrl: './well-details-dynacard-view-graph.component.html',
-  styleUrls: ['./well-details-dynacard-view-graph.component.scss']
+  selector: 'app-dyna-card',
+  templateUrl: './dyna-card.component.html',
+  styleUrls: ['./dyna-card.component.scss']
 })
-export class WellDetailsDynacardViewGraphComponent implements OnInit, OnDestroy {
+export class DynaCardComponent implements OnInit,OnDestroy {
 
-  $takUntil = new Subject<boolean>();
+  $takUntil  = new Subject<boolean>();
 
   constructor(private dynaservice: DynacardService) {
   }
@@ -20,29 +22,26 @@ export class WellDetailsDynacardViewGraphComponent implements OnInit, OnDestroy 
     this.$takUntil.complete();
   }
   ngOnInit(): void {
-    this.dynaservice.selectedTime.pipe(takeUntil(this.$takUntil), switchMap(obj => {
+    this.dynaservice.selectedTime.pipe(takeUntil(this.$takUntil),switchMap(obj => {
       if (obj.addedOrRemoved) {
         return this.dynaservice.getDynaCardDetailsForATime(obj.selected)
-          .pipe(
-            takeUntil(this.$takUntil),
-            map(y => ({ dynaDetails: y, name: obj.selected })));
+        .pipe(
+          takeUntil(this.$takUntil),
+          map(y=>({dynaDetails:y,name:obj.selected})));
       }
       else {
-        return of(({ dynaDetails: undefined, name: obj.selected }));
+        return of(({dynaDetails:undefined,name:obj.selected}));
       }
     })).subscribe(x => {
-      if (x.name == 'all')
-        this.removeAllSeries();
-      else
-        this.updateInHighChartv2(x.dynaDetails, x.dynaDetails != undefined, x.name);
+       this.updateInHighChartv2(x.dynaDetails, x.dynaDetails != undefined,x.name);
     });
   }
 
 
 
-  // csvFile: any;
-  // private csvText: string = "";
-  // allData: DynaCardModel[] | null = null;
+  csvFile: any;
+  private csvText: string = "";
+  allData: DynaCardModel[] | null = null;
   Index: number = 0;
 
   Highcharts: typeof Highcharts = Highcharts;
@@ -58,14 +57,14 @@ export class WellDetailsDynacardViewGraphComponent implements OnInit, OnDestroy 
     title: {
       text: ''
     },
-    yAxis: {
-      title: {
-        text: 'Load'
+    yAxis:{
+      title:{
+        text:'Load'
       }
     },
     xAxis: {
-      title: {
-        text: 'Position'
+      title:{
+        text:'Position'
       },
       type: 'category',
       tickInterval: 10
@@ -77,13 +76,9 @@ export class WellDetailsDynacardViewGraphComponent implements OnInit, OnDestroy 
   //   this.updateCsvData(event);
   // }
 
-  removeAllSeries() {
-    this.options.series.splice(0, this.options.series.length);
-    this.updateHighChartFlag = true;
-  }
 
-  updateInHighChartv2(dynacard: DynacardModel2[], addedOrRemoved: boolean, name: string) {
-    console.log(dynacard, addedOrRemoved);
+  updateInHighChartv2(dynacard: DynacardModel2[], addedOrRemoved: boolean,name:string) {
+    console.log(dynacard,addedOrRemoved);
     // return;
     if (addedOrRemoved) {
       var downhole = dynacard.map(x => [x.downhole_Card_Position, x.downhole_Card_Load]);

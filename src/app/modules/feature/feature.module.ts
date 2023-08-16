@@ -66,7 +66,10 @@ import { WellViewParametersComponent } from './components/well-view-parameters/w
 import { TreeViewService } from './services/tree-view.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AlgoFilterComponent } from './components/algorithms-and-mitigation/components/algo-filter/algo-filter.component';
+import { DynaCardComponent } from './components/dyna-card/dyna-card.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { DynacardService } from './services/dynacard.service';
+import { ListOfTimeComponent } from './components/list-of-time/list-of-time.component';
 import { WellInfoComponent } from './components/well-info/well-info.component';
 import { CreateCustomFeedComponent } from './components/well-info/create-custom-feed/create-custom-feed.component';
 //Dynacard
@@ -107,7 +110,9 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
     DashboardComponent,
     NavigationComponent,
     AlgoFilterComponent,
+    DynaCardComponent,
     ScatterChartComponent,
+    ListOfTimeComponent,
     WellInfoComponent,
     CreateCustomFeedComponent,
     WellDetailsDynacardComponent,
@@ -165,6 +170,7 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
   ],
   providers: [BsModalService,
     ChecklistDatabase,
-    TreeViewService],
+    TreeViewService,
+    DynacardService],
 })
 export class FeatureModule { }

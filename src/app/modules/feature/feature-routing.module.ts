@@ -16,6 +16,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
+import { DynaCardComponent } from './components/dyna-card/dyna-card.component';
+
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 import { WellInfoComponent } from './components/well-info/well-info.component';
 import { WellDetailsDynacardCardDetailsComponent } from './components/well-details-dynacard/well-details-dynacard-card-details/well-details-dynacard-card-details.component';
