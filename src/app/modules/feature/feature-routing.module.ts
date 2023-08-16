@@ -28,46 +28,47 @@ const routes: Routes = [
   //   path: '',
   //   component: FeatureComponent,
   //   children: [
+  {
+    path: '',
+    component: SidenavComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'alert-list', component: AlertListComponent },
+      { path: 'alerts/:id', component: AlertListComponent },
+      { path: 'event-list', component: EventListComponent },
+      { path: 'wells', component: WellsComponent },
+      { path: 'Parameter', component: ParChartComponent },
+      {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
+      { path: 'wells/:id', component: WellDetailsDynacardComponent },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       {
-        path: '',
-        component: SidenavComponent,
-        children: [
-          { path: 'dashboard', component: DashboardComponent },
-          { path: 'alert-list', component: AlertListComponent },
-          { path: 'event-list', component: EventListComponent },
-          { path: 'wells', component: WellsComponent },
-          { path: 'Parameter', component: ParChartComponent },
-          { path: 'dyna-card', component: DynaCardComponent },
-          {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
-          {
-            path: 'algorithms-and-mitigations',
-            component: AlgorithmsAndMitigationComponent,
-          },
-          { path:'',redirectTo:'/dashboard',pathMatch:'full'},
-          {
-            path: 'well-info',
-            component: WellInfoComponent,
-          }
-        ],
-      },
-      { path: 'well-performance', component: WellPerformanceComponent },
-      
-      {
-        path: 'scatter-chart',
-        component: ScatterChartComponent,
+        path: 'well-info',
+        component: WellInfoComponent,
       },
       {
-        path: 'bubble-chart',
-        component: BubbleChartComponent,
-      }
-      
+        path: 'algorithms-and-mitigations',
+        component: AlgorithmsAndMitigationComponent,
+      },
+    ],
+  },
+  { path: 'well-performance', component: WellPerformanceComponent },
+
+  {
+    path: 'scatter-chart',
+    component: ScatterChartComponent,
+  },
+  {
+    path: 'bubble-chart',
+    component: BubbleChartComponent,
+  }
+
   //   ],
   // },
-  
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FeatureRoutingModule {}
+export class FeatureRoutingModule { }

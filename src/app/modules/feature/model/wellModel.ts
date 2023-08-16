@@ -28,4 +28,5 @@ export interface WellModel {
      updatedBy:number;
      noOfAlerts:number;
      dateAndTime:any;
+     inferredChartObj:Highcharts.Options;
 }

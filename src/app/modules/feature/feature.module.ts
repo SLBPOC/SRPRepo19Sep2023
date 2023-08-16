@@ -41,7 +41,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // UI
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -60,7 +60,7 @@ import { WellsComponent } from './components/wells/wells.component';
 import { ParChartComponent } from './components/par-chart/par-chart.component';
 // import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { MtxTooltipModule } from '@ng-matero/extensions/tooltip';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { AlgoLineChartComponent } from './components/algorithms-and-mitigation/components/algo-line-chart/algo-line-chart.component';
 import { WellViewParametersComponent } from './components/well-view-parameters/well-view-parameters.component';
 import { TreeViewService } from './services/tree-view.service';
@@ -124,7 +124,7 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
     WellDetailsDynacardViewDataComponent,
     WellDetailsDynacardViewGraphComponent,
     DynacardChipsComponent,
-  
+
   ],
   imports: [
     CommonModule,
@@ -153,10 +153,10 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
     MatDatepickerModule,
     MatNativeDateModule,
     MatTooltipModule,
-    MatCardModule, 
+    MatCardModule,
     MatButtonModule,
     MtxTooltipModule,
-    
+
     // UI
     MatSidenavModule,
     MatTabsModule,
@@ -166,11 +166,11 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
     MatExpansionModule,
     MatToolbarModule,
     MatExpansionModule,
-
+    MatProgressSpinnerModule
   ],
   providers: [BsModalService,
     ChecklistDatabase,
     TreeViewService,
     DynacardService],
 })
-export class FeatureModule {}
+export class FeatureModule { }
