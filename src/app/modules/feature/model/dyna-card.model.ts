@@ -1,16 +1,16 @@
 export class DynaCardModel {
-    SurfaceCard	:any;
-    SurfaceCardTime	:any;
-    SurfaceCardPosition	:any;
-    SurfaceCardLoad	:any;
-    DownholeCardPosition:any;	
-    DownholeCardLoad	:any;
-    DownholeCard	:any;
-    DownholeCardTime:any;
+    SurfaceCard: any;
+    SurfaceCardTime: any;
+    SurfaceCardPosition: any;
+    SurfaceCardLoad: any;
+    DownholeCardPosition: any;
+    DownholeCardLoad: any;
+    DownholeCard: any;
+    DownholeCardTime: any;
 }
 
 
-export class DynacardModel2{
+export class DynacardModel2 {
     id: number;
     surface_Card: string;
     surface_Card_Time: string;
@@ -23,4 +23,15 @@ export class DynacardModel2{
     dynacard_Classification: string;
     secondary_Classification: string;
     confidence: string
+}
+
+export class CardDetailsModel {
+    id: string;
+    pumpFillage_per: number;
+    SPM: number;
+    minPolishedRodLoad_lbs: number;
+    peakPolishedRodLoad_lbs: number;
+    surfaceStrokeLength_in: number;
+    downholeStrokeLength_in: number;
+    totalFluid_in: number
 }
