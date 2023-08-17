@@ -34,7 +34,7 @@ export class ParaModel{
     updatedBy :number;
     createdDateTime : any;
     updatedDateTime :any;
-    wellName : string;
+    wellName : string; 
 }
 
 export class TelemetryModel{   

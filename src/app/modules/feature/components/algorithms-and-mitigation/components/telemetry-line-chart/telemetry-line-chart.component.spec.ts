@@ -9,7 +9,7 @@ describe('TelemetryLineChartComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TelemetryLineChartComponent ]
-    })
+    }) 
     .compileComponents();
 
     fixture = TestBed.createComponent(TelemetryLineChartComponent);

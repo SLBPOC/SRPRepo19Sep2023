@@ -45,7 +45,7 @@ export class DashboardService {
     return this.http.get<any[]>(this.apiUrl + "well/GetWellParams?Id=" + id, this.httpOptions);          
   }
 
-  GetTelemetryChart(): Observable<any> {
+  GetTelemetryChart(): Observable<any> { 
     return this.http.get<ParameterGraphModel[]>(this.telemetryJson);            
   }
   

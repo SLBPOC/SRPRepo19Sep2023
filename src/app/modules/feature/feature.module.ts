@@ -127,7 +127,7 @@ import { TelemetryLineChartComponent } from './components/algorithms-and-mitigat
     DynacardChipsComponent,
     TelemetryLineChartComponent
   ],
-  imports: [
+  imports: [ 
     CommonModule,
     FeatureRoutingModule,
     HighchartsChartModule,

@@ -18,7 +18,7 @@ export class TelemetryLineChartComponent {
   chartRef:any;
 
  
-  series :any[]=[];
+  series :any[]=[]; 
   yaxisdataarray=[{ labels: {   style: { fontSize: 10 } },
                     lineWidth: 0,tickAmount:15,
                     title: { text: "Inferred Production" },showEmpty: false},

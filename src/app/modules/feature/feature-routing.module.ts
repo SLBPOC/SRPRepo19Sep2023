@@ -46,7 +46,7 @@ const routes: Routes = [
       {
         path: 'well-info',
         component: WellInfoComponent,
-      },
+      }, 
       {
         path: 'algorithms-and-mitigations',
         component: AlgorithmsAndMitigationComponent,
