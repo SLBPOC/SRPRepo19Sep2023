@@ -21,6 +21,8 @@ export class DashboardService {
   yesterdayCycleCountBarJson = '../../../../assets/json/yesterday-cycle-count-bar-data.json'
   CounterJsonUrl='../../../../assets/json/cyclecounter.json';
   runtimeJsonUrl='../../../../assets/json/cycleruntime.json';
+  telemetryJson = '../../../../assets/json/telemetryLineChart.json';
+
   constructor(private http: HttpClient) { }
 
   getYesterdayCycleCountData(): Observable<any>{
@@ -41,6 +43,10 @@ export class DashboardService {
 
   GetParameterChart(id:any): Observable<any> {
     return this.http.get<any[]>(this.apiUrl + "well/GetWellParams?Id=" + id, this.httpOptions);          
+  }
+
+  GetTelemetryChart(): Observable<any> { 
+    return this.http.get<ParameterGraphModel[]>(this.telemetryJson);            
   }
   
 }

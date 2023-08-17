@@ -34,7 +34,14 @@ export class ParaModel{
     updatedBy :number;
     createdDateTime : any;
     updatedDateTime :any;
-    wellName : string;
+    wellName : string; 
+}
+
+export class TelemetryModel{   
+    dateAndTime :any;    
+    inferredProduction :number;
+    vfdSpeed:number;
+    optimizerPI:number;
 }
 
 
