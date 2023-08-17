@@ -97,7 +97,8 @@ BindChart()
     chart: {
         renderTo: 'container',
         type: 'line',
-        margin: 80,      
+       // margin: 80, 
+        width:1000, 
         events: {
           load: function() {
             var chart : any = this;

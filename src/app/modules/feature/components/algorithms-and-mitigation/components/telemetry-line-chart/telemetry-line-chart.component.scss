@@ -1,1 +1,15 @@
- 
+ .line-chart-container
+ {
+    width: 60%;
+    margin: 21px 20%;
+    highcharts-chart{
+        .highcharts-container 
+        {
+            width: 100% !important;
+            svg{
+                width: 100% !important;
+            }
+        }
+    }
+    
+ }
