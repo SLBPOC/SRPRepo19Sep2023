@@ -23,6 +23,8 @@ import { WellInfoComponent } from './components/well-info/well-info.component';
 import { WellDetailsDynacardCardDetailsComponent } from './components/well-details-dynacard/well-details-dynacard-card-details/well-details-dynacard-card-details.component';
 import { WellDetailsDynacardComponent } from './components/well-details-dynacard/well-details-dynacard.component';
 import { BubbleChartComponent } from './components/bubble-chart/bubble-chart.component';
+import { TelemetryLineChartComponent } from './components/algorithms-and-mitigation/components/telemetry-line-chart/telemetry-line-chart.component';
+
 const routes: Routes = [
   // {
   //   path: '',
@@ -48,6 +50,10 @@ const routes: Routes = [
       {
         path: 'algorithms-and-mitigations',
         component: AlgorithmsAndMitigationComponent,
+      },
+      {
+        path: 'telemetryChart',
+        component: TelemetryLineChartComponent,
       },
     ],
   },

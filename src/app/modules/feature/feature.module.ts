@@ -82,6 +82,7 @@ import { WellDetailsDynacardCardDatagridComponent } from './components/well-deta
 import { WellDetailsDynacardViewDataComponent } from './components/well-details-dynacard/well-details-dynacard-view-data/well-details-dynacard-view-data.component';
 import { WellDetailsDynacardViewGraphComponent } from './components/well-details-dynacard/well-details-dynacard-view-graph/well-details-dynacard-view-graph.component';
 import { DynacardChipsComponent } from './components/well-details-dynacard/dynacard-chips/dynacard-chips.component';
+import { TelemetryLineChartComponent } from './components/algorithms-and-mitigation/components/telemetry-line-chart/telemetry-line-chart.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,7 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
     WellDetailsDynacardViewDataComponent,
     WellDetailsDynacardViewGraphComponent,
     DynacardChipsComponent,
-
+    TelemetryLineChartComponent
   ],
   imports: [
     CommonModule,

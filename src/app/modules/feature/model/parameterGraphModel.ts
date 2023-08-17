@@ -37,6 +37,13 @@ export class ParaModel{
     wellName : string;
 }
 
+export class TelemetryModel{   
+    dateAndTime :any;    
+    inferredProduction :number;
+    vfdSpeed:number;
+    optimizerPI:number;
+}
+
 
 
 
