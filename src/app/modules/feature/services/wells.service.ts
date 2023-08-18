@@ -29,4 +29,10 @@ export class WellsService {
   getWellDetailsWithFilters(searchModel:any): Observable<any> {
     return this.http.post<WellModel[]>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);          
   }
+
+  getWellInfoById(wellId: string): Observable<any> {
+    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
+    return this.http.get<any>  (this.apiUrl + `Well/GetWellInfoById?WellId=${wellId}`)       
+  }
+
 }

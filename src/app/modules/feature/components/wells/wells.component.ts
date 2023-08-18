@@ -279,7 +279,7 @@ export class WellsComponent {
   }
 
   navigateToWellInfo(wellId: string) {
-    this.router.navigateByUrl(`/well-info/${wellId ?? 'W001'}`)
+    this.router.navigateByUrl(`/well-info/${wellId}`)
   }
 
 }
