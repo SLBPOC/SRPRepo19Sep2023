@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { WellsService } from '../../services/wells.service';
 interface Food {
   value: string;
   viewValue: string;
@@ -10,13 +11,6 @@ interface Food {
   styleUrls: ['./well-info.component.scss']
 })
 export class WellInfoComponent implements OnInit{
-
-  currentWellId: any;
-
-  constructor(private ac: ActivatedRoute) {
-  }
-
-  enabled: Boolean = false
 
   dynacardSummaryData: {label: string, value: string}[] = [
     {label: 'Current SPM ', value: '5.5 spm'},
@@ -31,6 +25,14 @@ export class WellInfoComponent implements OnInit{
     {value: 'pizza-1', viewValue: 'Pizza'},
     {value: 'tacos-2', viewValue: 'Tacos'},
   ];
+
+  constructor(private ac: ActivatedRoute, private service: WellsService) {
+  }
+
+  currentWellId: any;
+  dataResult: any;
+  enabled: Boolean = false
+
   createCustomFeed(){
     console.warn("@");
     this.enabled = true
@@ -38,6 +40,16 @@ export class WellInfoComponent implements OnInit{
 
   ngOnInit(): void {
     this.currentWellId = this.ac.snapshot.params['id'];
-    console.log('well info:- ', this.currentWellId)
+    this.getWellInfoById();
+  }
+
+  getWellInfoById() {
+    console.log('getWellInfoById', this.currentWellId)
+    this.service.getWellInfoById(this.currentWellId).subscribe((data: any) => {
+      this.dataResult = data;
+      console.log('well info:- ', this.dataResult)
+
+    })
+
   }
 }
