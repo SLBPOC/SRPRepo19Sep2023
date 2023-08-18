@@ -219,3 +219,11 @@
         }
     }   
 }
+
+td#well_name > a {
+    color: #6BA7FF;
+}
+td#well_name > a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
