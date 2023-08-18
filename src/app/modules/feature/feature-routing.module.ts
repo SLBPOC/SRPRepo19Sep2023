@@ -44,7 +44,7 @@ const routes: Routes = [
       { path: 'wells/:id', component: WellDetailsDynacardComponent },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       {
-        path: 'well-info',
+        path: 'well-info/:id',
         component: WellInfoComponent,
       }, 
       {

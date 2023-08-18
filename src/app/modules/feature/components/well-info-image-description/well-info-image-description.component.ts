@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AlgorithmsAndMitigationsService } from '../../services/algorithms-and-mitigations.service';
 
 @Component({
@@ -6,21 +6,24 @@ import { AlgorithmsAndMitigationsService } from '../../services/algorithms-and-m
   templateUrl: './well-info-image-description.component.html',
   styleUrls: ['./well-info-image-description.component.scss']
 })
-export class WellInfoImageDescriptionComponent implements OnInit {
+export class WellInfoImageDescriptionComponent implements OnInit, OnChanges {
   dataResult: any;
-  wellId: string = "W001";
+  @Input() wellId;
 
   constructor(private service: AlgorithmsAndMitigationsService) {}
 
   ngOnInit(): void {
       
-    this.getWellInfoById();
+    this.getWellInfoById(this.wellId);
   }
 
-  getWellInfoById() {
-    this.service.getWellInfoById(this.wellId).subscribe((data: any) => {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('===> wellId', this.wellId)
+
+  }
+  getWellInfoById(wellId: any) {
+    this.service.getWellInfoById(wellId).subscribe((data: any) => {
       this.dataResult = data;
-      console.log(this.dataResult)
     })
   }
 

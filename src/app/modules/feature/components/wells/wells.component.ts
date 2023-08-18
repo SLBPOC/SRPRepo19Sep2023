@@ -12,6 +12,7 @@ import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs'
 import * as HighCharts from 'highcharts';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class WellsComponent {
 
 
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router) { }
 
 
   ngAfterViewInit() {
@@ -277,5 +278,8 @@ export class WellsComponent {
     }
   }
 
+  navigateToWellInfo(wellId: string) {
+    this.router.navigateByUrl(`/well-info/${wellId ?? 'W001'}`)
+  }
 
 }
