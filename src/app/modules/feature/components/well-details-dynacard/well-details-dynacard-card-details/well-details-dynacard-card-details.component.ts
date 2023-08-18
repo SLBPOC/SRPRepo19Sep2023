@@ -45,6 +45,12 @@ export class WellDetailsDynacardCardDetailsComponent {
       else {
         this.selectedTimeDetails = new CardDetailsModel();
       }
+    });
+    this.dynaService.selectedTimeInGraph.subscribe(x => {
+      if (x != undefined && x != '')
+        this.dynaService.getDetailsAboutTime(x).subscribe(y => {
+          this.selectedTimeDetails = y;
+        });
     })
   }
 
