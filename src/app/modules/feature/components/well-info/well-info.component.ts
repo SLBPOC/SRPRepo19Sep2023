@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 interface Food {
   value: string;
   viewValue: string;
@@ -8,7 +9,12 @@ interface Food {
   templateUrl: './well-info.component.html',
   styleUrls: ['./well-info.component.scss']
 })
-export class WellInfoComponent {
+export class WellInfoComponent implements OnInit{
+
+  currentWellId: any;
+
+  constructor(private ac: ActivatedRoute) {
+  }
 
   enabled: Boolean = false
 
@@ -28,5 +34,10 @@ export class WellInfoComponent {
   createCustomFeed(){
     console.warn("@");
     this.enabled = true
+  }
+
+  ngOnInit(): void {
+    this.currentWellId = this.ac.snapshot.params['id'];
+    console.log('well info:- ', this.currentWellId)
   }
 }
