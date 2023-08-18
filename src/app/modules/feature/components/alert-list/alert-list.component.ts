@@ -7,6 +7,7 @@ import { AlertList } from '../../model/alert-list';
 import { MatSort } from '@angular/material/sort';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Option {
   id: string;
@@ -52,7 +53,7 @@ export class AlertListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: AlertListService) { }
+  constructor(private service: AlertListService,private router: Router) { }
 
   ngOnInit() {
     let dte = new Date();
@@ -188,6 +189,10 @@ export class AlertListComponent {
       }
     }
     this.selectedRangeValueChange.emit(this.selectedRangeValue);
+  }
+
+  navigateToWellList() {
+    this.router.navigateByUrl("/wells")
   }
 
 }

@@ -1,6 +1,6 @@
 [
     {
-        "wellName": "Well Name 001",
+        "wellName": "Apache 24 FED 11",
         "alertLevel": "High",
         "date": "2023-07-09T11:30:20.335Z",
         "desc": "Flatlining",
@@ -8,7 +8,7 @@
         "action": "Snooze"
     },
     {
-        "wellName": "Well Name 002",
+        "wellName": "Apache 24 FED 11",
         "alertLevel": "Medium",
         "date": "2023-07-04T11:30:20.335Z",
         "desc": "Tagging",
