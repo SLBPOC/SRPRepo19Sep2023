@@ -14,6 +14,8 @@ export class DynacardService {
 
   selectedTime: Subject<{ selected: string, addedOrRemoved }> = new Subject();
 
+  selectedTimeInGraph = new Subject<string>();
+
   selectedClassification: Subject<number> = new Subject();
 
   constructor(private client: HttpClient) { }

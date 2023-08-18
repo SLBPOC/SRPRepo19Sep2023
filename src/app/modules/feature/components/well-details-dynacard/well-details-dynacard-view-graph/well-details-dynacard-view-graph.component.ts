@@ -19,6 +19,11 @@ export class WellDetailsDynacardViewGraphComponent implements OnInit, OnDestroy 
     this.$takUntil.next(true);
     this.$takUntil.complete();
   }
+  onPointClick : Highcharts.PointClickCallbackFunction = (p)=> {
+    // console.log(p.point.series.name);
+    this.dynaservice.selectedTimeInGraph.next(p.point.series.name);
+    // console.log(p.point.options.z)
+  }
   ngOnInit(): void {
     this.dynaservice.selectedTime.pipe(takeUntil(this.$takUntil), switchMap(obj => {
       if (obj.addedOrRemoved) {
@@ -69,6 +74,15 @@ export class WellDetailsDynacardViewGraphComponent implements OnInit, OnDestroy 
       },
       type: 'category',
       tickInterval: 10
+    },
+    plotOptions:{
+      series:{
+        point:{
+          events:{
+            click:this.onPointClick
+          }
+        }
+      }
     },
     series: []
   };
