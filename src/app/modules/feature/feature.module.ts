@@ -83,6 +83,9 @@ import { WellDetailsDynacardViewDataComponent } from './components/well-details-
 import { WellDetailsDynacardViewGraphComponent } from './components/well-details-dynacard/well-details-dynacard-view-graph/well-details-dynacard-view-graph.component';
 import { DynacardChipsComponent } from './components/well-details-dynacard/dynacard-chips/dynacard-chips.component';
 import { TelemetryLineChartComponent } from './components/algorithms-and-mitigation/components/telemetry-line-chart/telemetry-line-chart.component';
+import { WellInfoImageDescriptionComponent } from './components/well-info-image-description/well-info-image-description.component';
+import { AlgorithmsAndMitigationsService } from './services/algorithms-and-mitigations.service';
+
 
 @NgModule({
   declarations: [
@@ -125,7 +128,9 @@ import { TelemetryLineChartComponent } from './components/algorithms-and-mitigat
     WellDetailsDynacardViewDataComponent,
     WellDetailsDynacardViewGraphComponent,
     DynacardChipsComponent,
-    TelemetryLineChartComponent
+    TelemetryLineChartComponent,
+    WellInfoImageDescriptionComponent
+
   ],
   imports: [ 
     CommonModule,
@@ -168,10 +173,13 @@ import { TelemetryLineChartComponent } from './components/algorithms-and-mitigat
     MatToolbarModule,
     MatExpansionModule,
     MatProgressSpinnerModule
+
   ],
   providers: [BsModalService,
     ChecklistDatabase,
     TreeViewService,
-    DynacardService],
+    DynacardService,
+    AlgorithmsAndMitigationsService
+  ],
 })
 export class FeatureModule { }

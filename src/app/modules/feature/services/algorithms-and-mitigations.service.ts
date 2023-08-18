@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { Observable } from 'rxjs';
+import {filter, tap} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AlgorithmsAndMitigationsService {
+
+  private apiUrl: string="https://localhost:50282/api/";
+  httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+
 
   private controllersSelectOptions = '../../../../assets/json/controllers.json';
   private agorithmsAndMitigationsFilterDataJson = '../../../../assets/json/algo-mit-filter-data.json';
@@ -22,6 +31,8 @@ export class AlgorithmsAndMitigationsService {
   private scatterChartDataJson = '../../../../assets/json/scatter-chart-data.json';
   private bubbleChartDataJson = '../../../../assets/json/bubble-chart-data.json';
   private scatterChartInfoJson = '../../../../assets/json/scatter-chart-info.json';
+  // private wellInfoJson = '../../../../assets/json/well-info.json';
+  private wellInfoJson = 'http://localhost:5000/api/Well/GetWellInfoById?WellId=';
 
   constructor(private http: HttpClient) { }
 
@@ -96,6 +107,15 @@ export class AlgorithmsAndMitigationsService {
 
   getChartInfo(): Observable<any> {
     return this.http.get(this.scatterChartInfoJson);
+  }
+
+  // getWellInfoById(wellId: string): Observable<any> {
+  //   return this.http.get(this.wellInfoJson + wellId)
+  // }
+
+  getWellInfoById(wellId: string): Observable<any> {
+    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
+    return this.http.get<any>  (`http://localhost:5000/api/Well/GetWellInfoById?WellId=${wellId}`)       
   }
 
 }
