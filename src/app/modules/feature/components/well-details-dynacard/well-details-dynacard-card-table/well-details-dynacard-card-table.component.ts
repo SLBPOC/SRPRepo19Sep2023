@@ -3,8 +3,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
 // import {MatTableDataSource} from '@angular/material';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Observable, map,switchMap,BehaviorSubject } from 'rxjs';
+import { Observable, map,switchMap,BehaviorSubject, Subject,of } from 'rxjs';
 import { DynacardService } from '../../../services/dynacard.service';
+// import { off } from 'process';
 
 // export interface PeriodicElement {
 //   card: string ;
@@ -29,6 +30,8 @@ export class WellDetailsDynacardCardTableComponent {
   displayedColumns: string[] = ['#', 'card', 'time', 'minimunpolishedrodload', 'peakpolishedrod'];
   listOfTime: Observable<string[]>;
   selectedClassification = new BehaviorSubject<number>(0);
+  searchText:string;
+  searchTextObseravale = new Subject<string>();
   // displayedColumns: string[] = ['#', 'Name', 'Change', 'Classfication'];
 
   constructor(private dynaService: DynacardService) {
@@ -37,9 +40,15 @@ export class WellDetailsDynacardCardTableComponent {
         this.selectedClassification.next(x % 8);
         this.dynaService.selectedTime.next({addedOrRemoved:false,selected:'all'});
         this.selectionTimeModel.clear();
+        this.searchText = '';
+        this.searchTextObseravale.next('');
         // console.log(this.selectedClassification)
       }
     )
+  }
+
+  searchTime(){
+    this.searchTextObseravale.next(this.searchText);
   }
 
   randomInteger(min, max) {
@@ -59,7 +68,17 @@ export class WellDetailsDynacardCardTableComponent {
             var result =x != undefined ? x.filter((t, i) => (i+1) % v) : [];
             return result;
           }
+        ),
+        switchMap(x=> this.searchTextObseravale.pipe(map(
+          text=> {
+            if(text != "" && text != undefined)
+            {
+              return x.filter(t=>t.toLocaleLowerCase().trim().indexOf(text) > -1 );
+            }
+            return x;
+          }
         )))
+        ))
       );
   }
 

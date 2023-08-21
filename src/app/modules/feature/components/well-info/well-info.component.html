@@ -50,6 +50,11 @@
                <p><label for="">Load</label> <span class="label-val">{{dataResult?.load || '--'}}</span></p>
             </mat-card>
          </div>
+         <div class="col-md-3 ">
+            <mat-card class="text-center">
+               <a class="button-type-none" [routerLink]="['/wells/dyna/',2]"><p><label for="">DynaCard</label> <span class="label-val">--</span></p></a>
+            </mat-card>
+         </div>
       </div>
    </div>
    <app-create-custom-feed [isEnable] ="enabled"></app-create-custom-feed>

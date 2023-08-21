@@ -10,9 +10,9 @@ export class DynacardChipsComponent {
     {label: 'Puming Status ', value: 'Running'},
     {label: 'Comm Status', value: 'Comm Established'},
     {label: 'Data Quality', value: 'ShutDown'},
-    {label: 'Puming Status ', value: 'Running'},
-    {label: 'Comm Status', value: 'Comm Established'},
-    {label: 'Data Quality', value: 'ShutDown'},
+    // {label: 'Puming Status ', value: 'Running'},
+    // {label: 'Comm Status', value: 'Comm Established'},
+    // {label: 'Data Quality', value: 'ShutDown'},
 
    
   ]; 

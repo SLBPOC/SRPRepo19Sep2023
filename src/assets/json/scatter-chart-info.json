@@ -5,7 +5,7 @@
     "value": "70",
     "symbol": "circle",
     "symbolClass": "fa fa-circle",
-    "symbolColor": "rgba(128,135,232,0.5)"
+    "symbolColor": "rgba(128,135,232,1)"
   },
   {
     "id": 2,
@@ -13,14 +13,14 @@
     "value": "520",
     "symbol": "square",
     "symbolClass": "fa fa-square",
-    "symbolColor": "rgba(163,237,186,0.5)"
+    "symbolColor": "rgba(163,237,186,1)"
   },
   {
     "id": 3,
     "type": "Gas Interference",
     "value": "50",
     "symbol": "triangle",
-    "symbolClass": "fa-solid fa-triangle",
+    "symbolClass": "fa fa-caret-up",
     "symbolColor": "orange"
   },
   {
@@ -28,8 +28,8 @@
     "type": "Fluid Pound",
     "value": "80",
     "symbol": "diamond",
-    "symbolClass": "fa-solid fa-rhombus",
-    "symbolColor": "darkgreen"
+    "symbolClass": "fa fa-square rhombus",
+    "symbolColor": "#6699A1"
   },
   {
     "id": 5,
@@ -37,7 +37,7 @@
     "value": "30",
     "symbol": "circle",
     "symbolClass": "fa fa-circle",
-    "symbolColor": "rgba(225,211,105,0.5)"
+    "symbolColor": "rgba(225,211,105,1)"
   },
   {
     "id": 6,
