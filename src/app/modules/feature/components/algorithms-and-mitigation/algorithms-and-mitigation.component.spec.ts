@@ -10,9 +10,9 @@ import { AlgoLineChartComponent } from './components/algo-line-chart/algo-line-c
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { AlgorithmsAndMitigationsService } from '../../../../services/algorithms-and-mitigations.service';
 import { Observable, of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
+import { AlgorithmsAndMitigationsService } from '../../services/algorithms-and-mitigations.service';
 
 export class AlgorithmsAndMitigationsServiceStub {
 

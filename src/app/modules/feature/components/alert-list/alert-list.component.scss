@@ -7,6 +7,12 @@
     }
 }
 
+.button-type-none {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 .alert-action-btn {
     color: white !important;
     background-color: #22263D !important;
@@ -268,4 +274,20 @@
             color: #080912;
         }
     }
+}
+
+.snooze-popup {
+    min-width: 300px;
+    // min-height: 400px;
+    // background-color: rgba(19, 22, 41, 0.9);
+    border: 1px solid white;
+    margin: 0px;
+
+    h1 {
+        color: white;
+    }
+}
+.bg-dark-blue {
+    background-color: rgba(19, 22, 41, 0.9);
+
 }
