@@ -7,7 +7,7 @@ import { AlertList } from '../../model/alert-list';
 import { MatSort } from '@angular/material/sort';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router ,ActivatedRoute} from '@angular/router';
 
 interface Option {
   id: string;
@@ -47,23 +47,31 @@ export class AlertListComponent {
   event: any;
   todayDate: Date = new Date();
   pipe!: DatePipe;
+  searchText:string='';
 
   @Input() selectedRangeValue: DateRange<Date>;
   @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: AlertListService,private router: Router) { }
+  constructor(private service: AlertListService,private router: Router,private _route:ActivatedRoute) { }
 
   ngOnInit() {
+
+    this._route.params.subscribe(params => {
+      this.searchText = params['id']     
+    });
+    
     let dte = new Date();
     dte.setDate(dte.getDate() - 1);
     this.service.getWellAlerts().subscribe((resp) => {
-      this.wellList = resp;
+      this.wellList = resp;      
       this.dataSource = new MatTableDataSource<AlertList>(this.wellList);
       this.getLegendCount();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      if(this.searchText !="")
+      this.dataSource.filter = this.searchText;
     })
   }
 
@@ -78,10 +86,25 @@ export class AlertListComponent {
     this.lowCount = low.length;
   }
 
-  search(data: Event) {
-    const val = (data.target as HTMLInputElement).value;
-    this.dataSource.filter = val;
+  // search(data: Event) {
+  //   const val = (data.target as HTMLInputElement).value;
+  //   this.dataSource.filter = val;
 
+  // }
+
+  search() {   
+    this.dataSource.filter = this.searchText;
+  }
+
+  ClearSearch() {   
+    this.searchText = "";
+    this.service.getWellAlerts().subscribe((resp) => {
+      this.wellList = resp;      
+      this.dataSource = new MatTableDataSource<AlertList>(this.wellList);
+      this.getLegendCount();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;      
+    })
   }
 
   alertChange(event: any) {

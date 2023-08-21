@@ -30,9 +30,9 @@
                 
                 </div> -->
                 <div class="searchBar">
-                    <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" (keyup)="search($event)">
+                    <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" (keyup)="search()" [(ngModel)]="searchText">
                     <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
-                        <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg"></button>
+                        <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg" (click)="ClearSearch()"></button>
                 </div>
                 <div class="headIcons">
                     <ul>

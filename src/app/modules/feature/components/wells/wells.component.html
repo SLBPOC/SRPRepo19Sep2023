@@ -158,7 +158,7 @@
          <ng-container matColumnDef="NoOfAlerts">
             <th mat-sort-header mat-header-cell *matHeaderCellDef>No Of Alerts</th>
             <td mat-cell *matCellDef="let element" class="align-col">
-               <a [routerLink]="['/alerts',element.id]"> {{ element.noOfAlerts }}</a>
+               <a [routerLink]="['/alerts',element.wellName]"> {{ element.noOfAlerts }}</a>
             </td>
          </ng-container>
 
