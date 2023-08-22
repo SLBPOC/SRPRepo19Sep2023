@@ -53,7 +53,7 @@ const routes: Routes = [
         component: AlgorithmsAndMitigationComponent,
       },
       {
-        path: 'telemetryChart',
+        path: 'telemetryLineChart',
         component: TelemetryLineChartComponent,
       },
       {

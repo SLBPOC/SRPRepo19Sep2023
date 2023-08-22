@@ -48,6 +48,7 @@ export class TelemetryBarChartModel{
     fluidpound :number;
     gasinterference:number;
     tagging:number;
+    flatlining:number;
 }
 
 

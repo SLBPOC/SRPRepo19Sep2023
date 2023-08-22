@@ -28,6 +28,7 @@ yaxisdataarray=[{ labels: {   style: { fontSize: 10 } },
 YAxisFluidPound:any[] =[];
 YAxisGasInterference:any[] =[];
 YAxisTagging:any[] =[];
+YAxisFlatlining:any[] =[];
 
 XAxis:any[]=[];
 dataList:TelemetryBarChartModel[]=[]; 
@@ -72,7 +73,8 @@ if(this.dataList!=null)
   {
     this.YAxisFluidPound.push([this.dataList[i].dateAndTime.toString(),this.dataList[i].fluidpound]);           
     this.YAxisGasInterference.push([this.dataList[i].dateAndTime.toString(),this.dataList[i].gasinterference]);  
-    this.YAxisTagging.push([this.dataList[i].dateAndTime.toString(),this.dataList[i].tagging]);               
+    this.YAxisTagging.push([this.dataList[i].dateAndTime.toString(),this.dataList[i].tagging]); 
+    this.YAxisFlatlining.push([this.dataList[i].dateAndTime.toString(),this.dataList[i].flatlining]);                 
   }
   
   this.series.push({id:id++,name:"fluid pound",data:this.YAxisFluidPound,lineWidth:2,visible:true,yAxis:0,dataLabels: {
@@ -117,6 +119,22 @@ if(this.dataList!=null)
 
     }
 }});  
+this.series.push({id:id++,name:"Flatlining",data:this.YAxisFlatlining,lineWidth:2,visible:true,dataLabels: {
+  enabled: true,
+  rotation: 0,
+  color: '#FFFFFF',
+  align: 'right',
+  y: -5, // 10 pixels down from the top
+  style: {
+      fontSize: '10px',
+      fontFamily: 'helvetica, arial, sans-serif',
+      textShadow: false,
+      fontWeight: 'normal'
+      
+
+  }
+}});
+
 }
 this.BindChart();
 }
@@ -157,7 +175,8 @@ legend:{
       marker:{
         enabled:false
         }   
-    }    
+    },
+    column:{pointWidth:20}   // Column width Adjust
   },
   series:this.series,   
   } as any;
