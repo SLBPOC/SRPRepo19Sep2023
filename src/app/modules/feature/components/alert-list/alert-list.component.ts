@@ -8,6 +8,8 @@ import { MatSort } from '@angular/material/sort';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router ,ActivatedRoute} from '@angular/router';
+import { WellModel } from '../../model/wellModel';
+import { WellsService } from '../../services/wells.service';
 
 interface Option {
   id: string;
@@ -48,13 +50,21 @@ export class AlertListComponent {
   todayDate: Date = new Date();
   pipe!: DatePipe;
   searchText:string='';
+  pageNumber = 1;
+  pageSize: number = 5;
+  model: any = {};
+  seachByStatus: string = "";
+  loading = true;
+  WellList!: WellModel[];
+  currentPage = 0;
+
 
   @Input() selectedRangeValue: DateRange<Date>;
   @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: AlertListService,private router: Router,private _route:ActivatedRoute) { }
+  constructor(private service: AlertListService, private wellService: WellsService, private router: Router,private _route:ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -93,6 +103,7 @@ export class AlertListComponent {
   // }
 
   search() {   
+    this.dataSource = new MatTableDataSource<AlertList>([...this.wellList]);
     this.dataSource.filter = this.searchText;
   }
 
@@ -122,12 +133,29 @@ export class AlertListComponent {
   }
 
   applyFilter(){
-    this.dataSource.filterPredicate = (data: any) => {
-      if (this.selectedStatus && this.selectedAlert) {
-        return data.status == this.selectedStatus && data.alertLevel == this.selectedAlert;
-      }
-      return true;
-    }
+    // this.dataSource.filteredData.filter((data: any) => data.status == this.selectedStatus && data.alertLevel == this.selectedAlert)
+    // this.dataSource.filteredData = (data: any) => {
+    //   if (this.selectedStatus && this.selectedAlert) {
+    //     return data.status == this.selectedStatus && data.alertLevel == this.selectedAlert;
+    //   }
+    //   return true;
+    // }
+
+    // this.dataSource.filterPredicate = (data: any) => {
+    //   if (this.selectedStatus && this.selectedAlert) {
+    //     return data.status == this.selectedStatus && data.alertLevel == this.selectedAlert;
+    //   }
+    //   return true;
+    // }
+
+    // this.loading = true;
+    let data = [...this.wellList].filter((data: any) => data.status == this.selectedStatus && data.alertLevel == this.selectedAlert)
+    this.dataSource = data;
+
+  }
+
+  refreshFilter() {
+    this.dataSource = [...this.wellList]
   }
 
   setDateSelected(option: any) {
@@ -217,5 +245,102 @@ export class AlertListComponent {
   navigateToWellList() {
     this.router.navigateByUrl("/wells")
   }
+
+  SeachByStatus(status: string) {
+    this.seachByStatus = status;
+    this.pageNumber = 1;
+    // this.GetWellDetailsWithFilters();
+  }
+
+  SearchByStatus(status: string) {
+    this.GetWellDetailsWithFilters(status);
+  }
+
+  GetWellDetailsWithFiltersTest() {
+    this.loading = true;
+    var SearchModel = this.createModel();
+    this.wellService.getWellDetailsWithFilters(SearchModel).subscribe(response => {
+      if (response.hasOwnProperty('data')) {
+        this.loading = false;
+        this.WellList = response.data;
+        this.WellList.forEach(x => this.prepareChart(x));
+        this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+        setTimeout(() => {
+          this.paginator.pageIndex = this.currentPage;
+          this.paginator.length = response.totalCount;
+        });
+
+        // this.TotalCount = response.totalCount;
+        // this.OverPumping = response.totalOverpumping;
+        // this.OptimalPumping = response.totalOptimalPumping;
+        // this.UnderPumping = response.totalUnderpumping;
+      }
+
+    });
+  }
+
+  GetWellDetailsWithFilters(status) {
+    this.loading = true;
+    let data = [...this.wellList].filter((data: any) => data.alertLevel === status)
+    this.dataSource = data;
+  }
+
+    //Create Model for search
+    createModel(this: any) {
+      this.model.pageSize = this.pageSize;
+      this.model.pageNumber = this.pageNumber;
+      this.model.searchText = this.searchText ? this.searchText : "";
+      this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
+      this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
+      this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
+  
+      return this.model;
+  
+  
+    }
+    prepareChart(x: WellModel): void {
+      x.inferredChartObj = {
+        title: { text: '' },
+        chart: {
+          renderTo: 'container',
+          margin: 0,
+          spacing: [0,0,0,0],
+          backgroundColor: undefined
+        },
+        yAxis: {
+          labels: {
+            enabled: false
+          },
+          tickAmount: 6,
+          gridLineWidth: 1
+        },
+        xAxis: {
+          labels: {
+            enabled: false
+          },
+          tickAmount: 6,
+          gridLineWidth: 1
+        },
+        legend: {
+          enabled: false
+        },
+        tooltip: {
+          outside: true,
+          className: 'highchart-elevate-tooltip'
+        },
+        series: [{
+          type: 'line',
+          data: this.GetRandomNumbers(false)
+        }]
+      }
+    }
+
+    GetRandomNumbers(isNegative: boolean = true) {
+      var integers = [];
+      for (let index = 0; index < 7; index++) {
+        integers.push([index + 1, (Math.random() * (isNegative ? 21 : 10)) - (isNegative ? 10 : 0)])
+      }
+      return integers;
+    }
 
 }
