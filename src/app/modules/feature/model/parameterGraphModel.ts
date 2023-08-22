@@ -43,6 +43,12 @@ export class TelemetryModel{
     vfdSpeed:number;
     optimizerPI:number;
 }
+export class TelemetryBarChartModel{   
+    dateAndTime :any;    
+    fluidpound :number;
+    gasinterference:number;
+    tagging:number;
+}
 
 
 

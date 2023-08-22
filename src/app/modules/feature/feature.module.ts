@@ -85,6 +85,7 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
 import { TelemetryLineChartComponent } from './components/algorithms-and-mitigation/components/telemetry-line-chart/telemetry-line-chart.component';
 import { WellInfoImageDescriptionComponent } from './components/well-info-image-description/well-info-image-description.component';
 import { AlgorithmsAndMitigationsService } from './services/algorithms-and-mitigations.service';
+import { TelemetryBarChartComponent } from './components/algorithms-and-mitigation/components/telemetry-bar-chart/telemetry-bar-chart.component';
 
 
 @NgModule({
@@ -129,7 +130,8 @@ import { AlgorithmsAndMitigationsService } from './services/algorithms-and-mitig
     WellDetailsDynacardViewGraphComponent,
     DynacardChipsComponent,
     TelemetryLineChartComponent,
-    WellInfoImageDescriptionComponent
+    WellInfoImageDescriptionComponent,
+    TelemetryBarChartComponent
 
   ],
   imports: [ 

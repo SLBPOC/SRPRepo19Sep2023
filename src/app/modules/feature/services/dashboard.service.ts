@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http'
 import { Observable } from 'rxjs';
-import {ParameterGraphModel } from 'src/app/modules/feature/model/parameterGraphModel';
+import {ParameterGraphModel, TelemetryBarChartModel } from 'src/app/modules/feature/model/parameterGraphModel';
 
 
 @Injectable({
@@ -22,6 +22,7 @@ export class DashboardService {
   CounterJsonUrl='../../../../assets/json/cyclecounter.json';
   runtimeJsonUrl='../../../../assets/json/cycleruntime.json';
   telemetryJson = '../../../../assets/json/telemetryLineChart.json';
+  telemetryBarChartJson='../../../../assets/json/telemetryBarChartJson.json';
 
   constructor(private http: HttpClient) { }
 
@@ -48,5 +49,11 @@ export class DashboardService {
   GetTelemetryChart(): Observable<any> { 
     return this.http.get<ParameterGraphModel[]>(this.telemetryJson);            
   }
+
+  GetTelemetryBarChart(): Observable<any> { 
+    return this.http.get<TelemetryBarChartModel[]>(this.telemetryBarChartJson);            
+  }
+
+  
   
 }

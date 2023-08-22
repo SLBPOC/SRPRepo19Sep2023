@@ -24,6 +24,7 @@ import { WellDetailsDynacardCardDetailsComponent } from './components/well-detai
 import { WellDetailsDynacardComponent } from './components/well-details-dynacard/well-details-dynacard.component';
 import { BubbleChartComponent } from './components/bubble-chart/bubble-chart.component';
 import { TelemetryLineChartComponent } from './components/algorithms-and-mitigation/components/telemetry-line-chart/telemetry-line-chart.component';
+import { TelemetryBarChartComponent } from './components/algorithms-and-mitigation/components/telemetry-bar-chart/telemetry-bar-chart.component';
 
 const routes: Routes = [
   // {
@@ -54,6 +55,10 @@ const routes: Routes = [
       {
         path: 'telemetryChart',
         component: TelemetryLineChartComponent,
+      },
+      {
+        path: 'telemetryBarChart',
+        component: TelemetryBarChartComponent,
       },
     ],
   },
