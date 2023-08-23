@@ -29,4 +29,12 @@ export interface WellModel {
      noOfAlerts:number;
      dateAndTime:any;
      inferredChartObj:Highcharts.Options;
+     spmChartObj:Highcharts.Options;
+     pumpFillageChartObj:Highcharts.Options;
+     effectiveRunChartObj:Highcharts.Options;
+     cycleChartObj:Highcharts.Options;
+     structuralLoadChartObj:Highcharts.Options;
+     minMaxLoadChartObj:Highcharts.Options;
+     gearBoxLoadChartObj:Highcharts.Options;
+     roadStressChartObj:Highcharts.Options;
 }

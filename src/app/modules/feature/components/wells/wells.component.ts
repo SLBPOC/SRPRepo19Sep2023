@@ -61,7 +61,7 @@ export class WellsComponent {
   OptimalPumping: number = 0;
   UnderPumping: number = 0;
 
-
+  minmaxChartData:any[]=[];  //min max chart data array
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router) { }
 
@@ -115,7 +115,7 @@ export class WellsComponent {
   //   });
   // }
 
-  GetWellDetailsWithFilters() {
+  GetWellDetailsWithFilters() {    
     this.loading = true;
     var SearchModel = this.createModel();
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
@@ -241,8 +241,333 @@ export class WellsComponent {
     return integers;
   }
 
+  GetMinMaxRandomNumbers(isNegative: boolean = true) {   
+    this.minmaxChartData=[];
+    this.minmaxChartData.push({name:"min",data:this.GetRandomNumbers(false)});
+    this.minmaxChartData.push({name:"max",data:this.GetRandomNumbers(false)});
+    return this.minmaxChartData; 
+  }
+
   prepareChart(x: WellModel): void {
+    
+    this.bindInferredChart(x);
+    this.bindSPMChart(x);
+    this.bindPumpFillageChart(x);
+    this.bindEffectiveRunChart(x);
+    this.bindCycleChart(x);
+    this.bindStructuralLoadChart(x);
+    this.bindMinMaxLoadChart(x);
+    this.bindGearBoxLoadChart(x);
+    this.bindRodStressChart(x);
+  }
+
+
+  bindSPMChart(x: WellModel)
+  {
+    x.spmChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: [{
+        type: 'line',
+        data: this.GetRandomNumbers(false)
+      }]
+    }
+  }
+
+  bindPumpFillageChart(x: WellModel)
+  {
+    x.pumpFillageChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: [{
+        type: 'line',
+        data: this.GetRandomNumbers(false)
+      }]
+    }
+  }
+
+  bindInferredChart(x: WellModel)
+  {
     x.inferredChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: [{
+        type: 'line',
+        data: this.GetRandomNumbers(false)
+      }]
+    }
+  }
+
+  bindEffectiveRunChart(x: WellModel)
+  {
+    x.effectiveRunChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: [{
+        type: 'line',
+        data: this.GetRandomNumbers(false)
+      }]
+    }
+  }
+
+  bindCycleChart(x: WellModel)
+  {
+    x.cycleChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: [{
+        type: 'column',
+        data: this.GetRandomNumbers(false)
+      }]
+    }
+  }
+
+  bindStructuralLoadChart(x: WellModel)
+  {
+    x.structuralLoadChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: [{
+        type: 'line',
+        data: this.GetRandomNumbers(false)
+      }]
+    }
+  }
+
+  bindMinMaxLoadChart(x: WellModel)
+  {
+    
+    x.minMaxLoadChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        type: 'line',
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: this.GetMinMaxRandomNumbers(false)
+    }
+  }
+
+  bindGearBoxLoadChart(x: WellModel)
+  {
+    x.gearBoxLoadChartObj = {
+      title: { text: '' },
+      chart: {
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        outside: true,
+        className: 'highchart-elevate-tooltip'
+      },
+      series: [{
+        type: 'line',
+        data: this.GetRandomNumbers(false)
+      }]
+    }
+  }
+
+  bindRodStressChart(x: WellModel)
+  {
+    x.roadStressChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',

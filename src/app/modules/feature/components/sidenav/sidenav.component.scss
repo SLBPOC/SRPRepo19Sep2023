@@ -484,6 +484,16 @@ mat-toolbar {
           border-left: 0px solid #FABB42;
         }
       }
+
+      .active-list-item {//change start for active side menu
+        background: rgb(2 14 76);
+
+        span.mdc-list-item__content {
+          border-left: 2px solid rgba(250, 187, 66, 1);
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+        }
+      } //change end
     }
 
     .mat-mdc-list-base {
@@ -864,6 +874,18 @@ button.mat-mdc-menu-trigger.userbutton {
 .open {
   mat-nav-list {
     display: block;
+  }
+}
+
+mat-nav-list {
+  mat-list-item.active-list-item {
+    background: rgb(2 14 76);
+
+    span {
+      border-left: 2px solid rgba(250, 187, 66, 1) !important;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
   }
 }
 
