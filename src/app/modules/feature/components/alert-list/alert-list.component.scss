@@ -40,6 +40,7 @@
             color: #fff;
             font-size: 14px;
             font-weight: 700;
+            cursor: pointer;
         }
     }
 
@@ -318,4 +319,8 @@ div.input-lbl {
 button.action-btn {
     width: 200px !important;
     font-size: 12px;
+}
+
+.snooze-active {
+    background-color: #6BA7FF !important;
 }

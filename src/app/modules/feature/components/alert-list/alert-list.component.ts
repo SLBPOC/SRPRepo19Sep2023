@@ -60,7 +60,8 @@ export class AlertListComponent {
   WellList!: WellModel[];
   currentPage = 0;
   clearAlertsComments!: string;
-
+  snoozeByTime: string = '1h';
+  showSnoozeDialog: boolean = false;
 
   @Input() selectedRangeValue: DateRange<Date>;
   @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
@@ -75,29 +76,33 @@ export class AlertListComponent {
       this.searchText = params['id']     
     });
     
-    let dte = new Date();
-    dte.setDate(dte.getDate() - 1);
-    this.service.getWellAlerts().subscribe((resp) => {
-      this.wellList = resp;      
-      this.dataSource = new MatTableDataSource<AlertList>(this.wellList);
-      this.getLegendCount();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      if(this.searchText !="")
-      this.dataSource.filter = this.searchText;
-    })
+    this.getAlertListFilters("");
   }
 
-  getLegendCount(){
-    let high = this.wellList.filter(alert => alert.alertLevel == "High");
-    this.highCount = high.length;
+  // getAlertList() {
+  //   let dte = new Date();
+  //   dte.setDate(dte.getDate() - 1);
+  //   this.service.getWellAlerts().subscribe((resp) => {
+  //     this.wellList = resp;      
+  //     this.dataSource = new MatTableDataSource<AlertList>(this.wellList);
+  //     this.getLegendCount();
+  //     this.dataSource.paginator = this.paginator;
+  //     this.dataSource.sort = this.sort;
+  //     if(this.searchText !="")
+  //     this.dataSource.filter = this.searchText;
+  //   })
+  // }
 
-    let med = this.wellList.filter(alert => alert.alertLevel == "Medium");
-    this.medCount = med.length;
+  // getLegendCount(){
+  //   let high = this.wellList.filter(alert => alert.alertLevel == "High");
+  //   this.highCount = high.length;
 
-    let low = this.wellList.filter(alert => alert.alertLevel == "Low");
-    this.lowCount = low.length;
-  }
+  //   let med = this.wellList.filter(alert => alert.alertLevel == "Medium");
+  //   this.medCount = med.length;
+
+  //   let low = this.wellList.filter(alert => alert.alertLevel == "Low");
+  //   this.lowCount = low.length;
+  // }
 
   // search(data: Event) {
   //   const val = (data.target as HTMLInputElement).value;
@@ -112,13 +117,14 @@ export class AlertListComponent {
 
   ClearSearch() {   
     this.searchText = "";
-    this.service.getWellAlerts().subscribe((resp) => {
-      this.wellList = resp;      
-      this.dataSource = new MatTableDataSource<AlertList>(this.wellList);
-      this.getLegendCount();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;      
-    })
+    // this.service.getWellAlerts().subscribe((resp) => {
+    //   this.wellList = resp;      
+    //   this.dataSource = new MatTableDataSource<AlertList>(this.wellList);
+    //   this.getLegendCount();
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;      
+    // })
+    this.getAlertListFilters('');
   }
 
   alertChange(event: any) {
@@ -158,18 +164,36 @@ export class AlertListComponent {
   }
 
   refreshFilter() {
-    this.dataSource = [...this.wellList]
+    // this.dataSource = [...this.wellList]
+    this.getAlertListFilters('');
   }
-  snoozeBy(time: any){
 
-  }
-  clearAlerts(wellId: any){
-    console.log("clearAlerts-->"+this.clearAlertsComments)
+  submitSnoozeBy(alert: any) {
+    const payload = { 
+      alertId: alert.alertId,
+      snoozeBy: this.snoozeByTime
+    }
+    console.log('snoozyBy payload', payload)
     // console.log("clearAlertsWllName-->"+wellId.id)
     // wellId.alertLevel = "Clear"
     // console.log("clearAlerts-->"+this.dataSource)
     // this.clearAlertsComments = "";
     // debugger
+    this.service.snoozeBy(payload).subscribe((data: any) => {
+      console.log('snooze by response', data);
+    })
+
+  }
+
+  clearAlerts(alert: any, comment: string){
+    console.log('clear alert', alert)
+    const payload = { 
+      alertId: alert.alertId,
+      comment: comment
+    }
+    this.service.clearAlert(payload).subscribe((data: any) => {
+      console.log('clear alert response', data);
+    })
   }
 
   setDateSelected(option: any) {
@@ -270,27 +294,37 @@ export class AlertListComponent {
     this.GetWellDetailsWithFilters(status);
   }
 
-  GetWellDetailsWithFiltersTest() {
+  getAlertListFilters(searchStatus: string) {
+    const payload = { 
+      ...this.createModel(),
+      searchStatus,
+      // searchText: this.searchText
+    }
+
     this.loading = true;
-    var SearchModel = this.createModel();
-    this.wellService.getWellDetailsWithFilters(SearchModel).subscribe(response => {
+    this.service.getAlertListFilters(payload).subscribe(response => {
       if (response.hasOwnProperty('data')) {
+        // console.log('search response:- ', response)
         this.loading = false;
         this.WellList = response.data;
-        this.WellList.forEach(x => this.prepareChart(x));
+        // this.WellList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
-        setTimeout(() => {
-          this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.totalCount;
-        });
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        if (this.searchText != "")
+        this.dataSource.filter = this.searchText;
+        else 
+        this.dataSource.filter = this.searchText;
 
-        // this.TotalCount = response.totalCount;
-        // this.OverPumping = response.totalOverpumping;
-        // this.OptimalPumping = response.totalOptimalPumping;
-        // this.UnderPumping = response.totalUnderpumping;
+        this.highCount = response.totalHigh;
+        this.medCount = response.totalMedium;
+        this.lowCount = response.totalLow;
+        this.clearedCount = response.totalCleared;
+      } else {
+        this.searchText = "";
       }
-
-    });
+      // console.log('payload:- ', payload);
+    })
   }
 
   GetWellDetailsWithFilters(status) {
@@ -312,42 +346,42 @@ export class AlertListComponent {
   
   
     }
-    prepareChart(x: WellModel): void {
-      x.inferredChartObj = {
-        title: { text: '' },
-        chart: {
-          renderTo: 'container',
-          margin: 0,
-          spacing: [0,0,0,0],
-          backgroundColor: undefined
-        },
-        yAxis: {
-          labels: {
-            enabled: false
-          },
-          tickAmount: 6,
-          gridLineWidth: 1
-        },
-        xAxis: {
-          labels: {
-            enabled: false
-          },
-          tickAmount: 6,
-          gridLineWidth: 1
-        },
-        legend: {
-          enabled: false
-        },
-        tooltip: {
-          outside: true,
-          className: 'highchart-elevate-tooltip'
-        },
-        series: [{
-          type: 'line',
-          data: this.GetRandomNumbers(false)
-        }]
-      }
-    }
+    // prepareChart(x: WellModel): void {
+    //   x.inferredChartObj = {
+    //     title: { text: '' },
+    //     chart: {
+    //       renderTo: 'container',
+    //       margin: 0,
+    //       spacing: [0,0,0,0],
+    //       backgroundColor: undefined
+    //     },
+    //     yAxis: {
+    //       labels: {
+    //         enabled: false
+    //       },
+    //       tickAmount: 6,
+    //       gridLineWidth: 1
+    //     },
+    //     xAxis: {
+    //       labels: {
+    //         enabled: false
+    //       },
+    //       tickAmount: 6,
+    //       gridLineWidth: 1
+    //     },
+    //     legend: {
+    //       enabled: false
+    //     },
+    //     tooltip: {
+    //       outside: true,
+    //       className: 'highchart-elevate-tooltip'
+    //     },
+    //     series: [{
+    //       type: 'line',
+    //       data: this.GetRandomNumbers(false)
+    //     }]
+    //   }
+    // }
 
     GetRandomNumbers(isNegative: boolean = true) {
       var integers = [];
@@ -360,4 +394,13 @@ export class AlertListComponent {
     closeMenu() {
       this.trigger.closeMenu()
     }
+
+    closeSnoozeDialog(snoozeDialog: any) {
+      snoozeDialog.close.emit();
+    }
+
+    closeClearAlertDialog(alertDialog: any) {
+      alertDialog.close.emit();
+    }
+
 }
