@@ -3,49 +3,54 @@
     "id": 1,
     "type": "Pump Tagging",
     "value": "70",
-    "symbol": "circle",
-    "symbolClass": "fa fa-circle",
-    "symbolColor": "rgba(128,135,232,1)"
+    "symbolClass": "circle bgcolor-aqua"
   },
   {
     "id": 2,
-    "type": "Flatlining",
+    "type": "Last Storke Card",
     "value": "520",
-    "symbol": "square",
-    "symbolClass": "fa fa-square",
-    "symbolColor": "rgba(163,237,186,1)"
+    "symbolClass": "circle bgcolor-green"
   },
   {
     "id": 3,
-    "type": "Gas Interference",
+    "type": "Distorted",
     "value": "50",
-    "symbol": "triangle",
-    "symbolClass": "fa fa-caret-up",
-    "symbolColor": "orange"
+    "symbolClass": "squar  bgcolor-yellow"
   },
   {
     "id": 4,
-    "type": "Fluid Pound",
+    "type": "Flatlining",
     "value": "80",
-    "symbol": "diamond",
-    "symbolClass": "fa fa-square rhombus",
-    "symbolColor": "#6699A1"
+    "symbolClass": "squar rotate bgcolor-magenta"
   },
   {
     "id": 5,
-    "type": "Distorted",
+    "type": "Fluid Pound",
     "value": "30",
-    "symbol": "circle",
-    "symbolClass": "fa fa-circle",
-    "symbolColor": "rgba(225,211,105,1)"
+    "symbolClass": "circle bgcolor-orange"
   },
   {
     "id": 6,
-    "type": "Normal",
+    "type": "Gas Interference",
     "value": "50",
-    "symbol": "rectangle",
-    "symbolClass": "fa fa-caret-down",
-    "symbolColor": "skyblue"
+    "symbolClass": "squar bgcolor-perpal"
+  },
+  {
+    "id": 6,
+    "type": "High Fluid Level",
+    "value": "50",
+    "symbolClass": "squar rotate bgcolor-light-yellow"
+  },
+  {
+    "id": 6,
+    "type": "Very High Fluid Level",
+    "value": "50",
+    "symbolClass": "squar rotate bgcolor-pink"
+  },
+  {
+    "id": 6,
+    "type": "Other",
+    "value": "50",
+    "symbolClass": "squar rotate bgcolor-skyblue"
   }
- 
 ]
