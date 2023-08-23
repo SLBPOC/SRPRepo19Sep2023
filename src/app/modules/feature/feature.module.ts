@@ -86,7 +86,7 @@ import { TelemetryLineChartComponent } from './components/algorithms-and-mitigat
 import { WellInfoImageDescriptionComponent } from './components/well-info-image-description/well-info-image-description.component';
 import { AlgorithmsAndMitigationsService } from './services/algorithms-and-mitigations.service';
 import { TelemetryBarChartComponent } from './components/algorithms-and-mitigation/components/telemetry-bar-chart/telemetry-bar-chart.component';
-import { SlidingTabsComponent } from './components/well-details-view/sliding-tabs/sliding-tabs.component';
+import { WellInfoEntryComponent } from './components/well-details-view/well-info-entry/well-info-entry.component';
 import { AlgorithmitiInnertabsComponent } from './components/well-details-view/algorithmiti-innertabs/algorithmiti-innertabs.component';
 import { CreateGatewayInnertabsComponent } from './components/well-details-view/create-gateway-innertabs/create-gateway-innertabs.component';
 import { GenericTabsComponent } from './components/well-details-view/generic-tabs/generic-tabs.component';
@@ -142,7 +142,7 @@ import { AlgomitFiltertabsComponent } from './components/well-details-view/algom
     WellInfoImageDescriptionComponent,
     TelemetryBarChartComponent,
     /// well detail view
-    SlidingTabsComponent,
+    WellInfoEntryComponent,
     AlgorithmitiInnertabsComponent,
     CreateGatewayInnertabsComponent,
     GenericTabsComponent,
@@ -150,7 +150,7 @@ import { AlgomitFiltertabsComponent } from './components/well-details-view/algom
     WellInfoAlertsComponent,
     WellInfoEventsComponent,
     WellinfoDynacardComponent,
-    AlgomitFiltertabsComponent
+    AlgomitFiltertabsComponent,
     /// well detail view end
   ],
   imports: [ 

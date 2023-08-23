@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { DateRange } from '@angular/material/datepicker';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
 interface Food {
   value: string;
   viewValue: string;
@@ -51,14 +52,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 ];
 @Component({
-  selector: 'app-sliding-tabs',
-  templateUrl: './sliding-tabs.component.html',
-  styleUrls: ['./sliding-tabs.component.scss'],
+  selector: 'app-well-info-entry',
+  templateUrl: './well-info-entry.component.html',
+  styleUrls: ['./well-info-entry.component.scss'],
 
 
 })
 
-export class SlidingTabsComponent {
+export class WellInfoEntryComponent {
 
   //readmore variable, its true than read more string will print
   ReadMore: boolean = true

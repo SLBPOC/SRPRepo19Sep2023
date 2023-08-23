@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SlidingTabsComponent } from './sliding-tabs.component';
+import { WellInfoEntryComponent } from './well-info-entry.component';
 
 describe('SlidingTabsComponent', () => {
-  let component: SlidingTabsComponent;
-  let fixture: ComponentFixture<SlidingTabsComponent>;
+  let component: WellInfoEntryComponent;
+  let fixture: ComponentFixture<WellInfoEntryComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SlidingTabsComponent]
+      declarations: [WellInfoEntryComponent]
     });
-    fixture = TestBed.createComponent(SlidingTabsComponent);
+    fixture = TestBed.createComponent(WellInfoEntryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -167,24 +167,24 @@ span.squar.rotate {
 }
 .dynacard-content {
 	.d-flex {
-		display: flex;
+		// display: flex;
 		.col-md-4 {
 			padding: 0 0 20px 20px;
 		}
 		.runtime-production-chart {
-			min-width: 19%;
+			// min-width: 19%;
 			border: 1px solid #8b90ad;
 			background-color: #171a2e;
 			border-radius: 6px;
-			padding: 20px;
-			margin-left: 35px;
-			margin-bottom: 20px;
+			// padding-top: 20px;
+			// margin-left: 35px;
+			// margin-bottom: 20px;
 			text-align: center;
 			height: 146px;
-			svg {
-				width: 82%;
-				height: 100%;
-			}
+			// svg {
+			// 	width: 82%;
+			// 	height: 100%;
+			// }
 		}
 	}
 	.dynacard-sec-block {
@@ -573,6 +573,10 @@ span.squar.rotate {
 			
 		}
 	}
+}
+
+.text-center{
+	text-align: center;
 }
 	
   
