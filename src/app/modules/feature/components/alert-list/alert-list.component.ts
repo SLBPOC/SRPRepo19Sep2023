@@ -298,7 +298,10 @@ export class AlertListComponent {
     const payload = { 
       ...this.createModel(),
       searchStatus,
-      // searchText: this.searchText
+      dateRange: {
+        fromDate: this.selectedRangeValue?.start?.toISOString(),
+        toDate: this.selectedRangeValue?.end?.toISOString()
+    }
     }
 
     this.loading = true;
