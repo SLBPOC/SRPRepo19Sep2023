@@ -29,6 +29,7 @@ enum DateRanges {
 })
 export class AlertListComponent {
   wellList!: AlertList[];
+  @ViewChild('menuTrigger') trigger;
   dataSource: any;
   displayedColumns: string[] = ["stat", "wellName", "alertLevel", "date", "desc", "status", "action"]
   alertTypes: Option[] = [
@@ -43,6 +44,7 @@ export class AlertListComponent {
   highCount = 0;
   medCount = 0;
   lowCount = 0;
+  clearedCount = 0;
   selectedStatus: any;
   selectedAlert: any;
   daysSelected: any[] = [];
@@ -57,6 +59,7 @@ export class AlertListComponent {
   loading = true;
   WellList!: WellModel[];
   currentPage = 0;
+  clearAlertsComments!: string;
 
 
   @Input() selectedRangeValue: DateRange<Date>;
@@ -156,6 +159,17 @@ export class AlertListComponent {
 
   refreshFilter() {
     this.dataSource = [...this.wellList]
+  }
+  snoozeBy(time: any){
+
+  }
+  clearAlerts(wellId: any){
+    console.log("clearAlerts-->"+this.clearAlertsComments)
+    // console.log("clearAlertsWllName-->"+wellId.id)
+    // wellId.alertLevel = "Clear"
+    // console.log("clearAlerts-->"+this.dataSource)
+    // this.clearAlertsComments = "";
+    // debugger
   }
 
   setDateSelected(option: any) {
@@ -343,4 +357,7 @@ export class AlertListComponent {
       return integers;
     }
 
+    closeMenu() {
+      this.trigger.closeMenu()
+    }
 }
