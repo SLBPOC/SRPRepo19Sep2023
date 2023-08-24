@@ -165,10 +165,11 @@ export class AlertListComponent {
 
   refreshFilter() {
     // this.dataSource = [...this.wellList]
+    this.resetDateRangeFilters();
     this.getAlertListFilters('');
   }
 
-  submitSnoozeBy(alert: any) {
+  submitSnoozeBy(alert: any, snoozeByDialog: any) {
     const payload = { 
       alertId: alert.alertId,
       snoozeBy: this.snoozeByTime
@@ -181,11 +182,12 @@ export class AlertListComponent {
     // debugger
     this.service.snoozeBy(payload).subscribe((data: any) => {
       console.log('snooze by response', data);
+      this.closeDialog(snoozeByDialog);
     })
 
   }
 
-  clearAlerts(alert: any, comment: string){
+  submitClearAlerts(alert: any, comment: string, clearAlertDialog: any){
     console.log('clear alert', alert)
     const payload = { 
       alertId: alert.alertId,
@@ -193,7 +195,13 @@ export class AlertListComponent {
     }
     this.service.clearAlert(payload).subscribe((data: any) => {
       console.log('clear alert response', data);
+      this.closeDialog(clearAlertDialog);
     })
+  }
+
+  submitCalendarFilters(calendarFilterDialog: any) {
+    this.getAlertListFilters('');
+    this.closeDialog(calendarFilterDialog);
   }
 
   setDateSelected(option: any) {
@@ -299,8 +307,8 @@ export class AlertListComponent {
       ...this.createModel(),
       searchStatus,
       dateRange: {
-        fromDate: this.selectedRangeValue?.start?.toISOString(),
-        toDate: this.selectedRangeValue?.end?.toISOString()
+        fromDate: this.selectedRangeValue?.start?.toISOString() ?? '',
+        toDate: this.selectedRangeValue?.end?.toISOString() ?? ''
     }
     }
 
@@ -398,12 +406,10 @@ export class AlertListComponent {
       this.trigger.closeMenu()
     }
 
-    closeSnoozeDialog(snoozeDialog: any) {
-      snoozeDialog.close.emit();
+    closeDialog(dialog: any) {
+      dialog.close.emit();
+
     }
 
-    closeClearAlertDialog(alertDialog: any) {
-      alertDialog.close.emit();
-    }
 
 }
