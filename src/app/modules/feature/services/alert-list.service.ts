@@ -29,7 +29,6 @@ export class AlertListService {
 
   getAlertListFilters(payload: any): Observable<any> {
     const url = `http://localhost:5000/api/Alerts/GetAlertList`;
-    console.log(payload)
     return this.http.post(url, payload, {
       headers: {}
     })
