@@ -40,6 +40,7 @@
             color: #fff;
             font-size: 14px;
             font-weight: 700;
+            cursor: pointer;
         }
     }
 
@@ -116,7 +117,7 @@
     .calender-alrt-filter-action-btn-grp {
         display: flex;
         justify-content: center;
-        padding: 30px 30px;
+        padding: 15px;
         border-top: 1px solid #313652;
 
         .action-btn {
@@ -290,4 +291,36 @@
 .bg-dark-blue {
     background-color: rgba(19, 22, 41, 0.9);
 
+}
+.tableContainer .tabletophead .righthead .prioritywrapper ul li.priority.cleared:before {
+    background-color: gray;
+}
+
+::ng-deep .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    width: 365px !important;
+
+    textarea {
+        min-width: 315px !important;
+    }
+  
+}
+.calender-alrt-filter {
+    width: 415px !important;
+    background: rgba(19, 22, 41, 0.9) !important;
+     border: none !important; 
+    padding: 15px !important;
+    // height: 100% !important;
+    margin: auto !important;
+}
+
+div.input-lbl {
+    font-size: 12px !important;
+}
+button.action-btn {
+    width: 200px !important;
+    font-size: 12px;
+}
+
+.snooze-active {
+    background-color: #6BA7FF !important;
 }
