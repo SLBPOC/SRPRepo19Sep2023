@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AlertList } from '../model/alert-list';
 import { Observable } from 'rxjs';
 
@@ -36,18 +36,24 @@ export class AlertListService {
   }
 
   clearAlert(payload: any): Observable<any> {
-    const url = `http://localhost:5000/api/Alerts/clearAlert`;
+    // let params = new HttpParams()
+    // .set('alertId', payload.alertId)
+    // .set('comment', payload.comment)
+    // let httpOptions = {
+    //   params: params
+    // }
+    const url = `http://localhost:5000/api/Alerts/ClearAlert`;
     console.log(payload)
-    return this.http.post(url, payload, {
-      headers: {}
+    return this.http.post(url, null, {
+      params: payload,
     })
   }
 
   snoozeBy(payload: any): Observable<any> {
-    const url = `http://localhost:5000/api/Alerts/snoozeBy`;
+    const url = `http://localhost:5000/api/Alerts/SnoozeBy`;
     console.log(payload)
-    return this.http.post(url, payload, {
-      headers: {}
+    return this.http.post(url, null, {
+      params: payload
     })
   }
 
