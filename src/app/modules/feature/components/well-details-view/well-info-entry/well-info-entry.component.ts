@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { EventEmitter, Input, Output, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateRange } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CreateCustomFeedComponent } from '../../well-info/create-custom-feed/create-custom-feed.component';
 
 interface Food {
   value: string;
@@ -127,5 +129,12 @@ export class WellInfoEntryComponent {
     GearboxLoad: false,
     RodStress: false
   });
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder,public dialog:MatDialog) { }
+
+  createCustomFeed(){
+    // console.warn("@");
+    // this.enabled = true;
+    const dialogRef = this.dialog.open(CreateCustomFeedComponent);
+  }
+
 }

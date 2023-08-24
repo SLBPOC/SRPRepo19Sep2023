@@ -10,14 +10,14 @@
       </span>
       <h1>General Well Info (Static Well Info)</h1>
   </div>
-  <button mat-flat-button class="action-btn-info feedBtn">Feed</button>
+  <button mat-flat-button class="action-btn-info feedBtn" (click)="createCustomFeed()">Feed</button>
    </div>
    <div class="slidingtabContainer">
      <div class="tabs1">
-       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" selectedIndex="2">
+       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" selectedIndex="1">
          <!-- Well Info  -->
          <mat-tab label="Well Info">
-           <div class="well-content">
+           <!-- <div class="well-content">
              <div class="container">
                <div class="row">
                  <div class="col-md-3">
@@ -64,10 +64,11 @@
                  </div>
                </div>
              </div>
-           </div>
+           </div> -->
+           <app-well-info></app-well-info>
          </mat-tab>
          <!-- Dynacard Info  -->
-         <mat-tab label="Dynacard Info">
+         <mat-tab label="Dynacard Info" *ngIf="false">
            <div class="well-content">
              <div class="container">
                <div class="row">
@@ -199,7 +200,7 @@
           
         </mat-tab>
           <!-- Alogorithm & Mitigation Info  -->
-         <mat-tab label="Algorithm & Mitigations">
+         <mat-tab label="Algorithm & Mitigations"  *ngIf="false">
            <div class="well-content">
              <div class="container">
                <div class="row">
@@ -243,7 +244,7 @@
            </div>
          </mat-tab>
          <!-- Charting  -->
-         <mat-tab label="Charting">
+         <mat-tab label="Charting"  *ngIf="false">
            <div class="well-content">
              <div class="container">
                <div class="row">
@@ -601,15 +602,15 @@
            </div>
          </mat-tab>
          <!-- Alerts  -->
-         <mat-tab label="Alerts">
+         <mat-tab label="Alerts"  *ngIf="false">
            <app-well-info-alerts></app-well-info-alerts>
          </mat-tab>
            <!-- Events Log  -->
-         <mat-tab label="Event Log">
+         <mat-tab label="Event Log"  *ngIf="false">
            <app-well-info-events></app-well-info-events>
          </mat-tab>
            <!-- Telementary & Control  -->
-         <mat-tab label="Telementary & Control">
+         <mat-tab label="Telementary & Control"  *ngIf="false">
            <div class="main-container-dashboard-teli">
              <div class="row">
                <!--Left panel start here-->
