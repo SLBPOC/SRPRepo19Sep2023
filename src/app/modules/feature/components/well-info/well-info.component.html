@@ -1,7 +1,12 @@
 <!-- <app-navigation>Well info</app-navigation>
 <button mat-button color="primary">Primary</button> -->
 <div class="main-container">
-   <div class="container-title d-flex justify-content-between">
+   <!-- <div class="row">
+      <div class="col-md-1 col-md-offset-11">
+         <button mat-button color="primary" (click)="createCustomFeed()">Feed</button>
+      </div>
+   </div> -->
+   <!-- <div class="container-title d-flex justify-content-between">
       <span class="d-flex align-items-center">
          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -11,7 +16,7 @@
          <h1>Well Info</h1>
       </span>
       <button mat-button color="primary" (click)="createCustomFeed()">Feed</button>
-   </div>
+   </div> -->
    <div class="d-flex mx-2 mt-4">
       <div class="row">
          <!-- <div class="col-md-3 " *ngFor="let summary of dynacardSummaryData">
@@ -50,14 +55,14 @@
                <p><label for="">Load</label> <span class="label-val">{{dataResult?.load || '--'}}</span></p>
             </mat-card>
          </div>
-         <div class="col-md-3 ">
+         <!-- <div class="col-md-3 ">
             <mat-card class="text-center">
                <a class="button-type-none" [routerLink]="['/wells/dyna/',2]"><p><label for="">DynaCard</label> <span class="label-val">--</span></p></a>
             </mat-card>
-         </div>
+         </div> -->
       </div>
    </div>
-   <app-create-custom-feed [isEnable] ="enabled"></app-create-custom-feed>
+   <!-- <app-create-custom-feed></app-create-custom-feed> -->
 </div>
 
 <div>
