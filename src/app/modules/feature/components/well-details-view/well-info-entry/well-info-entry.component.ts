@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, } from '@angular/core';
 import { EventEmitter, Input, Output, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Location } from '@angular/common';
 import { DateRange } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -129,9 +130,9 @@ export class WellInfoEntryComponent {
     GearboxLoad: false,
     RodStress: false
   });
-  constructor(private _formBuilder: FormBuilder,public dialog:MatDialog) { }
+  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, public _location: Location) { }
 
-  createCustomFeed(){
+  createCustomFeed() {
     // console.warn("@");
     // this.enabled = true;
     const dialogRef = this.dialog.open(CreateCustomFeedComponent);

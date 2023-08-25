@@ -13,12 +13,13 @@ body {
     margin: 0;
 }
 
-.clear{
-    clear:both;
+.clear {
+    clear: both;
 }
 
-button,a{
-    cursor:pointer;
+button,
+a {
+    cursor: pointer;
 }
 
 .mat-typography {
@@ -83,6 +84,7 @@ button {
     cursor: pointer;
 
 }
+
 .page-title {
     background-color: #080912;
     margin: 0px -20px;
@@ -122,7 +124,7 @@ button {
 
             }
 
- 
+
 
             h1 {
 
@@ -545,9 +547,10 @@ button {
     .mdc-switch__icons {
         display: none;
     }
-// .mdc-label {
-//         display: none;
-//     }
+
+    // .mdc-label {
+    //         display: none;
+    //     }
 
 
     .mdc-switch {
@@ -836,4 +839,14 @@ button {
 
 button:hover {
     cursor: pointer;
+}
+
+
+.tooltip-well-info-image .mdc-tooltip__surface {
+    background-color: #051464;
+    color: white;
+    padding: 11px;
+    font-size: 20px;
+    max-width: unset;
+    max-height: unset;
 }
