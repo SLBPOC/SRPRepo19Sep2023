@@ -1,6 +1,6 @@
 <!-- <app-navigation>Well info</app-navigation>
 <button mat-button color="primary">Primary</button> -->
-<div class="main-container">
+<!-- <div class="main-container"> -->
    <!-- <div class="row">
       <div class="col-md-1 col-md-offset-11">
          <button mat-button color="primary" (click)="createCustomFeed()">Feed</button>
@@ -17,7 +17,9 @@
       </span>
       <button mat-button color="primary" (click)="createCustomFeed()">Feed</button>
    </div> -->
-   <div class="d-flex mx-2 mt-4">
+   <!-- <div class="d-flex mx-2 mt-4"> -->
+      <div class="container-fluid">
+
       <div class="row">
          <!-- <div class="col-md-3 " *ngFor="let summary of dynacardSummaryData">
             <mat-card>
@@ -61,10 +63,14 @@
             </mat-card>
          </div> -->
       </div>
-   </div>
+   <!-- </div> -->
    <!-- <app-create-custom-feed></app-create-custom-feed> -->
-</div>
+<!-- </div> -->
 
-<div>
-   <app-well-info-image-description [wellId]="currentWellId"></app-well-info-image-description>
+ 
+   <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+         <app-well-info-image-description [wellId]="currentWellId"></app-well-info-image-description>
+      </div>
+   </div> 
 </div>
