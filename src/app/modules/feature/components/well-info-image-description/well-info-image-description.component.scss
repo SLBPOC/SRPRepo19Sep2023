@@ -17,7 +17,7 @@
         display: flex;
         justify-content: space-between;
         margin: 0px;
-        font-size: 12px;
+        font-size: 20px;
         font-weight: bold;
       }
     }
@@ -41,58 +41,67 @@
     cursor: pointer;
   }
 
+  .info-icon {
+    font-size: 35px;
+    color: blue;
+    width: 35px;
+    height: 35px;
+  }
+
+
+
   .icon-1 {
     position: absolute;
-    left: 160px;
-    top: 353px;
+    left: 13%;
+    top: 21%;
   }
 
   .icon-2 {
     position: absolute;
-    left: 298px;
-    top: 344px;
+    left: 31.5%;
+    top: 14.8%;
   }
 
   .icon-3 {
     position: absolute;
-    left: 335px;
-    top: 330px;
+    left: 33.5%;
+    top: 5%;
   }
 
   .icon-4 {
     position: absolute;
-    left: 665px;
-    top: 260px;
+    left: 41.3%;
+    top: 28%;
   }
 
   .icon-5 {
     position: absolute;
-    left: 790px;
-    top: 300px;
+    left: 74%;
+    top: 8%;
   }
 
   .icon-6 {
     position: absolute;
-    left: 896px;
-    top: 360px;
+    left: 63%;
+    top: 40.5%;
   }
 
   .icon-7 {
     position: absolute;
-    left: 440px;
-    top: 410px;
+    left: 63%;
+    top: 57%;
   }
 
   .icon-8 {
     position: absolute;
-    left: 700px;
-    top: 510px;
+    left: 74%;
+    top: 15%;
   }
 
   .icon-9 {
     position: absolute;
-    left: 820px;
-    top: 590px;
+    left: 65%;
+    top: 29%;
   }
 
   .m-r-l-auto {
