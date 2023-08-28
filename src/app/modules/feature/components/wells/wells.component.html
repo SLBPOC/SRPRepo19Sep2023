@@ -131,7 +131,7 @@
          <ng-container matColumnDef="SPM">
             <th mat-sort-header mat-header-cell *matHeaderCellDef>SPM</th>
             <td mat-cell *matCellDef="let element" class="align-col">
-               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element.spm }}</a>
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element.spm.value }}</a>
                <ng-template #tooltip>
                   <div style="width: 180px;">
                      <highcharts-chart [Highcharts]="HighCharts" [options]="element.spmChartObj"
@@ -144,7 +144,7 @@
          <ng-container matColumnDef="PumpFillage">
             <th mat-sort-header mat-header-cell *matHeaderCellDef>Pump Fillage</th>
             <td mat-cell *matCellDef="let element">
-               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element.pumpFillage }}</a>
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element.pumpFillage.value }}</a>
                <ng-template #tooltip>
                   <div style="width: 180px;">
                      <highcharts-chart [Highcharts]="HighCharts" [options]="element.pumpFillageChartObj"
@@ -157,7 +157,7 @@
          <ng-container matColumnDef="InferredProduction">
             <th mat-sort-header mat-header-cell *matHeaderCellDef>Inferred Production(bpd)</th>
             <td mat-cell *matCellDef="let element" class="align-col">
-               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{element.inferredProduction}}</a>
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{element.inferredProduction.value}}</a>
                <ng-template #tooltip>
                   <div style="width: 180px;">
                      <highcharts-chart [Highcharts]="HighCharts" [options]="element.inferredChartObj"
@@ -183,7 +183,7 @@
          <ng-container *ngFor="let eClumn of displayableExtraColumns" [matColumnDef]="eClumn.header">
             <th mat-sort-header mat-header-cell *matHeaderCellDef>{{ eClumn.label }}</th>
             <td mat-cell *matCellDef="let element">
-               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element[eClumn.accessor] }}
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element[eClumn.accessor].value }}
                   <span *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span>
                </a>
                <ng-template #tooltip>
