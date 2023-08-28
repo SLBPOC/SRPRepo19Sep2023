@@ -2,7 +2,8 @@
   {
     "name": "Pump Tagging",
     "marker": {
-      "symbol": "circle"
+      "symbol": "circle",
+      "fillColor":"#57B2C0"
     },
     "data": [
       [
@@ -25,7 +26,9 @@
   {
     "name": "Flatlining",
     "marker": {
-      "symbol": "square"
+      "symbol": "diamond",
+      "fillColor":"#D25299"
+      
     },
     "data": [
       [
@@ -48,7 +51,8 @@
   {
     "name": "Gas Interference",
     "marker": {
-      "symbol": "triangle"
+      "symbol": "square",
+      "fillColor":"#5433A0"
     },
     "data": [
       [
@@ -71,7 +75,8 @@
   {
     "name": "Fluid Pound",
     "marker": {
-      "symbol": "diamond"
+      "symbol": "circle",
+      "fillColor":"#EA910D"
     },
     "data": [
       [
@@ -94,7 +99,8 @@
   {
     "name": "Distorted",
     "marker": {
-      "symbol": "rectangle"
+      "symbol": "square",
+      "fillColor":"#FFD200"
     },
     "data": [
       [
@@ -117,7 +123,8 @@
   {
     "name": "Normal",
     "marker": {
-      "symbol": "triangle-down"
+      "symbol": "diamond",
+      "fillColor":"#2196F3"
     },
     "data": [
       [

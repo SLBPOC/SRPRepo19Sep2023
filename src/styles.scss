@@ -12,9 +12,20 @@ body {
 body {
     margin: 0;
 }
+
+.clear {
+    clear: both;
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
 .mat-typography {
     font-family: var(--font-Slb-San-Regular) !important;
 }
+
 .material-icons {
     font-family: 'Material Icons' !important;
 }
@@ -68,6 +79,12 @@ body {
 
 //page title start
 
+button {
+
+    cursor: pointer;
+
+}
+
 .page-title {
     background-color: #080912;
     margin: 0px -20px;
@@ -84,22 +101,65 @@ body {
 
 .mat-typography {
     .main-container {
-        background-color: #22263D;
+
         .container-title {
+
             width: 100%;
-            background-color: #000;
-            padding: 10px 0 10px 10px;
+
+            padding: 10px 20px;
+
             display: flex;
-            align-items: baseline;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background-color: #0C0D1A;
+
+            .container-title-content {
+
+                display: flex;
+
+                align-items: center;
+
+            }
+
+
 
             h1 {
+
                 color: #fff;
+
                 margin: 0px;
+
                 padding-left: 10px;
+
                 font-size: 20px !important;
+
                 position: relative;
+
             }
+
+            .action-btn-info {
+
+                font-size: 14px;
+
+                font-weight: 700;
+
+                background-color: #6BA7FF;
+
+                border: 1px solid #6BA7FF;
+
+                color: #080912;
+
+                padding: 12px 16px;
+
+                border-radius: 40px;
+
+            }
+
         }
+
     }
 
 }
@@ -116,6 +176,7 @@ body {
 .padding-rl-10 {
     padding: 0 10px;
 }
+
 .padding-15 {
     padding: 15px;
 }
@@ -131,6 +192,7 @@ body {
 .padding-10 {
     padding: 10px;
 }
+
 .padding-0 {
     padding: 0;
 }
@@ -154,7 +216,8 @@ body {
     .matcard-height {
         min-height: 390px;
     }
-  .card-header {
+
+    .card-header {
         display: flex;
         justify-content: space-between;
     }
@@ -171,7 +234,7 @@ body {
         font-weight: 700;
     }
 
-  .select-list {
+    .select-list {
         display: flex;
         margin-top: 20px;
         align-items: center;
@@ -182,7 +245,8 @@ body {
             font-weight: 500;
         }
     }
-	.search-list {
+
+    .search-list {
         display: flex;
         margin-top: 20px;
         align-items: center;
@@ -207,7 +271,8 @@ body {
             flex-direction: row;
             align-items: center;
         }
-		#searchQueryInput {
+
+        #searchQueryInput {
             width: 100%;
             height: 36px;
             background: #080912;
@@ -297,7 +362,8 @@ body {
             color: #EBECF2;
             padding: 4px 0;
         }
-		.mat-mdc-form-field {
+
+        .mat-mdc-form-field {
             display: block;
 
             .mdc-text-field__input {
@@ -349,8 +415,9 @@ body {
                 display: inline-block !important;
                 width: 50% !important;
             }
-      }
-      .checkbox-section p {
+        }
+
+        .checkbox-section p {
             margin: 0 !important;
         }
 
@@ -385,19 +452,20 @@ body {
     }
 
 }
-.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
-            border-color: #FABB42 !important; 
-        }
 
-        .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
-            border-color: #3A83FF !important;
-        }
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
+    border-color: #FABB42 !important;
+}
+
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
+    border-color: #3A83FF !important;
+}
 
 //added for aligning check box
-.mdc-radio{
+.mdc-radio {
     vertical-align: middle !important;
 }
-    
+
 
 
 .devider {
@@ -413,7 +481,7 @@ body {
 
 
 .mat-mdc-form-field {
-    display: block;
+    display: block !important;
 
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         background-color: #080912E5;
@@ -457,7 +525,7 @@ body {
     padding: 30px 0px;
 
     .action-btn {
-        font-size: 10px;
+        font-size: 12px;
         background-color: #080912;
         border: 1px solid #6BA7FF;
         color: #fff;
@@ -479,9 +547,12 @@ body {
     .mdc-switch__icons {
         display: none;
     }
-.mdc-label {
-        display: none;
-    }
+
+    // .mdc-label {
+    //         display: none;
+    //     }
+
+
     .mdc-switch {
         .mdc-switch__track {
             border-radius: 10px !important;
@@ -492,18 +563,21 @@ body {
             height: 16px !important;
             width: 16px !important;
         }
-      	.mdc-switch__track::before {
+
+        .mdc-switch__track::before {
             background: #8B90AD !important;
         }
 
         .mdc-switch__track::after {
             background: #6BA7FF !important;
         }
-      .mdc-switch__handle::before,.mdc-switch__handle::after {
+
+        .mdc-switch__handle::before,
+        .mdc-switch__handle::after {
             background-color: #fff !important;
         }
 
-      .mdc-switch__handle-track {
+        .mdc-switch__handle-track {
             width: calc(100% - var(--mdc-switch-handle-width, 20px)) !important;
             left: 2px !important;
         }
@@ -561,14 +635,14 @@ body {
     border-top: 1px solid #313652;
 
     .action-btn {
-        font-size: 10px;
+        font-size: 12px;
         background-color: #080912;
-        border: 1px solid #6BA7FF;
+        border: 1px solid #6C7191;
         color: #fff;
         padding: 6px 16px;
         height: 35px;
         border-radius: 40px;
-        width: 112px;
+        min-width: 112px;
     }
 
     .active {
@@ -588,96 +662,118 @@ body {
     border: 1px solid #404352;
     padding: 17px;
     margin: auto;
+
     .button-type-none {
         background: none;
         border: none;
         cursor: pointer;
     }
+
     .select-filter-header {
         display: flex;
         justify-content: space-between;
+
         .select-filter-title {
             color: #fff;
             font-size: 14px;
             font-weight: 700;
         }
+
         .select-filter-close {
             color: #fff;
             font-size: 14px;
             font-weight: 700;
         }
     }
+
     .select-filter-section {
         margin-top: 18px;
+
         .select-lbl {
             font-size: 12px;
             color: #EBECF2;
             padding: 4px 0;
         }
-        
-            .mat-mdc-form-field {
-                display: block;
-                .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-                    background-color: #080912E5;
-                    border-radius: 10px;
+
+        .mat-mdc-form-field {
+            display: block;
+
+            .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+                background-color: #080912E5;
+                border-radius: 10px;
                 // border: 1px solid #8B90ADBF;
-                    padding: 8px 12px;
-                }
-                .mdc-line-ripple::after, .mdc-line-ripple::before  {
-                    border-bottom-width: 0 !important;
-                }
-                .mat-mdc-form-field.mat-focused.mat-primary .mat-mdc-select-arrow {
-                    color: #fff !important;
-                }
-                .mat-mdc-select-placeholder {
-                    color: #ADB1C7;
-                }
-                .mat-mdc-select-arrow {
-                    color: #fff;
-                }
-                .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
-                    padding-top: 1px;
-                    padding-bottom: 1px;
-                    padding-left: 2px;
-                }
-                .mat-mdc-form-field-infix {
-                    min-height: fit-content;
-                }
+                padding: 8px 12px;
             }
-            .checkbox-section p {
-                margin: 0 !important;
+
+            .mdc-line-ripple::after,
+            .mdc-line-ripple::before {
+                border-bottom-width: 0 !important;
             }
-            .mat-mdc-checkbox-touch-target {
-                height: 36px;
-                width: 36px;
+
+            .mat-mdc-form-field.mat-focused.mat-primary .mat-mdc-select-arrow {
+                color: #fff !important;
             }
-            .mdc-checkbox .mdc-checkbox__background {
-                top: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
-                left: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
+
+            .mat-mdc-select-placeholder {
+                color: #ADB1C7;
             }
-            .mdc-checkbox {
-                height: 12px;
-                flex: 0 0 14px;
+
+            .mat-mdc-select-arrow {
+                color: #fff;
             }
-            .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
-                border-color: #ADB1C7;
-                background-color: #080912;
+
+            .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+                padding-top: 1px;
+                padding-bottom: 1px;
+                padding-left: 2px;
             }
-            .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
-                border-color: #FABB42;
-                background-color: #3A83FF;
+
+            .mat-mdc-form-field-infix {
+                min-height: fit-content;
             }
-            .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
-                color: #080912;
-            }
-       
-        
+        }
+
+        .checkbox-section p {
+            margin: 0 !important;
+        }
+
+        .mat-mdc-checkbox-touch-target {
+            height: 36px;
+            width: 36px;
+        }
+
+        .mdc-checkbox .mdc-checkbox__background {
+            top: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
+            left: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
+        }
+
+        .mdc-checkbox {
+            height: 12px;
+            flex: 0 0 14px;
+        }
+
+        .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
+            border-color: #ADB1C7;
+            background-color: #080912;
+        }
+
+        .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
+            border-color: #FABB42;
+            background-color: #3A83FF;
+        }
+
+        .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
+            color: #080912;
+        }
+
+
     }
-  
+
     .select-filter-action-btn {
         display: flex;
         justify-content: end;
         padding: 30px 0px;
+
         .action-btn {
             font-size: 10px;
             background-color: #080912;
@@ -688,14 +784,69 @@ body {
             border-radius: 40px;
             width: 112px;
         }
+
         .active {
             background-color: #6BA7FF;
             color: #080912;
         }
-    }   
+    }
 }
 
-.highcharts-tooltip-container:has(.highchart-elevate-tooltip )
-{
-    z-index: 1020 !important;
+//Added for comman form field section
+.form-field-sec-section {
+    .input-lbl {
+        color: rgba(222, 197, 197, 1);
+        font-size: 12px;
+        font-family: var(--font-Slb-San-Medium);
+        line-height: 32px;
+    }
+
+    .mat-mdc-form-field {
+        min-width: 100%;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        border: 1px solid rgba(139, 144, 173, 0.75);
+        background-color: rgba(8, 9, 18, 0.75);
+        border-radius: 8px;
+        padding: 10px 12px 10px 12px;
+    }
+
+    .mat-mdc-select-placeholder {
+        color: #ADB1C7;
+    }
+
+    .black-border-button {
+        background: #080912;
+        border-radius: 8px;
+        padding: 10px 12px 10px 12px;
+        border: 1px solid rgba(139, 144, 173, 0.75);
+        font-size: 16px;
+        font-family: var(--font-Slb-San-bold);
+        font-weight: 500;
+        color: #FFFFFF;
+    }
+
+    .buutonsection {
+        margin: 8px 0px;
+        vertical-align: middle;
+
+        button {
+            vertical-align: middle;
+        }
+    }
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+
+.tooltip-well-info-image .mdc-tooltip__surface {
+    background-color: #051464;
+    color: white;
+    padding: 11px;
+    font-size: 20px;
+    max-width: unset;
+    max-height: unset;
 }

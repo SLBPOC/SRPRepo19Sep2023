@@ -6,7 +6,6 @@ import * as Highcharts from 'highcharts';
 import { Subscription } from 'rxjs';
 import { AlgorithmsAndMitigationsService } from '../../../services/algorithms-and-mitigations.service';
 import { DynacardService } from '../../../services/dynacard.service';
-// import { type } from 'os';
 
 // import Highcharts from 'highcharts'
 // More(Highcharts)
@@ -50,6 +49,10 @@ export class WellDetailsDynacardCardLegendComponent implements OnInit {
   onPointClick : Highcharts.PointClickCallbackFunction = (p)=> {
     this.dynaService.selectedClassification.next(p.point.options.z);
     // console.log(p.point.options.z)
+  }
+
+  onShowEvent = (p) =>{
+    console.log(p);
   }
 
   drawChart() {
@@ -113,6 +116,10 @@ export class WellDetailsDynacardCardLegendComponent implements OnInit {
             events:{
               click: this.onPointClick
             }
+          },
+          events:{
+            afterAnimate : this.onShowEvent,
+            show:this.onShowEvent
           },
           cursor:'pointer',
           states: {

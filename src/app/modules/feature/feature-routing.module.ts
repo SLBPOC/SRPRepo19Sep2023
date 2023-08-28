@@ -25,6 +25,8 @@ import { WellDetailsDynacardComponent } from './components/well-details-dynacard
 import { BubbleChartComponent } from './components/bubble-chart/bubble-chart.component';
 import { TelemetryLineChartComponent } from './components/algorithms-and-mitigation/components/telemetry-line-chart/telemetry-line-chart.component';
 import { HeatMapComponent } from './components/algorithms-and-mitigation/components/heat-map/heat-map.component';
+import { TelemetryBarChartComponent } from './components/algorithms-and-mitigation/components/telemetry-bar-chart/telemetry-bar-chart.component';
+import { WellInfoEntryComponent } from './components/well-details-view/well-info-entry/well-info-entry.component';
 
 const routes: Routes = [
   // {
@@ -53,13 +55,21 @@ const routes: Routes = [
         component: AlgorithmsAndMitigationComponent,
       },
       {
-        path: 'telemetryChart',
-        component: TelemetryLineChartComponent,
-      },
-      {
         path: 'heat-map',
         component: HeatMapComponent,
       },
+      {
+        path: 'telemetryLineChart',
+        component: TelemetryLineChartComponent,
+      },
+      {
+        path: 'telemetryBarChart',
+        component: TelemetryBarChartComponent,
+      },
+      {
+        path:'well-info-v2/:id',
+        component:WellInfoEntryComponent
+      }
     ],
   },
   { path: 'well-performance', component: WellPerformanceComponent },
