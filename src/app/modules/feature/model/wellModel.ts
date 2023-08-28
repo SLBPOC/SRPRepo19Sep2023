@@ -3,8 +3,8 @@ export interface WellModel {
      wellName:string;
      wellStatus:string;
      location:string;
-     spm:number;
-     pumpFillage:number;
+     spm:details;
+     pumpFillage:details;
      wellState:string;
      pumpCardDiagnostics:string;
      motorCurrent:number;
@@ -13,13 +13,13 @@ export interface WellModel {
      commStatus:string;
      controllerStatus:string;
      performanceStatus:string;
-     inferredProduction:number;
-     effectiveRuntime:number;
-     cycleToday:number;
-     structuralLoad:number;
-     minMaxLoad:number;
-     gearboxLoad:number;
-     rodStress:number;
+     inferredProduction:details;
+     effectiveRunTime:details;
+     cyclesToday:details;
+     structuralLoad:details;
+     minMaxLoad:detailsMinMax;
+     gearboxLoad:details;
+     rodStress:details;
      yesterdayCycle:number;
      battery:string;
      pad:string;
@@ -38,3 +38,14 @@ export interface WellModel {
      gearBoxLoadChartObj:Highcharts.Options;
      roadStressChartObj:Highcharts.Options;
 }
+
+export class details {
+     value: string;
+     data: any[];
+ }
+
+ export class detailsMinMax {
+     value: string;
+     min: any[];
+     max: any[];
+ }
