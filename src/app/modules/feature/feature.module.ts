@@ -85,6 +85,7 @@ import { DynacardChipsComponent } from './components/well-details-dynacard/dynac
 import { TelemetryLineChartComponent } from './components/algorithms-and-mitigation/components/telemetry-line-chart/telemetry-line-chart.component';
 import { WellInfoImageDescriptionComponent } from './components/well-info-image-description/well-info-image-description.component';
 import { AlgorithmsAndMitigationsService } from './services/algorithms-and-mitigations.service';
+import { HeatMapComponent } from './components/algorithms-and-mitigation/components/heat-map/heat-map.component';
 import { TelemetryBarChartComponent } from './components/algorithms-and-mitigation/components/telemetry-bar-chart/telemetry-bar-chart.component';
 import { WellInfoEntryComponent } from './components/well-details-view/well-info-entry/well-info-entry.component';
 import { AlgorithmitiInnertabsComponent } from './components/well-details-view/algorithmiti-innertabs/algorithmiti-innertabs.component';
@@ -140,6 +141,7 @@ import { AlgomitFiltertabsComponent } from './components/well-details-view/algom
     DynacardChipsComponent,
     TelemetryLineChartComponent,
     WellInfoImageDescriptionComponent,
+    HeatMapComponent,
     TelemetryBarChartComponent,
     /// well detail view
     WellInfoEntryComponent,

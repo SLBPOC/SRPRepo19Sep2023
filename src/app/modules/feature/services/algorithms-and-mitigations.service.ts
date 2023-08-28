@@ -33,6 +33,8 @@ export class AlgorithmsAndMitigationsService {
   private scatterChartInfoJson = '../../../../assets/json/scatter-chart-info.json';
   // private wellInfoJson = '../../../../assets/json/well-info.json';
   private wellInfoJson = 'http://localhost:5000/api/Well/GetWellInfoById?WellId=';
+  private heatMapChartJson = '../../../../assets/json/heat-map-chart.json';
+
 
   constructor(private http: HttpClient) { }
 
@@ -116,6 +118,11 @@ export class AlgorithmsAndMitigationsService {
   getWellInfoById(wellId: string): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
     return this.http.get<any>  (`http://localhost:5000/api/Well/GetWellInfoById?WellId=${wellId}`)       
+  }
+
+  getHeatMapChartData() {
+    return this.http.get(this.heatMapChartJson)
+
   }
 
 }
