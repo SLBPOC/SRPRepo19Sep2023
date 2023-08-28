@@ -73,9 +73,9 @@
                         </div>
                     </div>
                     <div class="calender-alrt-filter-section-btn-grp">
-                        <button mat-flat-button class="select-btn" (click)="setDateSelected(1)">1 Day</button>
-                        <button mat-flat-button class="select-btn" (click)="setDateSelected(2)">1 Week</button>
-                        <button mat-flat-button class="select-btn" (click)="setDateSelected(3)">1 Month</button>
+                        <button mat-flat-button class="select-btn" [ngClass]="{'snooze-active': noOfDaysCalendar === '1d'}"  (click)="setDateSelected('1d')">1 Day</button>
+                        <button mat-flat-button class="select-btn" [ngClass]="{'snooze-active': noOfDaysCalendar === '1w'}" (click)="setDateSelected('1w')">1 Week</button>
+                        <button mat-flat-button class="select-btn" [ngClass]="{'snooze-active': noOfDaysCalendar === '1m'}" (click)="setDateSelected('1m')">1 Month</button>
                     </div>
                     <div class="calender-alrt-filter-section-date-range">
                         <div class="calender-alrt-filter-date-range-title">Select Date Range</div>

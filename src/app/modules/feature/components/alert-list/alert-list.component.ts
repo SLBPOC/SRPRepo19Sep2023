@@ -32,6 +32,7 @@ export class AlertListComponent {
   WellList!: WellModel[];
   clearAlertsComments!: string;
   snoozeByTime: string = '1h';
+  noOfDaysCalendar: string;
 
   @Input() selectedRangeValue: DateRange<Date>;
   @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
@@ -55,7 +56,6 @@ export class AlertListComponent {
   }
 
   refreshFilter() {
-    // this.dataSource = [...this.wellList]
     this.resetDateRangeFilters();
     this.getAlertListFilters('');
   }
@@ -66,7 +66,6 @@ export class AlertListComponent {
       snoozeBy: this.snoozeByTime
     }
     this.service.snoozeBy(payload).subscribe((data: any) => {
-      console.log('snooze by response', data);
       this.closeDialog(snoozeByDialog);
     })
   }
@@ -87,8 +86,8 @@ export class AlertListComponent {
   }
 
   setDateSelected(option: any) {
-    let noOfHours = option === 1 ? '24h' : option === 2 ? '168h' : '720h'
-    this.getAlertListFilters(noOfHours);
+    this.noOfDaysCalendar = option;
+    this.getAlertListFilters('');
 
   }
 
@@ -125,7 +124,8 @@ export class AlertListComponent {
       dateRange: {
         fromDate: this.selectedRangeValue?.start?.toISOString() ?? '',
         toDate: this.selectedRangeValue?.end?.toISOString() ?? ''
-      }
+      },
+      calendarDays: this.noOfDaysCalendar
     }
 
     this.loading = true;
