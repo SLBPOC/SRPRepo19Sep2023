@@ -1,0 +1,62 @@
+::ng-deep {
+  .mdc-text-field__input {
+    background: black !important;
+    color: white !important;
+    padding: 15px !important;
+    height: 32px !important;
+    width: 92%;
+    margin-left: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+  }
+//   .mat-expansion-panel-header {
+//     height: 72px !important;
+// }
+.border {
+  border: 1px solid #e6e6e6 !important;
+ }
+}
+.container-fluid {
+  background-color: rgba(19, 22, 41, 0.9);
+  margin-top: 20px;
+
+  // .row {
+  //   display: flex;
+  //   flex-direction: row;
+  //   padding: 15px;
+  // }
+  // .col-3 {
+  //   width: 33.33%;
+  // }
+  // .col-6 {
+  //   width: 50%;
+  // }
+  // .col-9 {
+  //   width: 66.66%
+  // }
+  // .col-12 {
+  //   width: 100%;
+  // }
+  .label {
+    padding: 16px !important;
+    font-size: 14px;
+    line-height: 16px;
+    color: white;
+    font-weight: 600;
+  }
+  .fa-close {
+    font-size: 18px; 
+    color: white;
+    cursor: pointer;
+  }
+
+  .btn-pills {
+    background-color: white;
+    border-radius: 12px;
+    margin-right: 5px;
+    padding: inherit;
+  }
+ 
+
+}
