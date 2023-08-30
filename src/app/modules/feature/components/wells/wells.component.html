@@ -237,6 +237,180 @@
             </mat-paginator>
          </div>
       </div>
+
+
+      <!-- select filter start-->
+
+      <mat-menu #SelectionFilter="matMenu" class="filter-container">
+         <div class="align-center">
+            <div class="select-filter">
+               <div class="select-filter-header">
+                  <div class="select-filter-title">Add/Remove Columns</div>
+                  <button mat-icon-button class="calender-alrt-filter-close button-type-none"><svg width="16"
+                        height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                           d="M16 1.13594L14.8664 0L8 6.88125L1.13359 0L0 1.13594L6.86641 8.01719L0.034375 14.8641L1.16797 16L8 9.15312L14.832 16L15.9656 14.8641L9.13359 8.01719L16 1.13594Z"
+                           fill="#CCCFDE" />
+                     </svg>
+                  </button>
+               </div>
+               <div class="select-filter-section" (click)="$event.stopPropagation()">
+                  <div class="select-lbl">Extra Columns</div>
+                  <section class="checkbox-section" *ngFor="let extraColumn of extraColumnsList">
+                     <mat-checkbox [value]="extraColumn.header"
+                        (change)="onChangeDemo($event)">{{extraColumn.label}}</mat-checkbox>
+                  </section>
+                  <!-- <mat-form-field>
+                        <mat-select placeholder="Select Performance" [formControl]="extraColumnsCtrl" multiple #extraColumns >
+                        <mat-option *ngFor="let extraColumn of extraColumnsList" [value]="extraColumn.accessor">{{extraColumn.label}}</mat-option>
+                                               
+                      </mat-select>
+                     </mat-form-field> -->
+               </div>
+
+               <!-- <div class="select-filter-action-btn">
+                     <button mat-flat-button class="action-btn active" (click)="getSelectedValues()">Apply</button>
+                  </div>  -->
+            </div>
+         </div>
+      </mat-menu>
+      <!-- select filter end -->
+
+      <table matSort mat-table [dataSource]="dataSource" (matSortChange)="onSortChanged($event)">
+         <!-- Priority Status Column -->
+         <ng-container matColumnDef="WellStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let element">
+               <span
+                  [ngClass]="element.wellStatus === 'Over Pumping' ? 'high-priorityline' : element.wellStatus === 'Optimum Pumping' ? 'med-priorityline': 'low-priorityline'"></span>
+            </td>
+         </ng-container>
+         <!-- Wells Name -->
+         <ng-container matColumnDef="WellName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Well Name</th>
+            <td mat-cell *matCellDef="let element" id="well_name" class="align-col">
+               <a (click)="navigateToWellInfo(element.wellId)">{{element.wellName}}</a>
+            </td>
+         </ng-container>
+         <!-- Time and date -->
+         <ng-container matColumnDef="DateAndTime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Time & Date </th>
+            <td mat-cell *matCellDef="let element" class="align-col"> {{element.dateAndTime }} </td>
+         </ng-container>
+         <!-- Comms Status -->
+         <ng-container matColumnDef="CommStatus">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Comms Status</th>
+            <td mat-cell *matCellDef="let element" class="align-col">{{ element.commStatus }}</td>
+         </ng-container>
+         <!-- Controller Status -->
+         <ng-container matColumnDef="ControllerStatus">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef> Controller Status</th>
+            <td mat-cell *matCellDef="let element" class="align-col">
+               {{ element.controllerStatus }}</td>
+         </ng-container>
+         <!-- SPM -->
+         <ng-container matColumnDef="SPM.value">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>SPM</th>
+            <td mat-cell *matCellDef="let element" class="align-col">
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element.spm.value }}</a>
+               <ng-template #tooltip>
+                  <div style="width: 180px;">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.spmChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div>                  
+               </ng-template>
+            </td>            
+         </ng-container>
+         <!-- Pump Fillage -->
+         <ng-container matColumnDef="PumpFillage.value">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Pump Fillage</th>
+            <td mat-cell *matCellDef="let element">
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element.pumpFillage.value }}</a>
+               <ng-template #tooltip>
+                  <div style="width: 180px;">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.pumpFillageChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div>                  
+               </ng-template>
+            </td>
+         </ng-container>
+         <!-- Inferred Production -->
+         <ng-container matColumnDef="InferredProduction.value">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>Inferred Production(bpd)</th>
+            <td mat-cell *matCellDef="let element" class="align-col">
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{element.inferredProduction.value}}</a>
+               <ng-template #tooltip>
+                  <div style="width: 180px;">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.inferredChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div>
+                  <!-- <div>
+                     <img alt="" class="" src="./assets/images/strip-chart-tooltip.png">
+                  </div> -->
+               </ng-template>
+            </td>
+
+         </ng-container>
+         <!-- No Of Alerts(%) -->
+         <ng-container matColumnDef="NoOfAlerts">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>No Of Alerts</th>
+            <td mat-cell *matCellDef="let element" class="align-col">
+               <a [routerLink]="['/alerts',element.wellName]"> {{ element.noOfAlerts }}</a>
+            </td>
+         </ng-container>
+
+
+         <!-- Dynamic Columns -->
+         <ng-container *ngFor="let eClumn of displayableExtraColumns" [matColumnDef]="eClumn.header">
+            <th mat-sort-header mat-header-cell *matHeaderCellDef>{{ eClumn.label }}</th>
+            <td mat-cell *matCellDef="let element">
+               <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element[eClumn.accessor].value }}
+                  <span *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span>
+               </a>
+               <ng-template #tooltip>
+                  <div style="width: 180px;" *ngIf="eClumn.header =='EffectiveRunTime'">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.effectiveRunChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div>
+                  <div style="width: 180px;" *ngIf="eClumn.header =='CyclesToday'">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.cycleChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div> 
+                  <div style="width: 180px;" *ngIf="eClumn.header =='StructuralLoad'">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.structuralLoadChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div>
+                  <div style="width: 180px;" *ngIf="eClumn.header =='MinMaxLoad'">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.minMaxLoadChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div>
+                  <div style="width: 180px;" *ngIf="eClumn.header =='GearboxLoad'">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.gearBoxLoadChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div> 
+                  <div style="width: 180px;" *ngIf="eClumn.header =='RodStress'">
+                     <highcharts-chart [Highcharts]="HighCharts" [options]="element.roadStressChartObj"
+                        style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
+                  </div>                   
+               </ng-template> 
+                </td>
+         </ng-container>
+         <tr *matNoDataRow class="mat-mdc-row mdc-data-table__row cdk-row ng-star-inserted">
+            <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="loading==true" [attr.colspan]="displayedColumns.length">
+               <mat-progress-spinner mode="indeterminate" class="table-progressbar" style="margin:0 auto;"></mat-progress-spinner>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="loading==false" [attr.colspan]="displayedColumns.length">No Record Found</td>
+         </tr>
+         <!-- Header -->
+         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+         <!-- <td mat-cell *matCellDef="let element"></td> -->
+      </table>
+      <!-- <mat-paginator  [length]="12" showFirstLastButtons="true" [pageSizeOptions]="[3,5, 10, 20]"   (page)="handlePage($event)" >
+      </mat-paginator> -->
+      <mat-paginator #paginator [length]="TotalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
+         [pageSizeOptions]="[5, 10, 20]" (page)="pageChanged($event)" aria-label="Select page">
+      </mat-paginator>
    </div>
    
 </div>
