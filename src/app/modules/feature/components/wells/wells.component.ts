@@ -25,16 +25,16 @@ export class WellsComponent {
   dataSource: any = [];
   WellList!: WellModel[];
   selectedColumn: string[] = [];
-  displayedColumns: string[] = ['WellStatus', 'WellName', 'DateAndTime', 'CommStatus', 'ControllerStatus', 'SPM.value', 'PumpFillage.value', 'InferredProduction.value', 'NoOfAlerts'];
+  displayedColumns: string[] = ['WellStatus', 'WellName', 'DateAndTime', 'CommStatus', 'ControllerStatus', 'SPM', 'PumpFillage', 'InferredProduction', 'NoOfAlerts'];
   displayableExtraColumns: { label: string, accessor: string, header: string }[] = [];
   extraColumnsCtrl: any = new FormControl('');
   extraColumnsList: { label: string, accessor: string, header: string }[] = [
-    { label: 'Effective Runtime(%)', accessor: 'effectiveRunTime', header: 'EffectiveRunTime.value' },
-    { label: 'Cycles Today', accessor: 'cyclesToday', header: 'CyclesToday.value' },
-    { label: 'Structural Load(%)', accessor: 'structuralLoad', header: 'StructuralLoad.value' },
-    { label: 'MinMax Load(%)', accessor: 'minMaxLoad', header: 'MinMaxLoad.value' },
-    { label: 'Gearbox Load(%)', accessor: 'gearboxLoad', header: 'GearboxLoad.value' },
-    { label: 'Rod Stress(%)', accessor: 'rodStress', header: 'RodStress.value' }
+    { label: 'Effective Runtime(%)', accessor: 'effectiveRunTime', header: 'EffectiveRunTime' },
+    { label: 'Cycles Today', accessor: 'cyclesToday', header: 'CyclesToday' },
+    { label: 'Structural Load(%)', accessor: 'structuralLoad', header: 'StructuralLoad' },
+    { label: 'MinMax Load(%)', accessor: 'minMaxLoad', header: 'MinMaxLoad' },
+    { label: 'Gearbox Load(%)', accessor: 'gearboxLoad', header: 'GearboxLoad' },
+    { label: 'Rod Stress(%)', accessor: 'rodStress', header: 'RodStress' }
   ];
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -42,9 +42,6 @@ export class WellsComponent {
   @ViewChild('extraColumns', { static: true }) private extraColumns!: MatSelect;
 
   @ViewChild('searchQueryInput') searchInput: ElementRef<HTMLInputElement>;
-
-  ChartColumns: string[] = ['SPM', 'PumpFillage', 'InferredProduction', 'EffectiveRunTime','CyclesToday','StructuralLoad' ,'MinMaxLoad','GearboxLoad','RodStress'];
-  
 
   HighCharts: typeof HighCharts = HighCharts;
 
