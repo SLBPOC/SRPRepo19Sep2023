@@ -227,3 +227,8 @@ td#well_name > a:hover {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.row {
+    display: flex;
+    flex-direction: row;
+}

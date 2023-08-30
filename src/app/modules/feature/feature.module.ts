@@ -96,6 +96,8 @@ import { WellInfoAlertsComponent } from './components/well-details-view/well-inf
 import { WellInfoEventsComponent } from './components/well-details-view/well-info-events/well-info-events.component';
 import { WellinfoDynacardComponent } from './components/well-details-view/wellinfo-dynacard/wellinfo-dynacard.component';
 import { AlgomitFiltertabsComponent } from './components/well-details-view/algomit-filtertabs/algomit-filtertabs.component';
+import { WellFilterAndSortComponent } from './components/well-filter-and-sort/well-filter-and-sort.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 @NgModule({
@@ -153,6 +155,7 @@ import { AlgomitFiltertabsComponent } from './components/well-details-view/algom
     WellInfoEventsComponent,
     WellinfoDynacardComponent,
     AlgomitFiltertabsComponent,
+    WellFilterAndSortComponent,
     /// well detail view end
   ],
   imports: [ 
@@ -195,8 +198,8 @@ import { AlgomitFiltertabsComponent } from './components/well-details-view/algom
     MatExpansionModule,
     MatToolbarModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
-
+    MatProgressSpinnerModule,
+    MatSliderModule
   ],
   providers: [BsModalService,
     ChecklistDatabase,

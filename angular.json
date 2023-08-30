@@ -31,8 +31,7 @@
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.css" ,
-              //commented as UI project is not using 
-              // "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
             ],
