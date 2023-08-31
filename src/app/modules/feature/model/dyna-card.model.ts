@@ -35,3 +35,31 @@ export class CardDetailsModel {
     downholeStrokeLength_in: number;
     totalFluid_in: number
 }
+
+export interface Classification {
+    name: string;
+    count: number;
+}
+
+export interface DateRangeBubbleChart {
+    from: string;
+    to: string;
+    classfications: Classification[];
+}
+
+export interface BubbleChartInfo {
+    cards: DateRangeBubbleChart[];
+    classfication: Classification[];
+}
+
+export interface FramesDynameter {
+    classfication: string,
+    frame: Date
+}
+
+export interface ClassficationInfo {
+    id: number,
+    type: string,
+    value: number,
+    symbolClass: string
+}

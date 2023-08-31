@@ -79,21 +79,26 @@
             <div class="dynacard-sec-left-header">
                <div class="dynacard-sec-left-header-short">
                   <div class="show-shorting-period">
-                     2023-06-21 13:14:59
-                     <br>
-                     TO
-                     <br>
-                     2023-06-21 13:14:59
+                     <div *ngIf="selectedRangeValue">
+                        <!-- 2023-06-21 13:14:59 -->
+                        {{selectedRangeValue.start | date:'yyyy-MM-dd HH:mm:ss' }}
+                        <br>
+                        TO
+                        <br>
+                        <!-- 2023-06-21 13:14:59 -->
+                        {{selectedRangeValue.end | date:'yyyy-MM-dd HH:mm:ss' }}
+                     </div>
                   </div>
                   <div class="select-shorting-period">
-                     <button class="action-btn none-active active-btn">1h</button>
+                     <button class="action-btn none-active">1h</button>
                      <button class="action-btn none-active">4h</button>
                      <button class="action-btn none-active">12h</button>
                      <button class="action-btn none-active">1d</button>
                      <button class="action-btn none-active">1w</button>
                      <button class="action-btn none-active">1m</button>
-                     <button class="action-btn none-active">3m</button>
-                     <button mat-icon-button aria-label="Example icon-button with a menu" class=" button-type-none">
+                     <button class="action-btn none-active" [ngClass]="{'active-btn': activeTimeRange == '3m'}" (click)="bubbleChartTimeSelection('3m')">3m</button>
+                     <button mat-icon-button [matMenuTriggerFor]="calenderFilter"
+                        aria-label="Example icon-button with a menu" class=" button-type-none">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                            <path fill-rule="evenodd" clip-rule="evenodd"
                               d="M5.76562 7.75H4.26562V9.25H5.76562V7.75ZM9.10547 7.75781H7.60547V9.25781H9.10547V7.75781ZM10.9492 7.75781H12.4492V9.25781H10.9492V7.75781ZM15.7891 7.75781H14.2891V9.25781H15.7891V7.75781ZM14.8281 11.6953L13.6084 12.915L12.3896 11.6953L11.3281 12.7559L12.5488 13.9756L11.3281 15.1953L12.3896 16.2559L13.6084 15.0361L14.8281 16.2559L15.8896 15.1953L14.6699 13.9756L15.8896 12.7559L14.8281 11.6953ZM6.39746 12.915L7.61719 11.6953L8.67871 12.7559L7.45801 13.9756L8.67871 15.1953L7.61719 16.2559L6.39746 15.0361L5.17871 16.2559L4.11719 15.1953L5.33691 13.9756L4.11719 12.7559L5.17871 11.6953L6.39746 12.915ZM15.2656 4.49512V3.00781H18.501V18.498H1.5V3.00781H4.73926V4.49512H6.23926V3.00781H13.7656V4.49512H15.2656ZM13.7666 0V1.50977H6.24023V0H4.74023V1.50977H0V20H20V1.50977H15.2666V0H13.7666Z"
@@ -131,11 +136,7 @@
                         </highcharts-chart>
                      </div>
                   </div>
-                  <div class="data-container-block-second">
-                     <!-- <p>Data will be displayed here</p> -->
-                     <highcharts-chart [Highcharts]="Highcharts" [options]="dynaOptions" [(update)]="updateDynaHighChartFlag"
-                     [oneToOne]="true" style="width: 100%; min-height: 550px; display: block"></highcharts-chart>
-                  </div>
+
                </div>
                <div class="dynacard-sec-right-contain-block">
                   <div class="data-container-right-block-first">
@@ -194,7 +195,7 @@
                         <div class="card-status-count color-skyblue">0</div>
                      </div> -->
                   </div>
-                  <div class="data-container-right-block-second">
+                  <!-- <div class="data-container-right-block-second">
                      <div class="data-container-right-block-second-action-btn-grp">
                         <button mat-flat-button class="action-btn-info">Auto Update</button>
                         <button mat-flat-button class="action-btn-success">Historical</button>
@@ -210,8 +211,13 @@
                      </div>
                      <div class="data-container-right-block-second-data-sec">
                      </div>
-                  </div>
+                  </div> -->
                </div>
+            </div>
+            <div class="data-container-block-second">
+               <!-- <p>Data will be displayed here</p> -->
+               <highcharts-chart [Highcharts]="Highcharts" [options]="dynaOptions" [(update)]="updateDynaHighChartFlag"
+                  [oneToOne]="true" style="width: 100%; min-height: 550px; display: block"></highcharts-chart>
             </div>
          </div>
          <div class="dynacard-sec-right">
@@ -222,9 +228,10 @@
                   </div>
                   <div class="wrapper">
                      <div class="searchBar">
-                        <input id="searchQueryInput" [(ngModel)]="searchText" type="text" (keyup)="searchTime()" name="searchQueryInput" placeholder="Search"
-                           value="" />
-                        <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit" (click)="searchTextObseravale.next('');searchText=''">
+                        <input id="searchQueryInput" [(ngModel)]="searchText" type="text" (keyup)="searchTime()"
+                           name="searchQueryInput" placeholder="Search" value="" />
+                        <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit"
+                           (click)="searchTextObseravale.next('');searchText=''">
                            <svg width="14" height="14" viewBox="0 0 20 20" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd"
@@ -277,7 +284,8 @@
                            <th mat-header-cell *matHeaderCellDef class="checkbox-section"> # </th>
                            <td mat-cell *matCellDef="let element" class="checkbox-section">
                               <mat-checkbox class="checklist-leaf-node"
-                                 [checked]="selectionTimeModel.isSelected(element)" (change)="selectTime(element)">
+                                 [checked]="selectionTimeModel.isSelected(element.frame)"
+                                 (change)="selectTime(element.frame)">
                               </mat-checkbox>
                            </td>
                         </ng-container>
@@ -285,15 +293,15 @@
                         <ng-container matColumnDef="card">
                            <th mat-header-cell *matHeaderCellDef>Card</th>
                            <td mat-cell *matCellDef="let element">
-                              <span class="circle bgcolor-aqua"></span>
-                              Pump Tagging
+                              <span [ngClass]="getMarkerForClassification(element.classfication)"></span>
+                              {{element.classfication}}
                            </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="time">
                            <th mat-header-cell *matHeaderCellDef> Time</th>
-                           <td mat-cell *matCellDef="let element"> {{element}} </td>
+                           <td mat-cell *matCellDef="let element"> {{element.frame | date:'yyyy-MM-dd HH:mm:ss' }} </td>
                         </ng-container>
 
 
@@ -309,11 +317,14 @@
                         </ng-container>
 
                         <tr *matNoDataRow class="mat-mdc-row mdc-data-table__row cdk-row ng-star-inserted">
-                           <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="tableLoading" [attr.colspan]="displayedColumns.length">
-                              <mat-progress-spinner mode="indeterminate" class="table-progressbar" style="margin:0 auto;"></mat-progress-spinner>
+                           <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center"
+                              *ngIf="tableLoading" [attr.colspan]="displayedColumns.length">
+                              <mat-progress-spinner mode="indeterminate" class="table-progressbar"
+                                 style="margin:0 auto;"></mat-progress-spinner>
                            </td>
-                           <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="!tableLoading && (selectedClassification | async) > 0" [attr.colspan]="displayedColumns.length">No Record Found.</td>
-                           <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="!tableLoading && (selectedClassification | async) <= 0" [attr.colspan]="displayedColumns.length">Please select Classification.</td>
+                           <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center"
+                              *ngIf="!tableLoading">No Record Found.</td>
+                           <!-- <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="!tableLoading && (selectedClassification | async) <= 0" [attr.colspan]="displayedColumns.length">Please select Classification.</td> -->
                         </tr>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;">
@@ -334,14 +345,14 @@
                      <div class="main-title">
                         <span class="circle bgcolor-aqua"></span> Pump Tagging
                      </div>
-                     <span class="date-time">{{selectedTimeDetails.id}}</span>
+                     <span class="date-time">{{selectedTimeDetails.id }}</span>
                   </div>
                   <div class="select-classification">
                      <mat-form-field>
                         <mat-select placeholder="Change Classification">
                            <mat-option *ngFor="let welldata of classficationListdata" [value]="welldata.value">
                               {{welldata.viewValue}}
-            
+
                            </mat-option>
                         </mat-select>
                      </mat-form-field>
@@ -386,3 +397,40 @@
       </div>
    </div>
 </div>
+
+<!-- calender filter start-->
+<mat-menu #calenderFilter="matMenu" class="filter-container">
+   <div class="align-center">
+      <div class="calender-alrt-filter">
+         <div class="calender-alrt-filter-header">
+            <div class="calender-alrt-filter-title">Select</div>
+            <button mat-icon-button class="calender-alrt-filter-close button-type-none"><svg width="16" height="16"
+                  viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                     d="M16 1.13594L14.8664 0L8 6.88125L1.13359 0L0 1.13594L6.86641 8.01719L0.034375 14.8641L1.16797 16L8 9.15312L14.832 16L15.9656 14.8641L9.13359 8.01719L16 1.13594Z"
+                     fill="#CCCFDE" />
+               </svg>
+            </button>
+         </div>
+         <!-- <div class="calender-alrt-filter-section-btn-grp">
+            <button mat-flat-button class="select-btn">1 Day</button>
+            <button mat-flat-button class="select-btn">1 Week</button>
+            <button mat-flat-button class="select-btn">1 Month</button>
+         </div> -->
+         <div class="calender-alrt-filter-section-date-range">
+            <div class="calender-alrt-filter-date-range-title">Select Data Range</div>
+            <div class="calender-alrt-filter-section-colender">
+               <mat-calendar [selected]="selectedRangeValue" (click)="$event.stopPropagation()"
+                  (selectedChange)="selectedChange($event)">
+               </mat-calendar>
+            </div>
+         </div>
+         <div class="calender-alrt-filter-action-btn-grp">
+            <button mat-flat-button class="action-btn" (click)="bubbleChartTimeSelection('3m')">Reset</button>
+            <button mat-flat-button class="action-btn active marginL20"
+               (click)="bubbleChartTimeSelection('cal')">Apply</button>
+         </div>
+      </div>
+   </div>
+</mat-menu>
+<!-- calender filter end -->

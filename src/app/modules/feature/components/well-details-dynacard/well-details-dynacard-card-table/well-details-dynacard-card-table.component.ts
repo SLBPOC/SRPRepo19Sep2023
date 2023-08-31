@@ -37,11 +37,11 @@ export class WellDetailsDynacardCardTableComponent {
   constructor(private dynaService: DynacardService) {
     this.dynaService.selectedClassification.subscribe(
       (x) => {
-        this.selectedClassification.next(x % 8);
-        this.dynaService.selectedTime.next({addedOrRemoved:false,selected:'all'});
-        this.selectionTimeModel.clear();
-        this.searchText = '';
-        this.searchTextObseravale.next('');
+        // this.selectedClassification.next(x % 8);
+        // this.dynaService.selectedTime.next({addedOrRemoved:false,selected:'all'});
+        // this.selectionTimeModel.clear();
+        // this.searchText = '';
+        // this.searchTextObseravale.next('');
         // console.log(this.selectedClassification)
       }
     )
@@ -61,25 +61,25 @@ export class WellDetailsDynacardCardTableComponent {
   }
 
   ngOnInit(): void {
-    this.listOfTime = this.dynaService.getListOfTime()
-      .pipe(
-        switchMap(x=> this.selectedClassification.pipe(map(
-          v => {
-            var result =x != undefined ? x.filter((t, i) => (i+1) % v) : [];
-            return result;
-          }
-        ),
-        switchMap(x=> this.searchTextObseravale.pipe(map(
-          text=> {
-            if(text != "" && text != undefined)
-            {
-              return x.filter(t=>t.toLocaleLowerCase().trim().indexOf(text) > -1 );
-            }
-            return x;
-          }
-        )))
-        ))
-      );
+    // this.listOfTime = this.dynaService.getListOfTime()
+    //   .pipe(
+    //     switchMap(x=> this.selectedClassification.pipe(map(
+    //       v => {
+    //         var result =x != undefined ? x.filter((t, i) => (i+1) % v) : [];
+    //         return result;
+    //       }
+    //     ),
+    //     switchMap(x=> this.searchTextObseravale.pipe(map(
+    //       text=> {
+    //         if(text != "" && text != undefined)
+    //         {
+    //           return x.filter(t=>t.toLocaleLowerCase().trim().indexOf(text) > -1 );
+    //         }
+    //         return x;
+    //       }
+    //     )))
+    //     ))
+    //   );
   }
 
   selectionTimeModel = new SelectionModel<string>(true);
