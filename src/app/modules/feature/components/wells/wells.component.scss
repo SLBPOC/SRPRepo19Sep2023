@@ -232,3 +232,6 @@ td#well_name > a:hover {
     display: flex;
     flex-direction: row;
 }
+::ng-deep .tableContainer .mat-mdc-paginator .mat-mdc-paginator-page-size-label{
+    display: inline !important;
+}
