@@ -22,7 +22,7 @@ export class ListOfTimeComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-    this.listOfTime = this.dynaService.getListOfTime();
+    // this.listOfTime = this.dynaService.getListOfTime();
   }
 
   selectionTimeModel = new SelectionModel<string>(true);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { Observable } from 'rxjs';
 import {filter, tap} from 'rxjs/operators'
+import { BubbleChartInfo, ClassficationInfo, DateRangeBubbleChart } from '../model/dyna-card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import {filter, tap} from 'rxjs/operators'
 
 export class AlgorithmsAndMitigationsService {
 
-  private apiUrl: string="https://localhost:50282/api/";
+  private apiUrl: string="http://localhost:5000/api/";
   httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -107,8 +108,13 @@ export class AlgorithmsAndMitigationsService {
     return this.http.get(this.bubbleChartDataJson);
   }
 
-  getChartInfo(): Observable<any> {
-    return this.http.get(this.scatterChartInfoJson);
+  getBubbleChartDataV2(start:Date,end:Date):Observable<BubbleChartInfo>{
+    var url = this.apiUrl + `dynameter/classifications/from/${start.toISOString()}/to/${end.toISOString()}/chart`
+    return this.http.get<BubbleChartInfo>(url);
+  }
+
+  getChartInfo(): Observable<ClassficationInfo[]> {
+    return this.http.get<ClassficationInfo[]>(this.scatterChartInfoJson);
   }
 
   // getWellInfoById(wellId: string): Observable<any> {
