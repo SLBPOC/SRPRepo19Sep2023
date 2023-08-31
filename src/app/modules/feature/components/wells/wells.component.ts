@@ -593,7 +593,8 @@ export class WellsComponent {
   }
 
   navigateToWellInfo(wellId: string) {
-    this.router.navigateByUrl(`/well-info-v2/${wellId}`)
+    //this.router.navigateByUrl(`/well-info-v2/${wellId}`)
+    this.router.navigate([]).then(result => {  window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
   }
 
 }
