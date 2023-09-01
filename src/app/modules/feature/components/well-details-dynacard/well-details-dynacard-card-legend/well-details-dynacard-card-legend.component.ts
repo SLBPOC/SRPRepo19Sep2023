@@ -47,7 +47,7 @@ export class WellDetailsDynacardCardLegendComponent implements OnInit {
   }
 
   onPointClick : Highcharts.PointClickCallbackFunction = (p)=> {
-    this.dynaService.selectedClassification.next(p.point.options.z);
+    // this.dynaService.selectedClassification.next(p.point.options.z);
     // console.log(p.point.options.z)
   }
 

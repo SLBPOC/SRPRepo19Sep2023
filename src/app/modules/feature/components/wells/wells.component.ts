@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './wells.component.html',
   styleUrls: ['./wells.component.scss']
 })
-export class WellsComponent {
+export class WellsComponent implements OnInit{
 
   dataSource: any = [];
   WellList!: WellModel[];
@@ -60,9 +60,10 @@ export class WellsComponent {
   OverPumping: number = 0;
   OptimalPumping: number = 0;
   UnderPumping: number = 0;
-
+  
   minmaxChartData:any[]=[];  //min max chart data array
-
+  pageSizeOption=[10,20,30]
+  respdata: any
   // chartarray:any[]=[
   //   [1, 8.620679090895912],
   //   [2, 5.056747930070717],
@@ -114,6 +115,8 @@ export class WellsComponent {
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
       if (response.hasOwnProperty('data')) {
         this.loading = false;
+        this.pageSizeOption=[10, 15, 20, response.totalCount]
+        // this.getPageSizeOptions();
         this.WellList = response.data;
         this.WellList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
@@ -126,6 +129,8 @@ export class WellsComponent {
         this.OverPumping = response.totalOverpumping;
         this.OptimalPumping = response.totalOptimalPumping;
         this.UnderPumping = response.totalUnderpumping;
+        this.dataSource.paginator = this.paginator;
+       
       }
 
     });
@@ -151,7 +156,7 @@ export class WellsComponent {
     });
   }
 
-
+  
   //Create Model for search
   createModel(this: any) {
     this.model.pageSize = this.pageSize;
