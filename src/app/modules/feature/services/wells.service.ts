@@ -12,27 +12,29 @@ const wellData = '../../assets/json-data/welllist-data.json';
 })
 export class WellsService {
 
-  private apiUrl: string="http://localhost:5000/api/";
-    httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        })
-      };
+  private apiUrl: string = "http://localhost:5000/api/";
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  };
 
+  wellListData = '../../../../assets/json/well-list-by-filters.json'
   constructor(private http: HttpClient) { }
 
-  
+
   getWellDetails(): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl + "well", this.httpOptions);          
+    return this.http.get<any[]>(this.apiUrl + "well", this.httpOptions);
   }
 
-  getWellDetailsWithFilters(searchModel:any): Observable<any> {
-    return this.http.post<WellModel[]>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);          
+  getWellDetailsWithFilters(searchModel: any): Observable<any> {
+    // return this.http.post<WellModel[]>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);          
+    return this.http.get(this.wellListData);
   }
 
   getWellInfoById(wellId: string): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<any>  (this.apiUrl + `Well/GetWellInfoById?WellId=${wellId}`)       
+    return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById?WellId=${wellId}`)
   }
 
 }
