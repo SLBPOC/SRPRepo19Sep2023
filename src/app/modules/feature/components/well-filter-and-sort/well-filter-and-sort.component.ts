@@ -24,7 +24,10 @@ export class WellFilterAndSortComponent {
     wellNames: false,
     commsStatus: false,
     controllerStatus: false,
-    pumpingTypes: false
+    pumpingTypes: false,
+    spm: false,
+    pumpFillage: false,
+    inferredProduction: false
   }
   constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router) { }
 
@@ -79,6 +82,9 @@ export class WellFilterAndSortComponent {
     this.clearControllerStatus();
     this.clearPumpingTypes();
     this.updateAppliedFilter();
+    this.clearSpm();
+    this.clearPumpFillage();
+    this.clearInferredProduction();
   }
 
   clearCommStatus() {
@@ -99,6 +105,26 @@ export class WellFilterAndSortComponent {
   clearWellNames() {
     this.providers.setValue([]);
     this.filtersApplied.wellNames = false;
+  }
+
+  clearSpm() {
+    this.spmSlider.start = 0;
+    this.spmSlider.end = 50;
+    this.filtersApplied.spm = false;
+  }
+
+  clearPumpFillage() {
+    this.pumpFillageSlider.start = 0;
+    this.pumpFillageSlider.end = 50;
+    this.filtersApplied.pumpFillage = false;
+
+  }
+
+  clearInferredProduction() {
+    this.inferredProductionSlider.start = 0;
+    this.inferredProductionSlider.end = 50;
+    this.filtersApplied.inferredProduction = false;
+
   }
 
   applyFilter(isChecked, filterOption) {
