@@ -19,13 +19,13 @@
       <span class="label">Applied filters</span>
     </div>
     <div class="col-12">
-     <button mat-raised-button class="mr-2" *ngIf="filtersApplied.wellNames" (click) = "clearWellNames()"> <mat-icon >close</mat-icon> Well Names</button>
+     <!-- <button mat-raised-button class="mr-2" *ngIf="filtersApplied.wellNames" (click) = "clearWellNames()"> <mat-icon >close</mat-icon> Well Names</button>
       <button mat-raised-button class="mr-2" *ngIf="filtersApplied.commsStatus" (click) = "clearCommStatus()"> <mat-icon >close</mat-icon> Comms Status</button>
       <button mat-raised-button class="mr-2" *ngIf="filtersApplied.controllerStatus" (click) = "clearControllerStatus()"> <mat-icon >close</mat-icon>Controller Status</button>
       <button mat-raised-button class="mr-2" *ngIf="filtersApplied.pumpingTypes" (click) = "clearPumpingTypes()"> <mat-icon >close</mat-icon>Pumping Types</button> 
+      -->
      
-     
-      <!-- <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.wellNames">
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.wellNames">
         <span aria-hidden="true" class="close-icon" (click) = "clearWellNames()">&times;</span> Well Names
       </button>
       <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.commsStatus">
@@ -45,7 +45,7 @@
       </button>
       <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.inferredProduction">
         <span aria-hidden="true" (click) = "clearInferredProduction()">&times;</span> Inferred Production
-      </button> -->
+      </button>
     </div>
   </div>
 
