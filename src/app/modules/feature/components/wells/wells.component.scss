@@ -235,3 +235,43 @@ td#well_name > a:hover {
 ::ng-deep .tableContainer .mat-mdc-paginator .mat-mdc-paginator-page-size-label{
     display: inline !important;
 }
+
+// akumar28-start
+::ng-deep {
+    .controller-status-btn-info {
+        background: #0dcaf0 !important;
+        border-radius: 16px !important;
+        color: black !important;
+        border: 1px solid #04505f;
+    }
+    .controller-status-btn-danger {
+        background: #f46e36 !important;
+        border-radius: 16px !important;
+        color: black !important;
+        border: 1px solid #873c1c;
+
+    }
+    .controller-status-btn-default {
+        background: #6c757d !important;
+        border-radius: 16px !important;
+        color: black !important;
+        border: 1px solid #484e53;
+
+    }
+    .controller-status-label-success {
+        color: green !important;
+    }
+    .controller-status-label-danger {
+        color: #f46e36 !important;
+    }
+    .tabletophead {
+        .lefthead {
+            width: 10% !important;
+        }
+        .righthead {
+            width: 90% !important;
+        }
+    }
+    
+}
+// akumar28-ends
