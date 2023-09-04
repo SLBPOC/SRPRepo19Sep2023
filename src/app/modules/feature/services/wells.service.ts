@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { WellModel } from '../model/wellModel';
+import { Subject } from 'rxjs';
 
 const wellData = '../../assets/json-data/welllist-data.json';
 
@@ -12,7 +13,8 @@ const wellData = '../../assets/json-data/welllist-data.json';
 })
 export class WellsService {
 
-  private apiUrl: string="https://localhost:50282/api/";
+ sub = new Subject()
+  private apiUrl: string="http://localhost:5000/api/";
     httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

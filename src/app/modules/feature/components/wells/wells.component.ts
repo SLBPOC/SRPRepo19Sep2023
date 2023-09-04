@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './wells.component.html',
   styleUrls: ['./wells.component.scss']
 })
-export class WellsComponent {
+export class WellsComponent implements OnInit{
 
   dataSource: any = [];
   WellList!: WellModel[];
@@ -48,7 +48,7 @@ export class WellsComponent {
   searchText: string = "";
   sortDirection: string = "";
   sortColumn: string = "";
-  pageSize: number = 5;
+  pageSize: number = 10;
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
@@ -60,9 +60,10 @@ export class WellsComponent {
   OverPumping: number = 0;
   OptimalPumping: number = 0;
   UnderPumping: number = 0;
-
+  
   minmaxChartData:any[]=[];  //min max chart data array
-
+  pageSizeOption=[10,20,30]
+  respdata: any
   // chartarray:any[]=[
   //   [1, 8.620679090895912],
   //   [2, 5.056747930070717],
@@ -91,6 +92,10 @@ export class WellsComponent {
 
   ngOnInit(): void {
     this.GetWellDetailsWithFilters();
+    this.service.sub.subscribe((resp : any)=> {
+      console.log(resp);
+      this.dataSource = new MatTableDataSource<WellModel>(resp);
+    })
   }
 
   GetWellDetails() {
@@ -110,6 +115,8 @@ export class WellsComponent {
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
       if (response.hasOwnProperty('data')) {
         this.loading = false;
+        this.pageSizeOption=[10, 15, 20, response.totalCount]
+        // this.getPageSizeOptions();
         this.WellList = response.data;
         this.WellList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
@@ -122,13 +129,34 @@ export class WellsComponent {
         this.OverPumping = response.totalOverpumping;
         this.OptimalPumping = response.totalOptimalPumping;
         this.UnderPumping = response.totalUnderpumping;
+        this.dataSource.paginator = this.paginator;
+       
       }
 
     });
   }
+  getWellDetailsWithFiltersAndSort(payload: any){
+    debugger;
+    this.loading = true;
+    this.service.getWellDetailsWithFilters(payload).subscribe(response => {
+      if (response.hasOwnProperty('data')) {
+        this.loading = false;
+        this.WellList = response.data;
+        this.WellList.forEach(x => this.prepareChart(x));
+        this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+        this.service.sub.next(response.data)
+        this.dataSource.data = this.WellList;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.TotalCount = response.totalCount;
+        this.OverPumping = response.totalOverpumping;
+        this.OptimalPumping = response.totalOptimalPumping;
+        this.UnderPumping = response.totalUnderpumping;
+      }
+    });
+  }
 
-
-
+  
   //Create Model for search
   createModel(this: any) {
     this.model.pageSize = this.pageSize;
@@ -593,7 +621,8 @@ export class WellsComponent {
   }
 
   navigateToWellInfo(wellId: string) {
-    this.router.navigateByUrl(`/well-info-v2/${wellId}`)
+    //this.router.navigateByUrl(`/well-info-v2/${wellId}`)
+    this.router.navigate([]).then(result => {  window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
   }
 
 }

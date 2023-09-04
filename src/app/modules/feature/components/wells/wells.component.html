@@ -179,7 +179,7 @@
                <ng-container matColumnDef="NoOfAlerts">
                   <th mat-sort-header mat-header-cell *matHeaderCellDef>No Of Alerts</th>
                   <td mat-cell *matCellDef="let element" class="align-col">
-                     <a [routerLink]="['/alerts',element.wellName]"> {{ element.noOfAlerts }}</a>
+                     <a [routerLink]="['/alerts',element.wellName]" target="_blank"> {{ element.noOfAlerts }}</a>
                   </td>
                </ng-container>
       
@@ -232,9 +232,14 @@
             </table>
             <!-- <mat-paginator  [length]="12" showFirstLastButtons="true" [pageSizeOptions]="[3,5, 10, 20]"   (page)="handlePage($event)" >
             </mat-paginator> -->
-            <mat-paginator #paginator [length]="TotalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
-               [pageSizeOptions]="[5, 10, 20]" (page)="pageChanged($event)" aria-label="Select page">
-            </mat-paginator>
+            <mat-paginator #paginator
+             style-paginator (page)="pageChanged($event)" 
+             [length]="TotalCount"
+             [pageIndex]="pageNumber" 
+             [pageSize]="pageSize" 
+             [pageSizeOptions]="pageSizeOption"
+            showFirstLastButtons>
+         </mat-paginator>
          </div>
       </div>
    </div>
