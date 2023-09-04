@@ -850,3 +850,9 @@ button:hover {
     max-width: unset;
     max-height: unset;
 }
+
+.light-theme {
+    .example-sidenav-content {
+        background: #cfd0d6 !important;
+    }
+}
