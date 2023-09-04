@@ -850,3 +850,55 @@ button:hover {
     max-width: unset;
     max-height: unset;
 }
+
+.light-theme {
+    .example-sidenav-content {
+        background: #cfd0d6 !important;
+    }
+    //left filter section css
+  .left-wellFilter{
+    background-color: #fff !important;
+
+    .label{
+        color:#051464 !important;
+        font-size: 18px;
+    }
+
+    .filterBtn{
+        background-color: #FF6B6B;
+        border-radius: 60px;
+        padding: 10px;
+        color: #fff;
+        margin: 20px 0 0 20px;
+    }
+
+    .mat-accordion{
+        h4{
+            font-size: 18px !important;
+            color:#051464 !important;
+            font-family: 'SLB Sans Bold' !important;
+        }
+
+        .mdc-form-field{
+            label{
+                color:#051464 !important;
+                font-size: 18px;
+
+
+            }
+
+            
+            .mdc-checkbox__background{
+                border:1px solid #ADB1C7 !important;
+                
+
+            }
+
+            .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background{
+                background-color: #051464 !important;
+                
+            }
+        }
+    }
+  }
+}

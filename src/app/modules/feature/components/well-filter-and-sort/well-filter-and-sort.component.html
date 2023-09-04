@@ -1,4 +1,4 @@
-<div class="container-fluid pt-2">
+<div class="container-fluid pt-2 left-wellFilter">
   <div class="row pt-2 pb-2">
     <div class="col-6">
       <span class="label">Filter & Sort</span>
@@ -25,25 +25,25 @@
       <button mat-raised-button class="mr-2" *ngIf="filtersApplied.pumpingTypes" (click) = "clearPumpingTypes()"> <mat-icon >close</mat-icon>Pumping Types</button> 
       -->
      
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.wellNames">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.wellNames">
         <span aria-hidden="true" class="close-icon" (click) = "clearWellNames()">&times;</span> Well Names
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.commsStatus">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.commsStatus">
         <span aria-hidden="true" (click) = "clearCommStatus()">&times;</span> Comms Status
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.controllerStatus">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.controllerStatus">
         <span aria-hidden="true" (click) = "clearControllerStatus()">&times;</span> Controller Status
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.pumpingTypes">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.pumpingTypes">
         <span aria-hidden="true" (click) = "clearPumpingTypes()">&times;</span> Pumping Types
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.spm">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.spm">
         <span aria-hidden="true" (click) = "clearSpm()">&times;</span> SPM Dimensionless
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.pumpFillage">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.pumpFillage">
         <span aria-hidden="true" (click) = "clearPumpFillage()">&times;</span> Pump Fillage
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.inferredProduction">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.inferredProduction">
         <span aria-hidden="true" (click) = "clearInferredProduction()">&times;</span> Inferred Production
       </button>
     </div>
