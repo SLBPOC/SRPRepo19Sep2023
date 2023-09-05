@@ -272,6 +272,9 @@ td#well_name > a:hover {
             width: 90% !important;
         }
     }
-    
+    .mat-mdc-tab.mdc-tab {
+        height: 48px;
+        flex-grow: 1 !important;
+    }
 }
 // akumar28-ends
