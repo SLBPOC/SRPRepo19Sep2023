@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FeatureComponent } from './feature.component';
 import { AlgorithmsAndMitigationComponent } from './components/algorithms-and-mitigation/algorithms-and-mitigation.component';
@@ -27,6 +27,13 @@ import { TelemetryLineChartComponent } from './components/algorithms-and-mitigat
 import { HeatMapComponent } from './components/algorithms-and-mitigation/components/heat-map/heat-map.component';
 import { TelemetryBarChartComponent } from './components/algorithms-and-mitigation/components/telemetry-bar-chart/telemetry-bar-chart.component';
 import { WellInfoEntryComponent } from './components/well-details-view/well-info-entry/well-info-entry.component';
+import { DynacardsClassificationComponent } from './components/dynacards-classification/dynacards-classification.component';
+import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fill/surface-card-pump-fill.component';
+import { CurrentCardAreaComponent } from './components/current-card-area/current-card-area.component';
+import { SurfaceCardPumpComponent } from './components/surface-card-pump/surface-card-pump.component';
+import { PumpFillageNoOfCycleComponent } from './components/pump-fillage-no-of-cycle/pump-fillage-no-of-cycle.component';
+import { SpmMeasuredComponent } from './components/spm-measured/spm-measured.component';
+
 
 const routes: Routes = [
   // {
@@ -81,7 +88,31 @@ const routes: Routes = [
   {
     path: 'bubble-chart',
     component: BubbleChartComponent,
-  }
+  },
+  {
+    path: 'dynaclass',
+    component: DynacardsClassificationComponent,
+  },
+  {
+    path: 'surface',
+    component: SurfaceCardPumpFillComponent,
+  },
+  {
+    path: 'current-card',
+    component: CurrentCardAreaComponent,
+  },
+  {
+    path: 'surface',
+    component: SurfaceCardPumpComponent,
+  },
+  {
+    path: 'pumpfill-chart',
+    component: PumpFillageNoOfCycleComponent,
+  },
+  {
+    path: 'spm',
+    component: SpmMeasuredComponent,
+  },
 
   //   ],
   // },
@@ -91,5 +122,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class FeatureRoutingModule { }

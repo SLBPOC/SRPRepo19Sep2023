@@ -98,6 +98,13 @@ import { WellinfoDynacardComponent } from './components/well-details-view/wellin
 import { AlgomitFiltertabsComponent } from './components/well-details-view/algomit-filtertabs/algomit-filtertabs.component';
 import { WellFilterAndSortComponent } from './components/well-filter-and-sort/well-filter-and-sort.component';
 import {MatSliderModule} from '@angular/material/slider';
+import { CurrentCardAreaComponent } from './components/current-card-area/current-card-area.component';
+import { SpmMeasuredComponent } from './components/spm-measured/spm-measured.component';
+import { PumpFillageNoOfCycleComponent } from './components/pump-fillage-no-of-cycle/pump-fillage-no-of-cycle.component';
+import { StylePaginatorDirective } from './components/wells/wells-dierctives';
+import { SurfaceCardPumpComponent } from './components/surface-card-pump/surface-card-pump.component';
+import { DynacardsClassificationComponent } from './components/dynacards-classification/dynacards-classification.component';
+import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fill/surface-card-pump-fill.component';
 
 
 @NgModule({
@@ -157,6 +164,13 @@ import {MatSliderModule} from '@angular/material/slider';
     AlgomitFiltertabsComponent,
     WellFilterAndSortComponent,
     /// well detail view end
+    DynacardsClassificationComponent,
+    SurfaceCardPumpFillComponent,
+    CurrentCardAreaComponent,
+    SurfaceCardPumpComponent,
+    PumpFillageNoOfCycleComponent,
+    SpmMeasuredComponent,
+    StylePaginatorDirective,
   ],
   imports: [ 
     CommonModule,
