@@ -859,6 +859,7 @@ button:hover {
 
     //left filter section css
   .left-wellFilter{
+   
     background-color: #fff !important;
 
     .label{
@@ -874,26 +875,95 @@ button:hover {
         margin: 20px 0 0 20px;
     }
 
+    .mat-expansion-panel:not([class*=mat-elevation-z]){
+        box-shadow: none !important;
+        border-radius: 0px;
+    }
+
+   
+    .mat-mdc-slider{
+
+    width: 75% !important;
+    margin: 10px auto !important;
+
+    }
+
+    .mat-mdc-slider .mdc-slider__thumb-knob{
+        background-color: #E6E6E6 !important;
+        border-color: #CBCBCB !important;
+    }
+
+    .mat-mdc-slider .mdc-slider__track--inactive{
+        background-color: #E6E6E6;
+        opacity: 1;
+    }
+
+    .mat-mdc-slider .mdc-slider__track--active_fill{
+        border-color: #3BAB46 !important;
+    }
+
+    .mdc-slider .mdc-slider__value-indicator {
+        transform: initial;
+        opacity: 1;
+        border-radius: 8px;
+        border: 1px solid #ADB1C7;
+        background-color: #EFF0F5;
+    }
+    .mdc-slider .mdc-slider__value-indicator::after, .mdc-slider .mdc-slider__value-indicator::before {
+        display: none;
+    }
+
+    .mat-expansion-panel-body{
+        padding:0px 0  20px 0;
+    }
+    .mat-expansion-panel-content{
+        padding: 0 20px !important;
+    }
+   .applyfilterBtn .mat-mdc-raised-button:not(:disabled){
+    background-color: #051464;
+   }
+    .margin0{ margin:0px}
     .mat-accordion{
+
+        border-bottom: 1px solid #ECEFF1;
+
+        padding:0px;
+
+        .mat-expansion-panel-header-description, .mat-expansion-indicator::after{
+            color:#051464;
+            width: 14px;
+            height: 14px;
+        }
+
+        .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled){
+            border:1px solid #8B90AD;
+            background-color: #EFF0F5;
+            border-radius: 28px;
+            padding: 8px 12px;
+   
+        }
+
+        
+
         h4{
             font-size: 18px !important;
             color:#051464 !important;
             font-family: 'SLB Sans Bold' !important;
+            margin-bottom: 0px;
         }
 
         .mdc-form-field{
             label{
                 color:#051464 !important;
-                font-size: 18px;
+                font-size: 16px;
 
 
             }
 
             
             .mdc-checkbox__background{
-                border:1px solid #ADB1C7 !important;
-                
-
+                border: 2px solid #ADB1C7 !important;
+                border-radius: 5px;
             }
 
             .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background{
@@ -901,15 +971,25 @@ button:hover {
 
             }
 
-            .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark{
-                border-color:#fff !important;
-
+            .mdc-checkbox__mixedmark {
+                width: 94%;
             }
 
-            .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark{
-                color:#fff !important
+            .mdc-checkbox__checkmark{
+                width:85%;
+                left:1px;
+                top:1px;
             }
+           
         }
+
+        .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__mixedmark {
+            border-color:#fff !important;
+        }
+        .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
+            color: #fff;
+        }
+
     }
   }
 }

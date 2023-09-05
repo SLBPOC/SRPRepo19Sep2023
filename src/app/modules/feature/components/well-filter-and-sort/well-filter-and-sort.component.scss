@@ -1,3 +1,39 @@
+
+//dropdown box in left filter box starts
+::ng-deep{
+.light-theme{
+  
+    .mdc-menu-surface {
+      background-color: #fff !important;
+      border: 1px solid #CCCED9 !important;
+      border-radius: 12px !important;
+      box-shadow: none !important;
+      
+      .mat-mdc-option .mdc-list-item__primary-text{
+        color: #505575 !important;
+      }  
+  }
+  
+  .mat-mdc-select-value{
+    color:#051464 !important
+  }
+  .mat-mdc-option .mat-icon, .mat-mdc-option .mat-pseudo-checkbox-full{
+    border: 1px solid #ADB1C7 !important;
+  }
+  
+  .mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-full::after{
+    color: #fff !important;
+  }
+  .mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-full{
+    background-color: #051464 !important;
+    border: 1px solid #ADB1C7 !important;
+  }
+  }
+}
+
+//dropdown box in left filter box ends
+
+
 ::ng-deep {
   .mdc-text-field__input {
     background: black !important;
