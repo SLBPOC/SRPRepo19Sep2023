@@ -1,6 +1,6 @@
 //Grid Table common Css
 .tableContainer {
-    padding: 20px;
+    // padding: 20px;
 
     .mat-mdc-row {
         td {
@@ -241,7 +241,9 @@
         padding: 0 !important;
     }
 }
-
+.mat-mdc-paginator {
+    background-color: rgba(19, 22, 41, 0.9);
+}
 .calender-alrt-filter {
     width: 400px;
     background: #404352;
@@ -655,3 +657,28 @@
         }
     }
 }
+
+.high-priorityCircle {
+    width: 10px;
+    height: 10px;
+    background-color: rgb(255, 107, 107);
+    border-radius: 8px;
+    display: block;
+}
+
+.med-priorityCircle {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(135, 234, 45, 1);
+    border-radius: 8px;
+    display: block;
+}
+
+.low-priorityCircle {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 162, 32, 1);
+    border-radius: 8px;
+    display: block;
+}
+

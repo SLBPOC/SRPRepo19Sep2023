@@ -20,7 +20,10 @@ export class WellFilterAndSortComponent {
     wellNames: false,
     commsStatus: false,
     controllerStatus: false,
-    pumpingTypes: false
+    pumpingTypes: false,
+    spm: false,
+    pumpFillage: false,
+    inferredProduction: false
   }
   providers = new FormControl();
   allProviders: any[] = [{ value: "Apache24 FED 11"}, { value: "Apache24 FED 12"}, { value: "Apache24 FED 13"}];
@@ -108,6 +111,29 @@ export class WellFilterAndSortComponent {
     }
     this.updateAppliedFilter();
     
+  }
+
+  clearSpm() {
+    this.spmSlider.start = 0;
+    this.spmSlider.end = 50;
+    this.filtersApplied.spm = false;
+  }
+
+ 
+
+  clearPumpFillage() {
+    this.pumpFillageSlider.start = 0;
+    this.pumpFillageSlider.end = 50;
+    this.filtersApplied.pumpFillage = false;
+ 
+  }
+
+ 
+
+  clearInferredProduction() {
+    this.inferredProductionSlider.start = 0;
+    this.inferredProductionSlider.end = 50;
+    this.filtersApplied.inferredProduction = false;
   }
 
   submitAppliedFilters() {

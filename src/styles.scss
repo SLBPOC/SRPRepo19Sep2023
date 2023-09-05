@@ -879,13 +879,24 @@ button:hover {
     .example-sidenav-content {
         background: #cfd0d6 !important;
     }
+
+    .filterborder{
+        border: 1px solid #8B90AD;
+    }
+
+    //added css for left filter and sort 
     .left-wellFilter{
-   
+       
         background-color: #fff !important;
     
         .label{
             color:#051464 !important;
             font-size: 18px;
+
+            &.applyfilterHead{
+                font-size: 18px !important;
+                font-family: 'SLB Sans Bold';
+            }
         }
     
         .filterBtn{
