@@ -8,7 +8,7 @@
       border: 1px solid #CCCED9 !important;
       border-radius: 12px !important;
       box-shadow: none !important;
-      
+
       .mat-mdc-option .mdc-list-item__primary-text{
         color: #505575 !important;
       }  
@@ -50,6 +50,13 @@
   //   .mat-expansion-panel-header {
   //     height: 72px !important;
   // }
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1;
+    /* Firefox */
+  }
+
   .border {
     border: 1px solid #e6e6e6 !important;
   }
@@ -99,9 +106,20 @@
     padding: inherit;
   }
 
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+
+  .close {
+    margin: 5px;
+  }
+
+  .close>span {
+    font-size: 16px;
+  }
+
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: white;
-    opacity: 1; /* Firefox */
+    opacity: 1;
+    /* Firefox */
   }
 
  

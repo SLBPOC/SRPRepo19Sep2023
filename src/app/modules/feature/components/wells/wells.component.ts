@@ -48,7 +48,7 @@ export class WellsComponent implements OnInit{
   searchText: string = "";
   sortDirection: string = "";
   sortColumn: string = "";
-  pageSize: number = 10;
+  pageSize: number = 5;
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
@@ -92,10 +92,6 @@ export class WellsComponent implements OnInit{
 
   ngOnInit(): void {
     this.GetWellDetailsWithFilters();
-    this.service.sub.subscribe((resp : any)=> {
-      console.log(resp);
-      this.dataSource = new MatTableDataSource<WellModel>(resp);
-    })
   }
 
   GetWellDetails() {
@@ -135,26 +131,7 @@ export class WellsComponent implements OnInit{
 
     });
   }
-  getWellDetailsWithFiltersAndSort(payload: any){
-    debugger;
-    this.loading = true;
-    this.service.getWellDetailsWithFilters(payload).subscribe(response => {
-      if (response.hasOwnProperty('data')) {
-        this.loading = false;
-        this.WellList = response.data;
-        this.WellList.forEach(x => this.prepareChart(x));
-        this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
-        this.service.sub.next(response.data)
-        this.dataSource.data = this.WellList;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.TotalCount = response.totalCount;
-        this.OverPumping = response.totalOverpumping;
-        this.OptimalPumping = response.totalOptimalPumping;
-        this.UnderPumping = response.totalUnderpumping;
-      }
-    });
-  }
+
 
   
   //Create Model for search

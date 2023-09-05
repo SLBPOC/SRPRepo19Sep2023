@@ -129,7 +129,7 @@
 
 
 .select-filter {
-    width: 400px;
+    width: 340px;
     background: #404352;
     height: auto;
     border: 1px solid #404352;
@@ -148,8 +148,9 @@
 
         .select-filter-title {
             color: #fff;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 700;
+            padding: 10px 0px;
         }
 
         .select-filter-close {
@@ -290,7 +291,7 @@ td#well_name>a:hover {
 }
 
 .table-responsive {
-    overflow-x: scroll !important;
+    overflow-x: auto !important;
     width: 100%;
 }
 
@@ -319,11 +320,60 @@ td#well_name>a:hover {
     span {
         vertical-align: super;
         color: #fff;
+        font-weight: 700;
     }
 
     svg {
         circle {
             fill: #fff;
         }
+    }
+}
+
+::ng-deep {
+
+    .controller-status-btn-info {
+        background: #0dcaf0 !important;
+        border-radius: 16px !important;
+        color: black !important;
+        border: 1px solid #04505f;
+    }
+
+    .controller-status-btn-danger {
+        background: rgb(255, 107, 107) !important;
+        border-radius: 16px !important;
+        color: black !important;
+        border: 1px solid #873c1c;
+    }
+
+    .controller-status-btn-default {
+        background: #6c757d !important;
+        border-radius: 16px !important;
+        color: black !important;
+        border: 1px solid #484e53;
+
+    }
+
+}
+
+.light-theme {
+    .controller-status-btn-danger {
+        background: rgba(220, 87, 87, 0.2) !important;
+        border: 1px solid rgba(220, 87, 87, 1) !important;
+    }
+
+    .filterSec {
+        span {
+            color: rgba(5, 20, 100, 1);
+        }
+
+        button {
+            svg {
+                circle {
+                    fill: rgba(5, 20, 100, 1) !important;
+                }
+            }
+        }
+
     }
 }
