@@ -284,7 +284,27 @@ td#well_name>a:hover {
 ::ng-deep .tableContainer .mat-mdc-paginator .mat-mdc-paginator-page-size-label {
     display: inline !important;
 }
+.light-theme {
+    .controller-status-btn-danger {
+        background: rgba(220, 87, 87, 0.2) !important;
+        border: 1px solid rgba(220, 87, 87, 1) !important;
+    }
 
+    .filterSec {
+        span {
+            color: rgba(5, 20, 100, 1);
+        }
+
+        button {
+            svg {
+                circle {
+                    fill: rgba(5, 20, 100, 1) !important;
+                }
+            }
+        }
+
+    }
+}
 //well-list search filter
 .well-list-search {
     padding-right: 0px;
@@ -338,14 +358,13 @@ td#well_name>a:hover {
         color: black !important;
         border: 1px solid #04505f;
     }
-
     .controller-status-btn-danger {
-        background: rgb(255, 107, 107) !important;
+        background: #f46e36 !important;
         border-radius: 16px !important;
         color: black !important;
         border: 1px solid #873c1c;
-    }
 
+    }
     .controller-status-btn-default {
         background: #6c757d !important;
         border-radius: 16px !important;
@@ -353,27 +372,29 @@ td#well_name>a:hover {
         border: 1px solid #484e53;
 
     }
-
-}
-
-.light-theme {
-    .controller-status-btn-danger {
-        background: rgba(220, 87, 87, 0.2) !important;
-        border: 1px solid rgba(220, 87, 87, 1) !important;
+    .controller-status-label-success {
+        color: green !important;
     }
-
-    .filterSec {
-        span {
-            color: rgba(5, 20, 100, 1);
-        }
-
-        button {
-            svg {
-                circle {
-                    fill: rgba(5, 20, 100, 1) !important;
-                }
-            }
-        }
-
+    .controller-status-label-danger {
+        color: #D11F1F !important;
     }
+    .tabletophead {
+        .lefthead {
+            width: 10% !important;
+        }
+        .righthead {
+            width: 90% !important;
+        }
+    }
+    .mat-mdc-tab.mdc-tab {
+        height: 48px;
+        flex-grow: 1 !important;
+    }
+    // .tableContainer .mdc-data-table__cell {
+    //     padding: 15px !important;
+    //     color: #ADB1C7 !important;
+    //     font-size: 14px !important;
+    //     font-weight: 400;
+    // }
 }
+// akumar28-ends

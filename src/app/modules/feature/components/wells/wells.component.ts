@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./wells.component.scss']
 })
 export class WellsComponent implements OnInit{
-
+  theme = 'light';
   dataSource: any = [];
   WellList!: WellModel[];
   selectedColumn: string[] = [];
