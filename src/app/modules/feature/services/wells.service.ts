@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { WellModel } from '../model/wellModel';
+import { Subject } from 'rxjs';
 
 const wellData = '../../assets/json-data/welllist-data.json';
 
