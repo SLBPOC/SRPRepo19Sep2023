@@ -852,7 +852,102 @@ button:hover {
 }
 
 .light-theme {
+    .controller-status-btn-danger {
+        background: rgba(220, 87, 87, 0.2) !important;
+        border: 1px solid rgba(220, 87, 87, 1) !important;
+        box-shadow: none;
+    }
+
+    .controller-status-btn-info {
+        background: rgba(8, 138, 231, 0.2) !important;
+        border: 1px solid rgba(8, 138, 231, 1) !important;
+        box-shadow: none !important;
+    }
+
+    .controller-status-btn-default {
+        background: rgba(106, 106, 106, 0.2) !important;
+        border: 1px solid rgba(106, 106, 106, 1) !important;
+        box-shadow: none !important;
+    }
+
+    .mat-drawer-content {
+        background: #cfd0d6 !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
     .example-sidenav-content {
         background: #cfd0d6 !important;
+    }
+
+    .container-title {
+        background-color: rgb(254, 254, 254) !important;
+
+        svg {
+            path {
+                fill: rgba(80, 85, 117, 1) !important;
+            }
+
+        }
+
+        h1 {
+            color: rgba(80, 85, 117, 1) !important;
+        }
+    }
+
+    .filterSec {
+        span {
+            color: rgba(5, 20, 100, 1) !important;
+        }
+
+        button {
+            svg {
+                circle {
+                    fill: rgba(5, 20, 100, 1) !important;
+                }
+            }
+        }
+    }
+
+    .select-filter {
+        background: rgba(251, 251, 253, 1) !important;
+        border: 1px solid rgba(110, 114, 141, 1) !important;
+        width: 340px;
+
+        .select-filter-header {
+            .select-filter-title {
+                color: rgba(5, 20, 100, 1) !important;
+            }
+        }
+
+        .select-filter-section {
+            .select-lbl {
+                color: rgba(5, 20, 100, 1) !important;
+            }
+        }
+
+        .mat-mdc-checkbox {
+            .mdc-form-field {
+                color: rgba(80, 85, 117, 1);
+            }
+        }
+
+        .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
+            border-color: rgba(173, 177, 199, 1) !important;
+            background-color: rgba(239, 240, 245, 1) !important;
+        }
+
+        .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
+            border-color: #FABB42;
+            background-color: #3A83FF;
+        }
+
+        .mat-mdc-icon-button {
+            svg {
+                width: 16px;
+                fill: rgba(80, 85, 117, 1);
+            }
+        }
+
     }
 }

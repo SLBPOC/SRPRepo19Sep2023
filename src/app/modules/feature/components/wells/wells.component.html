@@ -144,7 +144,7 @@
                   </div>
                </mat-menu>
                <!-- select filter end -->
-               <div class="table-responsive">
+               <div class="table-responsive table-section">
                   <table matSort mat-table [dataSource]="dataSource" (matSortChange)="onSortChanged($event)">
                      <!-- Priority Status Column -->
                      <ng-container matColumnDef="WellStatus">
@@ -175,7 +175,15 @@
                      <ng-container matColumnDef="ControllerStatus">
                         <th mat-sort-header mat-header-cell *matHeaderCellDef> Controller Status</th>
                         <td mat-cell *matCellDef="let element" class="align-col">
-                           {{ element.controllerStatus }}</td>
+                           <!-- {{ element.controllerStatus }} -->
+                           <button mat-raised-button type="button"
+                              [ngClass]="{'controller-status-btn-info': element.controllerStatus === 'Hand(Manual)','controller-status-btn-danger': element.controllerStatus === 'Shutdown', 'controller-status-btn-default': element.controllerStatus === 'Auto' }"
+                              class="controller-status-btn-info" aria-label="Close">
+
+                              {{ element.controllerStatus }}
+
+                           </button>
+                        </td>
                      </ng-container>
                      <!-- SPM -->
                      <ng-container matColumnDef="SPM">

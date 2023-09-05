@@ -4,11 +4,13 @@
       <span class="label">Filter & Sort</span>
     </div>
     <div class="col-6">
-      <span class="label" style="text-decoration: underline;
-      margin-left: 15px;">
+      <span class="label" style="text-decoration: underline; cursor: pointer; 
+      margin-left: 28px;" (click)="clearAppliedFilter()">
         Clear All
+        <mat-icon (click)="clearAppliedFilter()" style="cursor: pointer; color: white;font-size: 20px; margin-left: 5px;margin-bottom: -10px;">close</mat-icon>
+
       </span>
-      <i class="fa fa-close" (click)="clearAppliedFilter()"></i>
+      <!-- <i class="fa fa-close" (click)="clearAppliedFilter()"></i> -->
     </div>
   </div>
 
@@ -17,11 +19,33 @@
       <span class="label">Applied filters</span>
     </div>
     <div class="col-12">
-      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.wellNames" (click) = "clearWellNames()"> <mat-icon >close</mat-icon> Well Names</button>
+     <!-- <button mat-raised-button class="mr-2" *ngIf="filtersApplied.wellNames" (click) = "clearWellNames()"> <mat-icon >close</mat-icon> Well Names</button>
       <button mat-raised-button class="mr-2" *ngIf="filtersApplied.commsStatus" (click) = "clearCommStatus()"> <mat-icon >close</mat-icon> Comms Status</button>
       <button mat-raised-button class="mr-2" *ngIf="filtersApplied.controllerStatus" (click) = "clearControllerStatus()"> <mat-icon >close</mat-icon>Controller Status</button>
-      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.pumpingTypes" (click) = "clearPumpingTypes()"> <mat-icon >close</mat-icon>Pumping Types</button>
-
+      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.pumpingTypes" (click) = "clearPumpingTypes()"> <mat-icon >close</mat-icon>Pumping Types</button> 
+      -->
+     
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.wellNames">
+        <span aria-hidden="true" class="close-icon" (click) = "clearWellNames()">&times;</span> Well Names
+      </button>
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.commsStatus">
+        <span aria-hidden="true" (click) = "clearCommStatus()">&times;</span> Comms Status
+      </button>
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.controllerStatus">
+        <span aria-hidden="true" (click) = "clearControllerStatus()">&times;</span> Controller Status
+      </button>
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.pumpingTypes">
+        <span aria-hidden="true" (click) = "clearPumpingTypes()">&times;</span> Pumping Types
+      </button>
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.spm">
+        <span aria-hidden="true" (click) = "clearSpm()">&times;</span> SPM Dimensionless
+      </button>
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.pumpFillage">
+        <span aria-hidden="true" (click) = "clearPumpFillage()">&times;</span> Pump Fillage
+      </button>
+      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.inferredProduction">
+        <span aria-hidden="true" (click) = "clearInferredProduction()">&times;</span> Inferred Production
+      </button>
     </div>
   </div>
 
@@ -126,8 +150,8 @@
         </mat-expansion-panel-header>
         <div class="row mt-3">
             <mat-slider min="{{spmSlider.min}}" max="{{spmSlider.max}}" discrete  [displayWith]="formatLabel">
-              <input name="spmSliderStart" value="{{spmSlider.start}}" [(ngModel)] = "spmSlider.start" matSliderStartThumb>
-              <input name="spmSliderEnd" value="{{spmSlider.end}}" [(ngModel)] = "spmSlider.end" matSliderEndThumb>
+              <input (change)="filtersApplied.spm = true" name="spmSliderStart" value="{{spmSlider.start}}" [(ngModel)] = "spmSlider.start" matSliderStartThumb>
+              <input (change)="filtersApplied.spm = true" name="spmSliderEnd" value="{{spmSlider.end}}" [(ngModel)] = "spmSlider.end" matSliderEndThumb>
             </mat-slider>
         </div>
       </mat-expansion-panel>
@@ -146,8 +170,8 @@
         </mat-expansion-panel-header>
         <div class="row mt-3">
             <mat-slider min="{{pumpFillageSlider.min}}" max="{{pumpFillageSlider.max}}" discrete  [displayWith]="formatLabel">
-              <input name="pumpFillageStart" value="{{pumpFillageSlider.start}}" [(ngModel)] = "pumpFillageSlider.start" matSliderStartThumb>
-              <input name="pumpFillageEnd" value="{{pumpFillageSlider.end}}" [(ngModel)] = "pumpFillageSlider.end" matSliderEndThumb>
+              <input (change)="filtersApplied.pumpFillage= true" name="pumpFillageStart" value="{{pumpFillageSlider.start}}" [(ngModel)] = "pumpFillageSlider.start" matSliderStartThumb>
+              <input (change)="filtersApplied.pumpFillage= true" name="pumpFillageEnd" value="{{pumpFillageSlider.end}}" [(ngModel)] = "pumpFillageSlider.end" matSliderEndThumb>
             </mat-slider>
         </div>
       </mat-expansion-panel>
@@ -165,8 +189,8 @@
         </mat-expansion-panel-header>
         <div class="row mt-3">
             <mat-slider min="{{inferredProductionSlider.min}}" max="{{inferredProductionSlider.max}}" discrete  [displayWith]="formatLabel">
-              <input name="inferredProductionStart"  value="{{inferredProductionSlider.start}}" [(ngModel)] = "inferredProductionSlider.start" matSliderStartThumb>
-              <input name="inferredProductionEnd"  value="{{inferredProductionSlider.end}}" [(ngModel)] = "inferredProductionSlider.end" matSliderEndThumb>
+              <input (change)="filtersApplied.inferredProduction = true" name="inferredProductionStart"  value="{{inferredProductionSlider.start}}" [(ngModel)] = "inferredProductionSlider.start" matSliderStartThumb>
+              <input (change)="filtersApplied.inferredProduction = true" name="inferredProductionEnd"  value="{{inferredProductionSlider.end}}" [(ngModel)] = "inferredProductionSlider.end" matSliderEndThumb>
             </mat-slider>
         </div>
       </mat-expansion-panel>
