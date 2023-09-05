@@ -1,7 +1,7 @@
-<div class="container-fluid pt-2">
+<div class="container-fluid pt-2 left-wellFilter">
   <div class="row pt-2 pb-2">
     <div class="col-6">
-      <span class="label">Filter & Sort</span>
+      <span class="label applyfilterHead">Applied filters</span>
     </div>
     <div class="col-6">
       <span class="label" style="text-decoration: underline; cursor: pointer;"(click)="clearAppliedFilter()">
@@ -15,7 +15,7 @@
 
   <div class="row pt-2 pb-2">
     <div class="col-12">
-      <span class="label">Applied filters</span>
+     
     </div>
     <div class="col-12">
      <!-- <button mat-raised-button class="mr-2" *ngIf="filtersApplied.wellNames" (click) = "clearWellNames()"> <mat-icon >close</mat-icon> Well Names</button>
@@ -24,25 +24,25 @@
       <button mat-raised-button class="mr-2" *ngIf="filtersApplied.pumpingTypes" (click) = "clearPumpingTypes()"> <mat-icon >close</mat-icon>Pumping Types</button> 
       -->
      
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.wellNames">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.wellNames">
         <span aria-hidden="true" class="close-icon" (click) = "clearWellNames()">&times;</span> Well Names
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.commsStatus">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.commsStatus">
         <span aria-hidden="true" (click) = "clearCommStatus()">&times;</span> Comms Status
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.controllerStatus">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.controllerStatus">
         <span aria-hidden="true" (click) = "clearControllerStatus()">&times;</span> Controller Status
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.pumpingTypes">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.pumpingTypes">
         <span aria-hidden="true" (click) = "clearPumpingTypes()">&times;</span> Pumping Types
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.spm">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.spm">
         <span aria-hidden="true" (click) = "clearSpm()">&times;</span> SPM Dimensionless
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.pumpFillage">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.pumpFillage">
         <span aria-hidden="true" (click) = "clearPumpFillage()">&times;</span> Pump Fillage
       </button>
-      <button mat-raised-button type="button" class="close" aria-label="Close" *ngIf="filtersApplied.inferredProduction">
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close" *ngIf="filtersApplied.inferredProduction">
         <span aria-hidden="true" (click) = "clearInferredProduction()">&times;</span> Inferred Production
       </button>
     </div>
@@ -52,7 +52,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="border-bottom pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-4 pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Sort By Well Name</h4>
           </mat-panel-title>
@@ -83,7 +83,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="border-bottom pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-4 pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Comms Status</h4>
           </mat-panel-title>
@@ -102,7 +102,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState3 = true" (closed)="panelOpenState3 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="border-bottom pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-4 pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Controller Status</h4>
           </mat-panel-title>
@@ -122,7 +122,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState4 = true" (closed)="panelOpenState4 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="border-bottom pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-4 pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Pumping Type</h4>
           </mat-panel-title>
@@ -142,7 +142,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState5 = true" (closed)="panelOpenState5 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="border-bottom pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-4 pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">SPM Dimensionless</h4>
           </mat-panel-title>
@@ -162,7 +162,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState6 = true" (closed)="panelOpenState6 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="border-bottom pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-4 pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Pump Fillage</h4>
           </mat-panel-title>
@@ -181,7 +181,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="border-bottom pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-4 pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Inferred Production (bpd)</h4>
           </mat-panel-title>
@@ -196,7 +196,7 @@
     </mat-accordion>
   </div>
 
-  <div class="row pt-2 pb-2">
+  <div class="row pt-2 pb-2 margin0 applyfilterBtn">
     <button mat-raised-button style="color: white; border-radius: 12px;" (click) = "submitAppliedFilters()">Apply Filter</button>
 
   </div>

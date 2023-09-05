@@ -56,6 +56,7 @@
       <li>
         <img (click)="openFullscreen()" matbuttonicon="" alt="" class="" src="./assets/images/icon-expand.svg">
       </li>
+      <li><mat-slide-toggle (click)="toggleTheme()">Slide Toggle</mat-slide-toggle></li>
     </ul>
 
     <mat-menu #menunotification="matMenu" class="panelMenu notification-menu">
@@ -134,7 +135,8 @@
       <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" routerLink="/dashboard">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing"> Dashboard</span>
       </mat-list-item>
-      <mat-list-item (click)="showSubmenu = !showSubmenu" routerLinkActive="active-list-item" class="parent navcontenttxt" routerLink='wells'>
+      <mat-list-item (click)="showSubmenu = !showSubmenu" routerLinkActive="active-list-item"
+        class="parent navcontenttxt" routerLink='wells'>
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Well List</span>
 
         <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}"
@@ -145,11 +147,12 @@
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">
           <a [routerLink]="'/well-info/W001'" style="text-decoration: none;">Well Info</a>
         </span>
-        
+
       </mat-list-item>
 
-      <div class="submenu" routerLinkActive="active-list-item" [ngClass]="{'expanded' : showSubmenuWellList}" *ngIf="isShowing || isExpanded">
-        <a mat-list-item  routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
+      <div class="submenu" routerLinkActive="active-list-item" [ngClass]="{'expanded' : showSubmenuWellList}"
+        *ngIf="isShowing || isExpanded">
+        <a mat-list-item routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
       </div>
 
       <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" routerLink="/alert-list">
@@ -161,8 +164,8 @@
       <!-- <mat-list-item class="navcontenttxt" routerLinkActive="active" routerLink="/dyna-card">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Dynacard</span>
       </mat-list-item> -->
-      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" routerLinkActive="active-list-item" class="parent navcontenttxt"
-        [routerLink]="'/srp-reports'">
+      <mat-list-item (click)="showSubmenuReport = !showSubmenuReport" routerLinkActive="active-list-item"
+        class="parent navcontenttxt" [routerLink]="'/srp-reports'">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Reports</span>
         <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenuReport}"
           *ngIf="isExpanded || isShowing">arrow_drop_down</mat-icon>

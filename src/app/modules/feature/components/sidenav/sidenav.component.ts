@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router'
 import { MatSidenav } from '@angular/material/sidenav';
 import { DOCUMENT } from '@angular/common';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-sidenav',
@@ -26,7 +27,7 @@ export class SidenavComponent implements OnInit {
   renderer: any;
   constructor(
     @Inject(DOCUMENT) private document: any, render: Renderer2
-    ,private router:Router
+    , private overlay: OverlayContainer, private router: Router
   ) {
   }
 
@@ -84,8 +85,28 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  navigateToDashboard(){
+  navigateToDashboard() {
     this.router.navigateByUrl('/srp/dashboard');
+  }
+  toggleTheme(): void {
+    if (this.overlay.getContainerElement().classList.contains("dark-theme")) {
+      this.overlay.getContainerElement().classList.remove("dark-theme");
+      this.overlay.getContainerElement().classList.add("light-theme");
+    } else if (this.overlay.getContainerElement().classList.contains("light-theme")) {
+      this.overlay.getContainerElement().classList.remove("light-theme");
+      this.overlay.getContainerElement().classList.add("dark-theme");
+    } else {
+      this.overlay.getContainerElement().classList.add("light-theme");
+    }
+    if (document.body.classList.contains("dark-theme")) {
+      document.body.classList.remove("dark-theme");
+      document.body.classList.add("light-theme");
+    } else if (document.body.classList.contains("light-theme")) {
+      document.body.classList.remove("light-theme");
+      document.body.classList.add("dark-theme");
+    } else {
+      document.body.classList.add("light-theme");
+    }
   }
 
 }
