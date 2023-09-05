@@ -855,6 +855,8 @@ button:hover {
     .example-sidenav-content {
         background: #cfd0d6 !important;
     }
+
+
     //left filter section css
   .left-wellFilter{
     background-color: #fff !important;
@@ -896,7 +898,16 @@ button:hover {
 
             .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background{
                 background-color: #051464 !important;
-                
+
+            }
+
+            .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark{
+                border-color:#fff !important;
+
+            }
+
+            .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark{
+                color:#fff !important
             }
         }
     }
