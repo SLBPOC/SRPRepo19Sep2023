@@ -115,6 +115,8 @@ button {
             // justify-content: space-between;
 
             background-color: #0C0D1A;
+            justify-content: space-between !important;
+
 
             .container-title-content {
 
@@ -1026,6 +1028,7 @@ button:hover {
       }
     .container-title {
         background-color: rgb(254, 254, 254) !important;
+        
 
         svg {
             path {
