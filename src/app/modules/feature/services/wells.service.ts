@@ -14,7 +14,7 @@ const wellData = '../../assets/json-data/welllist-data.json';
 export class WellsService {
 
  sub = new Subject()
-  private apiUrl: string="http://localhost:5000/api/";
+  private apiUrl: string="https://localhost:6060/api/";
     httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
