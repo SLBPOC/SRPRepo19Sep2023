@@ -272,6 +272,15 @@ td#well_name > a:hover {
             width: 90% !important;
         }
     }
-    
+    .mat-mdc-tab.mdc-tab {
+        height: 48px;
+        flex-grow: 1 !important;
+    }
+    .tableContainer .mdc-data-table__cell {
+        padding: 15px !important;
+        color: #ADB1C7 !important;
+        font-size: 14px !important;
+        font-weight: 400;
+    }
 }
 // akumar28-ends
