@@ -27,35 +27,38 @@ export class WellFilterAndSortComponent implements OnInit{
     inferredProduction: false
   }
   providers = new FormControl();
-  allProviders: any[] = [{ value: "Apache24 FED 11"}, { value: "Apache24 FED 12"}, { value: "Apache24 FED 13"}];
-  commsStatusOptions: any[] = [{ value: "Comms Failed", checked: false }, { value: "Comms Established", checked: false }];
-  controllerStatusOptions: any[] = [{ value: "Shutdown", checked: false }, { value: "Hand (Manual)", checked: false }, { value: "Auto", checked: false }];
-  pumpingTypeOptions = [{ value: "Over Pumping", checked: false }, { value: "Optimum Pumping", checked: false }, { value: "Under Pumping", checked: false }];
-  spmSlider = {
-    min: 0,
-    max: 100,
-    start: 0,
-    end: 50
-  }
-  pumpFillageSlider = {
-    min: 0,
-    max: 100,
-    start: 0,
-    end: 50
-  }
+  // allProviders: any[] = [{ value: "Apache24 FED 11"}, { value: "Apache24 FED 12"}, { value: "Apache24 FED 13"}];
+  // commsStatusOptions: any[] = [{ value: "Comms Failed", checked: false }, { value: "Comms Established", checked: false }];
+  // controllerStatusOptions: any[] = [{ value: "Shutdown", checked: false }, { value: "Hand (Manual)", checked: false }, { value: "Auto", checked: false }];
+  // pumpingTypeOptions = [{ value: "Over Pumping", checked: false }, { value: "Optimum Pumping", checked: false }, { value: "Under Pumping", checked: false }];
+  allProviders!: any;
+  commsStatusOptions!: any;
+  controllerStatusOptions!: any;
+  pumpingTypeOptions!: any;
 
-  inferredProductionSlider = {
-    min: 0,
-    max: 100,
-    start: 0,
-    end: 50
-  }
+  spmSlider;
+  pumpFillageSlider;
+  inferredProductionSlider;
   filteredProviders: any[] = this.allProviders;
 
   constructor(private service: WellsService) {}
 
   ngOnInit(): void {
-      this.getWellList();
+    this.getDropdowns();
+    this.getWellList();
+  }
+
+  getDropdowns() {
+    this.service.getWellListFilterSortDropdowns().subscribe((response: any) => {
+      console.log('response =>', response)
+      this.commsStatusOptions = response.commsStatus;
+      this.controllerStatusOptions = response.controllerStatus;
+      this.pumpingTypeOptions = response.pumpingTypes;
+      this.spmSlider = response.spmSlider;
+      this.pumpFillageSlider = response.pumpFillageSlider;
+      this.inferredProductionSlider = response.inferredProductionSlider;
+
+    })
   }
 
   getWellList() {
