@@ -268,14 +268,16 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
       },
       legend: {
         enabled: false
@@ -306,14 +308,16 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
       },
       legend: {
         enabled: false
@@ -345,14 +349,18 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       legend: {
         enabled: false
@@ -383,14 +391,16 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
       },
       legend: {
         enabled: false
@@ -422,14 +432,18 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       legend: {
         enabled: false
@@ -460,14 +474,18 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       legend: {
         enabled: false
@@ -500,14 +518,18 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       legend: {
         enabled: false
@@ -536,14 +558,18 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       legend: {
         enabled: false
@@ -574,14 +600,18 @@ export class WellsComponent implements OnInit{
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       xAxis: {
         labels: {
           enabled: false
         },
         tickAmount: 6,
-        gridLineWidth: 1
+        gridLineWidth: 1,
+        visible: false
+
       },
       legend: {
         enabled: false
