@@ -53,8 +53,8 @@ export class WellinfoDynacardComponent implements OnInit {
     { label: 'Puming Status ', value: 'Running' },
     { label: 'Comm Status', value: 'Comm Established' },
     { label: 'Data Quality', value: 'ShutDown' },
-    { label: 'Pump Card Diagnistics', value: 'Normal' },
-    { label: 'Pump Displacement', value: '278.0 bbls/day' },
+    { label: 'Runtime %', value: '30%' },
+    { label: 'Inferred Production(bpd)', value: '60' },
     // {label: 'Data Quality', value: 'ShutDown'},
 
 
