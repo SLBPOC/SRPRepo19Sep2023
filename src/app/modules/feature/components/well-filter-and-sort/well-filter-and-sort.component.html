@@ -148,7 +148,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row mt-3">
-            <mat-slider min="{{spmSlider.min}}" max="{{spmSlider.max}}" discrete  [displayWith]="formatLabel">
+            <mat-slider min="{{spmSlider.min}}" max="{{spmSlider.max}}" discrete  [displayWith]="formatLabelSPM">
               <input (change)="filtersApplied.spm = true" name="spmSliderStart" value="{{spmSlider.start}}" [(ngModel)] = "spmSlider.start" matSliderStartThumb>
               <input (change)="filtersApplied.spm = true" name="spmSliderEnd" value="{{spmSlider.end}}" [(ngModel)] = "spmSlider.end" matSliderEndThumb>
             </mat-slider>

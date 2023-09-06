@@ -234,4 +234,8 @@ export class WellFilterAndSortComponent implements OnInit{
     let percentageValue = Math.round((value)*100) / 100 
     return `${percentageValue}%`;
   }
+  formatLabelSPM(value: number): string {
+    let percentageValue = Math.round((value)*100) / 100 
+    return `${percentageValue}`;
+  }
 }
