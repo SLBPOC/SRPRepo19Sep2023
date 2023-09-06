@@ -36,9 +36,25 @@ export class WellFilterAndSortComponent implements OnInit{
   controllerStatusOptions!: any;
   pumpingTypeOptions!: any;
 
-  spmSlider;
-  pumpFillageSlider;
-  inferredProductionSlider;
+  spmSlider = {
+    "min": 0,
+    "max": 100,
+    "start": 0,
+    "end": 100
+  }
+  pumpFillageSlider = {
+    "min": 0,
+    "max": 100,
+    "start": 0,
+    "end": 100
+  }
+  inferredProductionSlider = {
+    "min": 0,
+    "max": 100,
+    "start": 0,
+    "end": 100
+  }
+
   filteredProviders: any[] = this.allProviders;
 
   constructor(private service: WellsService) {}
@@ -150,7 +166,7 @@ export class WellFilterAndSortComponent implements OnInit{
 
   clearSpm() {
     this.spmSlider.start = 0;
-    this.spmSlider.end = 50;
+    this.spmSlider.end = 100;
     this.filtersApplied.spm = false;
   }
 
@@ -158,7 +174,7 @@ export class WellFilterAndSortComponent implements OnInit{
 
   clearPumpFillage() {
     this.pumpFillageSlider.start = 0;
-    this.pumpFillageSlider.end = 50;
+    this.pumpFillageSlider.end = 100;
     this.filtersApplied.pumpFillage = false;
  
   }
@@ -167,7 +183,7 @@ export class WellFilterAndSortComponent implements OnInit{
 
   clearInferredProduction() {
     this.inferredProductionSlider.start = 0;
-    this.inferredProductionSlider.end = 50;
+    this.inferredProductionSlider.end = 100;
     this.filtersApplied.inferredProduction = false;
   }
 
@@ -221,6 +237,20 @@ export class WellFilterAndSortComponent implements OnInit{
   }
 
   console.log('applied filters payload ===>', payload);
+  this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
+    if(response.hasOwnProperty('data')) {
+      const wellNamesList = response.data.reduce((acc: any, wellData: any, index: number) => {
+        acc[index] = {value: wellData.wellName}
+        return acc;
+      }, [])
+      // this.providers.setValue(Array.of(...wellNamesList));
+      this.allProviders = [...wellNamesList];
+      this.filteredProviders = [...this.allProviders];
+    }
+
+    console.log('well names', this.allProviders);
+  })
+
 
   }
   updateAppliedFilter() {
