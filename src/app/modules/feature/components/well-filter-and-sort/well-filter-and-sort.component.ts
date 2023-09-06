@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { WellsService } from '../../services/wells.service';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { WellsComponent } from '../wells/wells.component';
 
 @Component({
   selector: 'app-well-filter-and-sort',
@@ -29,31 +25,29 @@ export class WellFilterAndSortComponent {
     pumpFillage: false,
     inferredProduction: false
   }
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router) { }
-
   providers = new FormControl();
-  allProviders: any[] = [{ value: "Apache 24 FED 11"}, { value: "Apache 24 FED 12"}, { value: "Apache 24 FED 13"}];
+  allProviders: any[] = [{ value: "Apache24 FED 11"}, { value: "Apache24 FED 12"}, { value: "Apache24 FED 13"}];
   commsStatusOptions: any[] = [{ value: "Comms Failed", checked: false }, { value: "Comms Established", checked: false }];
-  controllerStatusOptions: any[] = [{ value: "Shutdown", checked: false }, { value: "Hand(Manual)", checked: false }, { value: "Auto", checked: false }];
+  controllerStatusOptions: any[] = [{ value: "Shutdown", checked: false }, { value: "Hand (Manual)", checked: false }, { value: "Auto", checked: false }];
   pumpingTypeOptions = [{ value: "Over Pumping", checked: false }, { value: "Optimum Pumping", checked: false }, { value: "Under Pumping", checked: false }];
   spmSlider = {
     min: 0,
     max: 100,
     start: 0,
-    end: 100
+    end: 50
   }
   pumpFillageSlider = {
     min: 0,
     max: 100,
     start: 0,
-    end: 100
+    end: 50
   }
 
   inferredProductionSlider = {
     min: 0,
     max: 100,
     start: 0,
-    end: 100
+    end: 50
   }
   filteredProviders: any[] = this.allProviders;
 
@@ -82,9 +76,6 @@ export class WellFilterAndSortComponent {
     this.clearControllerStatus();
     this.clearPumpingTypes();
     this.updateAppliedFilter();
-    this.clearSpm();
-    this.clearPumpFillage();
-    this.clearInferredProduction();
   }
 
   clearCommStatus() {
@@ -107,26 +98,6 @@ export class WellFilterAndSortComponent {
     this.filtersApplied.wellNames = false;
   }
 
-  clearSpm() {
-    this.spmSlider.start = 0;
-    this.spmSlider.end = 50;
-    this.filtersApplied.spm = false;
-  }
-
-  clearPumpFillage() {
-    this.pumpFillageSlider.start = 0;
-    this.pumpFillageSlider.end = 50;
-    this.filtersApplied.pumpFillage = false;
-
-  }
-
-  clearInferredProduction() {
-    this.inferredProductionSlider.start = 0;
-    this.inferredProductionSlider.end = 50;
-    this.filtersApplied.inferredProduction = false;
-
-  }
-
   applyFilter(isChecked, filterOption) {
     let isCommsStatus = filterOption === 'Comms Failed' || filterOption === 'Comms Established'
     let isControllerStatus = filterOption === 'Shutdown' || filterOption === 'Hand (Manual)' || filterOption === 'Auto';
@@ -140,6 +111,29 @@ export class WellFilterAndSortComponent {
     }
     this.updateAppliedFilter();
     
+  }
+
+  clearSpm() {
+    this.spmSlider.start = 0;
+    this.spmSlider.end = 50;
+    this.filtersApplied.spm = false;
+  }
+
+ 
+
+  clearPumpFillage() {
+    this.pumpFillageSlider.start = 0;
+    this.pumpFillageSlider.end = 50;
+    this.filtersApplied.pumpFillage = false;
+ 
+  }
+
+ 
+
+  clearInferredProduction() {
+    this.inferredProductionSlider.start = 0;
+    this.inferredProductionSlider.end = 50;
+    this.filtersApplied.inferredProduction = false;
   }
 
   submitAppliedFilters() {
@@ -169,7 +163,7 @@ export class WellFilterAndSortComponent {
     }, [])
 
     const payload = {
-      "pageSize": 10,
+      "pageSize": 5,
       "pageNumber": 1,
       "searchText": "",
       "sortColumn": "",
@@ -192,10 +186,8 @@ export class WellFilterAndSortComponent {
   }
 
   console.log('applied filters payload ===>', payload);
-  let wellComp = new WellsComponent(this._liveAnnouncer,this.service,this.router);  
-  wellComp.getWellDetailsWithFiltersAndSort(payload)
+
   }
-  
   updateAppliedFilter() {
     this.commsStatusOptions.every((element: any) => element.checked === false) ? this.filtersApplied.commsStatus = false : this.filtersApplied.commsStatus = true;
     this.controllerStatusOptions.every((element: any) => element.checked === false) ? this.filtersApplied.controllerStatus = false : this.filtersApplied.controllerStatus = true;
