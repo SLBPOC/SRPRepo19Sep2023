@@ -117,9 +117,9 @@
          <div class="col-md-2 well-list-search">
             <div class="" >
                <div class="col-md-12 p-0 mt-3 filterborder">
-                  <!-- <div class="d-flex justify-content-end">
-                     <mat-icon style="cursor: pointer; color: white;font-size: 20px;">close</mat-icon>
-                  </div> -->
+                  <div class="d-flex justify-content-end">
+                     <mat-icon style="cursor: pointer; color: white;font-size: 20px;" class="mt-2">close</mat-icon>
+                  </div>
                   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
                      <mat-tab label="Filter & Sort">
                         <app-well-filter-and-sort></app-well-filter-and-sort>
@@ -224,7 +224,7 @@
                               element.spm.value
                               }}</a>
                            <ng-template #tooltip>
-                              <div style="width: 180px;">
+                              <div class="border" style="width: 180px;">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.spmChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
@@ -238,7 +238,7 @@
                            <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{
                               element.pumpFillage.value }}</a>
                            <ng-template #tooltip>
-                              <div style="width: 180px;">
+                              <div class="border" style="width: 180px;">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.pumpFillageChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
@@ -252,7 +252,7 @@
                            <a class="button-type-none" [mtxTooltip]="tooltip"
                               mtxTooltipPosition="left">{{element.inferredProduction.value}}</a>
                            <ng-template #tooltip>
-                              <div style="width: 180px;">
+                              <div class="border" style="width: 180px;">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.inferredChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
@@ -282,27 +282,27 @@
                                  *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span> -->
                            </a>
                            <ng-template #tooltip>
-                              <div style="width: 180px;" *ngIf="eClumn.header =='EffectiveRunTime.value'">
+                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='EffectiveRunTime.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.effectiveRunChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
-                              <div style="width: 180px;" *ngIf="eClumn.header =='CyclesToday.value'">
+                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='CyclesToday.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.cycleChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
-                              <div style="width: 180px;" *ngIf="eClumn.header =='StructuralLoad.value'">
+                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='StructuralLoad.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.structuralLoadChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
-                              <div style="width: 180px;" *ngIf="eClumn.header =='MinMaxLoad.value'">
+                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='MinMaxLoad.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.minMaxLoadChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
-                              <div style="width: 180px;" *ngIf="eClumn.header =='GearboxLoad.value'">
+                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='GearboxLoad.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.gearBoxLoadChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
-                              <div style="width: 180px;" *ngIf="eClumn.header =='RodStress.value'">
+                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='RodStress.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.roadStressChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
