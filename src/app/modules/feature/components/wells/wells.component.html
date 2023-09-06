@@ -224,7 +224,7 @@
                   <th mat-sort-header mat-header-cell *matHeaderCellDef>{{ eClumn.label }}</th>
                   <td mat-cell *matCellDef="let element">
                      <a class="button-type-none" [mtxTooltip]="tooltip" mtxTooltipPosition="left">{{ element[eClumn.accessor].value }}
-                        <span *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span>
+                        <!-- <span *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span> -->
                      </a>
                      <ng-template #tooltip>
                         <div style="width: 180px;" *ngIf="eClumn.header =='EffectiveRunTime.value'">
