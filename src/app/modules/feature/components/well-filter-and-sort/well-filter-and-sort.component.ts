@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { WellsService } from '../../services/wells.service';
 
 @Component({
   selector: 'app-well-filter-and-sort',
   templateUrl: './well-filter-and-sort.component.html',
   styleUrls: ['./well-filter-and-sort.component.scss'],
 })
-export class WellFilterAndSortComponent {
+export class WellFilterAndSortComponent implements OnInit{
 
   panelOpenState: boolean;
   panelOpenState2: boolean;
@@ -50,6 +51,37 @@ export class WellFilterAndSortComponent {
     end: 50
   }
   filteredProviders: any[] = this.allProviders;
+
+  constructor(private service: WellsService) {}
+
+  ngOnInit(): void {
+      this.getWellList();
+  }
+
+  getWellList() {
+    const payload = {
+      "pageSize": 5,
+      "pageNumber": 1,
+      "searchText": "",
+      "sortColumn": "",
+      "sortDirection": "",
+      "searchStatus": ""
+  }
+
+    this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
+      if(response.hasOwnProperty('data')) {
+        const wellNamesList = response.data.reduce((acc: any, wellData: any, index: number) => {
+          acc[index] = {value: wellData.wellName}
+          return acc;
+        }, [])
+        // this.providers.setValue(Array.of(...wellNamesList));
+        this.allProviders = [...wellNamesList];
+        this.filteredProviders = [...this.allProviders];
+      }
+
+      console.log('well names', this.allProviders);
+    })
+  }
 
   onInputChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
