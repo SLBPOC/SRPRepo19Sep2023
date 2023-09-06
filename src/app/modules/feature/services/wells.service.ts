@@ -21,6 +21,8 @@ export class WellsService {
   };
 
   wellListData = '../../../../assets/json/well-list-by-filters.json'
+  wellListFilterSortDropdowns = '../../../../assets/json/well-list-filter-sort-dropdowns.json'
+
   constructor(private http: HttpClient) { }
 
 
@@ -38,4 +40,7 @@ export class WellsService {
     return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById?WellId=${wellId}`)
   }
 
+  getWellListFilterSortDropdowns(): Observable<any> {
+    return this.http.get(this.wellListFilterSortDropdowns);
+  }
 }
