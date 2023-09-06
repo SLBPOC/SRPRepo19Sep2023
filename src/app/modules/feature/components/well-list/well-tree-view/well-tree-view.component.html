@@ -6,7 +6,7 @@
           clear
         </mat-icon>
         <div *ngIf="isCheckbox(node)">
-          <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node.Id)"
+          <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node.NodeId)"
             (change)="todoLeafItemSelectionToggle(node)">
             <span class="status" [ngClass]="node.isOn ? 'status_green':'status_red'"></span>
             {{node.Name}}

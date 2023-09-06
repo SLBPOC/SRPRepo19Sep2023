@@ -632,4 +632,9 @@ export class WellsComponent implements OnInit{
     this.router.navigate([]).then(result => {  window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
   }
 
+  searchObjC:any;
+  userSearchChange(obj:any){
+    this.searchObjC = obj;
+  }
+
 }

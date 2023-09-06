@@ -1,3 +1,5 @@
+import { WellModel } from '../model/wellModel';
+
 export enum NodeType {
     Field,
     Battery,
@@ -5,14 +7,13 @@ export enum NodeType {
     Wells
   }
   
-  export class Node {
+  export interface Node extends WellModel {
     Type: NodeType;
     Name: string;
     Children?: Node[];
     isOn?: boolean;
-    Id: number;
-    ParentId?: number;
-    
+    NodeId: number;
+    NodeParentId?: number;
   }
   
   export class FlatNode {
