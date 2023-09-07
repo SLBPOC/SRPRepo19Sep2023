@@ -125,7 +125,7 @@
                   </div>
                   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
                      <mat-tab label="Filter & Sort">
-                        <app-well-filter-and-sort></app-well-filter-and-sort>
+                        <app-well-filter-and-sort (filterRefresh) = "refreshGrid($event)"></app-well-filter-and-sort>
                      </mat-tab>
                      <mat-tab label="Well List">
                         <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->

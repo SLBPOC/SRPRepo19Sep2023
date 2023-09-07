@@ -131,8 +131,6 @@ export class WellsComponent implements OnInit{
 
     });
   }
-
-
   
   //Create Model for search
   createModel(this: any) {
@@ -144,8 +142,6 @@ export class WellsComponent implements OnInit{
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
 
     return this.model;
-
-
   }
 
   search(data: Event) {
@@ -632,4 +628,29 @@ export class WellsComponent implements OnInit{
     this.router.navigate([]).then(result => {  window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
   }
 
+  refreshGrid(payload: any) {
+    console.log('wells component')
+    this.service.getWellDetailsWithFilters(payload).subscribe(response => {
+      if (response.hasOwnProperty('data')) {
+        this.loading = false;
+        this.pageSizeOption=[10, 15, 20, response.totalCount]
+        // this.getPageSizeOptions();
+        this.WellList = response.data;
+        this.WellList.forEach(x => this.prepareChart(x));
+        this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+        setTimeout(() => {
+          this.paginator.pageIndex = this.currentPage;
+          this.paginator.length = response.totalCount;
+        });
+
+        this.TotalCount = response.totalCount;
+        this.OverPumping = response.totalOverpumping;
+        this.OptimalPumping = response.totalOptimalPumping;
+        this.UnderPumping = response.totalUnderpumping;
+        this.dataSource.paginator = this.paginator;
+       
+      }
+
+    });
+  }
 }
