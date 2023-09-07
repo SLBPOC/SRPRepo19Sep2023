@@ -13,6 +13,8 @@ import { MatSelect } from '@angular/material/select';
 import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs'
 import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
+import { TreeViewService } from '../../services/tree-view.service';
+import { NodeType } from '../../services/models';
 
 
 @Component({
@@ -63,6 +65,7 @@ export class WellsComponent implements OnInit{
   
   minmaxChartData:any[]=[];  //min max chart data array
   pageSizeOption=[10,20,30]
+  ids:number[];
   respdata: any
   // chartarray:any[]=[
   //   [1, 8.620679090895912],
@@ -73,7 +76,7 @@ export class WellsComponent implements OnInit{
   //   [6, 0.16486046100086638],
   //   [7, 3.370270180965287]]
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router,public treeviewService: TreeViewService) { }
 
 
   ngAfterViewInit() {
@@ -92,6 +95,15 @@ export class WellsComponent implements OnInit{
 
   ngOnInit(): void {
     this.GetWellDetailsWithFilters();
+    this.treeviewService.selectedNodes.subscribe(x=>{
+      console.log(x);
+      if (x != undefined && x.length > 0 && x.some(m=>m.Type == NodeType.Wells)) {
+        this.ids = x.filter(m=>m.Type == NodeType.Wells).map(m=>m.NodeId);
+      }
+      else 
+        this.ids = [];
+      this.GetWellDetailsWithFilters();
+    })
   }
 
   GetWellDetails() {
@@ -142,6 +154,7 @@ export class WellsComponent implements OnInit{
     this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
     this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
+    this.model.Ids = this.ids;
 
     return this.model;
 
@@ -158,6 +171,7 @@ export class WellsComponent implements OnInit{
     this.pageNumber = 1;
     this.seachByStatus = "";
     this.searchText = "";
+    this.ids = [];
     this.GetWellDetailsWithFilters();
   }
 
