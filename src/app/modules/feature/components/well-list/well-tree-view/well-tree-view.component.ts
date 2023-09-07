@@ -5,6 +5,8 @@ import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from
 import { BehaviorSubject } from 'rxjs';
 import { TreeViewService } from '../../../services/tree-view.service';
 import { Node, NodeType, FlatNode } from '../../../services/models'
+import { WellsService } from '../../../services/wells.service';
+import { WellModel, WellModelResult } from '../../../model/wellModel';
 
 
 /**
@@ -55,155 +57,122 @@ export class ChecklistDatabase {
 
   dataChange = new BehaviorSubject<Node[]>([]);
 
-  // TREE_DATA : {[k: string]: any} = {
-  //   "Field Name 1":{
-  //     "Battery Name 02-1-ii": {
-  //       "Pad Name 01-xx": {
-  //         "Well No 1":null,
-  //         "Well No 2":null,
-  //         "Well No 3":null,
-  //       } ,
-  //       "Pad Name 02-yy": {
-  //         "Well No 1":null,
-  //         "Well No 2":null,
-  //         "Well No 3":null,
-  //       } 
-  //     }
-  //   },
-  //   "Field Name 2":
-  //     {
-  //       "Battery Name 02-1": {
-  //         "Pad Name 01": {
-  //           "Well No 1":null,
-  //           "Well No 2":null,
-  //           "Well No 3":null,
-  //         } ,
-  //         "Pad Name 02": {
-  //           "Well No 1":null,
-  //           "Well No 2":null,
-  //           "Well No 3":null,
-  //         } 
-  //       }
-  //     }
-  //   ,
-  //   "Field Name 3":{
-  //     "Battery Name 02-1-pp": {
-  //       "Pad Name 01-bb": {
-  //         "Well No 1":null,
-  //         "Well No 2":null,
-  //         "Well No 3":null,
-  //       } ,
-  //       "Pad Name 02-kk": {
-  //         "Well No 1":null,
-  //         "Well No 2":null,
-  //         "Well No 3":null,
-  //       } 
-  //     }
-  //   }
-  // }
+
+  createModel() {
+    var model: any = {};
+    model.pageSize = 5000;
+    model.pageNumber = 1;
+    model.searchText = "";
+    model.sortColumn = "";
+    model.sortDirection = "";
+    model.searchStatus = "";
+    return model;
+  }
 
   flatnedTree_data: Node[] = [];
 
-  TREE_DATA: Node[] = [
-    {
-      Type: NodeType.Field,
-      Id: 1,
-      Name: 'NY Field',
-    },
-    {
-      Type: NodeType.Field,
-      Id: 2,
-      Name: 'Field Name 1',
-      Children: [
-        {
-          Type: NodeType.Battery,
-          Id: 3,
-          ParentId: 2,
-          Name: 'Battery 1',
-          Children: [
-            {
-              Type: NodeType.Pad,
-              Id: 4,
-              ParentId: 3,
-              Name: 'Pad alone',
-              Children: [
-                {
-                  Type: NodeType.Wells,
-                  Id: 5,
-                  ParentId: 4,
-                  Name: 'Well 1-alone',
-                  isOn: true
-                },
-                {
-                  Type: NodeType.Wells,
-                  Id: 6,
-                  ParentId: 4,
-                  Name: 'Well 2',
-                  isOn: false
-                }
-              ]
-            },
-            {
-              Type: NodeType.Pad,
-              Id: 11,
-              ParentId: 3,
-              Name: 'Pad home',
-              Children: [
-                {
-                  Type: NodeType.Wells,
-                  Id: 12,
-                  ParentId: 11,
-                  Name: 'Well 1-home',
-                  isOn: true
-                },
-                {
-                  Type: NodeType.Wells,
-                  Id: 13,
-                  ParentId: 11,
-                  Name: 'Well 2-home',
-                  isOn: false
-                }
-              ]
-            }
-          ]
-        },
-        {
-          Type: NodeType.Battery,
-          Id: 7,
-          ParentId: 2,
-          Name: 'Battery 2',
-          Children: [
-            {
-              Type: NodeType.Pad,
-              Id: 8,
-              ParentId: 7,
-              Name: 'Pad 2-1',
-              Children: [
-                {
-                  Type: NodeType.Wells,
-                  Id: 9,
-                  ParentId: 8,
-                  Name: 'Well 2-2-1-home',
-                  isOn: true
-                },
-                {
-                  Type: NodeType.Wells,
-                  Id: 10,
-                  ParentId: 8,
-                  Name: 'Well 2-2-2-alone',
-                  isOn: false
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ];
+  TREE_DATA: Node[] = [];
+
+  // TREE_DATA: Node[] = [
+  //   {
+  //     Type: NodeType.Field,
+  //     Id: 1,
+  //     Name: 'NY Field',
+  //   },
+  //   {
+  //     Type: NodeType.Field,
+  //     Id: 2,
+  //     Name: 'Field Name 1',
+  //     Children: [
+  //       {
+  //         Type: NodeType.Battery,
+  //         Id: 3,
+  //         ParentId: 2,
+  //         Name: 'Battery 1',
+  //         Children: [
+  //           {
+  //             Type: NodeType.Pad,
+  //             Id: 4,
+  //             ParentId: 3,
+  //             Name: 'Pad alone',
+  //             Children: [
+  //               {
+  //                 Type: NodeType.Wells,
+  //                 Id: 5,
+  //                 ParentId: 4,
+  //                 Name: 'Well 1-alone',
+  //                 isOn: true
+  //               },
+  //               {
+  //                 Type: NodeType.Wells,
+  //                 Id: 6,
+  //                 ParentId: 4,
+  //                 Name: 'Well 2',
+  //                 isOn: false
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             Type: NodeType.Pad,
+  //             Id: 11,
+  //             ParentId: 3,
+  //             Name: 'Pad home',
+  //             Children: [
+  //               {
+  //                 Type: NodeType.Wells,
+  //                 Id: 12,
+  //                 ParentId: 11,
+  //                 Name: 'Well 1-home',
+  //                 isOn: true
+  //               },
+  //               {
+  //                 Type: NodeType.Wells,
+  //                 Id: 13,
+  //                 ParentId: 11,
+  //                 Name: 'Well 2-home',
+  //                 isOn: false
+  //               }
+  //             ]
+  //           }
+  //         ]
+  //       },
+  //       {
+  //         Type: NodeType.Battery,
+  //         Id: 7,
+  //         ParentId: 2,
+  //         Name: 'Battery 2',
+  //         Children: [
+  //           {
+  //             Type: NodeType.Pad,
+  //             Id: 8,
+  //             ParentId: 7,
+  //             Name: 'Pad 2-1',
+  //             Children: [
+  //               {
+  //                 Type: NodeType.Wells,
+  //                 Id: 9,
+  //                 ParentId: 8,
+  //                 Name: 'Well 2-2-1-home',
+  //                 isOn: true
+  //               },
+  //               {
+  //                 Type: NodeType.Wells,
+  //                 Id: 10,
+  //                 ParentId: 8,
+  //                 Name: 'Well 2-2-2-alone',
+  //                 isOn: false
+  //               }
+  //             ]
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ];
 
   get data(): Node[] { return this.dataChange.value; }
 
-  constructor() {
+  constructor(private service: WellsService) {
     this.initialize();
   }
 
@@ -213,8 +182,47 @@ export class ChecklistDatabase {
     // const data = this.buildFileTree(this.TREE_DATA, 0);
 
     // Notify the change.
-    this.flatnedTree_data = this.flattened(this.TREE_DATA, this.flatnedTree_data);
-    this.reset();
+
+    this.service.getWellDetailsWithFilters(this.createModel()).subscribe(x => {
+      this.TREE_DATA = this.projectToHierarch(x);
+      this.flatnedTree_data = this.flattened(this.TREE_DATA, this.flatnedTree_data);
+      this.reset();
+    })
+  }
+
+  projectToHierarch(wells: WellModelResult): Node[] {
+
+    var hierarchy: Node[] = [];
+
+    wells.data.forEach((item) => {
+      const fieldName = item.fieldName;
+      const batteryName = item.batteryName;
+      const padName = item.padName;
+      // Find or create the field in the hierarchy
+      let fieldNode = hierarchy.find((node) => node.Name === fieldName);
+      if (!fieldNode) {
+        fieldNode = <Node>{ Name: fieldName, Type: NodeType.Field, NodeId: item.fieldId, Children: [] };
+        hierarchy.push(fieldNode);
+      }
+
+      // Find or create the battery in the field
+      let batteryNode = fieldNode.Children.find((node) => node.Name === batteryName);
+      if (!batteryNode) {
+        batteryNode = <Node>{ Name: batteryName, Type: NodeType.Battery, NodeParentId: fieldNode.NodeId, NodeId: item.batteryId, Children: [] };
+        fieldNode.Children.push(batteryNode);
+      }
+
+      let padNode = batteryNode.Children.find((node) => node.Name == padName);
+      if (!padNode) {
+        padNode = <Node>{ Name: padName, Type: NodeType.Pad, NodeParentId: batteryNode.NodeId, NodeId: item.padId, Children: [] };
+        batteryNode.Children.push(padNode);
+      }
+
+      // Add the pad to the battery
+      padNode.Children.push({ Name: item.wellName, NodeId: item.id, NodeParentId: padNode.NodeId, Children: undefined, Type: NodeType.Wells, ...item });
+    });
+    // console.log(hierarchy);
+    return hierarchy;
   }
 
   reset() {
@@ -289,22 +297,22 @@ export class ChecklistDatabase {
     var fields = new Set<number>();
     var pads = new Set<number>();
     wellsData.forEach(x => {
-      var batteryId = this.flatnedTree_data.find(y => y.Id == x.ParentId)?.ParentId;
-      pads.add(<number>x.ParentId);
+      var batteryId = this.flatnedTree_data.find(y => y.NodeId == x.NodeParentId)?.NodeParentId;
+      pads.add(<number>x.NodeParentId);
       batteries.add(<number>batteryId);
     });
     batteries.forEach(x => {
-      fields.add(<number>this.flatnedTree_data.find(l => l.Id == x)?.ParentId);
+      fields.add(<number>this.flatnedTree_data.find(l => l.NodeId == x)?.NodeParentId);
     })
     fields.forEach(x => {
-      finalData.push(Object.assign({}, this.flatnedTree_data.find(y => y.Id == x)));
+      finalData.push(Object.assign({}, this.flatnedTree_data.find(y => y.NodeId == x)));
     })
     finalData.forEach(x => {
-      x.Children = this.flatnedTree_data.filter(y => batteries.has(y.Id) && y.ParentId == x.Id).map(z => Object.assign({}, z));
+      x.Children = this.flatnedTree_data.filter(y => batteries.has(y.NodeId) && y.NodeParentId == x.NodeId).map(z => Object.assign({}, z));
       x.Children.forEach(m => {
-        m.Children = this.flatnedTree_data.filter(k => pads.has(k.Id) && k.ParentId == m.Id).map(z => Object.assign({}, z));
+        m.Children = this.flatnedTree_data.filter(k => pads.has(k.NodeId) && k.NodeParentId == m.NodeId).map(z => Object.assign({}, z));
         m.Children.forEach(h => {
-          h.Children = wellsData.filter(xo => xo.ParentId == h.Id).map(z => Object.assign({}, z));
+          h.Children = wellsData.filter(xo => xo.NodeParentId == h.NodeId).map(z => Object.assign({}, z));
         })
       })
     });
@@ -317,17 +325,17 @@ export class ChecklistDatabase {
     var batteries = new Set<Number>();
     var fields = new Set<number>();
     padsData.forEach(x => {
-      var fieldId = this.flatnedTree_data.find(y => y.Id == x.ParentId)?.ParentId;
+      var fieldId = this.flatnedTree_data.find(y => y.NodeId == x.NodeParentId)?.NodeParentId;
       fields.add(<number>fieldId);
-      batteries.add(<number>x.ParentId);
+      batteries.add(<number>x.NodeParentId);
     })
     fields.forEach(x => {
-      finalData.push(Object.assign({}, this.flatnedTree_data.find(y => y.Id == x)));
+      finalData.push(Object.assign({}, this.flatnedTree_data.find(y => y.NodeId == x)));
     })
     finalData.forEach(x => {
-      x.Children = this.flatnedTree_data.filter(y => batteries.has(y.Id) && y.ParentId == x.Id).map(z => Object.assign({}, z));
+      x.Children = this.flatnedTree_data.filter(y => batteries.has(y.NodeId) && y.NodeParentId == x.NodeId).map(z => Object.assign({}, z));
       x.Children.forEach(m => {
-        m.Children = padsData.filter(t => t.ParentId == m.Id).map(z => Object.assign({}, z))
+        m.Children = padsData.filter(t => t.NodeParentId == m.NodeId).map(z => Object.assign({}, z))
       })
     });
     this.dataChange.next(finalData);
@@ -350,16 +358,16 @@ export class ChecklistDatabase {
     var searchData = this.flatnedTree_data.filter(x => x.Type == NodeType.Battery && this.searchName(x, searchText));
     var finalData: Node[] = [];
     var fields = new Set<number | undefined>();
-    searchData.map(x => x.ParentId).forEach(x => {
+    searchData.map(x => x.NodeParentId).forEach(x => {
       if (!fields.has(x)) {
         finalData.push.apply(finalData,
-          this.TREE_DATA.filter(y => y.Id == x).map(z => Object.assign({}, z))
+          this.TREE_DATA.filter(y => y.NodeId == x).map(z => Object.assign({}, z))
         )
         fields.add(x);
       }
     })
     finalData.forEach(x => {
-      x.Children = searchData.filter(y => y.ParentId == x.Id).map(z => Object.assign({}, z));
+      x.Children = searchData.filter(y => y.NodeParentId == x.NodeId).map(z => Object.assign({}, z));
     });
     this.dataChange.next(finalData);
   }
@@ -395,6 +403,17 @@ export class WellTreeView implements OnChanges {
   /** The selection for checklist */
   checklistSelection = new SelectionModel<number>(true);
 
+  expandTillPad(node: Node[]) {
+    if (node.length > 0) {
+      node.forEach(x => {
+        if (x.Type != NodeType.Pad)
+          this.treeControl.expand(x);
+        if(x.Type != NodeType.Pad && x.Children)
+          this.expandTillPad(x.Children);
+      })
+    }
+  }
+
   constructor(private database: ChecklistDatabase, public treeviewService: TreeViewService) {
     // this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
     //   this.isExpandable, this.getChildren);
@@ -404,10 +423,10 @@ export class WellTreeView implements OnChanges {
     database.dataChange.subscribe(data => {
       this.dataSource.data = data;
       this.treeControl.dataNodes = data;
-      this.treeControl.expandAll();
+      this.expandTillPad(this.treeControl.dataNodes);
     });
     this.checklistSelection.changed.subscribe(x => {
-      treeviewService.selectedNodes.next(this.database.flatnedTree_data.filter(y => this.checklistSelection.selected.some(z => z == y.Id)));
+      treeviewService.selectedNodes.next(this.database.flatnedTree_data.filter(y => this.checklistSelection.selected.some(z => z == y.NodeId)));
     });
 
     this.treeviewService.selectedSavedTreeStateEvent.subscribe(x => {
@@ -424,9 +443,9 @@ export class WellTreeView implements OnChanges {
   }
 
   UpdateTreeSelection(nodes: Node[]) {
-    var nodes1 = <Node[]>this.database.flatnedTree_data.filter(x => nodes.some(y => y.Id == x.Id))
+    var nodes1 = <Node[]>this.database.flatnedTree_data.filter(x => nodes.some(y => y.NodeId == x.NodeId))
     nodes1.forEach(x =>
-      this.checklistSelection.select(x.Id));
+      this.checklistSelection.select(x.NodeId));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -495,7 +514,7 @@ export class WellTreeView implements OnChanges {
   descendantsAllSelected(node: Node): boolean {
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected = descendants.every(child =>
-      this.checklistSelection.isSelected(child.Id)
+      this.checklistSelection.isSelected(child.NodeId)
     );
     return descAllSelected;
   }
@@ -503,28 +522,28 @@ export class WellTreeView implements OnChanges {
   /** Whether part of the descendants are selected */
   descendantsPartiallySelected(node: Node): boolean {
     const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => this.checklistSelection.isSelected(child.Id));
+    const result = descendants.some(child => this.checklistSelection.isSelected(child.NodeId));
     return result && !this.descendantsAllSelected(node);
   }
 
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
   todoItemSelectionToggle(node: Node): void {
-    this.checklistSelection.toggle(node.Id);
+    this.checklistSelection.toggle(node.NodeId);
     const descendants = this.treeControl.getDescendants(node);
-    this.checklistSelection.isSelected(node.Id)
-      ? this.checklistSelection.select(...(descendants.map(x => x.Id)))
-      : this.checklistSelection.deselect(...descendants.map(x => x.Id));
+    this.checklistSelection.isSelected(node.NodeId)
+      ? this.checklistSelection.select(...(descendants.map(x => x.NodeId)))
+      : this.checklistSelection.deselect(...descendants.map(x => x.NodeId));
 
     // // Force update for the parent
     descendants.every(child =>
-      this.checklistSelection.isSelected(child.Id)
+      this.checklistSelection.isSelected(child.NodeId)
     );
     this.checkAllParentsSelection(node);
   }
 
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
   todoLeafItemSelectionToggle(node: Node): void {
-    this.checklistSelection.toggle(node.Id);
+    this.checklistSelection.toggle(node.NodeId);
     this.checkAllParentsSelection(node);
   }
 
@@ -539,15 +558,15 @@ export class WellTreeView implements OnChanges {
 
   /** Check root node checked state and change it accordingly */
   checkRootNodeSelection(node: Node): void {
-    const nodeSelected = this.checklistSelection.isSelected(node.Id);
+    const nodeSelected = this.checklistSelection.isSelected(node.NodeId);
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected = descendants.every(child =>
-      this.checklistSelection.isSelected(child.Id)
+      this.checklistSelection.isSelected(child.NodeId)
     );
     if (nodeSelected && !descAllSelected) {
-      this.checklistSelection.deselect(node.Id);
+      this.checklistSelection.deselect(node.NodeId);
     } else if (!nodeSelected && descAllSelected) {
-      this.checklistSelection.select(node.Id);
+      this.checklistSelection.select(node.NodeId);
     }
   }
 
@@ -569,7 +588,7 @@ export class WellTreeView implements OnChanges {
     //     return currentNode;
     //   }
     // }
-    return <Node | null>this.database.flatnedTree_data.find(x => x.Id == node.ParentId);
+    return <Node | null>this.database.flatnedTree_data.find(x => x.NodeId == node.NodeParentId);
   }
 
   /** Select the category so we can insert the new item. */

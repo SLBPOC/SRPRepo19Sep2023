@@ -653,4 +653,9 @@ export class WellsComponent implements OnInit{
 
     });
   }
+  searchObjC:any;
+  userSearchChange(obj:any){
+    this.searchObjC = obj;
+  }
+
 }

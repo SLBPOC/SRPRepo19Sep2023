@@ -118,7 +118,7 @@
       </div>
       <div class="col-md-12">
          <div class="col-md-2 well-list-search">
-            <div class="" >
+            <div class="">
                <div class="col-md-12 p-0 mt-3 filterborder">
                   <div class="d-flex justify-content-end">
                      <mat-icon style="cursor: pointer; color: white;font-size: 20px;" class="mt-2">close</mat-icon>
@@ -128,10 +128,17 @@
                         <app-well-filter-and-sort (filterRefresh) = "refreshGrid($event)"></app-well-filter-and-sort>
                      </mat-tab>
                      <mat-tab label="Well List">
-                        <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
-                        <!--Well List goes here.  -->
+                        <div class="main-container-dashboard">
+                           <div class="block-bg-border padding-15">
+                              <app-well-tree-search (userChanged)="userSearchChange($event)"></app-well-tree-search>
+                              <div class="devider"></div>
+                              <div class="well-check-list">
+                                 <app-well-tree-view [searchObj]="searchObjC"></app-well-tree-view>
+                              </div>
+                           </div>
+                        </div>
                      </mat-tab>
-                     
+
                   </mat-tab-group>
                </div>
             </div>
@@ -197,28 +204,27 @@
                         <td mat-cell *matCellDef="let element" class="align-col"> {{element.dateAndTime }} </td>
                      </ng-container>
                      <!-- Comms Status -->
-                    <!-- Comms Status -->
-               <ng-container matColumnDef="CommStatus">
-                  <th mat-sort-header mat-header-cell *matHeaderCellDef>Comms Status</th>
-                  <td mat-cell *matCellDef="let element" class="align-col">
-                     <span [ngClass]="{'controller-status-label-success': element.commStatus.includes('Comms Established'), 
-                     'controller-status-label-danger': element.commStatus.includes('Comms Failed')}">{{ element.commStatus }}</span> 
-                     </td>
-               </ng-container>
-               <!-- Controller Status -->
-               <ng-container matColumnDef="ControllerStatus">
-                  <th mat-sort-header mat-header-cell *matHeaderCellDef> Controller Status</th>
-                  <td mat-cell *matCellDef="let element" class="align-col">
-                     <button mat-raised-button type="button"
-                     [ngClass]="{'controller-status-btn-info': element.controllerStatus === 'Hand(Manual)', 
+                     <!-- Comms Status -->
+                     <ng-container matColumnDef="CommStatus">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Comms Status</th>
+                        <td mat-cell *matCellDef="let element" class="align-col">
+                           <span [ngClass]="{'controller-status-label-success': element.commStatus.includes('Comms Established'), 
+                     'controller-status-label-danger': element.commStatus.includes('Comms Failed')}">{{
+                              element.commStatus }}</span>
+                        </td>
+                     </ng-container>
+                     <!-- Controller Status -->
+                     <ng-container matColumnDef="ControllerStatus">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef> Controller Status</th>
+                        <td mat-cell *matCellDef="let element" class="align-col">
+                           <button mat-raised-button type="button" [ngClass]="{'controller-status-btn-info': element.controllerStatus === 'Hand(Manual)', 
                      'controller-status-btn-danger': element.controllerStatus === 'Shutdown', 
                      'controller-status-btn-default': element.controllerStatus === 'Auto' }"
-
-                      class="controller-status-btn-info" aria-label="Close">
-                        {{ element.controllerStatus }}
-                      </button>
-                  </td>
-               </ng-container>
+                              class="controller-status-btn-info" aria-label="Close">
+                              {{ element.controllerStatus }}
+                           </button>
+                        </td>
+                     </ng-container>
                      <!-- SPM -->
                      <ng-container matColumnDef="SPM.value">
                         <th mat-sort-header mat-header-cell *matHeaderCellDef>SPM</th>
@@ -285,7 +291,8 @@
                                  *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span> -->
                            </a>
                            <ng-template #tooltip>
-                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='EffectiveRunTime.value'">
+                              <div class="border" style="width: 180px;"
+                                 *ngIf="eClumn.header =='EffectiveRunTime.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.effectiveRunChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
@@ -337,7 +344,7 @@
             </div>
          </div>
       </div>
-     
+
    </div>
-   
+
 </div>
