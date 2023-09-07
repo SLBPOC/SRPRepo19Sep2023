@@ -133,6 +133,14 @@ export class WellFilterAndSortComponent implements OnInit{
     this.clearInferredProduction();
     this.clearPumpFillage();
     this.updateAppliedFilter();
+    this.filterRefresh.emit({
+      "pageSize": 5,
+      "pageNumber": 1,
+      "searchText": "",
+      "sortColumn": "",
+      "sortDirection": "",
+      "searchStatus": ""
+  })
   }
 
   clearCommStatus() {
