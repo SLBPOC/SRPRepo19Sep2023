@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable, map } from 'rxjs';
 import { CardDetailsModel, DynacardModel2, FramesDynameter } from '../model/dyna-card.model';
+import { environment } from '@environments/environment';
+
 
 @Injectable()
 export class DynacardService {
 
-  baseUrl: string = "http://localhost:5000/api/";
+  baseUrl: string = environment.srp_microservice_url;
 
   listOfTime: string = "Dynacard/GetDynacardTimeRange";
 
