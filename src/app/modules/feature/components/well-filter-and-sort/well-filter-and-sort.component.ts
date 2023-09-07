@@ -16,6 +16,7 @@ export class WellFilterAndSortComponent implements OnInit{
   panelOpenState5: boolean;
   panelOpenState6: boolean;
   panelOpenState7: boolean;
+
   filtersApplied = {
     wellNames: false,
     commsStatus: false,
@@ -25,6 +26,8 @@ export class WellFilterAndSortComponent implements OnInit{
     pumpFillage: false,
     inferredProduction: false
   }
+
+  wellList:any[];
   providers = new FormControl();
   allProviders!: any;
   commsStatusOptions!: any;
@@ -56,6 +59,7 @@ export class WellFilterAndSortComponent implements OnInit{
   ngOnInit(): void {
     this.getDropdowns();
     this.getWellList();
+    this.BindFilterValues();
   }
 
   getDropdowns() {
@@ -87,6 +91,16 @@ export class WellFilterAndSortComponent implements OnInit{
         }, [])
         this.allProviders = [...wellNamesList];
         this.filteredProviders = [...this.allProviders];
+      }
+    })
+  }
+
+  BindFilterValues()
+  {
+    this.service.GetWellFilterDefaultValues().subscribe((response:any) => {
+      if(response !=null)
+      {
+          this.wellList=response.wellNames;          
       }
     })
   }

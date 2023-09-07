@@ -58,6 +58,17 @@ export class WellsComponent implements OnInit{
   seachByStatus: string = "";
   loading = true;
 
+  //filter variables;
+  commStatus:any[];
+  controllerStatus:any[];
+  inferredProduction :any[];
+  pumpFillage:any[];
+  pumpingType:any[];
+  spm:any[];
+  wellNames:any[];
+
+
+  //legend variables
   TotalCount: number = 0;
   OverPumping: number = 0;
   OptimalPumping: number = 0;
@@ -67,14 +78,7 @@ export class WellsComponent implements OnInit{
   pageSizeOption=[10,20,30]
   ids:number[];
   respdata: any
-  // chartarray:any[]=[
-  //   [1, 8.620679090895912],
-  //   [2, 5.056747930070717],
-  //   [3, 1.2472775679926662],
-  //   [4, 1.5001091034103453],
-  //   [5, 8.445513107538643],
-  //   [6, 0.16486046100086638],
-  //   [7, 3.370270180965287]]
+  
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router,public treeviewService: TreeViewService) { }
 
@@ -106,16 +110,7 @@ export class WellsComponent implements OnInit{
     })
   }
 
-  GetWellDetails() {
-    this.loading = true;
-    this.service.getWellDetails().subscribe((response: any) => {
-      this.loading = false;
-      this.WellList = response;
-      this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
-  }
+ 
 
   GetWellDetailsWithFilters() {    
     this.loading = true;
@@ -143,6 +138,20 @@ export class WellsComponent implements OnInit{
 
     });
   }
+
+
+  refreshGrid(payload: any) {
+
+    this.commStatus=payload.commStatus;
+    this.controllerStatus=payload.controllerStatus;
+    this.inferredProduction=payload.inferredProduction;
+    this.pumpFillage=payload.pumpFillage;
+    this.pumpingType=payload.pumpingType;
+    this.spm=payload.spm;
+    this.wellNames=payload.wellNames;
+
+    this.GetWellDetailsWithFilters();    
+  }
   
   //Create Model for search
   createModel(this: any) {
@@ -152,7 +161,14 @@ export class WellsComponent implements OnInit{
     this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
     this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
-    this.model.Ids = this.ids;
+
+    this.model.commStatus= this.commStatus? this.commStatus:[];
+    this.model.controllerStatus=this.controllerStatus? this.controllerStatus:[];
+    this.model.inferredProduction=this.inferredProduction ? this.inferredProduction:{start: 0, end: 100};
+    this.model.pumpFillage=this.pumpFillage? this.pumpFillage:{start: 0, end: 100};
+    this.model.pumpingType=this.pumpingType? this.pumpingType:[];
+    this.model.spm=this.spm? this.spm :{start: 0, end: 100};
+    this.model.wellNames=this.wellNames? this.wellNames:[];
 
     return this.model;
   }
@@ -642,31 +658,7 @@ export class WellsComponent implements OnInit{
     this.router.navigate([]).then(result => {  window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
   }
 
-  refreshGrid(payload: any) {
-    console.log('wells component')
-    this.service.getWellDetailsWithFilters(payload).subscribe(response => {
-      if (response.hasOwnProperty('data')) {
-        this.loading = false;
-        this.pageSizeOption=[10, 15, 20, response.totalCount]
-        // this.getPageSizeOptions();
-        this.WellList = response.data;
-        this.WellList.forEach(x => this.prepareChart(x));
-        this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
-        setTimeout(() => {
-          this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.totalCount;
-        });
-
-        this.TotalCount = response.totalCount;
-        this.OverPumping = response.totalOverpumping;
-        this.OptimalPumping = response.totalOptimalPumping;
-        this.UnderPumping = response.totalUnderpumping;
-        this.dataSource.paginator = this.paginator;
-       
-      }
-
-    });
-  }
+  
   searchObjC:any;
   userSearchChange(obj:any){
     this.searchObjC = obj;

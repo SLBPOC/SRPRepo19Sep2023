@@ -13,7 +13,7 @@ const wellData = '../../assets/json-data/welllist-data.json';
 })
 export class WellsService {
   sub = new Subject()
-  private apiUrl: string = "http://localhost:5000/api/";
+  private apiUrl: string = "https://localhost:6060/api/";
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -30,9 +30,12 @@ export class WellsService {
     return this.http.get<any[]>(this.apiUrl + "well", this.httpOptions);
   }
 
-  getWellDetailsWithFilters(searchModel: any): Observable<WellModelResult> {
-    return this.http.post<WellModelResult>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);          
-    // return this.http.get(this.wellListData);
+  getWellDetailsWithFilters(searchModel: any): Observable<any> {
+    return this.http.post<any[]>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);
+  }
+
+  GetWellFilterDefaultValues(): Observable<any> {
+    return this.http.post<any[]>(this.apiUrl + "Well/GetWellFilterDefaulValues", this.httpOptions);  
   }
 
   getWellInfoById(wellId: string): Observable<any> {

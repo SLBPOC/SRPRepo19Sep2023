@@ -61,7 +61,8 @@
         <div class="row mt-3">
 
           <mat-form-field appearance="fill">
-            <mat-select multiple [formControl]="providers" (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)">
+            <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
+            <mat-select multiple [formControl]="providers" >
               <input #multiUserSearch type="text" autocomplete="off" matInput class="search-prov"
                 placeholder="Search By Provider" (input)="onInputChange($event)" />
               <mat-select-trigger>
@@ -69,8 +70,8 @@
               </mat-select-trigger>
 
 
-              <mat-option *ngFor="let provider of filteredProviders"
-                [value]="provider.value">{{provider.value}}</mat-option>
+              <mat-option *ngFor="let provider of wellList"
+                [value]="provider.wellName">{{provider.wellName}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
