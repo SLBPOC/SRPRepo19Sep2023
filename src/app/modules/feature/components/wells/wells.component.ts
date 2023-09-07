@@ -161,6 +161,7 @@ export class WellsComponent implements OnInit{
     this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
     this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
+    this.model.ids = this.ids;
 
     this.model.commStatus= this.commStatus? this.commStatus:[];
     this.model.controllerStatus=this.controllerStatus? this.controllerStatus:[];

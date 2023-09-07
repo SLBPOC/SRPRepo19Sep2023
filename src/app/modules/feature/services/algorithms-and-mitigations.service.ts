@@ -3,6 +3,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { Observable } from 'rxjs';
 import {filter, tap} from 'rxjs/operators'
 import { BubbleChartInfo, ClassficationInfo, DateRangeBubbleChart } from '../model/dyna-card.model';
+import { environment } from '@environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ import { BubbleChartInfo, ClassficationInfo, DateRangeBubbleChart } from '../mod
 
 export class AlgorithmsAndMitigationsService {
 
-  private apiUrl: string="http://localhost:5000/api/";
+  private apiUrl: string=environment.srp_microservice_url;
   httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -123,7 +125,7 @@ export class AlgorithmsAndMitigationsService {
 
   getWellInfoById(wellId: string): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<any>  (`http://localhost:5000/api/Well/GetWellInfoById?WellId=${wellId}`)       
+    return this.http.get<any>  (`${this.apiUrl}Well/GetWellInfoById?WellId=${wellId}`)       
   }
 
   getHeatMapChartData() {

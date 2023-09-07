@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders
- } from '@angular/common/http';
+import {
+  HttpClient, HttpHeaders
+} from '@angular/common/http';
 import { EventList } from '../model/event-list';
 import { Observable, map, tap } from 'rxjs';
 import { SLBSearchParams, SortOptions } from 'src/app/models/slb-params';
+import { environment } from '@environments/environment';
+
 
 const eventsData = '../../../../assets/json/events-data.json';
 
@@ -11,18 +14,18 @@ const eventsData = '../../../../assets/json/events-data.json';
   providedIn: 'root',
 })
 export class EventListService {
-  private apiUrl: string="http://localhost:61209/api/";
+  private apiUrl: string = environment.srp_microservice_url;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
 
   getWellEventfromDB(): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions);          
+    return this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions);
   }
 
   getWellEvents(params: SLBSearchParams): Observable<EventList[]> {
@@ -42,8 +45,8 @@ export class EventListService {
         (x) =>
           x.wellName.toLowerCase().includes(params.searchTerm.toLowerCase()) ||
           x.eventDescription.toLowerCase().includes(params.searchTerm.toLowerCase())  // ||
-          // x.eventType.toLowerCase().includes(params.searchTerm.toLowerCase()) ||
-          // x.eventStatus.toLowerCase().includes(params.searchTerm.toLowerCase())
+        // x.eventType.toLowerCase().includes(params.searchTerm.toLowerCase()) ||
+        // x.eventStatus.toLowerCase().includes(params.searchTerm.toLowerCase())
       );
     }
     if (params.sort && params.sort.active) {

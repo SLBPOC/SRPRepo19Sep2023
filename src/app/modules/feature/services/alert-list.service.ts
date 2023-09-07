@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AlertList } from '../model/alert-list';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 
 const alertsData = '../../../../assets/json/alerts-data.json';
@@ -11,6 +12,8 @@ const alertsData = '../../../../assets/json/alerts-data.json';
 })
 export class AlertListService {
 
+  baseUrl:string = environment.srp_microservice_url;
+
   constructor(private http: HttpClient) { }
 
   // getWellAlerts(): Observable<AlertList[]> {
@@ -19,16 +22,16 @@ export class AlertListService {
 
   getWellAlerts(): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<Observable<AlertList[]>> (`http://localhost:5000/api/Alerts/GetAllWellList`)       
+    return this.http.get<Observable<AlertList[]>> (`${this.baseUrl}Alerts/GetAllWellList`)       
   }
 
   getAlertsByAlertStatus(alertStatus: string): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<any>  (`http://localhost:5000/api/Alerts/GetWellAlertsByAlertStatus?AlertStatus=${alertStatus}`)       
+    return this.http.get<any>  (`${this.baseUrl}Alerts/GetWellAlertsByAlertStatus?AlertStatus=${alertStatus}`)       
   }
 
   getAlertListFilters(payload: any): Observable<any> {
-    const url = `http://localhost:5000/api/Alerts/GetAlertList`;
+    const url = `${this.baseUrl}Alerts/GetAlertList`;
     return this.http.post(url, payload, {
       headers: {}
     })
@@ -41,7 +44,7 @@ export class AlertListService {
     // let httpOptions = {
     //   params: params
     // }
-    const url = `http://localhost:5000/api/Alerts/ClearAlert`;
+    const url = `${this.baseUrl}Alerts/ClearAlert`;
     console.log(payload)
     return this.http.post(url, null, {
       params: payload,
@@ -49,7 +52,7 @@ export class AlertListService {
   }
 
   snoozeBy(payload: any): Observable<any> {
-    const url = `http://localhost:5000/api/Alerts/SnoozeBy`;
+    const url = `${this.baseUrl}Alerts/SnoozeBy`;
     console.log(payload)
     return this.http.post(url, null, {
       params: payload

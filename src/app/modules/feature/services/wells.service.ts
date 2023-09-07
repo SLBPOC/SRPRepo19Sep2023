@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { WellModel, WellModelResult } from '../model/wellModel';
 import { Subject } from 'rxjs';
+import { environment } from '@environments/environment';
 
 const wellData = '../../assets/json-data/welllist-data.json';
 
@@ -13,7 +14,7 @@ const wellData = '../../assets/json-data/welllist-data.json';
 })
 export class WellsService {
   sub = new Subject()
-  private apiUrl: string = "https://localhost:6060/api/";
+  private apiUrl: string = environment.srp_microservice_url;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
