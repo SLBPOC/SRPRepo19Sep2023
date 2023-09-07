@@ -2,7 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl, NestedTreeControl, NestedTreeControlOptions } from '@angular/cdk/tree';
 import { Component, Injectable, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { TreeViewService } from '../../../services/tree-view.service';
 import { Node, NodeType, FlatNode } from '../../../services/models'
 import { WellsService } from '../../../services/wells.service';
@@ -212,13 +212,13 @@ export class ChecklistDatabase {
         fieldNode.Children.push(batteryNode);
       }
 
+      // Add the pad to the battery
       let padNode = batteryNode.Children.find((node) => node.Name == padName);
       if (!padNode) {
         padNode = <Node>{ Name: padName, Type: NodeType.Pad, NodeParentId: batteryNode.NodeId, NodeId: item.padId, Children: [] };
         batteryNode.Children.push(padNode);
       }
 
-      // Add the pad to the battery
       padNode.Children.push({ Name: item.wellName, NodeId: item.id, NodeParentId: padNode.NodeId, Children: undefined, Type: NodeType.Wells, ...item });
     });
     // console.log(hierarchy);
@@ -408,7 +408,7 @@ export class WellTreeView implements OnChanges {
       node.forEach(x => {
         if (x.Type != NodeType.Pad)
           this.treeControl.expand(x);
-        if(x.Type != NodeType.Pad && x.Children)
+        if (x.Type != NodeType.Pad && x.Children)
           this.expandTillPad(x.Children);
       })
     }
@@ -425,21 +425,33 @@ export class WellTreeView implements OnChanges {
       this.treeControl.dataNodes = data;
       this.expandTillPad(this.treeControl.dataNodes);
     });
-    this.checklistSelection.changed.subscribe(x => {
-      treeviewService.selectedNodes.next(this.database.flatnedTree_data.filter(y => this.checklistSelection.selected.some(z => z == y.NodeId)));
-    });
+    // this.checklistSelection.changed.pipe(tap(x=>{
+    //   return x.added.length == 1 
+    // })).subscribe(x => {
+    //   // console.log(this.checklistSelection.selected);
+    //   console.log(x);
+    //   if(list.some(x=>x.Type != NodeType.Pad))
+    //     treeviewService.selectedNodes.next(list);
+    // });
 
     this.treeviewService.selectedSavedTreeStateEvent.subscribe(x => {
       if (x.state != null && x.fresh) {
         this.checklistSelection.clear();
         // setTimeout(() => {
-        this.UpdateTreeSelection(<Node[]>x?.state?.SelectedNode);
-        // }, 500); 
+          this.UpdateTreeSelection(<Node[]>x?.state?.SelectedNode);
+          // }, 500); 
+          this.updateSelectedCheckList();
       }
       else if (x.state == null) {
         this.checklistSelection.clear();
+        this.updateSelectedCheckList();
       }
     })
+  }
+
+  updateSelectedCheckList() {
+    var list = this.database.flatnedTree_data.filter(y => this.checklistSelection.selected.some(z => z == y.NodeId));
+    this.treeviewService.selectedNodes.next(list);
   }
 
   UpdateTreeSelection(nodes: Node[]) {
@@ -539,12 +551,14 @@ export class WellTreeView implements OnChanges {
       this.checklistSelection.isSelected(child.NodeId)
     );
     this.checkAllParentsSelection(node);
+    this.updateSelectedCheckList();
   }
 
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
   todoLeafItemSelectionToggle(node: Node): void {
     this.checklistSelection.toggle(node.NodeId);
     this.checkAllParentsSelection(node);
+    this.updateSelectedCheckList();
   }
 
   /* Checks all the parents when a leaf node is selected/unselected */
