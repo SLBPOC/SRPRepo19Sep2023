@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { WellsService } from '../../services/wells.service';
 
@@ -8,7 +8,7 @@ import { WellsService } from '../../services/wells.service';
   styleUrls: ['./well-filter-and-sort.component.scss'],
 })
 export class WellFilterAndSortComponent implements OnInit{
-
+  @Output('filterRefresh') filterRefresh: EventEmitter<any> = new EventEmitter();
   panelOpenState: boolean;
   panelOpenState2: boolean;
   panelOpenState3: boolean;
@@ -16,7 +16,6 @@ export class WellFilterAndSortComponent implements OnInit{
   panelOpenState5: boolean;
   panelOpenState6: boolean;
   panelOpenState7: boolean;
-
   filtersApplied = {
     wellNames: false,
     commsStatus: false,
@@ -27,10 +26,6 @@ export class WellFilterAndSortComponent implements OnInit{
     inferredProduction: false
   }
   providers = new FormControl();
-  // allProviders: any[] = [{ value: "Apache24 FED 11"}, { value: "Apache24 FED 12"}, { value: "Apache24 FED 13"}];
-  // commsStatusOptions: any[] = [{ value: "Comms Failed", checked: false }, { value: "Comms Established", checked: false }];
-  // controllerStatusOptions: any[] = [{ value: "Shutdown", checked: false }, { value: "Hand (Manual)", checked: false }, { value: "Auto", checked: false }];
-  // pumpingTypeOptions = [{ value: "Over Pumping", checked: false }, { value: "Optimum Pumping", checked: false }, { value: "Under Pumping", checked: false }];
   allProviders!: any;
   commsStatusOptions!: any;
   controllerStatusOptions!: any;
@@ -54,7 +49,6 @@ export class WellFilterAndSortComponent implements OnInit{
     "start": 0,
     "end": 100
   }
-
   filteredProviders: any[] = this.allProviders;
 
   constructor(private service: WellsService) {}
@@ -66,14 +60,12 @@ export class WellFilterAndSortComponent implements OnInit{
 
   getDropdowns() {
     this.service.getWellListFilterSortDropdowns().subscribe((response: any) => {
-      console.log('response =>', response)
       this.commsStatusOptions = response.commsStatus;
       this.controllerStatusOptions = response.controllerStatus;
       this.pumpingTypeOptions = response.pumpingTypes;
       this.spmSlider = response.spmSlider;
       this.pumpFillageSlider = response.pumpFillageSlider;
       this.inferredProductionSlider = response.inferredProductionSlider;
-
     })
   }
 
@@ -93,12 +85,9 @@ export class WellFilterAndSortComponent implements OnInit{
           acc[index] = {value: wellData.wellName}
           return acc;
         }, [])
-        // this.providers.setValue(Array.of(...wellNamesList));
         this.allProviders = [...wellNamesList];
         this.filteredProviders = [...this.allProviders];
       }
-
-      console.log('well names', this.allProviders);
     })
   }
 
@@ -126,6 +115,9 @@ export class WellFilterAndSortComponent implements OnInit{
     this.clearCommStatus();
     this.clearControllerStatus();
     this.clearPumpingTypes();
+    this.clearSpm();
+    this.clearInferredProduction();
+    this.clearPumpFillage();
     this.updateAppliedFilter();
   }
 
@@ -161,7 +153,6 @@ export class WellFilterAndSortComponent implements OnInit{
       this.controllerStatusOptions[index].checked = isChecked;
     }
     this.updateAppliedFilter();
-    
   }
 
   clearSpm() {
@@ -170,16 +161,12 @@ export class WellFilterAndSortComponent implements OnInit{
     this.filtersApplied.spm = false;
   }
 
- 
-
   clearPumpFillage() {
     this.pumpFillageSlider.start = 0;
     this.pumpFillageSlider.end = 100;
     this.filtersApplied.pumpFillage = false;
  
   }
-
- 
 
   clearInferredProduction() {
     this.inferredProductionSlider.start = 0;
@@ -235,37 +222,23 @@ export class WellFilterAndSortComponent implements OnInit{
         end: this.inferredProductionSlider.end
       },
   }
-
-  console.log('applied filters payload ===>', payload);
-  this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
-    if(response.hasOwnProperty('data')) {
-      const wellNamesList = response.data.reduce((acc: any, wellData: any, index: number) => {
-        acc[index] = {value: wellData.wellName}
-        return acc;
-      }, [])
-      // this.providers.setValue(Array.of(...wellNamesList));
-      this.allProviders = [...wellNamesList];
-      this.filteredProviders = [...this.allProviders];
-    }
-
-    console.log('well names', this.allProviders);
-  })
-
-
+  this.filterRefresh.emit(payload);
   }
+  
   updateAppliedFilter() {
     this.commsStatusOptions.every((element: any) => element.checked === false) ? this.filtersApplied.commsStatus = false : this.filtersApplied.commsStatus = true;
     this.controllerStatusOptions.every((element: any) => element.checked === false) ? this.filtersApplied.controllerStatus = false : this.filtersApplied.controllerStatus = true;
     this.pumpingTypeOptions.every((element: any) => element.checked === false) ? this.filtersApplied.pumpingTypes = false : this.filtersApplied.pumpingTypes = true;
-
   }
 
   formatLabel(value: number): string {
     let percentageValue = Math.round((value)*100) / 100 
     return `${percentageValue}%`;
   }
+
   formatLabelSPM(value: number): string {
     let percentageValue = Math.round((value)*100) / 100 
     return `${percentageValue}`;
   }
+
 }
