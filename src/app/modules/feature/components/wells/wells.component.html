@@ -225,7 +225,7 @@
                      <ng-container matColumnDef="ControllerStatus">
                         <th mat-sort-header mat-header-cell *matHeaderCellDef> Controller Status</th>
                         <td mat-cell *matCellDef="let element" class="align-col">
-                           <button mat-raised-button type="button" [ngClass]="{'controller-status-btn-info': element.controllerStatus === 'Hand(Manual)', 
+                           <button mat-raised-button type="button" [ngClass]="{'controller-status-btn-info': element.controllerStatus === 'Hand (Manual)', 
                      'controller-status-btn-danger': element.controllerStatus === 'Shutdown', 
                      'controller-status-btn-default': element.controllerStatus === 'Auto' }"
                               class="controller-status-btn-info" aria-label="Close">
