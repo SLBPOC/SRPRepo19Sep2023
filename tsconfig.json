@@ -27,7 +27,8 @@
       "dom"
     ],
     "paths": {
-      "@environments/*":["src/environments/*"]
+      "@environments/*":["src/environments/*"],
+      "@common/*":["src/app/Common/*"]
     }
   },
   "angularCompilerOptions": {

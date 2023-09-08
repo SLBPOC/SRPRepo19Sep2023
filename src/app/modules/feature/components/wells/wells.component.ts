@@ -15,6 +15,7 @@ import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
 import { TreeViewService } from '../../services/tree-view.service';
 import { NodeType } from '../../services/models';
+import { Constants } from '@common/Constants'
 
 
 @Component({
@@ -22,7 +23,7 @@ import { NodeType } from '../../services/models';
   templateUrl: './wells.component.html',
   styleUrls: ['./wells.component.scss']
 })
-export class WellsComponent implements OnInit{
+export class WellsComponent implements OnInit {
   theme = 'light';
   dataSource: any = [];
   WellList!: WellModel[];
@@ -59,13 +60,13 @@ export class WellsComponent implements OnInit{
   loading = true;
 
   //filter variables;
-  commStatus:any[];
-  controllerStatus:any[];
-  inferredProduction :any[];
-  pumpFillage:any[];
-  pumpingType:any[];
-  spm:any[];
-  wellNames:any[];
+  commStatus: any[];
+  controllerStatus: any[];
+  inferredProduction: any[];
+  pumpFillage: any[];
+  pumpingType: any[];
+  spm: any[];
+  wellNames: any[];
 
 
   //legend variables
@@ -73,14 +74,14 @@ export class WellsComponent implements OnInit{
   OverPumping: number = 0;
   OptimalPumping: number = 0;
   UnderPumping: number = 0;
-  
-  minmaxChartData:any[]=[];  //min max chart data array
-  pageSizeOption=[10,20,30]
-  ids:number[];
-  respdata: any
-  
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router,public treeviewService: TreeViewService) { }
+  minmaxChartData: any[] = [];  //min max chart data array
+  pageSizeOption = [10, 20, 30]
+  ids: number[];
+  respdata: any
+
+
+  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router, public treeviewService: TreeViewService) { }
 
 
   ngAfterViewInit() {
@@ -99,26 +100,26 @@ export class WellsComponent implements OnInit{
 
   ngOnInit(): void {
     this.GetWellDetailsWithFilters();
-    this.treeviewService.selectedNodes.subscribe(x=>{
+    this.treeviewService.selectedNodes.subscribe(x => {
       console.log(x);
-      if (x != undefined && x.length > 0 && x.some(m=>m.Type == NodeType.Wells)) {
-        this.ids = x.filter(m=>m.Type == NodeType.Wells).map(m=>m.NodeId);
+      if (x != undefined && x.length > 0 && x.some(m => m.Type == NodeType.Wells)) {
+        this.ids = x.filter(m => m.Type == NodeType.Wells).map(m => m.NodeId);
       }
-      else 
+      else
         this.ids = [];
       this.GetWellDetailsWithFilters();
     })
   }
 
- 
 
-  GetWellDetailsWithFilters() {    
+
+  GetWellDetailsWithFilters() {
     this.loading = true;
     var SearchModel = this.createModel();
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
       if (response.hasOwnProperty('data')) {
         this.loading = false;
-        this.pageSizeOption=[10, 15, 20, response.totalCount]
+        this.pageSizeOption = [10, 15, 20, response.totalCount]
         // this.getPageSizeOptions();
         this.WellList = response.data;
         this.WellList.forEach(x => this.prepareChart(x));
@@ -133,7 +134,7 @@ export class WellsComponent implements OnInit{
         this.OptimalPumping = response.totalOptimalPumping;
         this.UnderPumping = response.totalUnderpumping;
         this.dataSource.paginator = this.paginator;
-       
+
       }
 
     });
@@ -142,17 +143,17 @@ export class WellsComponent implements OnInit{
 
   refreshGrid(payload: any) {
 
-    this.commStatus=payload.commStatus;
-    this.controllerStatus=payload.controllerStatus;
-    this.inferredProduction=payload.inferredProduction;
-    this.pumpFillage=payload.pumpFillage;
-    this.pumpingType=payload.pumpingType;
-    this.spm=payload.spm;
-    this.wellNames=payload.wellNames;
+    this.commStatus = payload.commStatus;
+    this.controllerStatus = payload.controllerStatus;
+    this.inferredProduction = payload.inferredProduction;
+    this.pumpFillage = payload.pumpFillage;
+    this.pumpingType = payload.pumpingType;
+    this.spm = payload.spm;
+    this.wellNames = payload.wellNames;
 
-    this.GetWellDetailsWithFilters();    
+    this.GetWellDetailsWithFilters();
   }
-  
+
   //Create Model for search
   createModel(this: any) {
     this.model.pageSize = this.pageSize;
@@ -163,13 +164,13 @@ export class WellsComponent implements OnInit{
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
     this.model.ids = this.ids;
 
-    this.model.commStatus= this.commStatus? this.commStatus:[];
-    this.model.controllerStatus=this.controllerStatus? this.controllerStatus:[];
-    this.model.inferredProduction=this.inferredProduction ? this.inferredProduction:{start: 0, end: 100};
-    this.model.pumpFillage=this.pumpFillage? this.pumpFillage:{start: 0, end: 100};
-    this.model.pumpingType=this.pumpingType? this.pumpingType:[];
-    this.model.spm=this.spm? this.spm :{start: 0, end: 100};
-    this.model.wellNames=this.wellNames? this.wellNames:[];
+    this.model.commStatus = this.commStatus ? this.commStatus : [];
+    this.model.controllerStatus = this.controllerStatus ? this.controllerStatus : [];
+    this.model.inferredProduction = this.inferredProduction ? this.inferredProduction : { start: 0, end: 100 };
+    this.model.pumpFillage = this.pumpFillage ? this.pumpFillage : { start: 0, end: 100 };
+    this.model.pumpingType = this.pumpingType ? this.pumpingType : [];
+    this.model.spm = this.spm ? this.spm : { start: 0, end: 100 };
+    this.model.wellNames = this.wellNames ? this.wellNames : [];
 
     return this.model;
   }
@@ -202,12 +203,12 @@ export class WellsComponent implements OnInit{
       if (this.selectedColumn.filter(resp => event.source.value === resp)) {
         this.selectedColumn.push(event.source.value)
         this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({ header }) => header === column)), ...[...new Set(this.selectedColumn)]];
-        this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string,header:string }) => [...new Set(this.selectedColumn)].includes(extraColumn.header));
+        this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string, header: string }) => [...new Set(this.selectedColumn)].includes(extraColumn.header));
       }
     } else {
       this.selectedColumn = this.selectedColumn.filter(function (e) { return e !== event.source.value })
       this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({ header }) => header === column)), ...this.selectedColumn];
-      this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string,header:string }) => this.selectedColumn.includes(extraColumn.header));
+      this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string, header: string }) => this.selectedColumn.includes(extraColumn.header));
     }
   }
 
@@ -243,11 +244,10 @@ export class WellsComponent implements OnInit{
     this.GetWellDetailsWithFilters();
   }
 
-  GetMinMaxChartData(w:WellModel)
-  {
-    this.minmaxChartData=[];
-    this.minmaxChartData.push({name:"min",data:w.minMaxLoad.min});
-    this.minmaxChartData.push({name:"min",data:w.minMaxLoad.max});
+  GetMinMaxChartData(w: WellModel) {
+    this.minmaxChartData = [];
+    this.minmaxChartData.push({ name: "min", data: w.minMaxLoad.min });
+    this.minmaxChartData.push({ name: "min", data: w.minMaxLoad.max });
     return this.minmaxChartData;
   }
 
@@ -267,7 +267,7 @@ export class WellsComponent implements OnInit{
   // }
 
   prepareChart(x: WellModel): void {
-    
+
     this.bindInferredChart(x);
     this.bindSPMChart(x);
     this.bindPumpFillageChart(x);
@@ -280,14 +280,13 @@ export class WellsComponent implements OnInit{
   }
 
 
-  bindSPMChart(x: WellModel)
-  {
+  bindSPMChart(x: WellModel) {
     x.spmChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -296,7 +295,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
       },
       xAxis: {
         labels: {
@@ -304,30 +303,30 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'line',
         data: x.spm.data   //this.GetRandomNumbers(false)
-      }]
+      }],
+      ...Constants.highChartCommonContext
     }
   }
 
-  bindPumpFillageChart(x: WellModel)
-  {
+  bindPumpFillageChart(x: WellModel) {
     x.pumpFillageChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -336,7 +335,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
       },
       xAxis: {
         labels: {
@@ -344,31 +343,31 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'line',
         data: x.pumpFillage.data
-      }]
+      }],
+      ...Constants.highChartCommonContext
     }
   }
 
-  bindInferredChart(x: WellModel)
-  {   
-    x.inferredChartObj = {
-      title: { text: '' },      
+  bindInferredChart(x: WellModel) {
+    var charobj: HighCharts.Options = {
+      title: { text: '' },
       chart: {
         renderTo: 'container',
-        type:'line',
+        type: 'line',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -377,7 +376,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       xAxis: {
@@ -386,31 +385,32 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'line',
         data: x.inferredProduction.data
-      }]
+      }],
+      ...Constants.highChartCommonContext
     }
+    x.inferredChartObj = charobj;
   }
 
-  bindEffectiveRunChart(x: WellModel)
-  {
+  bindEffectiveRunChart(x: WellModel) {
     x.effectiveRunChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -419,7 +419,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
       },
       xAxis: {
         labels: {
@@ -427,31 +427,31 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'line',
         data: x.effectiveRunTime.data //this.GetChartData(x).effectiveRuntime.data
-      }]
+      }],
+      ...Constants.highChartCommonContext
     }
-    
+
   }
 
-  bindCycleChart(x: WellModel)
-  {
+  bindCycleChart(x: WellModel) {
     x.cycleChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -460,7 +460,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       xAxis: {
@@ -469,31 +469,31 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'column',
         data: x.cyclesToday.data
-      }]
+      }],
+      ...Constants.highChartCommonContext
     }
   }
 
-  bindStructuralLoadChart(x: WellModel)
-  {
+  bindStructuralLoadChart(x: WellModel) {
     x.structuralLoadChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -502,7 +502,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       xAxis: {
@@ -511,33 +511,33 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'line',
-        data:  x.structuralLoad.data
-      }]
+        data: x.structuralLoad.data
+      }],
+      ...Constants.highChartCommonContext
     }
   }
 
-  bindMinMaxLoadChart(x: WellModel)
-  {
-    
+  bindMinMaxLoadChart(x: WellModel) {
+
     x.minMaxLoadChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
         type: 'line',
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -546,7 +546,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       xAxis: {
@@ -555,29 +555,29 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
-      
-      series: this.GetMinMaxChartData(x)
+
+      series: this.GetMinMaxChartData(x),
+      ...Constants.highChartCommonContext
     }
   }
 
-  bindGearBoxLoadChart(x: WellModel)
-  {
+  bindGearBoxLoadChart(x: WellModel) {
     x.gearBoxLoadChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -586,7 +586,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       xAxis: {
@@ -595,31 +595,31 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'line',
-        data:  x.gearboxLoad.data
-      }]
+        data: x.gearboxLoad.data
+      }],
+      ...Constants.highChartCommonContext
     }
   }
 
-  bindRodStressChart(x: WellModel)
-  {
+  bindRodStressChart(x: WellModel) {
     x.roadStressChartObj = {
       title: { text: '' },
       chart: {
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
+        spacing: [0, 0, 0, 0],
         backgroundColor: undefined
       },
       yAxis: {
@@ -628,7 +628,7 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       xAxis: {
@@ -637,31 +637,32 @@ export class WellsComponent implements OnInit{
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible:true
 
       },
       legend: {
         enabled: false
       },
       tooltip: {
-        outside: true,
+        outside: false,
         className: 'highchart-elevate-tooltip'
       },
       series: [{
         type: 'line',
-        data:  x.rodStress.data
-      }]
+        data: x.rodStress.data
+      }],
+      ...Constants.highChartCommonContext
     }
   }
 
   navigateToWellInfo(wellId: string) {
     //this.router.navigateByUrl(`/well-info-v2/${wellId}`)
-    this.router.navigate([]).then(result => {  window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
+    this.router.navigate([]).then(result => { window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
   }
 
-  
-  searchObjC:any;
-  userSearchChange(obj:any){
+
+  searchObjC: any;
+  userSearchChange(obj: any) {
     this.searchObjC = obj;
   }
 
