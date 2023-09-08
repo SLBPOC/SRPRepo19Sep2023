@@ -141,7 +141,7 @@ export class WellsComponent implements OnInit{
 
 
   refreshGrid(payload: any) {
-
+    this.seachByStatus=""; // Added by Gayatri 9/8/2023
     this.commStatus=payload.commStatus;
     this.controllerStatus=payload.controllerStatus;
     this.inferredProduction=payload.inferredProduction;
