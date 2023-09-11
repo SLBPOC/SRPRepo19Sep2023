@@ -24,7 +24,7 @@
     }
 
     .mdc-data-table__cell {
-        padding: 15px !important;
+        // padding: 15px !important;
         color: #ADB1C7 !important;
         font-size: 16px !important;
         font-weight: 500;
@@ -49,7 +49,7 @@
     }
     .tabletophead {
         background-color: rgba(19, 22, 41, 0.9);
-        padding: 20px;
+        padding: 0px 20px;
         display: flex;
 
         .lefthead {
@@ -80,7 +80,7 @@
             .prioritywrapper {
                 ul {
                     padding-left: 0px;
-                    margin-top: 20px;
+                    margin-top: 25px;
 
                     li {
                         width: auto;
@@ -107,26 +107,26 @@
 
                             &.high {
                                 &:before {
-                                    background-color: rgba(255, 107, 107, 1)
+                                    background-color:#D11F1F;
                                 }
                             }
 
                             &.medium {
                                 &:before {
                                     background-color:
-                                        rgba(135, 234, 45, 1)
+                                       #28A228
                                 }
                             }
 
                             &.low {
                                 &:before {
-                                    background-color: rgba(255, 162, 32, 1);
+                                    background-color: #939393;
                                 }
                             }
 
                             &.cleared {
                                 &:before {
-                                    background-color: #A0A0A0;
+                                    background-color: #939393;
                                 }
                             }
                         }
@@ -183,7 +183,7 @@
 
                     li {
                         display: inline-block;
-                        padding-right: 20px;
+                        padding-right: 10px;
                         list-style: none;
                         vertical-align: middle;
 
@@ -199,7 +199,7 @@
     .high-priorityline {
         width: 16px;
         height: 16px;
-        background-color: rgb(255, 107, 107);
+        background-color:#D11F1F;
         border-radius: 8px;
         display: block;
     }
@@ -209,7 +209,7 @@
         // height: 42px;
         width: 16px;
         height: 16px;
-        background-color: rgba(135, 234, 45, 1);
+        background-color: #28A228;
         border-radius: 8px;
         display: block;
     }
@@ -217,7 +217,7 @@
     .low-priorityline {
         width: 16px;
         height: 16px;
-        background-color: rgba(255, 162, 32, 1);
+        background-color:#939393;
         border-radius: 8px;
         display: block;
     }
@@ -545,7 +545,7 @@
     .tableContainer {
         .tabletophead {
             background-color: rgb(252 252 255);
-            border: 1px solid rgba(108, 113, 145, 1);
+            border: 1px solid #e6e6e6;
             border-radius: 8px;
 
             .lefthead {
@@ -607,7 +607,7 @@
         }
 
         .table-section {
-            border: 1px solid rgba(139, 144, 173, 1);
+            border: 1px solid #e6e6e6;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
@@ -621,12 +621,13 @@
             }
 
             .mdc-data-table__header-cell {
-                border-bottom-color: rgba(139, 144, 173, 1)
+                border-bottom-color: #e6e6e6;
             }
 
             .mdc-data-table__cell {
-                border-bottom-color: rgba(139, 144, 173, 1);
+                border-bottom-color:#e6e6e6;
                 color: rgba(80, 85, 117, 1) !important;
+                font-family: 'SLB SANS MEDIUM';
             }
 
             .mat-mdc-row {
@@ -645,7 +646,7 @@
 
         .mat-mdc-paginator {
             background: rgba(251, 251, 253, 1) !important;
-            border: 1px solid rgb(139, 144, 173);
+            border: 1px solid #e6e6e6;
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
             border-top: 0px;
@@ -684,27 +685,27 @@
 }
 
 .high-priorityCircle {
-    width: 12px;
-    height: 12px;
-    background-color: rgb(255, 107, 107);
+    width: 16px;
+    height: 16px;
+    background-color: #D11F1F;
     border-radius: 8px;
     display: block;
     margin-right: 10px;
 }
 
 .med-priorityCircle {
-    width: 12px;
-    height: 12px;
-    background-color: rgba(135, 234, 45, 1);
+    width: 16px;
+    height: 16px;
+    background-color: #28A228;
     border-radius: 8px;
     display: block;
     margin-right: 10px;
 }
 
 .low-priorityCircle {
-    width: 12px;
-    height: 12px;
-    background-color: rgba(255, 162, 32, 1);
+    width: 16px;
+    height: 16px;
+    background-color: #939393;
     border-radius: 8px;
     display: block;
     margin-right: 10px;
