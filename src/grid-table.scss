@@ -35,7 +35,7 @@
     .mdc-data-table__header-cell {
 
         padding: 16px !important;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 16px;
         color: #EBECF2;
         font-weight: 500;
@@ -43,6 +43,10 @@
 
     }
 
+    .mat-sort-header-content{
+        text-align: left !important;
+        font-family: 'SLB SANS BOLD';
+    }
     .tabletophead {
         background-color: rgba(19, 22, 41, 0.9);
         padding: 20px;
@@ -181,6 +185,7 @@
                         display: inline-block;
                         padding-right: 20px;
                         list-style: none;
+                        vertical-align: middle;
 
                         &:last-child {
                             padding-right: 0px;
@@ -554,6 +559,18 @@
                     ul {
                         li {
                             color: rgba(80, 85, 117, 1);
+                            font-family: 'SLB SANS BOLD';
+                            font-size:12px;
+                        }
+                    }
+                }
+                .headIcons {
+                    .refresh-btn {
+                        background: none;
+                        svg {
+                            path {
+                                fill:#505575;
+                            }
                         }
                     }
                 }
@@ -571,6 +588,14 @@
 
                     &::placeholder {
                         color: rgba(80, 85, 117, 1);
+                    }
+                }
+                #searchQuerySubmit {
+                    svg {
+                        vertical-align: baseline;
+                        path {
+                            fill: #505575;
+                        }
                     }
                 }
             }
@@ -659,26 +684,29 @@
 }
 
 .high-priorityCircle {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background-color: rgb(255, 107, 107);
     border-radius: 8px;
     display: block;
+    margin-right: 10px;
 }
 
 .med-priorityCircle {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background-color: rgba(135, 234, 45, 1);
     border-radius: 8px;
     display: block;
+    margin-right: 10px;
 }
 
 .low-priorityCircle {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background-color: rgba(255, 162, 32, 1);
     border-radius: 8px;
     display: block;
+    margin-right: 10px;
 }
 

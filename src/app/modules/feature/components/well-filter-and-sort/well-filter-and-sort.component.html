@@ -1,9 +1,9 @@
 <div class="container-fluid pt-2 left-wellFilter">
   <div class="row pt-2 pb-2">
-    <div class="col-6">
+    <div class="col-9">
       <span class="label applyfilterHead">Applied filters</span>
     </div>
-    <div class="col-6">
+    <div class="col-3">
       <span class="label" style="text-decoration: underline; cursor: pointer;"(click)="clearAppliedFilter()">
         Clear All
         <mat-icon (click)="clearAppliedFilter()" style="cursor: pointer; color: white;font-size: 20px; margin-left: 5px;margin-bottom: -10px;">close</mat-icon>
@@ -52,7 +52,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-4 pb-4">
+        <mat-expansion-panel-header class="pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Sort By Well Name</h4>
           </mat-panel-title>
@@ -62,7 +62,7 @@
 
           <mat-form-field appearance="fill">
             <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
-            <mat-select multiple [formControl]="providers" >
+            <mat-select multiple [formControl]="providers" (valueChange)="onWellSelection($event)" >
               <input #multiUserSearch type="text" autocomplete="off" matInput class="search-prov"
                 placeholder="Search By Provider" (input)="onInputChange($event)" />
               <mat-select-trigger>
@@ -84,14 +84,14 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-2 pb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Comms Status</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-3">
+        <div class="row mt-2">
           <ng-container *ngFor = "let commsStatus of commsStatusOptions; let i = index">
-            <mat-checkbox [checked]="commsStatusOptions[i]['checked']" class="example-margin" (change)="applyFilter($event.checked, commsStatus.value)">{{commsStatus.value}}</mat-checkbox>
+            <mat-checkbox [checked]="commsStatusOptions[i]['checked']" class="example-margin" id="checkbox-0{{i}}" (change)="applyFilter($event.checked, commsStatus.value)">{{commsStatus.value}}</mat-checkbox>
           </ng-container>
         </div>
       </mat-expansion-panel>
@@ -103,14 +103,14 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState3 = true" (closed)="panelOpenState3 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-4 pb-4">
+        <mat-expansion-panel-header class="pt-2 pb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Controller Status</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-3">
+        <div class="row mt-2">
           <ng-container *ngFor = "let controllerStatus of controllerStatusOptions; let i = index">
-            <mat-checkbox class="example-margin"  [checked]="controllerStatusOptions[i]['checked']"
+            <mat-checkbox class="example-margin" id="checkbox-1{{i}}" [checked]="controllerStatusOptions[i]['checked']"
             (change)="applyFilter($event.checked, controllerStatus.value)">{{controllerStatus.value}}</mat-checkbox>
           </ng-container>
         </div>
@@ -123,7 +123,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState4 = true" (closed)="panelOpenState4 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-4 pb-4">
+        <mat-expansion-panel-header class="pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Pumping Type</h4>
           </mat-panel-title>
@@ -131,8 +131,11 @@
         <div class="row mt-3">
           <ng-container *ngFor = "let pumpStatus of pumpingTypeOptions; let i = index">
             <mat-checkbox class="example-margin"  [checked]="pumpingTypeOptions[i]['checked']"
+
             (change)="pumpingTypeOptions[i].checked = $event.checked; filtersApplied.pumpingTypes = $event.checked; updateAppliedFilter()"
-            >{{pumpStatus.value}}</mat-checkbox>
+  
+            > <span [ngClass]="pumpStatus.value === 'Over Pumping' ? 'high-priorityCircle' : pumpStatus.value === 'Optimum Pumping' ? 'med-priorityCircle': 'low-priorityCircle'" class="priorityalign"></span> {{pumpStatus.value}}
+          </mat-checkbox>
           </ng-container>
         </div>
       </mat-expansion-panel>
@@ -143,7 +146,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState5 = true" (closed)="panelOpenState5 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-4 pb-4">
+        <mat-expansion-panel-header class="pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">SPM</h4>
           </mat-panel-title>
@@ -163,7 +166,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState6 = true" (closed)="panelOpenState6 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-4 pb-4">
+        <mat-expansion-panel-header class="pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Pump Fillage</h4>
           </mat-panel-title>
@@ -182,7 +185,7 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-4 pb-4">
+        <mat-expansion-panel-header class="pb-4">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Inferred Production (bpd)</h4>
           </mat-panel-title>
@@ -198,7 +201,12 @@
   </div>
 
   <div class="row pt-2 pb-2 margin0 applyfilterBtn">
-    <button mat-raised-button style="color: white; border-radius: 12px;" (click) = "submitAppliedFilters()">Apply Filter</button>
+    <button class ="filterapplyBtn" mat-raised-button (click) = "submitAppliedFilters()"><div>Apply Filter</div> <div><svg width="35" height="18" viewBox="0 0 35 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M26.0513 18L25.001 16.9436L32.8994 8.99805L25 1.05642L26.0503 -3.91204e-07L35 8.99805L26.0513 18Z" fill="#FBFBFD"/>
+      <path d="M0 9L33 9" stroke="#FBFBFD" stroke-width="1.5"/>
+      </svg>
+    </div>
+      </button>
 
   </div>
 </div>

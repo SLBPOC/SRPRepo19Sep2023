@@ -25,30 +25,33 @@
                      <ul>
                         <li class="button-type-none priority high" (click)="SeachByStatus('Over Pumping')">Over
                            Pumping
-                           ( {{OverPumping}} )
+                           ({{OverPumping}})
                         </li>
                         <li class="button-type-none priority medium" (click)="SeachByStatus('Optimum Pumping')">
                            Optimal
-                           Pumping (
-                           {{OptimalPumping}} )</li>
+                           Pumping ({{OptimalPumping}})</li>
                         <li class="button-type-none priority low" (click)="SeachByStatus('Under Pumping')">Under
                            Pumping
-                           ( {{UnderPumping}} )
+                           ({{UnderPumping}})
                         </li>
                      </ul>
                   </div>
 
                   <div class="searchBar">
                      <input id="searchQueryInput" #searchQueryInput type="text" name="searchQueryInput"
-                        [(ngModel)]="searchText" placeholder="Search">
+                        [(ngModel)]="searchText" placeholder="Search By Well Name">
                      <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit"
                         (click)="GetWellDetailsWithFilters()">
-                        <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg"
-                           (click)="ClearSearch()"></button>
+                        <!-- <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg"
+                           (click)="ClearSearch()"> -->
+                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z" fill="#EDDEDE" (click)="ClearSearch()" />
+                          </svg>
+                        </button>
                   </div>
                   <div class="headIcons">
                      <ul>
-                        <li (click)="RefreshGrid()"><button mat-icon-button class="button-type-none refresh-btn" style="background: lightgray;"><svg width="20"
+                        <li (click)="RefreshGrid()"><button mat-icon-button class="button-type-none refresh-btn"><svg width="20"
                            height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                            <path fill-rule="evenodd" clip-rule="evenodd"
                               d="M17.0527 2.93254C15.208 1.10189 12.6943 0 10.0005 0C4.48633 0 0 4.46343 0 9.95004C0 15.4362 4.48633 19.9001 10.0005 19.9001C15.5146 19.9001 20 15.4362 20 9.95004H18.5C18.5 14.6132 14.6875 18.4076 10.0005 18.4076C5.31348 18.4076 1.5 14.6132 1.5 9.95004C1.5 5.28645 5.31348 1.49251 10.0005 1.49251C12.29 1.49251 14.4268 2.42921 15.9951 3.98488L13 6.96503H18.2188H20V5.319V0L17.0527 2.93254Z"
@@ -109,10 +112,7 @@
          </div>
       </div> -->
       <div class="col-md-12">
-         <div class="d-flex align-items-center justify-content-end filterSec rFloat">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders mr-2" viewBox="0 0 16 16">
-               <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
-             </svg>
+         <div class="filterSec rFloat">
             <span> Add Remove Column</span><button mat-icon-button [matMenuTriggerFor]="SelectionFilter"
                class="button-type-none">
                <svg width="6" height="24" viewBox="0 0 6 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -125,33 +125,35 @@
          </div>
       </div>
       <div class="col-md-12">
-         <div class="col-md-2 well-list-search">
-            <div class="">
+         <div class="col-md-3 well-list-search">
+            <div class="" >
                <div class="col-md-12 p-0 mt-3 filterborder">
-                  <div class="d-flex justify-content-end">
-                     <mat-icon style="cursor: pointer; color: white;font-size: 20px;" class="mt-2">close</mat-icon>
-                  </div>
+                  <!-- <div class="d-flex justify-content-end">
+                     <mat-icon style="cursor: pointer; color: white;font-size: 20px;">close</mat-icon>
+                  </div> -->
                   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+                    
+                     <mat-tab label="Well List">
+                        <div class="block-bg-border padding-15 well-list-section">
+                           <app-well-tree-search (userChanged)="userSearchChange($event)"></app-well-tree-search>
+                           <div class="devider"></div>
+                           <div class="well-check-list">
+                               <app-well-tree-view [searchObj]="searchObjC"></app-well-tree-view>
+                               <!-- <app-tree-checklist></app-tree-checklist> -->
+                           </div>
+                       </div>
+                        <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
+                        <!--Well List goes here.  -->
+                     </mat-tab>
                      <mat-tab label="Filter & Sort">
                         <app-well-filter-and-sort (filterRefresh) = "refreshGrid($event)"></app-well-filter-and-sort>
                      </mat-tab>
-                     <mat-tab label="Well List">
-                        <div class="main-container-dashboard">
-                           <div class="block-bg-border padding-15">
-                              <app-well-tree-search (userChanged)="userSearchChange($event)"></app-well-tree-search>
-                              <div class="devider"></div>
-                              <div class="well-check-list">
-                                 <app-well-tree-view [searchObj]="searchObjC"></app-well-tree-view>
-                              </div>
-                           </div>
-                        </div>
-                     </mat-tab>
-
+                     
                   </mat-tab-group>
                </div>
             </div>
          </div>
-         <div class="col-md-10">
+         <div class="col-md-9">
             <div class="tableContainer padding-tb-15">
 
 
@@ -162,7 +164,7 @@
                   <div class="align-center">
                      <div class="select-filter">
                         <div class="select-filter-header">
-                           <div class="select-filter-title">Add/Remove Columns</div>
+                           <div class="select-filter-title">Add Column</div>
                            <button mat-icon-button class="calender-alrt-filter-close button-type-none"><svg width="16"
                                  height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                  <path fill-rule="evenodd" clip-rule="evenodd"
@@ -172,7 +174,7 @@
                            </button>
                         </div>
                         <div class="select-filter-section" (click)="$event.stopPropagation()">
-                           <div class="select-lbl">Extra Columns</div>
+                         
                            <section class="checkbox-section" *ngFor="let extraColumn of extraColumnsList">
                               <mat-checkbox [value]="extraColumn.header"
                                  (change)="onChangeDemo($event)">{{extraColumn.label}}</mat-checkbox>
@@ -225,14 +227,15 @@
                      <ng-container matColumnDef="ControllerStatus">
                         <th mat-sort-header mat-header-cell *matHeaderCellDef> Controller Status</th>
                         <td mat-cell *matCellDef="let element" class="align-col">
-                           <button mat-raised-button type="button" [ngClass]="{'controller-status-btn-info': element.controllerStatus === 'Hand (Manual)', 
+                           <button mat-raised-button type="button" [ngClass]="{'controller-status-btn-info': element.controllerStatus === 'Hand (Manual)' || element.controllerStatus === 'Hand(Manual)', 
                      'controller-status-btn-danger': element.controllerStatus === 'Shutdown', 
                      'controller-status-btn-default': element.controllerStatus === 'Auto' }"
-                              class="controller-status-btn-info" aria-label="Close">
-                              {{ element.controllerStatus }}
-                           </button>
-                        </td>
-                     </ng-container>
+
+                      class="controller-status-btn-info" aria-label="Close">
+                        {{ element.controllerStatus }}
+                      </button>
+                  </td>
+               </ng-container>
                      <!-- SPM -->
                      <ng-container matColumnDef="SPM.value">
                         <th mat-sort-header mat-header-cell *matHeaderCellDef>SPM</th>
@@ -299,8 +302,7 @@
                                  *ngIf="eClumn.label === 'Structural Load(%)' || eClumn.label === 'Effective Runtime(%)' || eClumn.label === 'MinMax Load(%)' || eClumn.label === 'Gearbox Load(%)' || eClumn.label === 'Rod Stress(%)'">%</span> -->
                            </a>
                            <ng-template #tooltip>
-                              <div class="border" style="width: 180px;"
-                                 *ngIf="eClumn.header =='EffectiveRunTime.value'">
+                              <div class="border" style="width: 180px;" *ngIf="eClumn.header =='EffectiveRunTime.value'">
                                  <highcharts-chart [Highcharts]="HighCharts" [options]="element.effectiveRunChartObj"
                                     style="width: 100%; min-height: 130px; display: block"></highcharts-chart>
                               </div>
@@ -352,7 +354,7 @@
             </div>
          </div>
       </div>
-
+     
    </div>
-
+   
 </div>

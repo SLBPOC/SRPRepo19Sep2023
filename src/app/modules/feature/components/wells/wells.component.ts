@@ -190,13 +190,37 @@ export class WellsComponent implements OnInit {
   }
 
   RefreshGrid() {
-    this.pageNumber = 1;
-    this.seachByStatus = "";
-    this.searchText = "";
-    this.GetWellDetailsWithFilters();
-  }
-
-
+        const payload = {
+          "pageSize": 5,
+          "pageNumber": 1,
+          "searchText": "",
+          "sortColumn": "",
+          "sortDirection": "",
+          "searchStatus": ""
+      }
+    
+        this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
+          if (response.hasOwnProperty('data')) {
+            this.loading = false;
+            this.pageSizeOption = [10, 15, 20, response.totalCount]
+            // this.getPageSizeOptions();
+            this.WellList = response.data;
+            this.WellList.forEach(x => this.prepareChart(x));
+            this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+            setTimeout(() => {
+              this.paginator.pageIndex = this.currentPage;
+              this.paginator.length = response.totalCount;
+            });
+    
+            this.TotalCount = response.totalCount;
+            this.OverPumping = response.totalOverpumping;
+            this.OptimalPumping = response.totalOptimalPumping;
+            this.UnderPumping = response.totalUnderpumping;
+            this.dataSource.paginator = this.paginator;
+    
+          }
+        })
+      }
 
   onChangeDemo(event: any) {
     if (event.checked) {
@@ -295,7 +319,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
       },
       xAxis: {
         labels: {
@@ -303,7 +327,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
       },
       legend: {
         enabled: false
@@ -335,7 +359,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
       },
       xAxis: {
         labels: {
@@ -343,7 +367,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
       },
       legend: {
         enabled: false
@@ -376,7 +400,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       xAxis: {
@@ -385,7 +409,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       legend: {
@@ -419,7 +443,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
       },
       xAxis: {
         labels: {
@@ -427,7 +451,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
       },
       legend: {
         enabled: false
@@ -460,7 +484,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       xAxis: {
@@ -469,7 +493,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       legend: {
@@ -502,7 +526,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       xAxis: {
@@ -511,7 +535,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       legend: {
@@ -546,7 +570,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       xAxis: {
@@ -555,7 +579,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       legend: {
@@ -586,7 +610,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       xAxis: {
@@ -595,7 +619,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       legend: {
@@ -628,7 +652,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       xAxis: {
@@ -637,7 +661,7 @@ export class WellsComponent implements OnInit {
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible:true
+        visible:false
 
       },
       legend: {
