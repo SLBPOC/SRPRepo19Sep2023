@@ -112,6 +112,7 @@ button {
             display: flex;
 
             align-items: center;
+            border-bottom: 1px solid #e6e6e6;
 
             // justify-content: space-between;
 
@@ -859,43 +860,57 @@ button:hover {
 }
 
 .light-theme {
+
+    .mat-mdc-paginator-container{
+        padding:10px 8px !important;
+    }
+
+    .menuButton{
+        color:#505575 !important;
+    }
     .mat-mdc-paginator-icon {
         fill: #505575 !important;
     }
   
     .controller-status-btn-danger {
-        background: rgba(220, 87, 87, 0.2) !important;
-        border: 1px solid rgba(220, 87, 87, 1) !important;
+        // background: rgba(220, 87, 87, 0.2) !important;
+        background: #CCCFDE !important;
+        // border: 1px solid rgba(220, 87, 87, 1) !important;
         box-shadow: none;
-        color: rgba(220, 87, 87, 1) !important;
+        color:#D11F1F !important;
+        border-radius: 4px !important;
     }
 
     .controller-status-btn-info {
-        background: rgba(8, 138, 231, 0.2) !important;
-        border: 1px solid rgba(8, 138, 231, 1) !important;
+        background: #CCCFDE !important;
+        // background: rgba(8, 138, 231, 0.2) !important;
+        // border: 1px solid rgba(8, 138, 231, 1) !important;
         box-shadow: none !important;
-        color: rgba(8, 138, 231, 1) !important;
+        color: #1946A2 !important;
+        border-radius: 4px !important;
     }
 
     .controller-status-btn-default {
-        background: rgba(106, 106, 106, 0.2) !important;
-        border: 1px solid rgba(106, 106, 106, 1) !important;
+        background:#CCCFDE !important;
+        // background: rgba(106, 106, 106, 0.2) !important;
+        // border: 1px solid rgba(106, 106, 106, 1) !important;
         box-shadow: none !important;
-        color: rgba(106, 106, 106, 1) !important;;
+        color: #168244 !important;
+        border-radius: 4px !important;
     }
 
     .mat-drawer-content {
-        background: #cfd0d6 !important;
+        background:#EBECF2 !important;
         overflow-y: auto;
         overflow-x: hidden;
     }
 
     .example-sidenav-content {
-        background: #cfd0d6 !important;
+        background: #EBECF2 !important;
     }
 
     .filterborder{
-        border: 1px solid #8B90AD;
+        border: 1px solid #e6e6e6;
         border-radius: 8px;
         overflow: hidden;
     }
@@ -975,13 +990,19 @@ button:hover {
 
     //added css for left filter and sort 
     .left-wellFilter{
+        position:relative;
+
         .filterapplyBtn{
+            position:fixed;
+            bottom:10px;
+
             .mdc-button__label{
                 display:flex;
                 justify-content: space-between;
                 font-size: 14px;
                 color:#fff;
                 width: 100%;
+               
             }
         }
      
@@ -1068,11 +1089,14 @@ button:hover {
         }
     
         .filterBtn{
-            background-color: #FF6B6B;
-            border-radius: 60px;
+            background-color: #CCCFDE;
+            border-radius: 4px;
             padding: 10px;
-            color: #fff;
+            color: #000;
             margin: 20px 0 0 20px;
+            box-shadow: none !important;
+            font-family: 'SLB SANS MEDIUM';
+            
         }
     
         .mat-expansion-panel:not([class*=mat-elevation-z]){
@@ -1114,14 +1138,15 @@ button:hover {
         }
     
         .mat-expansion-panel-body{
-            padding:0px 0  20px 0;
+            padding:0 !important
         }
         .mat-expansion-panel-content{
             padding: 0 20px !important;
         }
        .applyfilterBtn .mat-mdc-raised-button:not(:disabled){
-        background-color: #051464;
+        background-color: #0014DC;
         border-radius: 20px;
+        width:375px;
        }
         .margin0{ margin:0px}
         .mat-accordion{
