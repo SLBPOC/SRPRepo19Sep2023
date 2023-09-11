@@ -2,6 +2,25 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { WellsService } from '../../services/wells.service';
 
+interface ISpmSlider{
+  min: 0,
+  max: 20,
+  start: 0,
+  end: 20
+}
+interface IPumpFillageSlider{
+  min: 0,
+  max: 100,
+  start: 0,
+  end: 100
+}
+interface IInferredProductionSlider{
+  min: 0,
+  max: 100,
+  start: 0,
+  end: 100
+}
+
 @Component({
   selector: 'app-well-filter-and-sort',
   templateUrl: './well-filter-and-sort.component.html',
@@ -16,7 +35,12 @@ export class WellFilterAndSortComponent implements OnInit{
   panelOpenState5: boolean;
   panelOpenState6: boolean;
   panelOpenState7: boolean;
-
+  wellList:any[];
+  providers = new FormControl();
+  allProviders!: any;
+  commsStatusOptions!: any;
+  controllerStatusOptions!: any;
+  pumpingTypeOptions!: any;
   filtersApplied = {
     wellNames: false,
     commsStatus: false,
@@ -26,82 +50,27 @@ export class WellFilterAndSortComponent implements OnInit{
     pumpFillage: false,
     inferredProduction: false
   }
-
-  wellList:any[];
-  providers = new FormControl();
-  allProviders!: any;
-  commsStatusOptions!: any;
-  controllerStatusOptions!: any;
-  pumpingTypeOptions!: any;
-
-  spmSlider = {
-    "min": 0,
-    "max": 100,
-    "start": 0,
-    "end": 100
-  }
-  pumpFillageSlider = {
-    "min": 0,
-    "max": 100,
-    "start": 0,
-    "end": 100
-  }
-  inferredProductionSlider = {
-    "min": 0,
-    "max": 100,
-    "start": 0,
-    "end": 100
-  }
+  spmSlider: ISpmSlider = { min: 0, max: 20, start: 0, end: 20 }
+  pumpFillageSlider: IPumpFillageSlider = { min: 0, max: 100, start: 0, end: 100 };
+  inferredProductionSlider: IInferredProductionSlider = { min: 0, max: 100, start: 0, end: 100 }
   filteredProviders: any[] = this.allProviders;
 
   constructor(private service: WellsService) {}
 
   ngOnInit(): void {
-    this.getDropdowns();
-    this.getWellList();
-    this.BindFilterValues();
+    this.getDefaultValues();
   }
 
-  getDropdowns() {
-    this.service.getWellListFilterSortDropdowns().subscribe((response: any) => {
-      this.commsStatusOptions = response.commsStatus;
+  getDefaultValues() {
+    this.service.GetWellFilterDefaultValues().subscribe((response: any) => {
+      console.log('===> dropdown data', response);
+      this.commsStatusOptions = response.commStatus;
       this.controllerStatusOptions = response.controllerStatus;
       this.pumpingTypeOptions = response.pumpingTypes;
       this.spmSlider = response.spmSlider;
       this.pumpFillageSlider = response.pumpFillageSlider;
       this.inferredProductionSlider = response.inferredProductionSlider;
-    })
-  }
-
-  getWellList() {
-    const payload = {
-      "pageSize": 5,
-      "pageNumber": 1,
-      "searchText": "",
-      "sortColumn": "",
-      "sortDirection": "",
-      "searchStatus": ""
-  }
-
-    this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
-      if(response.hasOwnProperty('data')) {
-        const wellNamesList = response.data.reduce((acc: any, wellData: any, index: number) => {
-          acc[index] = {value: wellData.wellName}
-          return acc;
-        }, [])
-        this.allProviders = [...wellNamesList];
-        this.filteredProviders = [...this.allProviders];
-      }
-    })
-  }
-
-  BindFilterValues()
-  {
-    this.service.GetWellFilterDefaultValues().subscribe((response:any) => {
-      if(response !=null)
-      {
-          this.wellList=response.wellNames;          
-      }
+      this.wellList=response.wellNames; 
     })
   }
 
@@ -164,8 +133,9 @@ export class WellFilterAndSortComponent implements OnInit{
   }
 
   applyFilter(isChecked, filterOption) {
-    let isCommsStatus = filterOption === 'Comms Failed' || filterOption === 'Comms Established'
-    let isControllerStatus = filterOption === 'Shutdown' || filterOption === 'Hand (Manual)' || filterOption === 'Auto';
+      let isCommsStatus = this.commsStatusOptions.find((e: any) => e.value === filterOption);
+      let isControllerStatus = this.controllerStatusOptions.find((e: any) => e.value === filterOption);
+
     if(isCommsStatus) {
       const index = this.commsStatusOptions.findIndex((element: any) => element.value === filterOption);
       this.commsStatusOptions[index].checked = isChecked;
@@ -179,7 +149,7 @@ export class WellFilterAndSortComponent implements OnInit{
 
   clearSpm() {
     this.spmSlider.start = 0;
-    this.spmSlider.end = 100;
+    this.spmSlider.end = 20;
     this.filtersApplied.spm = false;
   }
 
@@ -197,13 +167,6 @@ export class WellFilterAndSortComponent implements OnInit{
   }
 
   submitAppliedFilters() {
-    console.log('commStatus:- ', this.commsStatusOptions);
-    console.log('controllerStatus:- ', this.controllerStatusOptions);
-    console.log('pumpingStatus:- ', this.pumpingTypeOptions)
-    console.log('spm:- ', this.spmSlider)
-    console.log('pumpFillage:- ', this.pumpFillageSlider)
-    console.log('inferredProductionSlider:- ', this.inferredProductionSlider);
-
     const commStatus = this.commsStatusOptions.filter((element: any) => element.checked === true)
     .reduce((acc, element, index) => {
       acc.push(element.value)
