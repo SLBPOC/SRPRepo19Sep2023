@@ -52,13 +52,13 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pb-4">
+        <mat-expansion-panel-header class="pb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Sort By Well Name</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div class="row mt-3">
+        <div class="row mt-2 mb-3">
 
           <mat-form-field appearance="fill">
             <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
@@ -84,12 +84,12 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-2 pb-2">
+        <mat-expansion-panel-header class="mb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Comms Status</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-2">
+        <div class="row mt-0">
           <ng-container *ngFor = "let commsStatus of commsStatusOptions; let i = index">
             <mat-checkbox [checked]="commsStatusOptions[i]['checked']" class="example-margin" id="checkbox-0{{i}}" (change)="applyFilter($event.checked, commsStatus.value)">{{commsStatus.value}}</mat-checkbox>
           </ng-container>
@@ -103,12 +103,12 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState3 = true" (closed)="panelOpenState3 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pt-2 pb-2">
+        <mat-expansion-panel-header class="mb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Controller Status</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-2">
+        <div class="row mt-0">
           <ng-container *ngFor = "let controllerStatus of controllerStatusOptions; let i = index">
             <mat-checkbox class="example-margin" id="checkbox-1{{i}}" [checked]="controllerStatusOptions[i]['checked']"
             (change)="applyFilter($event.checked, controllerStatus.value)">{{controllerStatus.value}}</mat-checkbox>
@@ -123,12 +123,12 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState4 = true" (closed)="panelOpenState4 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pb-4">
+        <mat-expansion-panel-header class="mb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Pumping Type</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-3">
+        <div class="row mt-0">
           <ng-container *ngFor = "let pumpStatus of pumpingTypeOptions; let i = index">
             <mat-checkbox class="example-margin"  [checked]="pumpingTypeOptions[i]['checked']"
 
@@ -146,12 +146,12 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState5 = true" (closed)="panelOpenState5 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pb-4">
+        <mat-expansion-panel-header class="pb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">SPM</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-3">
+        <div class="row mt-4">
             <mat-slider min="{{spmSlider.min}}" max="{{spmSlider.max}}" discrete  [displayWith]="formatLabelSPM">
               <input (change)="filtersApplied.spm = true" name="spmSliderStart" value="{{spmSlider.start}}" [(ngModel)] = "spmSlider.start" matSliderStartThumb>
               <input (change)="filtersApplied.spm = true" name="spmSliderEnd" value="{{spmSlider.end}}" [(ngModel)] = "spmSlider.end" matSliderEndThumb>
@@ -166,12 +166,12 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState6 = true" (closed)="panelOpenState6 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pb-4">
+        <mat-expansion-panel-header class="pb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Pump Fillage</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-3">
+        <div class="row mt-4">
             <mat-slider min="{{pumpFillageSlider.min}}" max="{{pumpFillageSlider.max}}" discrete  [displayWith]="formatLabel">
               <input (change)="filtersApplied.pumpFillage= true" name="pumpFillageStart" value="{{pumpFillageSlider.start}}" [(ngModel)] = "pumpFillageSlider.start" matSliderStartThumb>
               <input (change)="filtersApplied.pumpFillage= true" name="pumpFillageEnd" value="{{pumpFillageSlider.end}}" [(ngModel)] = "pumpFillageSlider.end" matSliderEndThumb>
@@ -185,12 +185,12 @@
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
         [expanded]="true">
-        <mat-expansion-panel-header class="pb-4">
+        <mat-expansion-panel-header class="pb-2">
           <mat-panel-title>
             <h4 style="font-size: 12px;">Inferred Production (bpd)</h4>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row mt-3">
+        <div class="row mt-4 mb-4">
             <mat-slider min="{{inferredProductionSlider.min}}" max="{{inferredProductionSlider.max}}" discrete  [displayWith]="formatLabel">
               <input (change)="filtersApplied.inferredProduction = true" name="inferredProductionStart"  value="{{inferredProductionSlider.start}}" [(ngModel)] = "inferredProductionSlider.start" matSliderStartThumb>
               <input (change)="filtersApplied.inferredProduction = true" name="inferredProductionEnd"  value="{{inferredProductionSlider.end}}" [(ngModel)] = "inferredProductionSlider.end" matSliderEndThumb>
