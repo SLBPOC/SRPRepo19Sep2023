@@ -105,6 +105,8 @@ import { StylePaginatorDirective } from './components/wells/wells-dierctives';
 import { SurfaceCardPumpComponent } from './components/surface-card-pump/surface-card-pump.component';
 import { DynacardsClassificationComponent } from './components/dynacards-classification/dynacards-classification.component';
 import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fill/surface-card-pump-fill.component';
+import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
+import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
 
 
 @NgModule({
@@ -171,6 +173,9 @@ import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fil
     PumpFillageNoOfCycleComponent,
     SpmMeasuredComponent,
     StylePaginatorDirective,
+    AlertsSrpComponent,
+    AlertsExpandableListComponent
+    
   ],
   imports: [ 
     CommonModule,

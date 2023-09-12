@@ -33,6 +33,8 @@ import { CurrentCardAreaComponent } from './components/current-card-area/current
 import { SurfaceCardPumpComponent } from './components/surface-card-pump/surface-card-pump.component';
 import { PumpFillageNoOfCycleComponent } from './components/pump-fillage-no-of-cycle/pump-fillage-no-of-cycle.component';
 import { SpmMeasuredComponent } from './components/spm-measured/spm-measured.component';
+import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
+import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
 
 
 const routes: Routes = [
@@ -75,7 +77,15 @@ const routes: Routes = [
       },
       {
         path:'well-info-v2/:id',
-        component:WellInfoEntryComponent
+        component:WellInfoEntryComponent,
+      },
+      {
+        path: 'srp-alerts',
+        component: AlertsSrpComponent,
+      },
+      {
+        path: 'alert-expandble-list',
+        component: AlertsExpandableListComponent
       }
     ],
   },

@@ -183,7 +183,7 @@
 
                     li {
                         display: inline-block;
-                        padding-right: 20px;
+                        padding-right: 0px;
                         list-style: none;
                         vertical-align: middle;
 
@@ -547,6 +547,7 @@
             background-color: rgb(252 252 255);
             border: 1px solid rgba(108, 113, 145, 1);
             border-radius: 8px;
+            padding: 12px 20px;
 
             .lefthead {
                 h2 {
@@ -565,11 +566,14 @@
                     }
                 }
                 .headIcons {
-                    .refresh-btn {
-                        background: none;
-                        svg {
-                            path {
-                                fill:#505575;
+                    ul {
+                        margin: 0;
+                        .refresh-btn {
+                            background: none;
+                            svg {
+                                path {
+                                    fill:#505575;
+                                }
                             }
                         }
                     }
@@ -680,6 +684,82 @@
                 }
             }
         }
+    }
+
+    //    srp alert page css for light theme
+
+    .main-alerts {
+
+        .headIcons {
+            .headIcon-btn {
+                background: none;
+                svg {
+                    path {
+                        fill:#505575;
+                    }
+                }
+            }
+        }
+
+        // td.actionbtn {
+        //     display: flex;
+        // }
+
+        .expand-element-detail {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .tableContainer .mat-mdc-table .mdc-data-table__cell {
+            border-top: 1px solid rgb(139, 144, 173);
+            border-bottom: none !important;
+        }
+        .tableContainer .mat-mdc-table .mdc-data-table__header-cell {
+            border-bottom: none !important;
+        }
+        .expand-detail-row {
+            height: 0;
+            td {
+                border-top: none !important;
+                padding: 0 !important;
+            }
+        }
+        .mat-column-expandedDetail {
+            border-top: none !important;
+        }
+
+        .expand-element-detail-selection {
+            margin-top: 20px;
+            .status {
+                margin-bottom: 20px;
+                .status-title {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #051464;
+                }
+                .status-value {
+                    font-size: 16px;
+                    color: #505575;
+                    margin-top: 5px;
+                }
+                .mat-mdc-form-field {
+                    width: 100px;
+                    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+                        background-color: #051464;
+                        color: #fdfdfd;
+                        border-radius: 25px;
+                        font-size: 14px ;
+                    }
+                    .mat-mdc-select-placeholder {
+                        color: #fdfdfd;
+                        font-size: 14px;
+                    }
+
+                }
+            }
+        }
+        
     }
 }
 
