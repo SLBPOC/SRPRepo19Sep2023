@@ -547,7 +547,6 @@
             background-color: rgb(252 252 255);
             border: 1px solid #e6e6e6;
             border-radius: 8px;
-            padding: 12px 20px;
 
             .lefthead {
                 h2 {
@@ -690,7 +689,14 @@
     //    srp alert page css for light theme
 
     .main-alerts {
-
+        .tableContainer {
+            .tabletophead {
+                background-color: rgb(252 252 255);
+                border: 1px solid #e6e6e6;
+                border-radius: 8px;
+                padding: 12px 20px;
+            }
+        }
         .headIcons {
             .headIcon-btn {
                 background: none;
@@ -699,6 +705,9 @@
                         fill:#505575;
                     }
                 }
+            }
+            .tableContainer .tabletophead .righthead .headIcons ul li {
+                padding-right: 0;
             }
         }
 
@@ -713,7 +722,7 @@
         }
 
         .tableContainer .mat-mdc-table .mdc-data-table__cell {
-            border-top: 1px solid rgb(139, 144, 173);
+            border-top: 1px solid #e6e6e6;
             border-bottom: none !important;
         }
         .tableContainer .mat-mdc-table .mdc-data-table__header-cell {
