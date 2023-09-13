@@ -94,7 +94,7 @@ export class AlertsSrpComponent implements OnInit {
   searchText: string = "";
   sortDirection: string = "";
   sortColumn: string = "";
-  pageSize: number = 5;
+  pageSize: number = 5; 
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
