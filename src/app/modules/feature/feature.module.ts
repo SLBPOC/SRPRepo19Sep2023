@@ -107,6 +107,9 @@ import { DynacardsClassificationComponent } from './components/dynacards-classif
 import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fill/surface-card-pump-fill.component';
 import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
 import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
+import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
+
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 
 @NgModule({
@@ -174,7 +177,8 @@ import { AlertsExpandableListComponent } from './components/alerts-srp/component
     SpmMeasuredComponent,
     StylePaginatorDirective,
     AlertsSrpComponent,
-    AlertsExpandableListComponent
+    AlertsExpandableListComponent,
+    CustomAlertComponent
     
   ],
   imports: [ 
@@ -218,7 +222,11 @@ import { AlertsExpandableListComponent } from './components/alerts-srp/component
     MatToolbarModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
   ],
   providers: [BsModalService,
     ChecklistDatabase,
