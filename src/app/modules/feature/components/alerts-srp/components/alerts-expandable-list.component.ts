@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2, Input, EventEmitter, Output } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,29 +6,52 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 //import { WellName } from '../model/wellname';
-import { WellModel } from '../../model/wellModel'
-import { WellsService } from '../../services/wells.service';
+import { WellModel } from '../../../model/wellModel'
+import { WellsService } from '../../../services/wells.service';
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs'
 import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
-import { TreeViewService } from '../../services/tree-view.service';
-import { NodeType } from '../../services/models';
+import { TreeViewService } from '../../../services/tree-view.service';
+import { NodeType } from '../../../services/models';
 import { Constants } from '@common/Constants'
+import { DateRange } from '@angular/material/datepicker';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
+interface Food {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
-  selector: 'app-wells',
-  templateUrl: './wells.component.html',
-  styleUrls: ['./wells.component.scss']
+  selector: 'app-alerts-expandable-list',
+  templateUrl: './alerts-expandable-list.component.html',
+  styleUrls: ['./alerts-expandable-list.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
-export class WellsComponent implements OnInit {
+
+export class AlertsExpandableListComponent implements OnInit {
+
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+
+ 
+  expandedElement: PeriodicElement | null;
   theme = 'light';
   dataSource: any = [];
   WellList!: WellModel[];
   selectedColumn: string[] = [];
-  displayedColumns: string[] = ['WellStatus', 'WellName', 'DateAndTime', 'CommStatus', 'ControllerStatus', 'SPM.value', 'PumpFillage.value', 'InferredProduction.value', 'NoOfAlerts'];
+  displayedColumns: string[] = ['WellStatus', 'WellName', 'DateAndTime', 'CommStatus', 'action'];
   displayableExtraColumns: { label: string, accessor: string, header: string }[] = [];
   extraColumnsCtrl: any = new FormControl('');
   extraColumnsList: { label: string, accessor: string, header: string }[] = [
@@ -39,6 +62,7 @@ export class WellsComponent implements OnInit {
     { label: 'Gearbox Load(%)', accessor: 'gearboxLoad', header: 'GearboxLoad.value' },
     { label: 'Rod Stress(%)', accessor: 'rodStress', header: 'RodStress.value' }
   ];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -150,7 +174,7 @@ export class WellsComponent implements OnInit {
     this.pumpingType = payload.pumpingType;
     this.spm = payload.spm;
     this.wellNames = payload.wellNames;
-    this.currentPage=0;
+
     this.GetWellDetailsWithFilters();
   }
 
@@ -186,56 +210,41 @@ export class WellsComponent implements OnInit {
     this.seachByStatus = "";
     this.searchText = "";
     this.ids = [];
-    this.currentPage=0;
     this.GetWellDetailsWithFilters();
   }
 
-  RefreshGrid()
-  {
-    this.seachByStatus=""; // Added by Gayatri 9/8/2023
-    //this.pageSize = 5;
-    this.pageNumber=1;
-    this.seachByStatus = "";
-    this.sortColumn = "";
-    this.sortDirection = "";
-    this.seachByStatus="";
-    this.currentPage=0;
-
-    this.GetWellDetailsWithFilters();
-  }
-
-  // RefreshGrid() {
-  //       const payload = {
-  //         "pageSize": 5,
-  //         "pageNumber": 1,
-  //         "searchText": "",
-  //         "sortColumn": "",
-  //         "sortDirection": "",
-  //         "searchStatus": ""
-  //     }
+  RefreshGrid() {
+        const payload = {
+          "pageSize": 5,
+          "pageNumber": 1,
+          "searchText": "",
+          "sortColumn": "",
+          "sortDirection": "",
+          "searchStatus": ""
+      }
     
-  //       this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
-  //         if (response.hasOwnProperty('data')) {
-  //           this.loading = false;
-  //           this.pageSizeOption = [10, 15, 20, response.totalCount]
-  //           // this.getPageSizeOptions();
-  //           this.WellList = response.data;
-  //           this.WellList.forEach(x => this.prepareChart(x));
-  //           this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
-  //           setTimeout(() => {
-  //             this.paginator.pageIndex = this.currentPage;
-  //             this.paginator.length = response.totalCount;
-  //           });
+        this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
+          if (response.hasOwnProperty('data')) {
+            this.loading = false;
+            this.pageSizeOption = [10, 15, 20, response.totalCount]
+            // this.getPageSizeOptions();
+            this.WellList = response.data;
+            this.WellList.forEach(x => this.prepareChart(x));
+            this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+            setTimeout(() => {
+              this.paginator.pageIndex = this.currentPage;
+              this.paginator.length = response.totalCount;
+            });
     
-  //           this.TotalCount = response.totalCount;
-  //           this.OverPumping = response.totalOverpumping;
-  //           this.OptimalPumping = response.totalOptimalPumping;
-  //           this.UnderPumping = response.totalUnderpumping;
-  //           this.dataSource.paginator = this.paginator;
+            this.TotalCount = response.totalCount;
+            this.OverPumping = response.totalOverpumping;
+            this.OptimalPumping = response.totalOptimalPumping;
+            this.UnderPumping = response.totalUnderpumping;
+            this.dataSource.paginator = this.paginator;
     
-  //         }
-  //       })
-  //     }
+          }
+        })
+      }
 
   onChangeDemo(event: any) {
     if (event.checked) {
@@ -705,4 +714,12 @@ export class WellsComponent implements OnInit {
     this.searchObjC = obj;
   }
 
+}
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+  description: string;
 }

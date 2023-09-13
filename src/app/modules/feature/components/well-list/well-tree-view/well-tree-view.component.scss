@@ -103,7 +103,7 @@ $--mdc-checkbox-state-layer-size :29px;
 .mat-tree {
   background: transparent;
   font-family: var(--font-slb-sans-medium);
-  height: 495px;
+  min-height: 495px;
   white-space:nowrap;
 }
 
@@ -256,7 +256,8 @@ mat-tree-node {
 
 .mdc-form-field>label 
 {
-  font-size: 16px !important;
+  font-size: 18px !important;
+  font-weight: 700;
 }
 
 

@@ -1,3 +1,3 @@
 export const environment = {
-    srp_microservice_url: "https://localhost:49385/api/"
+    srp_microservice_url: "https://evd.srp.cloud.slb-ds.com/api/"
 }
