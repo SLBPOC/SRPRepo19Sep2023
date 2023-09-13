@@ -18,6 +18,7 @@ import { NodeType } from '../../services/models';
 import { Constants } from '@common/Constants'
 import { DateRange } from '@angular/material/datepicker';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { CustomAlertComponent } from '../custom-alert/custom-alert.component';
 
 interface Food {
   value: string;
@@ -93,7 +94,7 @@ export class AlertsSrpComponent implements OnInit {
   searchText: string = "";
   sortDirection: string = "";
   sortColumn: string = "";
-  pageSize: number = 5;
+  pageSize: number = 5; 
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
@@ -123,7 +124,9 @@ export class AlertsSrpComponent implements OnInit {
   respdata: any
 
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router, public treeviewService: TreeViewService) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router
+    , public treeviewService: TreeViewService
+    ,public customDialog: MatDialog) { }
 
 
   ngAfterViewInit() {
@@ -724,6 +727,10 @@ export class AlertsSrpComponent implements OnInit {
   navigateToWellInfo(wellId: string) {
     //this.router.navigateByUrl(`/well-info-v2/${wellId}`)
     this.router.navigate([]).then(result => { window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
+  }
+
+  openDialog() {
+    this.customDialog.open(CustomAlertComponent);
   }
 
 
