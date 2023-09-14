@@ -54,10 +54,10 @@ const routes: Routes = [
       { path: 'event-list', component: EventListComponent },
       { path: 'wells', component: WellsComponent },
       { path: 'Parameter', component: ParChartComponent },
-      // {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
+      {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
       { path: 'wells/dyna/:id', component: WellDetailsDynacardComponent },
-      // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-       { path: '', redirectTo: '/wells', pathMatch: 'full' },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
       {
         path: 'well-info/:id',
         component: WellInfoComponent,
