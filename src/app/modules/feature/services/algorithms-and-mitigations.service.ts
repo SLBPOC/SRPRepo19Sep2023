@@ -125,7 +125,7 @@ export class AlgorithmsAndMitigationsService {
 
   getWellInfoById(wellId: string): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<any>  (`${this.apiUrl}Well/GetWellInfoById?WellId=${wellId}`)       
+    return this.http.get<any>  (`${this.apiUrl}WellInfo/Get?WellId=${wellId}`)       
   }
 
   getHeatMapChartData() {
