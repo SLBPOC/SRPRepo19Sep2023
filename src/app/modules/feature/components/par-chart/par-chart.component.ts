@@ -58,15 +58,18 @@ export class ParChartComponent {
   
 ngOnInit()
 {  
+  debugger;
   this.GetGraphDetails();
 }
 
 GetGraphDetails()
 {
+  debugger;
   this._parameterGraphService.GetParameterChart(1).subscribe((response: any) => {
     this.wellparamList=response;
     for(let i=0;i<this.wellparamList.length;i++)
     {
+      //this.wellparamList[i].createdDateTime=this.datepipe.transform(this.wellparamList[i].createdDateTime,'MM/dd/YYYY');      
       this.wellparamList[i].createdDateTime=this.datepipe.transform(this.wellparamList[i].createdDateTime,'MM/dd/YYYY');      
     }
     // Bind X Axis values
