@@ -63,7 +63,7 @@ export class WellFilterAndSortComponent implements OnInit{
 
   getDefaultValues() {
     this.service.GetWellFilterDefaultValues().subscribe((response: any) => {
-      console.log('===> dropdown data', response);
+      //console.log('===> dropdown data', response);
       this.commsStatusOptions = response.commStatus;
       this.controllerStatusOptions = response.controllerStatus;
       this.pumpingTypeOptions = response.pumpingTypes;
