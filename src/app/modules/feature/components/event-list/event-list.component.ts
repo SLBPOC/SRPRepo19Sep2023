@@ -25,6 +25,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { SLBSearchParams, SortOptions } from 'src/app/models/slb-params';
 import { ViewEncapsulation } from '@angular/compiler';
+import { WellsService } from '../../services/wells.service';
+import { WellModel } from '../../model/wellModel';
 
 interface Food {
   value: string;
@@ -83,7 +85,7 @@ export class EventListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private service: EventListService) {
+  constructor(private service: EventListService, private wellService: WellsService) {
     this.dataSource = new MatTableDataSource<any>([]);
   }
   ngOnInit() {
@@ -94,6 +96,31 @@ export class EventListComponent implements AfterViewInit {
       this.bindGridData(resp);
       //this.dataSource.sort = this.sort;
     });
+    this.getWellData();
+  }
+
+  refreshGrid($event) {
+
+  }
+  getWellData() {
+    const payload = {
+      "pageSize": 5,
+      "pageNumber": 1,
+      "searchText": "",
+      "sortColumn": "",
+      "sortDirection": "",
+      "searchStatus": ""
+    }
+    this.wellService.getWellDetailsWithFilters(payload).subscribe((response: any) => {
+      if (response.hasOwnProperty('data')) {
+        console.log('===> well-list response', response.data);
+        this.dataSource = new MatTableDataSource<WellModel>(response.data);
+        setTimeout(() => {
+          this.paginator.pageIndex = 1;
+          this.paginator.length = response.totalCount;
+        });
+      }
+    })
   }
   test() {
     let aDate = new Date();
@@ -106,7 +133,7 @@ export class EventListComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  getLegendCount(){
+  getLegendCount() {
     let high = this.wellList.filter(alert => alert.priority == "High");
     // console.log("getLegendCount--> "+ high.length);
     this.highCount = high.length;
@@ -215,8 +242,8 @@ export class EventListComponent implements AfterViewInit {
       this.slbSearchParams.params.set(
         'dateRange',
         this.eventFormModel.dateRange.start.toString() +
-          '$' +
-          this.eventFormModel.dateRange.end.toString()
+        '$' +
+        this.eventFormModel.dateRange.end.toString()
       );
     }
     this.service.getWellEvents(this.slbSearchParams).subscribe((resp) => {
@@ -378,4 +405,10 @@ export class EventListComponent implements AfterViewInit {
 
     calendar.updateTodaysDate();
   }
+
+  searchObjC: any;
+  userSearchChange(obj: any) {
+    this.searchObjC = obj;
+  }
+
 }
