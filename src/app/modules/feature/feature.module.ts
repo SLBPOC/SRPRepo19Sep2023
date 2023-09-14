@@ -108,8 +108,9 @@ import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fil
 import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
 import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
 import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
-
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
+import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
 
 
 @NgModule({
@@ -178,7 +179,9 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     StylePaginatorDirective,
     AlertsSrpComponent,
     AlertsExpandableListComponent,
-    CustomAlertComponent
+    CustomAlertComponent,
+    AlertCategoriesChartComponent,
+    AlertCategoriesTableComponent,
     
   ],
   imports: [ 
