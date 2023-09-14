@@ -1,0 +1,5 @@
+<div *ngIf="errorMessages.length > 0" class="error-messages" >
+    <ul  style="list-style: none;">
+      <li *ngFor="let errorMessage of errorMessages; let i=index">{{i+1}} . {{ errorMessage }}</li>
+    </ul>
+  </div>

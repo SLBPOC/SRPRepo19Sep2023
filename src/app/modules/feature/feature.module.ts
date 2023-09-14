@@ -112,6 +112,7 @@ import { CustomAlertComponent } from './components/custom-alert/custom-alert.com
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
 import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
+import { ErrorComponent } from 'src/app/core/error/error.component';
 
 
 @NgModule({
@@ -183,6 +184,8 @@ import { AlertCategoriesTableComponent } from './components/alert-categories-tab
     CustomAlertComponent,
     AlertCategoriesChartComponent,
     AlertCategoriesTableComponent,
+    //httperrors
+    ErrorComponent
     
   ],
   imports: [ 
