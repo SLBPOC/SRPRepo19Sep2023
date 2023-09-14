@@ -35,6 +35,8 @@ import { PumpFillageNoOfCycleComponent } from './components/pump-fillage-no-of-c
 import { SpmMeasuredComponent } from './components/spm-measured/spm-measured.component';
 import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
 import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
+import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
+import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
 
 
 const routes: Routes = [
@@ -124,6 +126,16 @@ const routes: Routes = [
     path: 'spm',
     component: SpmMeasuredComponent,
   },
+ 
+  {
+    path: 'acchart',
+    component: AlertCategoriesChartComponent,
+  },
+  {
+    path: 'alerttable',
+    component: AlertCategoriesTableComponent,
+  },
+
 
   //   ],
   // },
