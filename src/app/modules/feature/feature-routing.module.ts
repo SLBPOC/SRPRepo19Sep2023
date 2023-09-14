@@ -33,6 +33,10 @@ import { CurrentCardAreaComponent } from './components/current-card-area/current
 import { SurfaceCardPumpComponent } from './components/surface-card-pump/surface-card-pump.component';
 import { PumpFillageNoOfCycleComponent } from './components/pump-fillage-no-of-cycle/pump-fillage-no-of-cycle.component';
 import { SpmMeasuredComponent } from './components/spm-measured/spm-measured.component';
+import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
+import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
+import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
+import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
 
 
 const routes: Routes = [
@@ -44,15 +48,16 @@ const routes: Routes = [
     path: '',
     component: SidenavComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },      
       { path: 'alert-list', component: AlertListComponent },
       { path: 'alerts/:id', component: AlertListComponent },
       { path: 'event-list', component: EventListComponent },
       { path: 'wells', component: WellsComponent },
       { path: 'Parameter', component: ParChartComponent },
-      {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
+      // {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
       { path: 'wells/dyna/:id', component: WellDetailsDynacardComponent },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+       { path: '', redirectTo: '/wells', pathMatch: 'full' },
       {
         path: 'well-info/:id',
         component: WellInfoComponent,
@@ -75,7 +80,15 @@ const routes: Routes = [
       },
       {
         path:'well-info-v2/:id',
-        component:WellInfoEntryComponent
+        component:WellInfoEntryComponent,
+      },
+      {
+        path: 'srp-alerts',
+        component: AlertsSrpComponent,
+      },
+      {
+        path: 'alert-expandble-list',
+        component: AlertsExpandableListComponent
       }
     ],
   },
@@ -113,6 +126,16 @@ const routes: Routes = [
     path: 'spm',
     component: SpmMeasuredComponent,
   },
+ 
+  {
+    path: 'acchart',
+    component: AlertCategoriesChartComponent,
+  },
+  {
+    path: 'alerttable',
+    component: AlertCategoriesTableComponent,
+  },
+
 
   //   ],
   // },

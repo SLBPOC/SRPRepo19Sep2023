@@ -1568,5 +1568,102 @@ button:hover {
         }
     }
 
+    //    srp alert page css for light theme
+
+    .main-alerts {
+        .category-container {
+            background-color: rgb(252, 252, 255);
+            border: 1px solid #8B90AD;
+            border-radius: 8px;
+
+            .category-container-header {
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid #8B90AD;
+                padding: 11px 0 11px 24px;
+
+                .category-title {
+                    font-size: 21px;
+                    font-weight: 700;
+                    color: #051464;
+                }
+
+                .prioritywrapper {
+                    ul {
+                        padding-left: 0px;
+
+                        li {
+                            width: auto;
+                            display: inline-block;
+                            padding-right: 20px;
+                            font-size: 12px !important;
+                            color: #fff;
+                            font-family: 'SLB Sans Regular';
+
+                            &.priority {
+                                position: relative;
+                                margin-left: 20px;
+                                font-size: 20px;
+                                color: #505575;
+                                font-weight: 700;
+
+                                &:before {
+                                    position: absolute;
+                                    left: -21px;
+                                    content: "";
+                                    height: 16px;
+                                    width: 16px;
+                                    margin-bottom: 15px;
+                                    top: 1px;
+                                    border-radius: 8px;
+                                }
+
+                                &.high {
+                                    &:before {
+                                        background-color: rgba(255, 107, 107, 1)
+                                    }
+                                }
+
+                                &.medium {
+                                    &:before {
+                                        background-color:
+                                            rgba(135, 234, 45, 1)
+                                    }
+                                }
+
+                                &.low {
+                                    &:before {
+                                        background-color: rgba(255, 162, 32, 1);
+                                    }
+                                }
+
+                                &.cleared {
+                                    &:before {
+                                        background-color: #A0A0A0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            .category-content-block {
+                display: inline-block;
+            }
+        }
+
+        td.actionbtn {
+            .headIcon-btn {
+                svg {
+                    path {
+                        fill: #051464;
+                    }
+                }
+            }
+
+        }
+    }
 
 }

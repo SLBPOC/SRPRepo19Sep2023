@@ -105,6 +105,12 @@ import { StylePaginatorDirective } from './components/wells/wells-dierctives';
 import { SurfaceCardPumpComponent } from './components/surface-card-pump/surface-card-pump.component';
 import { DynacardsClassificationComponent } from './components/dynacards-classification/dynacards-classification.component';
 import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fill/surface-card-pump-fill.component';
+import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
+import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
+import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
+import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
 
 
 @NgModule({
@@ -171,6 +177,12 @@ import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fil
     PumpFillageNoOfCycleComponent,
     SpmMeasuredComponent,
     StylePaginatorDirective,
+    AlertsSrpComponent,
+    AlertsExpandableListComponent,
+    CustomAlertComponent,
+    AlertCategoriesChartComponent,
+    AlertCategoriesTableComponent,
+    
   ],
   imports: [ 
     CommonModule,
@@ -213,7 +225,11 @@ import { SurfaceCardPumpFillComponent } from './components/surface-card-pump-fil
     MatToolbarModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
   ],
   providers: [BsModalService,
     ChecklistDatabase,
