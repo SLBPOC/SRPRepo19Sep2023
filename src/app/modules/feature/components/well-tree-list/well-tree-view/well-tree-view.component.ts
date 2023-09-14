@@ -85,7 +85,7 @@ export class WellTreeView implements OnChanges, OnInit, AfterViewInit {
     if (this.searchObj != undefined && this.searchObj.searchText != undefined && this.searchObj.searchText.trim() != '')
       this.searchData();
     else {
-      this.hierarchyService.reset();
+      this.hierarchyService.initialize();
     }
   }
 

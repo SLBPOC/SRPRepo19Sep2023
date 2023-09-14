@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FeatureRoutingModule } from './feature-routing.module';
 import { FeatureComponent } from './feature.component';
 import { AlgorithmsAndMitigationComponent } from './components/algorithms-and-mitigation/algorithms-and-mitigation.component';
-import { WellTreeListComponent } from './components/well-tree-list/well-list.component';
+import { WellTreeListComponent } from './components/well-tree-list/well-tree-list.component';
 import { WellPerformanceComponent } from './components/well-performance/well-performance.component';
 import { YesterdayCycleCountComponent } from './components/yesterdays-cycle-count/yesterday-cycle-count.component';
 import { YesterdayPercentRunComponent } from './components/yesterday-percent-run/yesterday-percent-run.component';

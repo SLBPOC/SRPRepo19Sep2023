@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WellTreeListComponent } from './well-list.component';
+import { WellTreeListComponent } from './well-tree-list.component';
 
 describe('WellListComponent', () => {
   let component: WellTreeListComponent;
