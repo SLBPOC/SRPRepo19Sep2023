@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { WellModel, WellModelResult } from '../model/wellModel';
 import { Subject } from 'rxjs';
 import { environment } from '@environments/environment';
+import { NodeType, WellHierarchyResult } from './models';
 
 const wellData = '../../assets/json-data/welllist-data.json';
 
@@ -47,5 +48,11 @@ export class WellsService {
 
   getWellListFilterSortDropdowns(): Observable<any> {
     return this.http.get(this.wellListFilterSortDropdowns);
+  }
+  getWellHierarchy(): Observable<WellHierarchyResult> {
+    return this.http.get<WellHierarchyResult>(this.apiUrl + "Well/hierarchy");
+  }
+  searchWellHierarch(searchText: string, searchLevels: NodeType[]): Observable<WellHierarchyResult> {
+    return this.http.get<WellHierarchyResult>(this.apiUrl + `Well/hierarchy?SearchText=${searchText}&SearchLevels=${searchLevels.join("&SearchLevels=")}`  )
   }
 }

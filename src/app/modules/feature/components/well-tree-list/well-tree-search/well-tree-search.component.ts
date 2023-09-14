@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Inject } from '@angular/core';
 import { TreeViewService } from '../../../services/tree-view.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
-import { SavedState, Node } from '../../../services/models';
+import { SavedState, Node, NodeType } from '../../../services/models';
 
 @Component({
   selector: 'app-well-tree-search',
@@ -17,6 +17,11 @@ export class WellTreeSearchComponent {
   savedStateName: string = '';
   currentSelectedSavedSearch: SavedState | null;
   selectedNodes: Node[];
+  selectedNodeTypes: NodeType[] = [];
+  fieldCheckbox: boolean = false;
+  batteryCheckbox: boolean = false;
+  padCheckbox: boolean = false;
+  wellCheckbox: boolean = false;
 
   @Output()
   userChanged: EventEmitter<any> = new EventEmitter<any>()
@@ -33,7 +38,7 @@ export class WellTreeSearchComponent {
         this.searchText = <string>x.state?.SavedText || '';
         this.onSearchChange()
       }
-      else if(x.state == null) {
+      else if (x.state == null) {
         this.option = 'fields';
         this.searchText = '';
         this.onSearchChange()
@@ -44,12 +49,24 @@ export class WellTreeSearchComponent {
     });
 
   }
+
+  onCheckBoxChange(event: any, nodeType: NodeType) {
+    if (event.checked)
+      this.selectedNodeTypes.push(nodeType);
+    else
+      this.selectedNodeTypes.splice(this.selectedNodeTypes.findIndex(x => x == nodeType), 1);
+    this.onSearchChange();
+  }
   onSearchChange() {
-    this.userChanged.emit({ option: this.option, searchText: this.searchText });
+    this.userChanged.emit({ option: this.selectedNodeTypes, searchText: this.searchText });
   }
   onClear() {
     this.treeViewService.setSelectedSavedTreeState(null);
     this.userChanged.emit({ clear: true });
+    this.batteryCheckbox = false;
+    this.padCheckbox = false;
+    this.fieldCheckbox = false;
+    this.wellCheckbox = false;
   }
   public save() {
     // console.log(this.selectedNodes);

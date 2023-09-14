@@ -1,6 +1,6 @@
 import { Node } from "../services/models";
 
-export interface WellModel {
+export class WellModel {
     fieldName: string;
     batteryName: string;
     padName: string;
@@ -42,9 +42,9 @@ export interface WellModel {
     minMaxLoadChartObj: Highcharts.Options;
     gearBoxLoadChartObj: Highcharts.Options;
     roadStressChartObj: Highcharts.Options;
-    fieldId: number,
-    batteryId: number,
-    padId: number
+    fieldId: number;
+    batteryId: number;
+    padId: number;
 }
 
 export class details {
@@ -59,7 +59,7 @@ export class detailsMinMax {
 }
 
 export interface WellModelResult {
-    data: Node[];
+    data: WellModel[];
     success: boolean;
     totalCount: number;
     totalOptimalPumping: number;
