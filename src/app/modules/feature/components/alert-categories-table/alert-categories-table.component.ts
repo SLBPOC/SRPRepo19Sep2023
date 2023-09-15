@@ -18,6 +18,8 @@ export class AlertCategoriesTableComponent {
       spacing: [0,0,0,0],
       backgroundColor: undefined
     },
+    exporting: { enabled: false },
+    legend : {enabled: false},
     
     yAxis: {
       labels: {
@@ -44,13 +46,16 @@ export class AlertCategoriesTableComponent {
                 enabled: true,
                 inside: true,
                 align: 'left',
-                x: -40
+                x: -20
             },
+        },
+        series: {
+         
+      }
 
-        }
     },
     
-    series: [
+    series: [ 
       
     ]
   };
@@ -65,18 +70,18 @@ export class AlertCategoriesTableComponent {
           {
             name: '',
             y: 10,
-            color: 'red'
+            color: '#D11F1F'
           },
           
           {
             name: '',
             y: 25,
-            color: 'orange'
+            color: '#FABB42'
           },
           {
             name: '',
             y: 50,
-            color: 'green'
+            color: '#28A228'
           },
         ]
       }

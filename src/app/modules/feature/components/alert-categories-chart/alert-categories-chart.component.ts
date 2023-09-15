@@ -34,7 +34,7 @@ export class AlertCategoriesChartComponent implements OnInit, OnChanges {
     this.chartOptions = {
       chart: {
         type: 'pie',
-
+        backgroundColor: '#fff',
       },
       title: {
         text: ''
@@ -42,18 +42,21 @@ export class AlertCategoriesChartComponent implements OnInit, OnChanges {
       plotOptions: {
         pie: {
           innerSize: '50%',
-          dataLabels: {
+           dataLabels: {
             enabled: false
           },
           showInLegend: true,
         }
       },
       legend: {
-        align: 'left',
-        layout: 'horizontal',
-        verticalAlign: 'top',
+        align: 'left', 
+        layout: 'horizontal', 
+        verticalAlign: 'top', 
         labelFormat: '<b>{name}</b>: {percentage:.1f}%',
         symbolRadius: 0,
+        itemStyle:{'color':'#22263D'}
+  
+        
       },
       series: [
         {

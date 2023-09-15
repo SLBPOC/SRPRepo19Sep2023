@@ -4,28 +4,28 @@
         "cycleToday":3,
         "wellName":"OilField",
         "effectiveRuntime":9,
-        "pumpFillage":6,
+        "pumpFillage":1,
         "strPM":10,
-        "inferredProduction":12,
-        "minMaxLoad":13
+        "inferredProduction":15,
+        "minMaxLoad":25
     },
     {
         "createdDateTime":"07/09/2022",
         "cycleToday":19,
         "wellName":"OilField",
         "effectiveRuntime":24,
-        "pumpFillage":6,
-        "strPM":10,
-        "inferredProduction":12,
-        "minMaxLoad":13
+        "pumpFillage":9,
+        "strPM":20,
+        "inferredProduction":31,
+        "minMaxLoad":45
     }, 
     {
         "createdDateTime":"08/09/2022",
         "cycleToday":3,
         "wellName":"OilField",
         "effectiveRuntime":9,
-        "pumpFillage":6,
-        "strPM":10,
+        "pumpFillage":3,
+        "strPM":5,
         "inferredProduction":12,
         "minMaxLoad":13
     },
@@ -34,20 +34,20 @@
         "cycleToday":8,
         "wellName":"OilField",
         "effectiveRuntime":30,
-        "pumpFillage":6,
-        "strPM":10,
+        "pumpFillage":8,
+        "strPM":11,
         "inferredProduction":12,
-        "minMaxLoad":13
+        "minMaxLoad":15
     }, 
     {
         "createdDateTime":"10/09/2022",
         "cycleToday":5,
         "wellName":"OilField",
         "effectiveRuntime":2,
-        "pumpFillage":6,
-        "strPM":10,
+        "pumpFillage":18,
+        "strPM":1,
         "inferredProduction":12,
-        "minMaxLoad":13
+        "minMaxLoad":8
     },
     {
         "createdDateTime":"11/09/2022",
@@ -55,9 +55,9 @@
         "wellName":"OilField",
         "effectiveRuntime":25,
         "pumpFillage":6,
-        "strPM":10,
+        "strPM":18,
         "inferredProduction":12,
-        "minMaxLoad":13
+        "minMaxLoad":35
     }
     ,
     {
@@ -65,7 +65,7 @@
         "cycleToday":20,
         "wellName":"OilField",
         "effectiveRuntime":15,
-        "pumpFillage":6,
+        "pumpFillage":13,
         "strPM":10,
         "inferredProduction":12,
         "minMaxLoad":13

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WellListComponent } from './well-list.component';
+import { WellTreeListComponent } from './well-tree-list.component';
 
 describe('WellListComponent', () => {
-  let component: WellListComponent;
-  let fixture: ComponentFixture<WellListComponent>;
+  let component: WellTreeListComponent;
+  let fixture: ComponentFixture<WellTreeListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WellListComponent ]
+      declarations: [ WellTreeListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WellListComponent);
+    fixture = TestBed.createComponent(WellTreeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

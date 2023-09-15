@@ -30,9 +30,9 @@
             <!-- Controller Status -->
             <ng-container matColumnDef="action">
                <th mat-header-cell *matHeaderCellDef>Action</th>
-               <td mat-cell *matCellDef="let element">
+               <td mat-cell *matCellDef="let element" class="actionbtn">
                  <button
-                   class="button-type-none"
+                   class="button-type-none headIcon-btn"
                    mat-icon-button
                    [matMenuTriggerFor]="snoozefilter"
                  >
@@ -140,7 +140,7 @@
                  </mat-menu>
        
                  <button
-                   class="button-type-none"
+                   class="button-type-none headIcon-btn"
                    mat-icon-button
                    [matMenuTriggerFor]="alertclearFilter"
                    [ngClass]="{ disabled: element.AlertLevel === 'Cleared' }"
@@ -262,4 +262,5 @@
          showFirstLastButtons>
       </mat-paginator>
    </div>
+   
 </div>

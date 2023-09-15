@@ -111,8 +111,8 @@ export class AlertsSrpComponent implements OnInit {
     // this.GetAlertListWithFilters();
     this.treeviewService.selectedNodes.subscribe(x => {
       console.log(x);
-      if (x != undefined && x.length > 0 && x.some(m => m.Type == NodeType.Wells)) {
-        this.ids = x.filter(m => m.Type == NodeType.Wells).map(m => m.NodeId);
+      if (x != undefined && x.length > 0 && x.some(m => m.type == NodeType.Wells)) {
+        this.ids = x.filter(m => m.type == NodeType.Wells).map(m => m.nodeId);
       }
       else
         this.ids = [];

@@ -3,8 +3,16 @@
     overflow-x: hidden;
     height: 28rem;
     // width: 50%;
+    box-shadow: none;
+    width: 100%;
   }
   
   table {
     width: 100%;
+    .priority-custom {
+      width: 180px;
+    }
+
   }
+ 
+  
