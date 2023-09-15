@@ -10,7 +10,7 @@ export class AlertCategoriesChartComponent {
   chartOptions: Highcharts.Options = {
     chart: {
       type: 'pie',
-      
+      backgroundColor: '#fff',
     },
     title: {
       text: ''
@@ -30,6 +30,9 @@ export class AlertCategoriesChartComponent {
       verticalAlign: 'top', 
       labelFormat: '<b>{name}</b>: {percentage:.1f}%',
       symbolRadius: 0,
+      itemStyle:{'color':'#22263D'}
+
+      
     },
     series: [
       
@@ -40,11 +43,12 @@ export class AlertCategoriesChartComponent {
       {
         type: 'pie', 
         name: 'Cycle Status',
+        
         data: [
           {
             name: 'Gas Interference Events',
             y: 15,
-            color: '#F38888'
+            color: '#F38888',
           },
           {
             name: 'Fluid Pound Events',
