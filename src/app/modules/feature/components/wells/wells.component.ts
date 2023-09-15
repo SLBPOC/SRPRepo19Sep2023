@@ -116,25 +116,25 @@ export class WellsComponent implements OnInit {
     this.loading = true;
     var SearchModel = this.createModel();
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
-      if (response.hasOwnProperty('data')) {
+      //if (response.hasOwnProperty('data')) {
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.totalCount]
+        this.pageSizeOption = [10, 15, 20, response.pumpingDetails.totalCount]
         // this.getPageSizeOptions();
-        this.WellList = response.data;
+        this.WellList = response.wellDtos;
         this.WellList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.totalCount;
+          this.paginator.length = response.pumpingDetails.totalCount;
         });
 
-        this.TotalCount = response.totalCount;
-        this.OverPumping = response.totalOverpumping;
-        this.OptimalPumping = response.totalOptimalPumping;
-        this.UnderPumping = response.totalUnderpumping;
+        this.TotalCount = response.pumpingDetails.totalCount;
+        this.OverPumping = response.pumpingDetails.overPumping;
+        this.OptimalPumping = response.pumpingDetails.optimalPumping;
+        this.UnderPumping = response.pumpingDetails.underPumping;
         this.dataSource.paginator = this.paginator;
 
-      }
+     // }
 
     });
   }
