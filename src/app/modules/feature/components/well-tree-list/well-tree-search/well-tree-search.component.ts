@@ -18,7 +18,7 @@ export class WellTreeSearchComponent {
   currentSelectedSavedSearch: SavedState | null;
   selectedNodes: Node[];
   selectedNodeTypes: NodeType[] = [];
-  fieldCheckbox: boolean = false;
+  fieldCheckbox: boolean = true;
   batteryCheckbox: boolean = false;
   padCheckbox: boolean = false;
   wellCheckbox: boolean = false;
@@ -47,7 +47,7 @@ export class WellTreeSearchComponent {
     this.treeViewService.selectedNodes.subscribe(x => {
       this.selectedNodes = x;
     });
-
+    this.selectedNodeTypes.push(NodeType.Field);
   }
 
   onCheckBoxChange(event: any, nodeType: NodeType) {
@@ -62,11 +62,13 @@ export class WellTreeSearchComponent {
   }
   onClear() {
     this.treeViewService.setSelectedSavedTreeState(null);
-    this.userChanged.emit({ clear: true });
+    this.fieldCheckbox = true;
     this.batteryCheckbox = false;
     this.padCheckbox = false;
-    this.fieldCheckbox = false;
     this.wellCheckbox = false;
+    this.selectedNodeTypes = [];
+    this.selectedNodeTypes.push(NodeType.Field);
+    this.userChanged.emit({ clear: true });
   }
   public save() {
     // console.log(this.selectedNodes);

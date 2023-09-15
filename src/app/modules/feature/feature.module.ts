@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FeatureRoutingModule } from './feature-routing.module';
 import { FeatureComponent } from './feature.component';
 import { AlgorithmsAndMitigationComponent } from './components/algorithms-and-mitigation/algorithms-and-mitigation.component';
-import { WellTreeListComponent } from './components/well-tree-list/well-list.component';
+import { WellTreeListComponent } from './components/well-tree-list/well-tree-list.component';
 import { WellPerformanceComponent } from './components/well-performance/well-performance.component';
 import { YesterdayCycleCountComponent } from './components/yesterdays-cycle-count/yesterday-cycle-count.component';
 import { YesterdayPercentRunComponent } from './components/yesterday-percent-run/yesterday-percent-run.component';
@@ -112,6 +112,7 @@ import { CustomAlertComponent } from './components/custom-alert/custom-alert.com
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
 import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
+import { ErrorComponent } from 'src/app/core/error/error.component';
 
 
 @NgModule({
@@ -183,6 +184,8 @@ import { AlertCategoriesTableComponent } from './components/alert-categories-tab
     CustomAlertComponent,
     AlertCategoriesChartComponent,
     AlertCategoriesTableComponent,
+    //httperrors
+    ErrorComponent
     
   ],
   imports: [ 
