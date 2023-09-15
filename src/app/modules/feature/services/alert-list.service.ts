@@ -13,6 +13,7 @@ const alertsData = '../../../../assets/json/alerts-data.json';
 export class AlertListService {
 
   baseUrl:string = environment.srp_microservice_url;
+  _apiUrl: string = "https://localhost:53866/";
 
   constructor(private http: HttpClient) { }
 
@@ -35,6 +36,10 @@ export class AlertListService {
     return this.http.post(url, payload, {
       headers: {}
     })
+  }
+
+  getAlertList(payload: any): Observable<any> {
+    return this.http.post<AlertList[]>(this._apiUrl + 'api/Alerts/Get',payload);
   }
 
   clearAlert(payload: any): Observable<any> {

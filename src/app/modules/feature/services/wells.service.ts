@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { WellModel, WellModelResult } from '../model/wellModel';
 import { Subject } from 'rxjs';
 import { environment } from '@environments/environment';
+import { NodeType, WellHierarchyResult } from './models';
 
 const wellData = '../../assets/json-data/welllist-data.json';
 
@@ -33,19 +34,25 @@ export class WellsService {
 
   getWellDetailsWithFilters(searchModel: any): Observable<any> {
     //return this.http.get(this.wellListData);
-    return this.http.post<any[]>(this.apiUrl + "Well/GetWellListByFilters", searchModel, this.httpOptions);
+    return this.http.post<any[]>(this.apiUrl + "Well/Get", searchModel, this.httpOptions);
   }
 
   GetWellFilterDefaultValues(): Observable<any> {
-    return this.http.post<any[]>(this.apiUrl + "Well/GetWellFilterDefaulValues", this.httpOptions);  
+    return this.http.post<any[]>(this.apiUrl + "Well/GetDefaultValues", this.httpOptions);  
   }
 
   getWellInfoById(wellId: string): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById?WellId=${wellId}`)
+    return this.http.get<any>(this.apiUrl + `WellInfo/Get?WellId=${wellId}`)
   }
 
   getWellListFilterSortDropdowns(): Observable<any> {
     return this.http.get(this.wellListFilterSortDropdowns);
+  }
+  getWellHierarchy(): Observable<WellHierarchyResult> {
+    return this.http.get<WellHierarchyResult>(this.apiUrl + "Well/hierarchy");
+  }
+  searchWellHierarch(searchText: string, searchLevels: NodeType[]): Observable<WellHierarchyResult> {
+    return this.http.get<WellHierarchyResult>(this.apiUrl + `Well/hierarchy?SearchText=${searchText}&SearchLevels=${searchLevels.join("&SearchLevels=")}`  )
   }
 }

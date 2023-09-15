@@ -35,6 +35,8 @@ export class SidenavComponent implements OnInit {
     this.elem = document.documentElement;
   }
 
+  isSideNaveOpen : boolean = true;
+
 
   sidenavToggle() {
     const abc = document.getElementById('navopen');

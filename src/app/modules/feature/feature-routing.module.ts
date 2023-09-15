@@ -35,6 +35,8 @@ import { PumpFillageNoOfCycleComponent } from './components/pump-fillage-no-of-c
 import { SpmMeasuredComponent } from './components/spm-measured/spm-measured.component';
 import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component';
 import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
+import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
+import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
 
 
 const routes: Routes = [
@@ -52,10 +54,10 @@ const routes: Routes = [
       { path: 'event-list', component: EventListComponent },
       { path: 'wells', component: WellsComponent },
       { path: 'Parameter', component: ParChartComponent },
-      // {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
+      {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
       { path: 'wells/dyna/:id', component: WellDetailsDynacardComponent },
-      // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-       { path: '', redirectTo: '/wells', pathMatch: 'full' },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
       {
         path: 'well-info/:id',
         component: WellInfoComponent,
@@ -124,6 +126,16 @@ const routes: Routes = [
     path: 'spm',
     component: SpmMeasuredComponent,
   },
+ 
+  {
+    path: 'acchart',
+    component: AlertCategoriesChartComponent,
+  },
+  {
+    path: 'alerttable',
+    component: AlertCategoriesTableComponent,
+  },
+
 
   //   ],
   // },

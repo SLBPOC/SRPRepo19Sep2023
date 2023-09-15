@@ -7,7 +7,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 //import { WellName } from '../model/wellname';
 import { WellModel } from '../../model/wellModel'
-import { WellsService } from '../../services/wells.service';
+import { AlertList } from '../../model/alert-list'
+import { AlertListService } from '../../services/alert-list.service';
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs'
@@ -68,9 +69,11 @@ export class AlertsSrpComponent implements OnInit {
   expandedElement: PeriodicElement | null;
   theme = 'light';
   dataSource: any = [];
-  WellList!: WellModel[];
+  alertList!: AlertList[];
+  snoozeByTime: number = 1;
+  clearAlertsComments!: string;
   selectedColumn: string[] = [];
-  displayedColumns: string[] = ['WellStatus', 'WellName', 'DateAndTime', 'CommStatus', 'action'];
+  displayedColumns: string[] = ['wellName', 'date', 'desc', 'action'];
   displayableExtraColumns: { label: string, accessor: string, header: string }[] = [];
   extraColumnsCtrl: any = new FormControl('');
   extraColumnsList: { label: string, accessor: string, header: string }[] = [
@@ -82,8 +85,7 @@ export class AlertsSrpComponent implements OnInit {
     { label: 'Rod Stress(%)', accessor: 'rodStress', header: 'RodStress.value' }
   ];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('extraColumns', { static: true }) private extraColumns!: MatSelect;
 
@@ -124,13 +126,13 @@ export class AlertsSrpComponent implements OnInit {
   respdata: any
 
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router
+  constructor(private _liveAnnouncer: LiveAnnouncer, private service: AlertListService, private router: Router
     , public treeviewService: TreeViewService
     ,public customDialog: MatDialog) { }
 
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
     fromEvent<any>(this.searchInput.nativeElement, 'keyup').pipe(
       map(event => event.target.value),
       debounceTime(500),
@@ -138,37 +140,35 @@ export class AlertsSrpComponent implements OnInit {
       tap(x => this.searchText = x)
     ).subscribe(x => {
       if (x != undefined && x.trim() != "") {
-        this.GetWellDetailsWithFilters();
+        this.GetAlertListWithFilters();
       }
     });
   }
 
   ngOnInit(): void {
-    this.GetWellDetailsWithFilters();
+    this.GetAlertListWithFilters();
     this.treeviewService.selectedNodes.subscribe(x => {
       console.log(x);
-      if (x != undefined && x.length > 0 && x.some(m => m.Type == NodeType.Wells)) {
-        this.ids = x.filter(m => m.Type == NodeType.Wells).map(m => m.NodeId);
+      if (x != undefined && x.length > 0 && x.some(m => m.type == NodeType.Wells)) {
+        this.ids = x.filter(m => m.type == NodeType.Wells).map(m => m.nodeId);
       }
       else
         this.ids = [];
-      this.GetWellDetailsWithFilters();
+      this.GetAlertListWithFilters();
     })
   }
 
-
-
-  GetWellDetailsWithFilters() {
+  GetAlertListWithFilters() {
     this.loading = true;
     var SearchModel = this.createModel();
-    this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
-      if (response.hasOwnProperty('data')) {
+    this.service.getAlertList(SearchModel).subscribe(response => {
+      // if (response.hasOwnProperty('data')) {
         this.loading = false;
         this.pageSizeOption = [10, 15, 20, response.totalCount]
         // this.getPageSizeOptions();
-        this.WellList = response.data;
-        this.WellList.forEach(x => this.prepareChart(x));
-        this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+        this.alertList = response.alerts;
+        // this.alertList.forEach(x => this.prepareChart(x));
+        this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = response.totalCount;
@@ -180,7 +180,7 @@ export class AlertsSrpComponent implements OnInit {
         this.UnderPumping = response.totalUnderpumping;
         this.dataSource.paginator = this.paginator;
 
-      }
+      // }
 
     });
   }
@@ -196,26 +196,38 @@ export class AlertsSrpComponent implements OnInit {
     this.spm = payload.spm;
     this.wellNames = payload.wellNames;
 
-    this.GetWellDetailsWithFilters();
+    this.GetAlertListWithFilters();
   }
 
   //Create Model for search
   createModel(this: any) {
+    let dateObj = {
+      "fromDate": "",
+      "toDate": ""
+    }
     this.model.pageSize = this.pageSize;
     this.model.pageNumber = this.pageNumber;
     this.model.searchText = this.searchText ? this.searchText : "";
     this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
     this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
-    this.model.ids = this.ids;
+    this.model.dateRange = dateObj
+      
+    // }
 
-    this.model.commStatus = this.commStatus ? this.commStatus : [];
-    this.model.controllerStatus = this.controllerStatus ? this.controllerStatus : [];
-    this.model.inferredProduction = this.inferredProduction ? this.inferredProduction : { start: 0, end: 100 };
-    this.model.pumpFillage = this.pumpFillage ? this.pumpFillage : { start: 0, end: 100 };
-    this.model.pumpingType = this.pumpingType ? this.pumpingType : [];
-    this.model.spm = this.spm ? this.spm : { start: 0, end: 100 };
-    this.model.wellNames = this.wellNames ? this.wellNames : [];
+    // {
+    //   "pageSize": 5,
+    //   "pageNumber": 1,
+    //   "searchText": "",
+    //   "sortColumn": "",
+    //   "sortDirection": "",
+    //   "searchStatus": "",
+    //   "dateRange": {
+    //     "fromDate": "",
+    //     "toDate": ""
+    //   }
+    // }
+    
 
     return this.model;
   }
@@ -231,7 +243,7 @@ export class AlertsSrpComponent implements OnInit {
     this.seachByStatus = "";
     this.searchText = "";
     this.ids = [];
-    this.GetWellDetailsWithFilters();
+    this.GetAlertListWithFilters();
   }
 
   RefreshGrid() {
@@ -244,14 +256,14 @@ export class AlertsSrpComponent implements OnInit {
           "searchStatus": ""
       }
     
-        this.service.getWellDetailsWithFilters(payload).subscribe((response: any) => {
+        this.service.getAlertList(payload).subscribe((response: any) => {
           if (response.hasOwnProperty('data')) {
             this.loading = false;
             this.pageSizeOption = [10, 15, 20, response.totalCount]
             // this.getPageSizeOptions();
-            this.WellList = response.data;
-            this.WellList.forEach(x => this.prepareChart(x));
-            this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+            this.alertList = response.data;
+            // this.alertList.forEach(x => this.prepareChart(x));
+            // this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
             setTimeout(() => {
               this.paginator.pageIndex = this.currentPage;
               this.paginator.length = response.totalCount;
@@ -288,7 +300,7 @@ export class AlertsSrpComponent implements OnInit {
     this.pageSize = e.pageSize;
     this.sortDirection = this.sort.direction;
     this.sortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
-    this.GetWellDetailsWithFilters();
+    this.GetAlertListWithFilters();
   }
 
   pageChanged(event: PageEvent) {
@@ -296,7 +308,7 @@ export class AlertsSrpComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.pageNumber = event.pageIndex + 1;
-    this.GetWellDetailsWithFilters();
+    this.GetAlertListWithFilters();
   }
 
   public onSortChanged(e: any) {
@@ -304,13 +316,13 @@ export class AlertsSrpComponent implements OnInit {
     this.pageSize = this.pageSize;
     this.sortDirection = this.sort.direction;
     this.sortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
-    this.GetWellDetailsWithFilters();
+    this.GetAlertListWithFilters();
   }
 
   SeachByStatus(status: string) {
     this.seachByStatus = status;
     this.pageNumber = 1;
-    this.GetWellDetailsWithFilters();
+    this.GetAlertListWithFilters();
   }
 
   GetMinMaxChartData(w: WellModel) {

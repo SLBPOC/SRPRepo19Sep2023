@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="well-tree">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="well-tree" #treeSelector>
   <mat-nested-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="20">
     <li>
       <div class="mat-tree-node">
@@ -6,16 +6,16 @@
           clear
         </mat-icon>
         <div *ngIf="isCheckbox(node)">
-          <mat-checkbox class="checklist-leaf-node  status-lbl" [checked]="checklistSelection.isSelected(node.NodeId)"
+          <mat-checkbox class="checklist-leaf-node  status-lbl" [checked]="checklistSelection.isSelected(node.nodeId)"
             (change)="todoLeafItemSelectionToggle(node)">
             <span class="status" [ngClass]="node.isOn ? 'status_green':'status_red'"></span>
-            {{node.Name}}
+            {{node.name}}
           </mat-checkbox>
         </div>
         
         <div class="mdc-form-field" *ngIf="!isCheckbox(node)">
           <label>
-            {{node.Name}}
+            {{node.name}}
           </label>
         </div>
       </div>
@@ -32,10 +32,10 @@
           </mat-icon>
         </button>
         <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)"
-          (change)="todoItemSelectionToggle(node)" *ngIf="isCheckbox(node)">{{node.Name}}</mat-checkbox>
+          (change)="todoItemSelectionToggle(node)" *ngIf="isCheckbox(node)">{{node.name}}</mat-checkbox>
         <div class="mdc-form-field" *ngIf="!isCheckbox(node)">
           <label>
-            {{node.Name}}
+            {{node.name}}
           </label>
         </div>
       </div>

@@ -23,7 +23,8 @@ a {
     cursor: pointer;
 }
 
-.mat-typography, .mdc-form-field {
+.mat-typography,
+.mdc-form-field {
     font-family: var(--font-Slb-San-Medium) !important;
 }
 
@@ -762,7 +763,8 @@ button {
             border-color: #ADB1C7;
             background-color: #080912;
         }
-        ::ng-deep{
+
+        ::ng-deep {
             .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
                 border-color: #ADB1C7 !important;
                 background-color: #051464 !important;
@@ -772,7 +774,7 @@ button {
                 color: #fff !important;
             }
         }
-        
+
 
 
     }
@@ -1100,24 +1102,24 @@ button:hover {
 
 // light theme css start from here.
 .light-theme {
-
-    .mat-mdc-paginator-container{
-        padding:10px 8px !important;
+    .mat-mdc-paginator-container {
+        padding: 10px 8px !important;
     }
 
-    .menuButton{
-        color:#505575 !important;
+    .menuButton {
+        color: #505575 !important;
     }
+
     .mat-mdc-paginator-icon {
         fill: #505575 !important;
     }
-  
+
     .controller-status-btn-danger {
         // background: rgba(220, 87, 87, 0.2) !important;
         background: #CCCFDE !important;
         // border: 1px solid rgba(220, 87, 87, 1) !important;
         box-shadow: none;
-        color:#D11F1F !important;
+        color: #D11F1F !important;
         border-radius: 4px !important;
     }
 
@@ -1131,7 +1133,7 @@ button:hover {
     }
 
     .controller-status-btn-default {
-        background:#CCCFDE !important;
+        background: #CCCFDE !important;
         // background: rgba(106, 106, 106, 0.2) !important;
         // border: 1px solid rgba(106, 106, 106, 1) !important;
         box-shadow: none !important;
@@ -1140,7 +1142,7 @@ button:hover {
     }
 
     .mat-drawer-content {
-        background:#EBECF2 !important;
+        background: #EBECF2 !important;
         overflow-y: auto;
         overflow-x: hidden;
     }
@@ -1149,16 +1151,17 @@ button:hover {
         background: #EBECF2 !important;
     }
 
-    .filterborder{
+    .filterborder {
         border: 1px solid #e6e6e6;
         border-radius: 8px;
         overflow: hidden;
     }
 
-    .mdc-tab--active { 
+    .mdc-tab--active {
         background: #fff !important;
 
-     }
+    }
+
     .mat-mdc-tab:hover .mdc-tab__ripple::before {
 
         opacity: .04;
@@ -1166,65 +1169,68 @@ button:hover {
         background-color: #080912;
 
     }
-    
-
-.mdc-tab__ripple::before{background:#ddd !important; opacity: 0.04;}
-
-.mat-mdc-tab .mdc-tab-indicator__content--underline {
-
-    border-color: var(--tabBorder);
-
-}
 
 
+    .mdc-tab__ripple::before {
+        background: #ddd !important;
+        opacity: 0.04;
+    }
 
-.mat-mdc-tab.mdc-tab--active:hover .mdc-tab-indicator__content--underline {
+    .mat-mdc-tab .mdc-tab-indicator__content--underline {
 
-    border-color: var(--tabBorder);
+        border-color: var(--tabBorder);
 
-}
+    }
 
 
 
-.mat-mdc-tab:hover .mdc-tab__ripple::before {
+    .mat-mdc-tab.mdc-tab--active:hover .mdc-tab-indicator__content--underline {
 
-    opacity: .04;
+        border-color: var(--tabBorder);
 
-    background-color: #080912;
-
-}
+    }
 
 
 
-.mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
+    .mat-mdc-tab:hover .mdc-tab__ripple::before {
 
-.mat-mdc-tab.mdc-tab--active .mat-ripple-element {
+        opacity: .04;
 
-    opacity: .04;
+        background-color: #080912;
 
-    background-color: #080912;
-
-}
+    }
 
 
 
-.mat-mdc-tab-body-wrapper {
+    .mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
 
-    background: #171A2E;
+    .mat-mdc-tab.mdc-tab--active .mat-ripple-element {
 
-    box-shadow: 0px 0px 1px #fff;
+        opacity: .04;
 
-}
+        background-color: #080912;
+
+    }
 
 
 
-.mat-mdc-tab .mat-ripple-element {
+    .mat-mdc-tab-body-wrapper {
 
-    opacity: .12;
+        background: #171A2E;
 
-    background-color: #080912;
+        box-shadow: 0px 0px 1px #fff;
 
-}
+    }
+
+
+
+    .mat-mdc-tab .mat-ripple-element {
+
+        opacity: .12;
+
+        background-color: #080912;
+
+    }
 
 
 
@@ -1233,88 +1239,88 @@ button:hover {
         position:relative;
         background-color: #fff !important;
 
-        .filterapplyBtn{
-            position:fixed;
-            bottom:10px;
+        .filterapplyBtn {
+            position: fixed;
+            bottom: 10px;
 
-            .mdc-button__label{
-                display:flex;
+            .mdc-button__label {
+                display: flex;
                 justify-content: space-between;
                 font-size: 14px;
-                color:#fff;
+                color: #fff;
                 width: 100%;
-               
+
             }
         }
-     
-        .mat-expansion-panel-header.mat-expanded{
+
+        .mat-expansion-panel-header.mat-expanded {
             height: inherit;
         }
 
 
-        .priorityalign{
-            display:inline-block
+        .priorityalign {
+            display: inline-block
         }
- 
+
         ::ng-deep {
 
-           
+
             .mat-mdc-tab .mdc-tab-indicator__content--underline {
-        
+
                 border-color: var(--tabBorder);
-        
+
             }
-        
-        
-        
+
+
+
             .mat-mdc-tab.mdc-tab--active:hover .mdc-tab-indicator__content--underline {
-        
+
                 border-color: var(--tabBorder);
-        
+
             }
-        
-        
-        
+
+
+
             .mat-mdc-tab:hover .mdc-tab__ripple::before {
-        
+
                 opacity: .04;
-        
+
                 background-color: #080912;
-        
+
             }
-        
-        
-        
+
+
+
             .mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
-        
+
             .mat-mdc-tab.mdc-tab--active .mat-ripple-element {
-        
+
                 opacity: .04;
-        
+
                 background-color: #080912;
-        
+
             }
-        
-        
-        
+
+
+
             .mat-mdc-tab-body-wrapper {
-        
+
                 background: #171A2E;
-        
+
                 box-shadow: 0px 0px 1px #fff;
-        
+
             }
-        
-        
-        
+
+
+
             .mat-mdc-tab .mat-ripple-element {
-        
+
                 opacity: .12;
-        
+
                 background-color: #080912;
-        
+
             }
-        
+
         }
        
        
@@ -1323,13 +1329,13 @@ button:hover {
             color:#051464 !important;
             font-size: 18px;
 
-            &.applyfilterHead{
+            &.applyfilterHead {
                 font-size: 18px !important;
                 font-family: 'SLB Sans Bold';
             }
         }
-    
-        .filterBtn{
+
+        .filterBtn {
             background-color: #CCCFDE;
             border-radius: 4px;
             padding: 10px;
@@ -1337,36 +1343,36 @@ button:hover {
             margin: 20px 0 0 20px;
             box-shadow: none !important;
             font-family: 'SLB SANS MEDIUM';
-            
+
         }
-    
-        .mat-expansion-panel:not([class*=mat-elevation-z]){
+
+        .mat-expansion-panel:not([class*=mat-elevation-z]) {
             box-shadow: none !important;
             border-radius: 0px;
         }
-    
-       
-        .mat-mdc-slider{
-    
-        width: 75% !important;
-        margin: 10px auto !important;
-    
+
+
+        .mat-mdc-slider {
+
+            width: 75% !important;
+            margin: 10px auto !important;
+
         }
-    
-        .mat-mdc-slider .mdc-slider__thumb-knob{
+
+        .mat-mdc-slider .mdc-slider__thumb-knob {
             background-color: #E6E6E6 !important;
             border-color: #CBCBCB !important;
         }
-    
-        .mat-mdc-slider .mdc-slider__track--inactive{
+
+        .mat-mdc-slider .mdc-slider__track--inactive {
             background-color: #E6E6E6;
             opacity: 1;
         }
-    
-        .mat-mdc-slider .mdc-slider__track--active_fill{
+
+        .mat-mdc-slider .mdc-slider__track--active_fill {
             border-color: #3BAB46 !important;
         }
-    
+
         .mdc-slider .mdc-slider__value-indicator {
             transform: initial;
             opacity: 1;
@@ -1374,85 +1380,94 @@ button:hover {
             border: 1px solid #ADB1C7;
             background-color: #EFF0F5;
         }
-        .mdc-slider .mdc-slider__value-indicator::after, .mdc-slider .mdc-slider__value-indicator::before {
+
+        .mdc-slider .mdc-slider__value-indicator::after,
+        .mdc-slider .mdc-slider__value-indicator::before {
             display: none;
         }
-    
-        .mat-expansion-panel-body{
-            padding:0 !important
+
+        .mat-expansion-panel-body {
+            padding: 0 !important
         }
-        .mat-expansion-panel-content{
+
+        .mat-expansion-panel-content {
             padding: 0 20px !important;
         }
-       .applyfilterBtn .mat-mdc-raised-button:not(:disabled){
-        background-color: #0014DC;
-        border-radius: 20px;
-        width:375px;
-       }
-        .margin0{ margin:0px}
-        .mat-accordion{
-    
+
+        .applyfilterBtn .mat-mdc-raised-button:not(:disabled) {
+            background-color: #0014DC;
+            border-radius: 20px;
+            width: 375px;
+        }
+
+        .margin0 {
+            margin: 0px
+        }
+
+        .mat-accordion {
+
             border-bottom: 1px solid #ECEFF1;
-    
-            padding:0px;
-    
-            .mat-expansion-panel-header-description, .mat-expansion-indicator::after{
-                color:#051464;
+
+            padding: 0px;
+
+            .mat-expansion-panel-header-description,
+            .mat-expansion-indicator::after {
+                color: #051464;
                 width: 14px;
                 height: 14px;
             }
-    
-            .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled){
-                border:1px solid #8B90AD;
+
+            .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+                border: 1px solid #8B90AD;
                 background-color: #EFF0F5;
                 border-radius: 28px;
                 padding: 8px 12px;
-       
+
             }
-    
-            
-    
-            h4{
+
+
+
+            h4 {
                 font-size: 18px !important;
-                color:#051464 !important;
+                color: #051464 !important;
                 font-family: 'SLB Sans Bold' !important;
                 margin-bottom: 0px;
             }
-    
-            .mdc-form-field{
-                label{
-                    color:#051464;
-                    font-size: 16px;    
+
+            .mdc-form-field {
+                label {
+                    color: #051464;
+                    font-size: 16px;
                 }
-    
+
                 ::ng-deep {
-           
-                    label[for = "checkbox-00-input"] {
-                  
+
+                    label[for="checkbox-00-input"] {
+
                         color: red !important;
-                    
-                      }
-                    
-                      label[for = "checkbox-01-input"] {
-                    
+
+                    }
+
+                    label[for="checkbox-01-input"] {
+
                         color: green !important;
-                    
-                      }
-                    
-                      label[for = "checkbox-10-input"] {
-                    
+
+                    }
+
+                    label[for="checkbox-10-input"] {
+
                         color: red !important;
-                    
-                      }
-                    
-                      label[for = "checkbox-11-input"] {
-                    
+
+                    }
+
+                    label[for="checkbox-11-input"] {
+
                         color: skyblue !important;
-                    
-                      }
-                    
-                      label[for = "checkbox-12-input"] {
-                    
+
+                    }
+
+                    label[for="checkbox-12-input"] {
+
                         color: black !important;
                     
                       }
@@ -1489,10 +1504,11 @@ button:hover {
             // }
     
         }
-      }
+    }
+
     .container-title {
         background-color: rgb(254, 254, 254) !important;
-        
+
 
         svg {
             path {
@@ -1562,7 +1578,8 @@ button:hover {
             svg {
                 width: 16px;
                 fill: rgba(80, 85, 117, 1);
-                path{
+
+                path {
                     fill: #505575;
                 }
             }
@@ -1613,17 +1630,20 @@ button:hover {
     .mat-mdc-tab-body-wrapper {
         background-color: #FBFBFD;
     }
+
     .well-list-section {
         .well-header-section {
             display: flex;
             justify-content: space-between;
             margin-top: 15px;
             align-items: baseline;
+
             .card-title {
                 font-size: 18px;
                 color: #051464;
                 font-weight: 700;
             }
+
             .savelist {
                 background: #051464;
                 border-radius: 40px;
@@ -1631,16 +1651,19 @@ button:hover {
                 font-size: 14px;
                 font-weight: 500;
             }
+
             .clearlist {
                 font-size: 15px;
                 color: #505575;
                 font-weight: 500;
             }
         }
+
         .select-list {
             margin-top: 15px;
             display: flex;
             justify-content: space-around;
+
             .mat-mdc-slide-toggle {
                 label {
                     color: #505575;
@@ -1648,20 +1671,24 @@ button:hover {
                     font-weight: 500;
                 }
             }
+
             span {
                 color: #505575;
                 font-size: 16px;
                 font-weight: 500;
             }
         }
+
         .search-list {
             margin-top: 10px;
             padding: 10px 20px 10px 10px;
+
             .searchBar {
                 width: auto;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+
                 #searchQueryInput {
                     background: rgba(239, 240, 245, 1);
                     border-color: rgba(139, 144, 173, 1);
@@ -1681,13 +1708,16 @@ button:hover {
                         color: rgba(80, 85, 117, 1);
                     }
                 }
+
                 #searchQuerySubmit {
                     margin-left: -2.5rem;
                     background: none;
                     border: none;
                     outline: none;
+
                     svg {
                         vertical-align: baseline;
+
                         path {
                             fill: #505575;
                         }
@@ -1695,9 +1725,11 @@ button:hover {
                 }
             }
         }
+
         .select-field {
             .checkbox-section {
                 display: inline-block;
+
                 p {
                     width: 50%;
                     float: left;
@@ -1735,19 +1767,24 @@ button:hover {
             min-height: 495px;
             white-space: nowrap;
         }
-        .mat-tree-node, .mat-nested-tree-node {
+
+        .mat-tree-node,
+        .mat-nested-tree-node {
             font-weight: 700;
             font-size: 18px !important;
             color: #051464 !important;
         }
+
         .button__arrow {
             color: #051464 !important;
             width: 28px !important;
             height: 30px !important;
+
             .mat-icon {
                 height: 30px;
                 width: 30px;
             }
+
             .material-icons {
                 font-size: 30px;
             }
@@ -1797,27 +1834,30 @@ button:hover {
         }
     }
 
-//    srp alert page css for light theme
+    //    srp alert page css for light theme
 
     .main-alerts {
         .category-container {
             background-color: rgb(252, 252, 255);
             border: 1px solid #8B90AD;
             border-radius: 8px;
+
             .category-container-header {
                 display: flex;
                 justify-content: space-between;
                 border-bottom: 1px solid #8B90AD;
                 padding: 11px 0 11px 24px;
+
                 .category-title {
                     font-size: 21px;
                     font-weight: 700;
                     color: #051464;
                 }
+
                 .prioritywrapper {
                     ul {
                         padding-left: 0px;
-    
+
                         li {
                             width: auto;
                             display: inline-block;
@@ -1825,14 +1865,14 @@ button:hover {
                             font-size: 12px !important;
                             color: #fff;
                             font-family: 'SLB Sans Regular';
-    
+
                             &.priority {
                                 position: relative;
                                 margin-left: 20px;
                                 font-size: 20px;
                                 color: #505575;
                                 font-weight: 700;
-    
+
                                 &:before {
                                     position: absolute;
                                     left: -21px;
@@ -1843,26 +1883,26 @@ button:hover {
                                     top: 1px;
                                     border-radius: 8px;
                                 }
-    
+
                                 &.high {
                                     &:before {
                                         background-color: rgba(255, 107, 107, 1)
                                     }
                                 }
-    
+
                                 &.medium {
                                     &:before {
                                         background-color:
                                             rgba(135, 234, 45, 1)
                                     }
                                 }
-    
+
                                 &.low {
                                     &:before {
                                         background-color: rgba(255, 162, 32, 1);
                                     }
                                 }
-    
+
                                 &.cleared {
                                     &:before {
                                         background-color: #A0A0A0;
@@ -1874,19 +1914,21 @@ button:hover {
                 }
 
             }
+
             .category-content-block {
                 display: inline-block;
             }
         }
+
         td.actionbtn {
             .headIcon-btn {
                 svg {
                     path {
-                        fill:#051464;
+                        fill: #051464;
                     }
                 }
             }
-            
+
         }
     }
 // srp custom alerts css for light theme 
