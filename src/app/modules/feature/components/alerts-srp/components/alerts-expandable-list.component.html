@@ -14,6 +14,12 @@
                <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" class="align-col"> {{element.date }} </td>
             </ng-container>
             <!-- Comms Status -->
+            <ng-container matColumnDef="category">
+               <th mat-sort-header mat-header-cell *matHeaderCellDef>Category</th>
+               <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" class="align-col">
+                  {{ element.category }}
+               </td>
+            </ng-container>
             <!-- Comms Status -->
             <ng-container matColumnDef="desc">
                <th mat-sort-header mat-header-cell *matHeaderCellDef>Description</th>
