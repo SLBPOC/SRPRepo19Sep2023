@@ -2,16 +2,31 @@
   <div class="container-title">
     <div class="container-title-content">
       <span>
-        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
+        <svg
+          width="20"
+          height="14"
+          viewBox="0 0 20 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
             d="M7.89746 12.919L2.86035 7.76407H19.9995V6.23543H2.86035L7.90039 1.08203L6.84131 0L0 7.00075L6.84082 14L7.89746 12.919Z"
-            fill="#EBECF2"></path>
+            fill="#EBECF2"
+          ></path>
         </svg>
       </span>
       <h1>Events List</h1>
     </div>
-    <button mat-flat-button="" class="action-btn-info" tabindex="0" ng-reflect-router-link="">Feed</button>
-
+    <button
+      mat-flat-button=""
+      class="action-btn-info"
+      tabindex="0"
+      ng-reflect-router-link=""
+    >
+      Feed
+    </button>
   </div>
   <div class="row">
     <div class="col-md-12">
@@ -29,33 +44,73 @@
               </ul>
             </div> -->
             <div class="searchBar">
-              <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search"
-                (keyup)="applyFilterSearch($event)" value="" />
-              <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
-                <img matbuttonicon="" alt="" class="" (click)="clearAll()" src="./assets/images/close-icon.svg" />
+              <input
+                id="searchQueryInput"
+                type="text"
+                name="searchQueryInput"
+                placeholder="Search"
+                (keyup)="applyFilterSearch($event)"
+                value=""
+              />
+              <button
+                id="searchQuerySubmit"
+                type="submit"
+                name="searchQuerySubmit"
+              >
+                <img
+                  matbuttonicon=""
+                  alt=""
+                  class=""
+                  (click)="clearAll()"
+                  src="./assets/images/close-icon.svg"
+                />
               </button>
             </div>
             <div class="headIcons">
               <ul>
                 <li>
-                  <button mat-icon-button (click)="clearAll()" class="button-type-none">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd"
+                  <button
+                    mat-icon-button
+                    (click)="clearAll()"
+                    class="button-type-none"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
                         d="M17.0527 2.94727C15.208 1.10742 12.6943 0 10.0005 0C4.48633 0 0 4.48584 0 10C0 15.5137 4.48633 20 10.0005 20C15.5146 20 20 15.5137 20 10H18.5C18.5 14.6865 14.6875 18.5 10.0005 18.5C5.31348 18.5 1.5 14.6865 1.5 10C1.5 5.31299 5.31348 1.5 10.0005 1.5C12.29 1.5 14.4268 2.44141 15.9951 4.00488L13 7H18.2188H20V5.3457V0L17.0527 2.94727Z"
-                        fill="#6D7189" />
+                        fill="#6D7189"
+                      />
                     </svg>
-
                   </button>
                 </li>
                 <li>
-                  <button mat-icon-button [matMenuTriggerFor]="calenderFilter" class="button-type-none"
-                    (click)="(openCalender)">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd"
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="calenderFilter"
+                    class="button-type-none"
+                    (click)="(openCalender)"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
                         d="M4.7002 7.59961H6.2002V9.09961H4.7002V7.59961ZM6.2002 10.5996H4.7002V12.0996H6.2002V10.5996ZM9.2998 10.5996H7.7998V12.0996H9.2998V10.5996ZM9.2998 7.59961H7.7998V9.09961H9.2998V7.59961ZM4.7002 13.5996H6.2002V15.0996H4.7002V13.5996ZM9.2998 13.5996H7.7998V15.0996H9.2998V13.5996ZM10.7998 10.5996H12.2998V12.0996H10.7998V10.5996ZM15.2998 10.5996H13.7998V12.0996H15.2998V10.5996ZM10.7998 7.59961H12.2998V9.09961H10.7998V7.59961ZM15.2998 7.59961H13.7998V9.09961H15.2998V7.59961ZM18.5 18.5H1.5V3H4.7002V4.5H6.2002V3H13.7002V4.5H15.2002V3H18.4004V18.5H18.5ZM15.2998 1.5V0H13.7998V1.5H6.2002V0H4.7002V1.5H0V20H20V1.5H15.2998Z"
-                        fill="#6D7189" />
+                        fill="#6D7189"
+                      />
                     </svg>
-
                   </button>
                 </li>
                 <!-- <li>
@@ -80,16 +135,16 @@
         <div class="">
           <div class="col-md-12 p-0 mt-3 filterborder">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-
               <mat-tab label="Well List">
                 <app-well-tree-list></app-well-tree-list>
                 <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
                 <!--Well List goes here.  -->
               </mat-tab>
               <mat-tab label="Filter & Sort">
-                <app-well-filter-and-sort (filterRefresh)="refreshGrid($event)"></app-well-filter-and-sort>
+                <app-well-filter-and-sort
+                  (filterRefresh)="refreshGrid($event)"
+                ></app-well-filter-and-sort>
               </mat-tab>
-
             </mat-tab-group>
           </div>
         </div>
@@ -99,18 +154,33 @@
           <!-- calender filter start-->
           <mat-menu #calenderFilter="matMenu" class="filter-container">
             <div class="align-center">
-              <div class="calender-alrt-filter" (click)="$event.stopPropagation()">
+              <div
+                class="calender-alrt-filter"
+                (click)="$event.stopPropagation()"
+              >
                 <div class="calender-alrt-filter-header">
                   <div class="calender-alrt-filter-title">Select</div>
                 </div>
                 <div class="calender-alrt-filter-section-btn-grp">
-                  <button mat-flat-button class="select-btn" (click)="setSelectedDateRange(1)">
+                  <button
+                    mat-flat-button
+                    class="select-btn"
+                    (click)="setSelectedDateRange(1)"
+                  >
                     1 Day
                   </button>
-                  <button mat-flat-button class="select-btn" (click)="setSelectedDateRange(2)">
+                  <button
+                    mat-flat-button
+                    class="select-btn"
+                    (click)="setSelectedDateRange(2)"
+                  >
                     1 Week
                   </button>
-                  <button mat-flat-button class="select-btn" (click)="setSelectedDateRange(3)">
+                  <button
+                    mat-flat-button
+                    class="select-btn"
+                    (click)="setSelectedDateRange(3)"
+                  >
                     1 Month
                   </button>
                 </div>
@@ -119,8 +189,12 @@
                     Select Data Range
                   </div>
                   <div class="calender-alrt-filter-section-colender">
-                    <mat-calendar #calendar [selected]="selectedRangeValue" (selectedChange)="select($event, calendar)"
-                      [dateClass]="isSelected">
+                    <mat-calendar
+                      #calendar
+                      [selected]="selectedRangeValue"
+                      (selectedChange)="select($event, calendar)"
+                      [dateClass]="isSelected"
+                    >
                     </mat-calendar>
                   </div>
                 </div>
@@ -165,10 +239,18 @@
                             </div>
                           </div> -->
                 <div class="calender-alrt-filter-action-btn-grp">
-                  <button mat-flat-button class="action-btn" (click)="resetCalender()">
+                  <button
+                    mat-flat-button
+                    class="action-btn"
+                    (click)="resetCalender()"
+                  >
                     Reset
                   </button>
-                  <button mat-flat-button (click)="applyFilter()" class="action-btn active marginL20">
+                  <button
+                    mat-flat-button
+                    (click)="applyFilter()"
+                    class="action-btn active marginL20"
+                  >
                     Apply
                   </button>
                 </div>
@@ -181,71 +263,108 @@
                 <div class="select-filter-header">
                   <div class="select-filter-title">Filter by</div>
                 </div>
-                <div class="select-filter-section" (click)="$event.stopPropagation()">
+                <div
+                  class="select-filter-section"
+                  (click)="$event.stopPropagation()"
+                >
                   <div class="select-lbl">Event Type</div>
                   <mat-form-field>
-                    <mat-select placeholder="Select Event Type" [(value)]="eventFormModel.eventType">
-                      <mat-option *ngFor="let food of EventType" [value]="food.value">
+                    <mat-select
+                      placeholder="Select Event Type"
+                      [(value)]="eventFormModel.eventType"
+                    >
+                      <mat-option
+                        *ngFor="let food of EventType"
+                        [value]="food.value"
+                      >
                         {{ food.viewValue }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="select-filter-section" (click)="$event.stopPropagation()">
+                <div
+                  class="select-filter-section"
+                  (click)="$event.stopPropagation()"
+                >
                   <div class="select-lbl">Status</div>
                   <mat-form-field>
-                    <mat-select placeholder="Select Status" [(value)]="eventFormModel.status">
-                      <mat-option *ngFor="let food of EventStatus" [value]="food.value">
+                    <mat-select
+                      placeholder="Select Status"
+                      [(value)]="eventFormModel.status"
+                    >
+                      <mat-option
+                        *ngFor="let food of EventStatus"
+                        [value]="food.value"
+                      >
                         {{ food.viewValue }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="select-filter-action-btn">
-                  <button mat-flat-button class="action-btn active" (click)="clearFilter()">
+                  <button
+                    mat-flat-button
+                    class="action-btn active"
+                    (click)="clearFilter()"
+                  >
                     Clear
                   </button>
-                  <button mat-flat-button class="action-btn active" (click)="applyFilter()">
+                  <button
+                    mat-flat-button
+                    class="action-btn active"
+                    (click)="applyFilter()"
+                  >
                     Apply
                   </button>
                 </div>
               </div>
             </div>
           </mat-menu>
+          <app-alert-categories-chart></app-alert-categories-chart>
           <!-- select filter end -->
 
           <table mat-table [dataSource]="dataSource" matSort>
             <!-- Priority Status Column -->
             <ng-container matColumnDef="stat">
               <th mat-header-cell *matHeaderCellDef>No</th>
-              <td mat-cell *matCellDef="let element; let i = index;">
+              <td mat-cell *matCellDef="let element; let i = index">
                 <!-- <span class="high-priorityline">{{element?.status}}</span>  -->
-                {{i + 1}}
+                {{ i + 1 }}
               </td>
             </ng-container>
             <!-- Wells Name -->
             <ng-container matColumnDef="wellName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Well Name</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Well Name
+              </th>
               <td mat-cell *matCellDef="let element" id="well_name">
                 {{ element.wellName }}
               </td>
             </ng-container>
             <!--Alert Level -->
             <ng-container matColumnDef="priority">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Priority
+              </th>
               <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
             </ng-container>
             <!-- Time and date -->
             <ng-container matColumnDef="creationDateTime">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Time and Date</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Time and Date
+              </th>
               <td mat-cell *matCellDef="let element">
                 {{ element.creationDateTime | date : "yyyy-MM-dd HH:MM:ss" }}
               </td>
             </ng-container>
             <!-- Description -->
             <ng-container matColumnDef="eventDescription">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-              <td mat-cell *matCellDef="let element">{{ element.eventDescription }}</td>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Description
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.eventDescription }}
+              </td>
             </ng-container>
             <!-- Status -->
 
@@ -254,8 +373,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-            aria-label="Select page of periodic elements">
+          <mat-paginator
+            [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons
+            aria-label="Select page of periodic elements"
+          >
           </mat-paginator>
 
           <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu">
@@ -263,8 +385,12 @@
                   </button> -->
           <mat-menu #appMenu="matMenu">
             <div (click)="$event.stopPropagation()">
-              <mat-calendar #calendar1 (selectedChange)="select($event, calendar1)" [dateClass]="isSelected"
-                [selected]="todayDate">
+              <mat-calendar
+                #calendar1
+                (selectedChange)="select($event, calendar1)"
+                [dateClass]="isSelected"
+                [selected]="todayDate"
+              >
               </mat-calendar>
             </div>
           </mat-menu>
