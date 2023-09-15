@@ -50,7 +50,7 @@
 
     .tabletophead {
         background-color: rgba(19, 22, 41, 0.9);
-        padding: 0px 20px;
+        padding: 10px 20px;
         display: flex;
 
         .lefthead {
@@ -69,7 +69,7 @@
             width: 70%;
             display: flex;
             justify-content: end;
-
+            align-items: center;
             mat-icon {
                 color: #fff;
             }
@@ -81,7 +81,8 @@
             .prioritywrapper {
                 ul {
                     padding-left: 0px;
-                    margin-top: 20px;
+                    margin-top: 0px;
+                    margin-bottom: 0;
 
                     li {
                         width: auto;
@@ -177,6 +178,7 @@
 
             .headIcons {
                 display: flex;
+                align-items: center;
 
                 ul {
                     padding-left: 30px;
@@ -438,8 +440,8 @@
     .tableContainer {
         .tabletophead {
             background-color: rgb(252 252 255);
-            border: 1px solid #e6e6e6;
-            border-radius: 8px;
+            // border: 1px solid #e6e6e6;
+            // border-radius: 8px;
 
             .lefthead {
                 h2 {
@@ -592,14 +594,14 @@
     //    srp alert page css for light theme
 
     .main-alerts {
-        .tableContainer {
-            .tabletophead {
-                background-color: rgb(252 252 255);
-                border: 1px solid #e6e6e6;
-                border-radius: 8px;
-                padding: 12px 20px;
-            }
-        }
+        // .tableContainer {
+        //     .tabletophead {
+        //         background-color: rgb(252 252 255);
+        //         // border: 1px solid #e6e6e6;
+        //         // border-radius: 8px;
+        //         padding: 12px 20px;
+        //     }
+        // }
 
         .headIcons {
             .headIcon-btn {
