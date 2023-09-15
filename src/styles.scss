@@ -509,7 +509,7 @@ button {
     }
 
     .mat-mdc-select-arrow {
-        color: #fff;
+        color: #505575;
     }
 
     .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
@@ -1970,6 +1970,9 @@ button:hover {
             svg {
                 width: 16px;
                 height: 16px;
+                path {
+                    fill:#505575;
+                }
             }
         }
         .mat-mdc-icon-button .mat-mdc-button-touch-target {
