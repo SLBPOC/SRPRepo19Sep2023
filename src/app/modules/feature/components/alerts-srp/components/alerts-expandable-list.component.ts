@@ -1,14 +1,11 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2, Input, EventEmitter, Output } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 //import { WellName } from '../model/wellname';
 import { WellModel } from '../../../model/wellModel'
 import { AlertList } from '../../../model/alert-list'
 import { AlertListService } from '../../../services/alert-list.service';
-import { FormControl } from '@angular/forms';
-import { MatSelect } from '@angular/material/select';
 import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs'
 import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
@@ -35,12 +32,6 @@ interface Food {
 })
 
 export class AlertsExpandableListComponent implements OnInit {
-
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
   theme = 'light';
   dataSource: any = [];
   WellList!: WellModel[];
@@ -48,23 +39,13 @@ export class AlertsExpandableListComponent implements OnInit {
   snoozeByTime: number = 1;
   clearAlertsComments!: string;
   selectedColumn: string[] = [];
-  displayedColumns: string[] = ['wellName', 'date', 'desc', 'action'];
-  displayableExtraColumns: { label: string, accessor: string, header: string }[] = [];
-  extraColumnsCtrl: any = new FormControl('');
-  extraColumnsList: { label: string, accessor: string, header: string }[] = [
-    { label: 'Effective Runtime(%)', accessor: 'effectiveRunTime', header: 'EffectiveRunTime.value' },
-    { label: 'Cycles Today', accessor: 'cyclesToday', header: 'CyclesToday.value' },
-    { label: 'Structural Load(%)', accessor: 'structuralLoad', header: 'StructuralLoad.value' },
-    { label: 'MinMax Load(%)', accessor: 'minMaxLoad', header: 'MinMaxLoad.value' },
-    { label: 'Gearbox Load(%)', accessor: 'gearboxLoad', header: 'GearboxLoad.value' },
-    { label: 'Rod Stress(%)', accessor: 'rodStress', header: 'RodStress.value' }
-  ];
+  displayedColumns: string[] = ['wellName', 'date', 'category', 'desc', 'action'];
   // columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('extraColumns', { static: true }) private extraColumns!: MatSelect;
 
   @ViewChild('searchQueryInput') searchInput: ElementRef<HTMLInputElement>;
+  @Input() sortAndFilterPayload: any;
 
   HighCharts: typeof HighCharts = HighCharts;
 
@@ -79,29 +60,18 @@ export class AlertsExpandableListComponent implements OnInit {
   seachByStatus: string = "";
   loading = true;
 
-  //filter variables;
-  commStatus: any[];
-  controllerStatus: any[];
-  inferredProduction: any[];
-  pumpFillage: any[];
-  pumpingType: any[];
-  spm: any[];
-  wellNames: any[];
-
 
   //legend variables
   TotalCount: number = 0;
-  OverPumping: number = 0;
-  OptimalPumping: number = 0;
-  UnderPumping: number = 0;
-
-  minmaxChartData: any[] = [];  //min max chart data array
+  High: number = 0;
+  Medium: number = 0;
+  Low: number = 0;
+  Clear: number = 0;
   pageSizeOption = [10, 20, 30]
   ids: number[];
-  respdata: any
 
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: AlertListService, private router: Router, public treeviewService: TreeViewService) { }
+  constructor( private service: AlertListService, private router: Router, public treeviewService: TreeViewService) { }
 
 
   ngAfterViewInit() {
@@ -135,24 +105,31 @@ export class AlertsExpandableListComponent implements OnInit {
 
   GetAlertListWithFilters() {
     this.loading = true;
-    var SearchModel = this.createModel();
+    var SearchModel: any;
+    if(this.sortAndFilterPayload !=undefined){
+      SearchModel = this.sortAndFilterPayload
+    }
+    else {
+      SearchModel = this.createModel();
+    }
     this.service.getAlertList(SearchModel).subscribe(response => {
       // if (response.hasOwnProperty('data')) {
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.totalCount]
+        this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount]
         // this.getPageSizeOptions();
         this.alertList = response.alerts;
         // this.WellList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.totalCount;
+          this.paginator.length = response.alertsLevelDto.totalCount;
         });
 
-        this.TotalCount = response.totalCount;
-        this.OverPumping = response.totalOverpumping;
-        this.OptimalPumping = response.totalOptimalPumping;
-        this.UnderPumping = response.totalUnderpumping;
+        this.TotalCount = response.alertsLevelDto.totalCount;
+        this.High = response.alertsLevelDto.totalHigh;
+        this.Medium = response.alertsLevelDto.totalMedium;
+        this.Low = response.alertsLevelDto.totalLow;
+        this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
 
       // }
@@ -163,13 +140,6 @@ export class AlertsExpandableListComponent implements OnInit {
 
   refreshGrid(payload: any) {
     this.seachByStatus=""; // Added by Gayatri 9/8/2023
-    this.commStatus = payload.commStatus;
-    this.controllerStatus = payload.controllerStatus;
-    this.inferredProduction = payload.inferredProduction;
-    this.pumpFillage = payload.pumpFillage;
-    this.pumpingType = payload.pumpingType;
-    this.spm = payload.spm;
-    this.wellNames = payload.wellNames;
 
     this.GetAlertListWithFilters();;
   }
@@ -218,39 +188,26 @@ export class AlertsExpandableListComponent implements OnInit {
         this.service.getAlertList(payload).subscribe((response: any) => {
           // if (response.hasOwnProperty('data')) {
             this.loading = false;
-            this.pageSizeOption = [10, 15, 20, response.totalCount]
+            this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount]
             // this.getPageSizeOptions();
             this.alertList = response.data;
             // this.WellList.forEach(x => this.prepareChart(x));
             this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
             setTimeout(() => {
               this.paginator.pageIndex = this.currentPage;
-              this.paginator.length = response.totalCount;
+              this.paginator.length = response.alertsLevelDto.totalCount;
             });
     
             this.TotalCount = response.totalCount;
-            this.OverPumping = response.totalOverpumping;
-            this.OptimalPumping = response.totalOptimalPumping;
-            this.UnderPumping = response.totalUnderpumping;
+            this.High = response.totalHigh;
+            this.Medium = response.totalMedium;
+            this.Low = response.totalLow;
+            this.Clear = response.alertsLevelDto.totalCleared;
             this.dataSource.paginator = this.paginator;
     
           // }
         })
       }
-
-  onChangeDemo(event: any) {
-    if (event.checked) {
-      if (this.selectedColumn.filter(resp => event.source.value === resp)) {
-        this.selectedColumn.push(event.source.value)
-        // this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({ header }) => header === column)), ...[...new Set(this.selectedColumn)]];
-        this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string, header: string }) => [...new Set(this.selectedColumn)].includes(extraColumn.header));
-      }
-    } else {
-      this.selectedColumn = this.selectedColumn.filter(function (e) { return e !== event.source.value })
-      // this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({ header }) => header === column)), ...this.selectedColumn];
-      this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string, header: string }) => this.selectedColumn.includes(extraColumn.header));
-    }
-  }
 
 
 

@@ -13,7 +13,7 @@ const alertsData = '../../../../assets/json/alerts-data.json';
 export class AlertListService {
 
   baseUrl:string = environment.srp_microservice_url;
-  _apiUrl: string = "https://localhost:53866/";
+  _apiUrl: string = "https://localhost:61446/";
 
   constructor(private http: HttpClient) { }
 
@@ -32,7 +32,7 @@ export class AlertListService {
   }
 
   getAlertListFilters(payload: any): Observable<any> {
-    const url = `${this.baseUrl}Alerts/GetAlertList`;
+    const url = `${this.baseUrl}Alerts/Get`;
     return this.http.post(url, payload, {
       headers: {}
     })
@@ -42,26 +42,16 @@ export class AlertListService {
     return this.http.post<AlertList[]>(this._apiUrl + 'api/Alerts/Get',payload);
   }
 
-  clearAlert(payload: any): Observable<any> {
-    // let params = new HttpParams()
-    // .set('alertId', payload.alertId)
-    // .set('comment', payload.comment)
-    // let httpOptions = {
-    //   params: params
-    // }
-    const url = `${this.baseUrl}Alerts/ClearAlert`;
-    console.log(payload)
-    return this.http.post(url, null, {
-      params: payload,
-    })
+  getDefaultAlertCategory(payload?: any): Observable<any> {
+    return this.http.post<AlertList[]>(this._apiUrl + 'api/Alerts/GetDefaultValues',payload);
   }
 
-  snoozeBy(payload: any): Observable<any> {
-    const url = `${this.baseUrl}Alerts/SnoozeBy`;
-    console.log(payload)
-    return this.http.post(url, null, {
-      params: payload
-    })
+  clearAlert(id: number, comments: string, payload?: any): Observable<any> {
+    return this.http.post<AlertList[]>(this._apiUrl + `api/Alerts/ClearAlert?alertId=${id}&comment=${comments}`,payload);
+  }
+
+  snoozeBy(id: number, time: number, payload?: any): Observable<any> {
+    return this.http.post<AlertList[]>(this._apiUrl + `api/Alerts/SnoozeBy?alertId=${id}&snoozeBy=${time}`,payload);
   }
 
 }
