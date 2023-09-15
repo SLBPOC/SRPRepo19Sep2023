@@ -1837,86 +1837,98 @@ button:hover {
     //    srp alert page css for light theme
 
     .main-alerts {
+        .margin-15 {
+            margin: 15px;
+        }
+        .border-right {
+            border-right: 1px solid #CCCFDE;
+        }
+        .pr-0 {
+            padding-right: 0 !important;
+        }
+        .align-center {
+            text-align: center;
+        }
         .category-container {
             background-color: rgb(252, 252, 255);
-            border: 1px solid #8B90AD;
-            border-radius: 8px;
 
             .category-container-header {
                 display: flex;
                 justify-content: space-between;
-                border-bottom: 1px solid #8B90AD;
-                padding: 11px 0 11px 24px;
+                border-bottom: 1px solid #CCCFDE;
+                padding: 15px 0 15px 24px;
+                align-items: center;
 
                 .category-title {
-                    font-size: 21px;
+                    font-size: 16px;
                     font-weight: 700;
-                    color: #051464;
+                    color: #22263D;
                 }
 
-                .prioritywrapper {
-                    ul {
-                        padding-left: 0px;
+            }
+            .prioritywrapper {
+                ul {
+                    padding-left: 0px;
+                    margin-bottom: 0;
 
-                        li {
-                            width: auto;
-                            display: inline-block;
-                            padding-right: 20px;
-                            font-size: 12px !important;
-                            color: #fff;
-                            font-family: 'SLB Sans Regular';
+                    li {
+                        width: auto;
+                        display: inline-block;
+                        padding-right: 20px;
+                        font-size: 12px !important;
+                        color: #fff;
+                        font-family: 'SLB Sans Regular';
 
-                            &.priority {
-                                position: relative;
-                                margin-left: 20px;
-                                font-size: 20px;
-                                color: #505575;
-                                font-weight: 700;
+                        &.priority {
+                            position: relative;
+                            margin-left: 20px;
+                            font-size: 20px;
+                            color: #505575;
+                            font-weight: 700;
 
+                            &:before {
+                                position: absolute;
+                                left: -24px;
+                                content: "";
+                                height: 15px;
+                                width: 21px;
+                                margin-bottom: 15px;
+                                top: 2px;
+                                border-radius: 2px
+                            }
+
+                            &.high {
                                 &:before {
-                                    position: absolute;
-                                    left: -21px;
-                                    content: "";
-                                    height: 16px;
-                                    width: 16px;
-                                    margin-bottom: 15px;
-                                    top: 1px;
-                                    border-radius: 8px;
+                                    background-color: #D11F1F
                                 }
+                            }
 
-                                &.high {
-                                    &:before {
-                                        background-color: rgba(255, 107, 107, 1)
-                                    }
+                            &.medium {
+                                &:before {
+                                    background-color: #FABB42
                                 }
+                            }
 
-                                &.medium {
-                                    &:before {
-                                        background-color:
-                                            rgba(135, 234, 45, 1)
-                                    }
+                            &.low {
+                                &:before {
+                                    background-color: #28A228;
                                 }
+                            }
 
-                                &.low {
-                                    &:before {
-                                        background-color: rgba(255, 162, 32, 1);
-                                    }
-                                }
-
-                                &.cleared {
-                                    &:before {
-                                        background-color: #A0A0A0;
-                                    }
+                            &.cleared {
+                                &:before {
+                                    background-color: #9F9F9F;
                                 }
                             }
                         }
                     }
                 }
-
             }
 
             .category-content-block {
-                display: inline-block;
+                display: flex;
+                
+                
             }
         }
 

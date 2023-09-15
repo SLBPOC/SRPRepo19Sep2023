@@ -155,29 +155,36 @@
             </div>
          </div>
          <div class="col-md-9">
-            <div class="category-container padding-tb-15">
+            <div class="category-container">
                <div class="category-container-header">
                   <div class="category-title">Alert Categories</div>
                    <div class="prioritywrapper">
                      <ul>
-                        <li class="button-type-none priority high" (click)="SeachByStatus('Over Pumping')">High
-                           ({{OverPumping}})
-                        </li>
-                        <li class="button-type-none priority medium" (click)="SeachByStatus('Optimum Pumping')">Medium
-                           ({{OptimalPumping}})</li>
-                        <li class="button-type-none priority low" (click)="SeachByStatus('Under Pumping')">Low
-                           ({{UnderPumping}})
-                        </li>
-                        <li class="button-type-none priority cleared" (click)="SeachByStatus('Under Pumping')">Cleared
-                        </li>
+                        <li class="button-type-none priority high" (click)="SeachByStatus('Over Pumping')">High</li>
+                        <li class="button-type-none priority medium" (click)="SeachByStatus('Optimum Pumping')">Medium</li>
+                        <li class="button-type-none priority low" (click)="SeachByStatus('Under Pumping')">Low</li>
                      </ul>
                   </div>
                </div>
-               <div class="category-content-block">
-                  <div class="col-md-6">
-                        <app-alert-categories-chart></app-alert-categories-chart>                    
+               <div class="category-content-block padding-15">
+                  <div class="col-md-6 p-0 border-right">
+                        <app-alert-categories-chart></app-alert-categories-chart>  
+                        <div class="prioritywrapper align-center margin-t-20">
+                           <ul>
+                              <li class="button-type-none priority high" (click)="SeachByStatus('Over Pumping')">High
+                                 ({{OverPumping}})
+                              </li>
+                              <li class="button-type-none priority medium" (click)="SeachByStatus('Optimum Pumping')">Medium
+                                 ({{OptimalPumping}})</li>
+                              <li class="button-type-none priority low" (click)="SeachByStatus('Under Pumping')">Low
+                                 ({{UnderPumping}})
+                              </li>
+                              <li class="button-type-none priority cleared" (click)="SeachByStatus('Under Pumping')">Cleared
+                              </li>
+                           </ul>
+                        </div>              
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6 pr-0">
                      <app-alert-categories-table></app-alert-categories-table>
                      <!-- <app-alerts-expandable-list></app-alerts-expandable-list> -->
                   </div>
