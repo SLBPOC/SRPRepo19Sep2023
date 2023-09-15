@@ -35,6 +35,8 @@ export class SidenavComponent implements OnInit {
     this.elem = document.documentElement;
   }
 
+  isSideNaveOpen : boolean = true;
+
 
   sidenavToggle() {
     const abc = document.getElementById('navopen');
@@ -89,15 +91,15 @@ export class SidenavComponent implements OnInit {
     this.router.navigateByUrl('/srp/dashboard');
   }
   toggleTheme(): void {
-    if (this.overlay.getContainerElement().classList.contains("dark-theme")) {
-      this.overlay.getContainerElement().classList.remove("dark-theme");
-      this.overlay.getContainerElement().classList.add("light-theme");
-    } else if (this.overlay.getContainerElement().classList.contains("light-theme")) {
-      this.overlay.getContainerElement().classList.remove("light-theme");
-      this.overlay.getContainerElement().classList.add("dark-theme");
-    } else {
-      this.overlay.getContainerElement().classList.add("light-theme");
-    }
+    // if (this.overlay.getContainerElement().classList.contains("dark-theme")) {
+    //   this.overlay.getContainerElement().classList.remove("dark-theme");
+    //   this.overlay.getContainerElement().classList.add("light-theme");
+    // } else if (this.overlay.getContainerElement().classList.contains("light-theme")) {
+    //   this.overlay.getContainerElement().classList.remove("light-theme");
+    //   this.overlay.getContainerElement().classList.add("dark-theme");
+    // } else {
+    //   this.overlay.getContainerElement().classList.add("light-theme");
+    // }
     if (document.body.classList.contains("dark-theme")) {
       document.body.classList.remove("dark-theme");
       document.body.classList.add("light-theme");

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FeatureRoutingModule } from './feature-routing.module';
 import { FeatureComponent } from './feature.component';
 import { AlgorithmsAndMitigationComponent } from './components/algorithms-and-mitigation/algorithms-and-mitigation.component';
-import { WellListComponent } from './components/well-list/well-list.component';
+import { WellTreeListComponent } from './components/well-tree-list/well-tree-list.component';
 import { WellPerformanceComponent } from './components/well-performance/well-performance.component';
 import { YesterdayCycleCountComponent } from './components/yesterdays-cycle-count/yesterday-cycle-count.component';
 import { YesterdayPercentRunComponent } from './components/yesterday-percent-run/yesterday-percent-run.component';
@@ -18,8 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   SaveTreeStateDialog,
   WellTreeSearchComponent,
-} from './components/well-list/well-tree-search/well-tree-search.component';
-import { ChecklistDatabase, WellTreeView } from './components/well-list/well-tree-view/well-tree-view.component';
+} from './components/well-tree-list/well-tree-search/well-tree-search.component';
+import { WellTreeView } from './components/well-tree-list/well-tree-view/well-tree-view.component';
+import { HierarchyService } from './services/HierarchyService';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -111,13 +112,14 @@ import { CustomAlertComponent } from './components/custom-alert/custom-alert.com
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
 import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
+import { ErrorComponent } from 'src/app/core/error/error.component';
 
 
 @NgModule({
   declarations: [
     FeatureComponent,
     AlgorithmsAndMitigationComponent,
-    WellListComponent,
+    WellTreeListComponent,
     WellPerformanceComponent,
     YesterdayCycleCountComponent,
     YesterdayPercentRunComponent,
@@ -182,6 +184,8 @@ import { AlertCategoriesTableComponent } from './components/alert-categories-tab
     CustomAlertComponent,
     AlertCategoriesChartComponent,
     AlertCategoriesTableComponent,
+    //httperrors
+    ErrorComponent
     
   ],
   imports: [ 
@@ -232,7 +236,7 @@ import { AlertCategoriesTableComponent } from './components/alert-categories-tab
     NgxMatNativeDateModule,
   ],
   providers: [BsModalService,
-    ChecklistDatabase,
+    HierarchyService,
     TreeViewService,
     DynacardService,
     AlgorithmsAndMitigationsService

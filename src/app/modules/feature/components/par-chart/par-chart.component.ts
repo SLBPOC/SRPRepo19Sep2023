@@ -14,7 +14,14 @@ import { DatePipe } from '@angular/common';
 export class ParChartComponent {
 
   variables = new FormControl();
-
+  extraColumnsList: { label: string, accessor: string, header: string }[] = [
+    { label: 'Yesterday Cycle Counter', accessor: 'yesterdayCycleCounter', header: 'Yesterday Cycle Counter' },
+    { label: 'Yesterday Cycle Run', accessor: 'yesterdayCycleRun', header: 'Yesterday Cycle Run' },
+    { label: 'Average Pump Fillage', accessor: 'averagePumpFillage', header: 'Average Pump Fillage' },
+    { label: 'Average SPM', accessor: 'averageSPM', header: 'Average SPM' },
+    { label: 'Production Index', accessor: 'productionIndex', header: 'Production Index' },
+    { label: 'Load', accessor: 'load', header: 'Load' }
+  ];
   variableList = ['Yesterday Cycle Counter', 'Yesterday Cycle Run', 'Average Pump Fillage', 'Average SPM', 'Production Index', 'Load'];
   selectedVariables:any;
 
@@ -46,7 +53,7 @@ export class ParChartComponent {
   graphXAxis:any[]=[];
   wellparamList:ParaModel[]=[];
   WellArr: string[]=[];  
-
+  namearr: string[]=[]; 
   constructor(private _parameterGraphService: DashboardService,private datepipe:DatePipe)
   {
     this.selectedVariables="Yesterday Cycle Counter', 'Yesterday Cycle Run";
@@ -57,7 +64,7 @@ export class ParChartComponent {
   };
   
 ngOnInit()
-{  
+{ 
   this.GetGraphDetails();
 }
 
@@ -67,6 +74,7 @@ GetGraphDetails()
     this.wellparamList=response;
     for(let i=0;i<this.wellparamList.length;i++)
     {
+      //this.wellparamList[i].createdDateTime=this.datepipe.transform(this.wellparamList[i].createdDateTime,'MM/dd/YYYY');      
       this.wellparamList[i].createdDateTime=this.datepipe.transform(this.wellparamList[i].createdDateTime,'MM/dd/YYYY');      
     }
     // Bind X Axis values
@@ -151,7 +159,17 @@ BindSeriesDetails()
 
 
 onChange($event:any) 
-{  
+{ 
+  if($event.checked)
+    this.namearr.push($event.source.value);
+  else
+    {
+      this.namearr.forEach((value,index)=>{
+        if(value==$event.source.value) 
+          this.namearr.splice(index,1);
+    });
+    }
+  this.selectedVariables = this.namearr
   this.BindSeriesDetails(); 
 }
 

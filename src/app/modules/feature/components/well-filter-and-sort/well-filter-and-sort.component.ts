@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { WellsService } from '../../services/wells.service';
+import { AlertListService } from '../../services/alert-list.service';
 
 interface ISpmSlider{
   min: 0,
@@ -41,6 +42,10 @@ export class WellFilterAndSortComponent implements OnInit{
   commsStatusOptions!: any;
   controllerStatusOptions!: any;
   pumpingTypeOptions!: any;
+  selectedWells = [];
+  selectedCategory = [];
+  wellNames: any;
+  category: any
   filtersApplied = {
     wellNames: false,
     commsStatus: false,
@@ -50,20 +55,25 @@ export class WellFilterAndSortComponent implements OnInit{
     pumpFillage: false,
     inferredProduction: false
   }
+  @Input() isAlerts!: any;
   spmSlider: ISpmSlider = { min: 0, max: 20, start: 0, end: 20 }
   pumpFillageSlider: IPumpFillageSlider = { min: 0, max: 100, start: 0, end: 100 };
   inferredProductionSlider: IInferredProductionSlider = { min: 0, max: 100, start: 0, end: 100 }
   filteredProviders: any[] = this.allProviders;
 
-  constructor(private service: WellsService) {}
+  constructor(private service: WellsService, private alertService: AlertListService,) {}
 
   ngOnInit(): void {
     this.getDefaultValues();
+    this.isAlerts;
+    if(this.isAlerts){
+      this.getAlertDetails();
+    }
   }
 
   getDefaultValues() {
     this.service.GetWellFilterDefaultValues().subscribe((response: any) => {
-      console.log('===> dropdown data', response);
+      //console.log('===> dropdown data', response);
       this.commsStatusOptions = response.commStatus;
       this.controllerStatusOptions = response.controllerStatus;
       this.pumpingTypeOptions = response.pumpingTypes;
@@ -71,6 +81,13 @@ export class WellFilterAndSortComponent implements OnInit{
       this.pumpFillageSlider = response.pumpFillageSlider;
       this.inferredProductionSlider = response.inferredProductionSlider;
       this.wellList=response.wellNames; 
+    })
+  }
+
+  getAlertDetails(){
+    this.alertService.getDefaultAlertCategory().subscribe((resp) => {
+      this.wellNames = resp.wellNames;
+      this.category = resp.category;
     })
   }
 
@@ -89,8 +106,13 @@ export class WellFilterAndSortComponent implements OnInit{
   }
 
   onWellSelection(selectedWellNamesArray: any) {
+    this.selectedWells = selectedWellNamesArray;
     this.filtersApplied.wellNames = selectedWellNamesArray.length > 0;
-    this.updateAppliedFilter();
+    // this.updateAppliedFilter();
+  }
+
+  onCategorySelection(selectedCategoryArray: any){
+    this.selectedCategory = selectedCategoryArray;
   }
 
   clearAppliedFilter() {
@@ -167,46 +189,65 @@ export class WellFilterAndSortComponent implements OnInit{
   }
 
   submitAppliedFilters() {
-    const commStatus = this.commsStatusOptions.filter((element: any) => element.checked === true)
-    .reduce((acc, element, index) => {
-      acc.push(element.value)
-      return acc;
-    }, [])
+    // const commStatus = this.commsStatusOptions.filter((element: any) => element.checked === true)
+    // .reduce((acc, element, index) => {
+    //   acc.push(element.value)
+    //   return acc;
+    // }, [])
 
-    const controllerStatus = this.controllerStatusOptions.filter((element: any) => element.checked === true)
-    .reduce((acc, element, index) => {
-      acc.push(element.value)
-      return acc;
-    }, [])
+    // const controllerStatus = this.controllerStatusOptions.filter((element: any) => element.checked === true)
+    // .reduce((acc, element, index) => {
+    //   acc.push(element.value)
+    //   return acc;
+    // }, [])
 
-    const pumpingType = this.pumpingTypeOptions.filter((element: any) => element.checked === true)
-    .reduce((acc, element, index) => {
-      acc.push(element.value)
-      return acc;
-    }, [])
-
-    const payload = {
-      "pageSize": 5,
-      "pageNumber": 1,
-      "searchText": "",
-      "sortColumn": "",
-      "sortDirection": "",
-      "searchStatus": "",
-      "wellNames": this.providers.value,
-      "commStatus": commStatus,
-      "controllerStatus": controllerStatus,
-      "pumpingType": pumpingType,
-      "spm": {
-        start: this.spmSlider.start,
-        end: this.spmSlider.end
-      },"pumpFillage": {
-        start: this.pumpFillageSlider.start,
-        end: this.pumpFillageSlider.end
-      },"inferredProduction": {
-        start: this.inferredProductionSlider.start,
-        end: this.inferredProductionSlider.end
-      },
-  }
+    // const pumpingType = this.pumpingTypeOptions.filter((element: any) => element.checked === true)
+    // .reduce((acc, element, index) => {
+    //   acc.push(element.value)
+    //   return acc;
+    // }, [])
+    let payload = {}
+    if (this.isAlerts) {
+      payload = {
+        "pageSize": 5,
+        "pageNumber": 1,
+        "searchText": "",
+        "sortColumn": "",
+        "sortDirection": "",
+        "searchStatus": "",
+        "dateRange": {
+          "fromDate": "",
+        "toDate": ""
+        },
+        "wellNames": this.selectedWells,
+        "category": this.selectedCategory,
+        "ids" : []
+      }
+    }
+    else {
+      payload = {
+        "pageSize": 5,
+        "pageNumber": 1,
+        "searchText": "",
+        "sortColumn": "",
+        "sortDirection": "",
+        "searchStatus": "",
+        "wellNames": this.providers.value,
+        // "commStatus": commStatus,
+        // "controllerStatus": controllerStatus,
+        // "pumpingType": pumpingType,
+        "spm": {
+          start: this.spmSlider.start,
+          end: this.spmSlider.end
+        }, "pumpFillage": {
+          start: this.pumpFillageSlider.start,
+          end: this.pumpFillageSlider.end
+        }, "inferredProduction": {
+          start: this.inferredProductionSlider.start,
+          end: this.inferredProductionSlider.end
+        },
+      }
+    }
   this.filterRefresh.emit(payload);
   }
   

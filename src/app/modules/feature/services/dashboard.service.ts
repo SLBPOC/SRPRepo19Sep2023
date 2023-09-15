@@ -24,6 +24,7 @@ export class DashboardService {
   runtimeJsonUrl='../../../../assets/json/cycleruntime.json';
   telemetryJson = '../../../../assets/json/telemetryLineChart.json';
   telemetryBarChartJson='../../../../assets/json/telemetryBarChartJson.json';
+  ParameterChartJson='../../../../assets/json/parameterChart.json';
 
   constructor(private http: HttpClient) { 
     this.apiUrl=environment.srp_microservice_url;
@@ -46,7 +47,8 @@ export class DashboardService {
   }
 
   GetParameterChart(id:any): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl + "well/GetWellParams?Id=" + id, this.httpOptions);          
+    return this.http.get<any[]>(this.ParameterChartJson); 
+    //return this.http.get<any[]>(this.apiUrl + "well/GetWellParams?Id=" + id, this.httpOptions);          
   }
 
   GetTelemetryChart(): Observable<any> { 

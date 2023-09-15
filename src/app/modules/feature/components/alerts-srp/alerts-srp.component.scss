@@ -5,6 +5,10 @@
     width: 79%;
 }
 
+.snooze-active {
+    background-color: #6ba7ff !important;
+  }
+
 
 ::ng-deep .filter-container.mat-mdc-menu-panel.mat-mdc-menu-panel {
     max-width: fit-content !important;

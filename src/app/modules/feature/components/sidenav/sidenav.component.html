@@ -131,9 +131,8 @@
 <mat-sidenav-container class="example-container d-flex">
   <mat-sidenav #sidenav mode="side" class="example-sidenav open" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true"
     id="navopen">
-    <mat-nav-list>
-      <!-- routerLink="/dashboard" -->
-      <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" >
+    <mat-nav-list>     
+      <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" routerLink="/dashboard">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing"> Dashboard</span>
       </mat-list-item>
       <mat-list-item (click)="showSubmenu = !showSubmenu" routerLinkActive="active-list-item"
@@ -156,11 +155,10 @@
         <a mat-list-item routerLink="algorithms-and-mitigations">Algorithms and Mitigations</a>
       </div>
 
-      <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" routerLink="/alert-list">
+      <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" routerLink="/srp-alerts">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Alerts</span>
       </mat-list-item>
-      <!-- routerLink="/event-list" -->
-      <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" >
+      <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" routerLink="/event-list">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing">Events</span>
       </mat-list-item>
       <!-- <mat-list-item class="navcontenttxt" routerLinkActive="active" routerLink="/dyna-card">
