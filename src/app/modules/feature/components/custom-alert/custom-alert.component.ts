@@ -8,6 +8,8 @@ import { DateRange } from '@angular/material/datepicker';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
+import { MatSort } from '@angular/material/sort';
+
 @Component({
   selector: 'app-custom-alert',
   templateUrl: './custom-alert.component.html',
@@ -19,8 +21,8 @@ export class CustomAlertComponent {
   @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
 
 
-  public dateControl = new FormControl(new Date(2021,9,4,5,6,7));
-      public dateControlMinMax = new FormControl(new Date());
+  // public dateControl = new FormControl(new Date(2021,9,4,5,6,7));
+  //     public dateControlMinMax = new FormControl(new Date());
       customAlertForm = this.fb.group({
       CustomAlertName: ['', [Validators.required]],
       wellName: ['', [Validators.required]],
@@ -29,7 +31,9 @@ export class CustomAlertComponent {
       Category: ['', [Validators.required]],
       Operator: ['', [Validators.required]],
       Value: ['', [Validators.required]],
-      IsActive: ['', [Validators.required]]      
+      actualValue: ['', [Validators.required]],
+      IsActive: ['', [Validators.required]],
+      dateRange: ['', [Validators.required]]       
     });
 
   customTime: any;
@@ -47,10 +51,15 @@ export class CustomAlertComponent {
   endDate:any;
   disableSelect:any;
   selected!: Date;
-
+  isNumeric:boolean = false;
+  selectionModel!:any;
+  ActualValue!:any;
+  submitted = false;
+  flag=false;
+  flag1=false;
   // Grid column variables
   alertData!: customAlert[];
-    public displayedColumns = ['customAlertName', 'wellName', 'action'];
+    public displayedColumns = ['CustomAlertName', 'WellName', 'IsActive'];
     dataSource:any;
 
   // Filter variable
@@ -63,13 +72,16 @@ export class CustomAlertComponent {
   isActive:boolean=true;
  
   //Pagination variables
-  pageSizeOption=[10,20,30]
+  maxPageSize: number = Math.max(...environment.pageSizeOption);
+  pageSizeOption:any;
   pageSize: number = 10;
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
   model: any = {}   
-     
+  sortDirection: string = "";
+  sortColumn: string = "";  
+  @ViewChild(MatSort) sort!: MatSort; 
 
   constructor(private fb: FormBuilder,private CustomAlertService:CustomAlertService ,private dialogRef: MatDialogRef<CustomAlertComponent>) {
      this.notification=environment.customAlertNotification;
@@ -77,6 +89,7 @@ export class CustomAlertComponent {
      this.category=environment.customAlertCategory;
      this.operator=environment.customAlertOperator;
      this.value=environment.customAlertValue;
+     //this.pageSizeOption=environment.pageSizeOption;
   }
 
   ngOnInit() {
@@ -97,35 +110,58 @@ export class CustomAlertComponent {
         }
       }
       this.selectedRangeValueChange.emit(this.selectedRangeValue);
+      this.flag = false;
   }
 
     //Create Model for search
   createModel(this: any) {
     this.model.pageSize = this.pageSize;
     this.model.pageNumber = this.pageNumber;
-    this.model.sortColumn = "";
-    this.model.sortDirection =  "";
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
     return this.model;
   }
 
   getAlertDetails(){
+    this.submitted = false;
     var SearchModel = this.createModel();
       this.CustomAlertService.displayDetails(SearchModel)
         .subscribe(response=>{          
           this.alertData = response.customAlertDto;
           this.well=response.wellFilterListDetails;
           this.totalCount=response.countDetails.totalCount;
+          
           this.dataSource = new MatTableDataSource<customAlert>(this.alertData);
+          this.dataSource.sort = this.sort;
+          
         setTimeout(() => {
+          this.loadPageOptions();
           this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.countDetails.totalCount;
+          this.paginator.length = response.countDetails.totalCount;          
         }); 
-        
       })
     }
 
-    pageChanged(event: PageEvent) {
-      console.log({ event });
+    public loadPageOptions()
+    {
+      this.pageSizeOption=environment.pageSizeOption;
+      if(!this.pageSizeOption.includes(this.totalCount))
+          {
+            if(this.totalCount>this.maxPageSize)
+            {
+              this.pageSizeOption.push(this.totalCount);
+            }
+          }
+    }
+    public onSortChanged(e: any) {
+      this.pageNumber = this.pageNumber;
+      this.pageSize = this.pageSize;
+      this.sortDirection = this.sort.direction;
+      this.sortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
+      this.getAlertDetails();
+    }
+
+    pageChanged(event: PageEvent) {      
       this.pageSize = event.pageSize;
       this.currentPage = event.pageIndex;
       this.pageNumber = event.pageIndex + 1;
@@ -148,7 +184,39 @@ export class CustomAlertComponent {
       this.endDate = toDate?.getFullYear() + '-' + this.getSelectedMonth(toDate?.getMonth()) + '-' + this.getSelectedDay(toDate?.getDate()); 
     }
 
+    onChange()
+    {
+      if(this.selectionModel == this.value[0])
+      {
+        this.isNumeric = true;
+        this.flag1 = false;
+      }
+      else
+      {
+      this.isNumeric = false;
+      this.flag1 = true;
+      }
+    }
+
     onSubmit(){
+      if(this.customAlertForm.value!=null)
+      {        
+        this.submitted = true;
+        this.flag = true;
+        if(this.isNumeric == true)
+        {
+          if(this.customAlertForm.value.actualValue=="" || this.customAlertForm.value.actualValue==undefined)
+            {
+              this.flag1 = false;
+            }
+            else
+            {
+              this.flag1 = true;
+            }
+        }
+        else{
+          this.flag1 = true;
+        }
       let obj:any;
       let timeZone = this.date.toISOString().slice(-4);
       let time = this.date.toTimeString().slice(0,8);
@@ -165,22 +233,31 @@ export class CustomAlertComponent {
         operator:this.customAlertForm.value.Operator,
         value:this.customAlertForm.value.Value,
         isActive:this.customAlertForm.value.IsActive,
+        actualValue:this.customAlertForm.value.actualValue,
         startDate:this.startDate,
         endDate:this.endDate
       }
-      
-      this.CustomAlertService.addCustomAlert(obj).subscribe((res)=>{ 
+      if(this.flag1 == true)
+      {
+        this.CustomAlertService.addCustomAlert(obj).subscribe((res)=>{ 
         if(res!=null)
         {
           alert("Records added successfully");
         }     
           this.getAlertDetails();     
           this.clear();
-      });
+          this.flag = false;
+          this.flag1 = false;
+        });
+      }
+    }
+    this.flag=false;
+    this.flag1 = true;
     }
 
     editAlert(Id:number)
     {
+      
       var GetRecord=this.alertData.filter(a=> a.id==Id)
       if(GetRecord != null)
       {
@@ -193,8 +270,21 @@ export class CustomAlertComponent {
         this.customAlertForm.controls.Category.setValue(GetRecord[0].category);
         this.customAlertForm.controls.Operator.setValue(GetRecord[0].operator);
         this.customAlertForm.controls.Value.setValue(GetRecord[0].value);
-        this.selectedRangeValue = new DateRange<Date>(null, null);
+        this.ActualValue=GetRecord[0].actualValue;
         
+        if(this.ActualValue!=null)
+        {
+          this.isNumeric=true;
+        }
+        else
+        {
+          this.isNumeric=false;
+        }
+        let startDate = GetRecord[0].startDate;
+        let sDate = startDate.slice(0,10);
+        let endDate = GetRecord[0].endDate;
+        let eDate =  endDate.slice(0,10);
+        this.selectedRangeValue = new DateRange<Date>(new Date(sDate), new Date(eDate));       
       }
     }
 
@@ -213,6 +303,8 @@ export class CustomAlertComponent {
 
     clear()
     {
+      this.submitted = false;
+      this.flag = false;
       this.customAlertForm.get('CustomAlertName')?.reset();
       this.customAlertForm.get('wellName')?.reset();
       this.customAlertForm.get('NotificationType')?.reset();
@@ -220,6 +312,7 @@ export class CustomAlertComponent {
       this.customAlertForm.get('Category')?.reset();
       this.customAlertForm.get('Operator')?.reset();
       this.customAlertForm.get('Value')?.reset();
+      this.customAlertForm.get('actualValue')?.reset();
       this.selectedRangeValue = new DateRange<Date>(null, null);
     }
 

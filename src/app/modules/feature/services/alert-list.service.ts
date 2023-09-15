@@ -31,7 +31,7 @@ export class AlertListService {
   }
 
   getAlertListFilters(payload: any): Observable<any> {
-    const url = `${this.baseUrl}Alerts/GetAlertList`;
+    const url = `${this.baseUrl}Alerts/Get`;
     return this.http.post(url, payload, {
       headers: {}
     })

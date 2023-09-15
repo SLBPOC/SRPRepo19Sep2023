@@ -11,6 +11,9 @@
                         <mat-form-field appearance="outline" >                       
                             <input matInput placeholder="Enter Custom Alert Name" formControlName="CustomAlertName">
                         </mat-form-field>
+                        <span *ngIf="customAlertForm.controls['CustomAlertName'].errors?.['required'] && customAlertForm.controls['CustomAlertName'].invalid && (customAlertForm.controls['CustomAlertName'].dirty || customAlertForm.controls['CustomAlertName'].touched || submitted)" style="color: red;">
+                            Alert Name is required.
+                           </span>
                         <div class="select-lbl">Select well Name</div>
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="Select Well Name" formControlName="wellName">
@@ -18,6 +21,9 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <span *ngIf="customAlertForm.controls['wellName'].errors?.['required'] && customAlertForm.controls['wellName'].invalid && (customAlertForm.controls['wellName'].dirty || customAlertForm.controls['wellName'].touched || submitted)" style="color: red;">
+                            Well Name is required.
+                           </span>
                         <div class="select-lbl">Select Notification Type</div>
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="Select Notification" formControlName="NotificationType">
@@ -25,6 +31,9 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <span *ngIf="customAlertForm.controls['NotificationType'].errors?.['required'] && customAlertForm.controls['NotificationType'].invalid && (customAlertForm.controls['NotificationType'].dirty || customAlertForm.controls['NotificationType'].touched || submitted)" style="color: red;">
+                            Notification Type is required.
+                           </span>
                         <div class="select-lbl">Select Priority</div>
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="Select Priority" formControlName="Priority">
@@ -32,6 +41,9 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <span *ngIf="customAlertForm.controls['Priority'].errors?.['required'] && customAlertForm.controls['Priority'].invalid && (customAlertForm.controls['Priority'].dirty || customAlertForm.controls['Priority'].touched || submitted)" style="color: red;">
+                            Priority is required.
+                           </span>
                         <div class="select-lbl">Select Category</div>
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="Select Category" formControlName="Category">
@@ -40,6 +52,9 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <span *ngIf="customAlertForm.controls['Category'].errors?.['required'] && customAlertForm.controls['Category'].invalid && (customAlertForm.controls['Category'].dirty || customAlertForm.controls['Category'].touched || submitted)" style="color: red;">
+                            Category is required.
+                           </span>
                         <div class="select-lbl">Select Operator</div>
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="Select Operator" formControlName="Operator">
@@ -47,21 +62,36 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <span *ngIf="customAlertForm.controls['Operator'].errors?.['required'] && customAlertForm.controls['Operator'].invalid && (customAlertForm.controls['Operator'].dirty || customAlertForm.controls['Operator'].touched || submitted)" style="color: red;">
+                            Operator is required.
+                           </span>
                         <div class="select-lbl">Select Value</div>
                         <mat-form-field appearance="outline">
-                            <mat-select placeholder="Select Value" formControlName="Value">
+                            <mat-select placeholder="Select Value" [(ngModel)]="selectionModel" (selectionChange)="onChange()" formControlName="Value">
                                 <mat-option *ngFor="let items of value" [value]="items">{{ items }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <span *ngIf="customAlertForm.controls['Value'].errors?.['required'] && customAlertForm.controls['Value'].invalid && (customAlertForm.controls['Value'].dirty || customAlertForm.controls['Value'].touched || submitted)" style="color: red;">
+                            Value is required.
+                           </span>
+                        <mat-form-field appearance="outline" *ngIf="isNumeric">                       
+                            <input matInput placeholder="Enter value" [(ngModel)]="ActualValue" formControlName="actualValue">
+                        </mat-form-field>
+                        <span *ngIf="(isNumeric && flag1) && customAlertForm.controls['actualValue'].errors?.['required'] && customAlertForm.controls['actualValue'].invalid && (customAlertForm.controls['actualValue'].dirty || customAlertForm.controls['actualValue'].touched || submitted)" style="color: red;">
+                            Value is required.
+                           </span>
                     </div>
                 </div>
                 <div class="col-md-6 padding20">
                     <div class="calender-alrt-filter-section-date-range">
                         <div class="calender-alrt-filter-date-range-title">Select Date & Time</div>
-                        <mat-calendar [selected]="selectedRangeValue" (click)="$event.stopPropagation()"
-                        (selectedChange)="selectedChange($event)">
-                                </mat-calendar>              
+                        <mat-calendar [selected]="selectedRangeValue" formControlName="dateRange" (click)="$event.stopPropagation()"
+                        (selectedChange)="selectedChange($event)" >
+                                </mat-calendar> 
+                                <span *ngIf="customAlertForm.controls['dateRange'].errors?.['required'] && customAlertForm.controls['dateRange'].invalid && (customAlertForm.controls['dateRange'].dirty || flag )" style="color: red;">
+                                    Date Range is required.
+                                   </span>             
                                 <ngx-mat-timepicker [(ngModel)]="date" [ngModelOptions]="{standalone: true}" [disabled]="disabled" [showSpinners]="showSpinners"
                                 [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds"
                                 [color]="color" [enableMeridian]="enableMeridian">
@@ -87,17 +117,17 @@
               </button>
             </div>
             <div>
-                <table mat-table [dataSource]="dataSource">
-                    <ng-container matColumnDef="customAlertName">
-                        <th mat-header-cell *matHeaderCellDef> Custom Alert Name </th>
+                <table matSort mat-table [dataSource]="dataSource" (matSortChange)="onSortChanged($event)">
+                    <ng-container matColumnDef="CustomAlertName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Custom Alert Name </th>
                         <td mat-cell *matCellDef="let element"> {{element.customAlertName}} </td>
                       </ng-container>
-                      <ng-container matColumnDef="wellName">
-                        <th mat-header-cell *matHeaderCellDef> Well Name </th>
+                      <ng-container matColumnDef="WellName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Well Name </th>
                         <td mat-cell *matCellDef="let element"> {{element.wellName}} </td>
                       </ng-container>
-                      <ng-container matColumnDef="action">
-                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                      <ng-container matColumnDef="IsActive">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                         <td mat-cell *matCellDef="let element">
                             <mat-slide-toggle [checked]="element.isActive" (change)="toggle(element.id,$event)"></mat-slide-toggle>
 
