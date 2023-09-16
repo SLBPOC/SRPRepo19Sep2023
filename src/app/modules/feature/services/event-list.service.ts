@@ -44,10 +44,10 @@ export class EventListService {
     });
   }
 
-  getAlertList(SearchModel: any): Observable<any> {
+  getEventList(SearchModel: any): Observable<any> {
     return this.http.post<EventList[]>(
       this._apiUrl + 'api/Event/Get',
-      SearchModel
+      SearchModel 
     );
   }
 
