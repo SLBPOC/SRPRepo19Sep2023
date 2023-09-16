@@ -27,6 +27,7 @@ import { SLBSearchParams, SortOptions } from 'src/app/models/slb-params';
 import { ViewEncapsulation } from '@angular/compiler';
 import { WellsService } from '../../services/wells.service';
 import { WellModel } from '../../model/wellModel';
+import * as XLSX from 'xlsx';
 
 interface Food {
   value: string;
@@ -82,9 +83,11 @@ export class EventListComponent implements AfterViewInit {
     end: new FormControl(),
   });
   pipe!: DatePipe;
+  dateString:string
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('TABLE', { static: false }) TABLE: ElementRef;
   constructor(private service: EventListService, private wellService: WellsService) {
     this.dataSource = new MatTableDataSource<any>([]);
   }
@@ -411,4 +414,30 @@ export class EventListComponent implements AfterViewInit {
     this.searchObjC = obj;
   }
 
+  createModelReport(this: any) {
+    this.model.pageSize = this.TotalCount;
+    this.model.pageNumber = 1;
+    this.model.searchText = this.searchText ? this.searchText : "";
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
+    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
+
+    return this.model;
+  }
+  EventsDownloadExcel() {
+    debugger;
+    // var payload = this.createModelReport();
+    // this.service.getAlertListFilters(payload).subscribe(response => {
+    //   this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
+    //  this.exportToXls(this.dataSource);
+    //   })
+  }
+  // exportToXls(list:any){
+  //   debugger;
+  //   this.dateString = this.datePipe.transform(this.todayDate, 'dd_MM_YYYY_hh_mm');
+  //   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.TABLE.nativeElement); 
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new(); 
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); 
+  //   XLSX.writeFile(wb, 'AlertList_'+this.dateString +'.xlsx');
+  // }
 }

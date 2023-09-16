@@ -159,7 +159,11 @@
                   </div>
                </mat-menu>
                <!-- select filter end -->
-               <div class="table-responsive table-section">
+               <!-- <div class="table-responsive table-section" #TABLE #table style="display: none;">
+                  <table matSort mat-table [dataSource]="dataSourceReport">
+                  </table>
+               </div> -->
+               <div class="table-responsive table-section" #TABLE #table>
                   <table matSort mat-table [dataSource]="dataSource" (matSortChange)="onSortChanged($event)">
                      <!-- Priority Status Column -->
                      <ng-container matColumnDef="WellStatus">
