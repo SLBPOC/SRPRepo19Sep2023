@@ -20,6 +20,12 @@ interface Food {
   viewValue: string;
 }
 
+enum DateRanges {
+  DAY = 1,
+  WEEK = 2,
+  MONTH = 3,
+}
+
 @Component({
   selector: 'app-alerts-srp',
   templateUrl: './alerts-srp.component.html',
@@ -71,7 +77,8 @@ export class AlertsSrpComponent implements OnInit {
 
   //filter variables;
   wellNames: any[];
-
+  startDate: any;
+  endDate: any;
 
   //legend variables
   TotalCount: number = 0;
@@ -81,6 +88,7 @@ export class AlertsSrpComponent implements OnInit {
   Clear: number = 0;
   legendCount: any;
 
+  barChartData: any;
   categoriesChartData: any;
   minmaxChartData: any[] = [];  //min max chart data array
   pageSizeOption = [10, 20, 30]
@@ -130,6 +138,7 @@ export class AlertsSrpComponent implements OnInit {
         this.alertList = response.alerts;
         this.legendCount = response.alertsLevelDto;
         this.categoriesChartData = response.alertcategory;
+        this.barChartData = response.alertcount;
         // this.alertList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
@@ -178,8 +187,8 @@ export class AlertsSrpComponent implements OnInit {
   //Create Model for search
   createModel(this: any) {
     let dateObj = {
-      "fromDate": "",
-      "toDate": ""
+      "fromDate": this.startDate ? this.startDate : "",
+      "toDate": this.endDate ? this.endDate : ""
     }
     this.model.pageSize = this.pageSize;
     this.model.pageNumber = this.pageNumber;
@@ -217,12 +226,12 @@ export class AlertsSrpComponent implements OnInit {
         this.loading = false;
         this.pageSizeOption = [10, 15, 20, response.totalCount]
         // this.getPageSizeOptions();
-        this.alertList = response.data;
+        this.alertList = response.alerts;
         // this.alertList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
           // this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.totalCount;
+          this.paginator.length = response.alertsLevelDto.totalCount;
         });
 
         this.TotalCount = response.alertsLevelDto.totalCount;
@@ -254,6 +263,96 @@ export class AlertsSrpComponent implements OnInit {
         // this.SnoozeFlag = true;
       }
     });
+  }
+
+  resetDateFilters() {
+    // this.dataSource.filter = '';
+    this.pageNumber = this.pageNumber;
+    this.seachByStatus = '';
+    this.searchText = '';
+    let todaysDate = new Date();
+    this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
+    this.selectedRangeValueChange.emit(this.selectedRangeValue);
+  }
+
+  setDateSelected(option: any) {
+    this.resetDateFilters();
+    switch (option) {
+      case DateRanges.DAY:
+        let today = new Date().toISOString();
+        let d = new Date();
+        let tomorrow = new Date();
+        tomorrow.setDate(d.getDate() + 1);
+        let tomorrowStr = tomorrow.toISOString();
+        this.startDate = today.substring(0, 10);
+        this.endDate = tomorrowStr.substring(0, 10);
+        this.GetAlertListWithFilters();
+        break;
+
+      case DateRanges.WEEK:
+        let curr = new Date(); // get current date
+        let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+        let last = first + 6; // last day is the first day + 6
+        let firstday = new Date(curr.setDate(first)).toISOString();
+        let lastday = new Date(curr.setDate(last)).toISOString();
+        this.startDate = firstday.substring(0, 10);
+        this.endDate = lastday.substring(0, 10);
+        this.GetAlertListWithFilters();
+        break;
+
+      case DateRanges.MONTH:
+        let date = new Date();
+        let firstDay = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          1
+        ).toISOString();
+        let lastDay = new Date(
+          date.getFullYear(),
+          date.getMonth() + 1,
+          0
+        ).toISOString();
+        this.startDate = firstDay.substring(0, 10);
+        this.endDate = lastDay.substring(0, 10);
+        this.GetAlertListWithFilters();
+    }
+  }
+
+  resetDateRangeFilters() {
+    // this.dataSource.filter = '';
+    this.RefreshGrid();
+    let todaysDate = new Date();
+    this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
+    this.selectedRangeValueChange.emit(this.selectedRangeValue);
+  }
+
+  getSelectedMonth(month: any) {
+    let m = month + 1;
+    return m.toString().padStart(2, '0');
+  }
+
+  getSelectedDay(day: any) {
+    return day.toString().padStart(2, '0');
+  }
+
+  applyDateRangeFilter() {
+    let fromDate = this.selectedRangeValue.start;
+    let toDate = this.selectedRangeValue.end;
+    let startDate =
+      fromDate?.getFullYear() +
+      '-' +
+      this.getSelectedMonth(fromDate?.getMonth()) +
+      '-' +
+      this.getSelectedDay(fromDate?.getDate());
+    let endDate =
+      toDate?.getFullYear() +
+      '-' +
+      this.getSelectedMonth(toDate?.getMonth()) +
+      '-' +
+      this.getSelectedDay(toDate?.getDate());
+    this.startDate = startDate
+    this.endDate = endDate
+    this.GetAlertListWithFilters();
   }
 
   selectedChange(m: any) {
