@@ -17,6 +17,7 @@ import { TreeViewService } from '../../services/tree-view.service';
 import { NodeType } from '../../services/models';
 import { Constants } from '@common/Constants'
 import * as XLSX from 'xlsx';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -82,9 +83,14 @@ export class WellsComponent implements OnInit {
   pageSizeOption = [10, 20, 30]
   ids: number[];
   respdata: any
+  todayDate : Date = new Date();
+  dateString:string
 
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService, private router: Router, public treeviewService: TreeViewService) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private service: WellsService
+    , private router: Router
+    , public treeviewService: TreeViewService
+    ,private datePipe: DatePipe) { }
 
 
   ngAfterViewInit() {
@@ -741,9 +747,10 @@ export class WellsComponent implements OnInit {
   }
   exportToXls(list:any){
     debugger;
+    this.dateString = this.datePipe.transform(this.todayDate, 'dd_MM_YYYY_hh_mm');
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.TABLE.nativeElement); 
     const wb: XLSX.WorkBook = XLSX.utils.book_new(); 
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); 
-    XLSX.writeFile(wb, 'User Data.xlsx');
+    XLSX.writeFile(wb, 'WellList_'+this.dateString +'.xlsx');
   }
 }
