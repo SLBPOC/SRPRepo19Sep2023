@@ -55,8 +55,8 @@ export class CustomAlertComponent {
   selectionModel!:any;
   ActualValue!:any;
   submitted = false;
-  flag=false;
-  flag1=false;
+  dateFlag=false;
+  valueFlag=false;
   // Grid column variables
   alertData!: customAlert[];
     public displayedColumns = ['CustomAlertName', 'WellName', 'IsActive'];
@@ -89,9 +89,9 @@ export class CustomAlertComponent {
      this.category=environment.customAlertCategory;
      this.operator=environment.customAlertOperator;
      this.value=environment.customAlertValue;
-     //this.pageSizeOption=environment.pageSizeOption;
   }
 
+ 
   ngOnInit() {
       this.getAlertDetails();
   }
@@ -110,7 +110,7 @@ export class CustomAlertComponent {
         }
       }
       this.selectedRangeValueChange.emit(this.selectedRangeValue);
-      this.flag = false;
+      this.dateFlag = false;
   }
 
     //Create Model for search
@@ -130,12 +130,12 @@ export class CustomAlertComponent {
           this.alertData = response.customAlertDto;
           this.well=response.wellFilterListDetails;
           this.totalCount=response.countDetails.totalCount;
-          
+         
           this.dataSource = new MatTableDataSource<customAlert>(this.alertData);
           this.dataSource.sort = this.sort;
           
         setTimeout(() => {
-          this.loadPageOptions();
+          this.loadPageOptions();    
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = response.countDetails.totalCount;          
         }); 
@@ -144,7 +144,7 @@ export class CustomAlertComponent {
 
     public loadPageOptions()
     {
-      this.pageSizeOption=environment.pageSizeOption;
+      this.pageSizeOption=[10,20,30];
       if(!this.pageSizeOption.includes(this.totalCount))
           {
             if(this.totalCount>this.maxPageSize)
@@ -189,12 +189,12 @@ export class CustomAlertComponent {
       if(this.selectionModel == this.value[0])
       {
         this.isNumeric = true;
-        this.flag1 = false;
+        this.valueFlag = false;
       }
       else
       {
       this.isNumeric = false;
-      this.flag1 = true;
+      this.valueFlag = true;
       }
     }
 
@@ -202,21 +202,21 @@ export class CustomAlertComponent {
       if(this.customAlertForm.value!=null)
       {        
         this.submitted = true;
-        this.flag = true;
+        this.dateFlag = true;
         if(this.isNumeric == true)
         {
           if(this.customAlertForm.value.actualValue=="" || this.customAlertForm.value.actualValue==undefined)
             {
-              this.flag1 = false;
+              this.valueFlag = false;
             }
             else
             {
-              this.flag1 = true;
+              this.valueFlag = true;
             }
         }
-        else{
-          this.flag1 = true;
-        }
+        // else{
+        //   this.flag1 = false;
+        // }
       let obj:any;
       let timeZone = this.date.toISOString().slice(-4);
       let time = this.date.toTimeString().slice(0,8);
@@ -233,11 +233,11 @@ export class CustomAlertComponent {
         operator:this.customAlertForm.value.Operator,
         value:this.customAlertForm.value.Value,
         isActive:this.customAlertForm.value.IsActive,
-        actualValue:this.customAlertForm.value.actualValue,
+        actualValue:this.customAlertForm.value.actualValue=="" ? null : this.customAlertForm.value.actualValue,
         startDate:this.startDate,
         endDate:this.endDate
       }
-      if(this.flag1 == true)
+      if(this.valueFlag == true)
       {
         this.CustomAlertService.addCustomAlert(obj).subscribe((res)=>{ 
         if(res!=null)
@@ -246,13 +246,13 @@ export class CustomAlertComponent {
         }     
           this.getAlertDetails();     
           this.clear();
-          this.flag = false;
-          this.flag1 = false;
+          this.dateFlag = false;
+          this.valueFlag = false;
         });
       }
     }
-    this.flag=false;
-    this.flag1 = true;
+    this.dateFlag=false;
+    this.valueFlag = true;
     }
 
     editAlert(Id:number)
@@ -304,7 +304,7 @@ export class CustomAlertComponent {
     clear()
     {
       this.submitted = false;
-      this.flag = false;
+      this.dateFlag = false;
       this.customAlertForm.get('CustomAlertName')?.reset();
       this.customAlertForm.get('wellName')?.reset();
       this.customAlertForm.get('NotificationType')?.reset();

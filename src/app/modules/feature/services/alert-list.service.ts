@@ -3,55 +3,72 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AlertList } from '../model/alert-list';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
-
+import { EventList } from '../model/event-list';
 
 const alertsData = '../../../../assets/json/alerts-data.json';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertListService {
+  baseUrl: string = environment.srp_microservice_url;
+  _apiUrl: string = 'https://localhost:52906/';
 
-  baseUrl:string = environment.srp_microservice_url;
-  _apiUrl: string = "https://localhost:61446/";
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // getWellAlerts(): Observable<AlertList[]> {
   //   return this.http.get<AlertList[]>(alertsData);
   // }
 
   getWellAlerts(): Observable<any> {
-    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<Observable<AlertList[]>> (`${this.baseUrl}Alerts/GetAllWellList`)       
+    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions);
+    return this.http.get<Observable<AlertList[]>>(
+      `${this.baseUrl}Alerts/GetAllWellList`
+    );
   }
 
   getAlertsByAlertStatus(alertStatus: string): Observable<any> {
-    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions); 
-    return this.http.get<any>  (`${this.baseUrl}Alerts/GetWellAlertsByAlertStatus?AlertStatus=${alertStatus}`)       
+    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions);
+    return this.http.get<any>(
+      `${this.baseUrl}Alerts/GetWellAlertsByAlertStatus?AlertStatus=${alertStatus}`
+    );
   }
 
   getAlertListFilters(payload: any): Observable<any> {
     const url = `${this.baseUrl}Alerts/Get`;
     return this.http.post(url, payload, {
-      headers: {}
-    })
+      headers: {},
+    });
   }
 
   getAlertList(payload: any): Observable<any> {
-    return this.http.post<AlertList[]>(this._apiUrl + 'api/Alerts/Get',payload);
+    return this.http.post<AlertList[]>(
+      this._apiUrl + 'api/Alerts/Get',
+      payload
+    );
   }
 
   getDefaultAlertCategory(payload?: any): Observable<any> {
-    return this.http.post<AlertList[]>(this._apiUrl + 'api/Alerts/GetDefaultValues',payload);
+    return this.http.post<AlertList[]>(
+      this._apiUrl + 'api/Alerts/GetDefaultValues',
+      payload
+    );
+  }
+  getDefaultEventCategory(payload?: any): Observable<any> {
+    return this.http.post<EventList[]>(this._apiUrl + 'api/Event/Get', payload);
   }
 
   clearAlert(id: number, comments: string, payload?: any): Observable<any> {
-    return this.http.post<AlertList[]>(this._apiUrl + `api/Alerts/ClearAlert?alertId=${id}&comment=${comments}`,payload);
+    return this.http.post<AlertList[]>(
+      this._apiUrl + `api/Alerts/ClearAlert?alertId=${id}&comment=${comments}`,
+      payload
+    );
   }
 
   snoozeBy(id: number, time: number, payload?: any): Observable<any> {
-    return this.http.post<AlertList[]>(this._apiUrl + `api/Alerts/SnoozeBy?alertId=${id}&snoozeBy=${time}`,payload);
+    return this.http.post<AlertList[]>(
+      this._apiUrl + `api/Alerts/SnoozeBy?alertId=${id}&snoozeBy=${time}`,
+      payload
+    );
   }
-
 }
