@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div class="row pt-2 pb-2">
+  <div class="row pt-2 pb-2" *ngIf="isAlerts">
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         [expanded]="true">
@@ -77,7 +77,7 @@
               </mat-select-trigger>
 
 
-              <mat-option *ngFor="let provider of wellList"
+              <mat-option *ngFor="let provider of wellNames"
                 [value]="provider.wellName">{{provider.wellName}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -86,8 +86,39 @@
     </mat-accordion>
   </div>
 
+  <div class="row pt-2 pb-2" *ngIf="isAlerts">
+    <mat-accordion>
+      <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+        [expanded]="true">
+        <mat-expansion-panel-header class="pb-2">
+          <mat-panel-title>
+            <h4 style="font-size: 12px;">Sort By Category</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-  <div class="row pt-2 pb-2">
+        <div class="row mt-2 mb-3">
+
+          <mat-form-field appearance="fill">
+            <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
+            <mat-select multiple [formControl]="providers" (valueChange)="onCategorySelection($event)">
+              <input #multiUserSearch type="text" autocomplete="off" matInput class="search-prov"
+                placeholder="Search By Provider" (input)="onInputChange($event)" />
+              <mat-select-trigger>
+                {{providers.value }}
+              </mat-select-trigger>
+
+
+              <mat-option *ngFor="let provider of category"
+                [value]="provider.value">{{provider.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+
+  <div class="row pt-2 pb-2" *ngIf="!isAlerts">
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false"
         [expanded]="true">
@@ -107,7 +138,7 @@
   </div>
 
 
-  <div class="row pt-2 pb-2">
+  <div class="row pt-2 pb-2" *ngIf="!isAlerts">
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState3 = true" (closed)="panelOpenState3 = false"
         [expanded]="true">
@@ -127,7 +158,7 @@
   </div>
 
 
-  <div class="row pt-2 pb-2">
+  <div class="row pt-2 pb-2" *ngIf="!isAlerts">
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState4 = true" (closed)="panelOpenState4 = false"
         [expanded]="true">
@@ -150,7 +181,7 @@
     </mat-accordion>
   </div>
 
-  <div class="row pt-2 pb-2">
+  <div class="row pt-2 pb-2" *ngIf="!isAlerts">
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState5 = true" (closed)="panelOpenState5 = false"
         [expanded]="true">
@@ -172,7 +203,7 @@
   </div>
 
 
-  <div class="row pt-2 pb-2 pl-4">
+  <div class="row pt-2 pb-2 pl-4" *ngIf="!isAlerts">
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState6 = true" (closed)="panelOpenState6 = false"
         [expanded]="true">
@@ -194,7 +225,7 @@
     </mat-accordion>
   </div>
 
-  <div class="row pt-2 pb-2">
+  <div class="row pt-2 pb-2" *ngIf="!isAlerts">
     <mat-accordion>
       <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
         [expanded]="true">

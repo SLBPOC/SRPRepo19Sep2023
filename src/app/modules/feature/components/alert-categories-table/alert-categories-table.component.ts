@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -6,81 +7,124 @@ import * as Highcharts from 'highcharts';
   templateUrl: './alert-categories-table.component.html',
   styleUrls: ['./alert-categories-table.component.scss']
 })
-export class AlertCategoriesTableComponent {
-  displayedColumns = ['wellname', 'noofalerts', 'snoozedalerts', 'priority'];
-  dataSource = ELEMENT_DATA;
-  Highcharts: typeof Highcharts = Highcharts;
-  chartOptions: Highcharts.Options = {
-    chart: {
-      type: 'pie',
-      renderTo: 'container',
-      margin: 0,
-      spacing: [0,0,0,0],
-      backgroundColor: undefined
-    },
-    
-    yAxis: {
-      labels: {
-        enabled: false
-      },
-      tickAmount: 6,
-      gridLineWidth: 1,
-      visible: false
-    },
-    xAxis: {
-      labels: {
-        enabled: false
-      },
-      tickAmount: 6,
-      gridLineWidth: 1,
-      visible: false
-    },
-    title: {
-      text: ''
-    },
-   plotOptions: {
-        bar: {
-            dataLabels: {
-                enabled: true,
-                inside: true,
-                align: 'left',
-                x: -40
-            },
+export class AlertCategoriesTableComponent implements OnInit, OnChanges {
 
-        }
-    },
-    
-    series: [
+  displayedColumns = ['wellname', 'alertCount', 'brozCount', 'priority'];
+  dataSource: any = [];
+  Highcharts: typeof Highcharts = Highcharts;
+  chartOptions: Highcharts.Options;
+
+  loading = true;
+  pageSize: number = 5; 
+  pageNumber = 1;
+  currentPage = 0;
+  totalCount = 0;
+  pageSizeOption = [10, 20, 30]
+
+  @Input() barChartData: any;
+
+
+  constructor(){}
+
+  ngOnInit(){
+    this.loading = true;
+    this.loadChartData();
+    this.loadTable();
+  }
+
+  ngOnChanges(){
+    this.loadChartData();
+    this.loadTable();
+  }
+
+  loadTable(){ 
+        this.loading = false;
+        this.dataSource = new MatTableDataSource<any>(this.barChartData);
+  }
+
+  loadChartData(){
+    // let chartSeriesArr = []
+    // let obj = {}
+    // for (let i = 0; i < this.barChartData.length; i++) {
+    //   obj = {
+    //     name: '',
+    //     y: this.barChartData[i].value
+    //   }
+    //   chartSeriesArr.push(obj)
+    // }
+    this.chartOptions = {
+      chart: {
+        type: 'pie',
+        renderTo: 'container',
+        margin: 0,
+        spacing: [0,0,0,0],
+        backgroundColor: undefined
+      },
+      exporting: { enabled: false },
+      legend : {enabled: false},
       
-    ]
-  };
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1,
+        visible: false
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        tickAmount: 6,
+        gridLineWidth: 1,
+        visible: false
+      },
+      title: {
+        text: ''
+      },
+     plotOptions: {
+          bar: {
+              dataLabels: {
+                  enabled: true,
+                  inside: true,
+                  align: 'left',
+                  x: -40
+              },
+          },
+          series: {
+           
+        }
+  
+      },
+      
+      series: [ 
+        {
+          type: 'bar',
+          data: [
+            {
+              name: '',
+              y: 10,
+              color: '#D11F1F'
+            },
+            
+            {
+              name: '',
+              y: 25,
+              color: '#FABB42'
+            },
+            {
+              name: '',
+              y: 50,
+              color: '#28A228'
+            },
+          ]
+        }
+      ]
+    };
+  }
+
   onSortChanged(event:any){
 
-  }
-  constructor(){
-    this.chartOptions.series =  [
-      {
-        type: 'bar',
-        data: [
-          {
-            name: '',
-            y: 10,
-            color: 'red'
-          },
-          
-          {
-            name: '',
-            y: 25,
-            color: 'orange'
-          },
-          {
-            name: '',
-            y: 50,
-            color: 'green'
-          },
-        ]
-      }
-    ]
   }
 
 }

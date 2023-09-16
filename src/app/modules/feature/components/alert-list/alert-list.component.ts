@@ -65,9 +65,9 @@ export class AlertListComponent {
       alertId: alert.alertId,
       snoozeBy: this.snoozeByTime
     }
-    this.service.snoozeBy(payload).subscribe((data: any) => {
-      this.closeDialog(snoozeByDialog);
-    })
+    // this.service.snoozeBy(payload).subscribe((data: any) => {
+    //   this.closeDialog(snoozeByDialog);
+    // })
   }
 
   submitClearAlerts(alert: any, comment: string, clearAlertDialog: any) {
@@ -75,9 +75,9 @@ export class AlertListComponent {
       alertId: alert.alertId,
       comment: comment
     }
-    this.service.clearAlert(payload).subscribe((data: any) => {
-      this.closeDialog(clearAlertDialog);
-    })
+    // this.service.clearAlert(payload).subscribe((data: any) => {
+    //   this.closeDialog(clearAlertDialog);
+    // })
   }
 
   submitCalendarFilters(calendarFilterDialog: any) {

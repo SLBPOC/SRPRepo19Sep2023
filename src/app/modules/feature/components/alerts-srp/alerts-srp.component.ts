@@ -1,22 +1,16 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, EventEmitter, Output } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
-//import { WellName } from '../model/wellname';
-import { WellModel } from '../../model/wellModel'
 import { AlertList } from '../../model/alert-list'
 import { AlertListService } from '../../services/alert-list.service';
-import { FormControl } from '@angular/forms';
-import { MatSelect } from '@angular/material/select';
 import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs'
 import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
 import { TreeViewService } from '../../services/tree-view.service';
 import { NodeType } from '../../services/models';
-import { Constants } from '@common/Constants'
 import { DateRange } from '@angular/material/datepicker';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { CustomAlertComponent } from '../custom-alert/custom-alert.component';
@@ -24,6 +18,12 @@ import { CustomAlertComponent } from '../custom-alert/custom-alert.component';
 interface Food {
   value: string;
   viewValue: string;
+}
+
+enum DateRanges {
+  DAY = 1,
+  WEEK = 2,
+  MONTH = 3,
 }
 
 @Component({
@@ -50,44 +50,15 @@ export class AlertsSrpComponent implements OnInit {
   @Input() selectedRangeValue: DateRange<Date> | undefined;
   @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
 
-  selectedChange(m: any) {
-      if (!this.selectedRangeValue?.start || this.selectedRangeValue?.end) {
-          this.selectedRangeValue = new DateRange<Date>(m, null);
-      } else {
-          const start = this.selectedRangeValue.start;
-          const end = m;
-          if (end < start) {
-              this.selectedRangeValue = new DateRange<Date>(end, start);
-          } else {
-              this.selectedRangeValue = new DateRange<Date>(start, end);
-          }
-      }
-      this.selectedRangeValueChange.emit(this.selectedRangeValue);
-  }
-
-  
-  expandedElement: PeriodicElement | null;
   theme = 'light';
   dataSource: any = [];
   alertList!: AlertList[];
   snoozeByTime: number = 1;
   clearAlertsComments!: string;
   selectedColumn: string[] = [];
-  displayedColumns: string[] = ['wellName', 'date', 'desc', 'action'];
-  displayableExtraColumns: { label: string, accessor: string, header: string }[] = [];
-  extraColumnsCtrl: any = new FormControl('');
-  extraColumnsList: { label: string, accessor: string, header: string }[] = [
-    { label: 'Effective Runtime(%)', accessor: 'effectiveRunTime', header: 'EffectiveRunTime.value' },
-    { label: 'Cycles Today', accessor: 'cyclesToday', header: 'CyclesToday.value' },
-    { label: 'Structural Load(%)', accessor: 'structuralLoad', header: 'StructuralLoad.value' },
-    { label: 'MinMax Load(%)', accessor: 'minMaxLoad', header: 'MinMaxLoad.value' },
-    { label: 'Gearbox Load(%)', accessor: 'gearboxLoad', header: 'GearboxLoad.value' },
-    { label: 'Rod Stress(%)', accessor: 'rodStress', header: 'RodStress.value' }
-  ];
-  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  displayedColumns: string[] = ['wellName', 'date', 'category', 'desc', 'action'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('extraColumns', { static: true }) private extraColumns!: MatSelect;
 
   @ViewChild('searchQueryInput') searchInput: ElementRef<HTMLInputElement>;
 
@@ -105,21 +76,20 @@ export class AlertsSrpComponent implements OnInit {
   loading = true;
 
   //filter variables;
-  commStatus: any[];
-  controllerStatus: any[];
-  inferredProduction: any[];
-  pumpFillage: any[];
-  pumpingType: any[];
-  spm: any[];
   wellNames: any[];
-
+  startDate: any;
+  endDate: any;
 
   //legend variables
   TotalCount: number = 0;
-  OverPumping: number = 0;
-  OptimalPumping: number = 0;
-  UnderPumping: number = 0;
+  High: number = 0;
+  Medium: number = 0;
+  Low: number = 0;
+  Clear: number = 0;
+  legendCount: any;
 
+  barChartData: any;
+  categoriesChartData: any;
   minmaxChartData: any[] = [];  //min max chart data array
   pageSizeOption = [10, 20, 30]
   ids: number[];
@@ -146,7 +116,7 @@ export class AlertsSrpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.GetAlertListWithFilters();
+    // this.GetAlertListWithFilters();
     this.treeviewService.selectedNodes.subscribe(x => {
       console.log(x);
       if (x != undefined && x.length > 0 && x.some(m => m.type == NodeType.Wells)) {
@@ -159,25 +129,28 @@ export class AlertsSrpComponent implements OnInit {
   }
 
   GetAlertListWithFilters() {
-    this.loading = true;
+    this.loading = true; 
     var SearchModel = this.createModel();
     this.service.getAlertList(SearchModel).subscribe(response => {
-      // if (response.hasOwnProperty('data')) {
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.totalCount]
+        this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount]
         // this.getPageSizeOptions();
         this.alertList = response.alerts;
+        this.legendCount = response.alertsLevelDto;
+        this.categoriesChartData = response.alertcategory;
+        this.barChartData = response.alertcount;
         // this.alertList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.totalCount;
+          this.paginator.length = response.alertsLevelDto.totalCount;
         });
 
-        this.TotalCount = response.totalCount;
-        this.OverPumping = response.totalOverpumping;
-        this.OptimalPumping = response.totalOptimalPumping;
-        this.UnderPumping = response.totalUnderpumping;
+        this.TotalCount = response.alertsLevelDto.totalCount;
+        this.High = response.alertsLevelDto.totalHigh;
+        this.Medium = response.alertsLevelDto.totalMedium;
+        this.Low = response.alertsLevelDto.totalLow;
+        this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
 
       // }
@@ -185,25 +158,37 @@ export class AlertsSrpComponent implements OnInit {
     });
   }
 
+  GetAlertListWithSortFilters(payload: any) {
+    this.loading = true; 
+    // var SearchModel = this.createModel();
+    this.service.getAlertList(payload).subscribe(response => {
+        this.loading = false;
+        this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount]
+        this.alertList = response.alerts;
+        this.legendCount = response.alertsLevelDto;
+        this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
+        setTimeout(() => {
+          this.paginator.pageIndex = this.currentPage;
+          this.paginator.length = response.alertsLevelDto.totalCount;
+        });
+        this.TotalCount = response.alertsLevelDto.totalCount;
+        this.High = response.alertsLevelDto.totalHigh;
+        this.Medium = response.alertsLevelDto.totalMedium;
+        this.Low = response.alertsLevelDto.totalLow;
+        this.Clear = response.alertsLevelDto.totalCleared;
+        this.dataSource.paginator = this.paginator;
+    });
+  }
 
-  refreshGrid(payload: any) {
-    this.seachByStatus=""; // Added by Gayatri 9/8/2023
-    this.commStatus = payload.commStatus;
-    this.controllerStatus = payload.controllerStatus;
-    this.inferredProduction = payload.inferredProduction;
-    this.pumpFillage = payload.pumpFillage;
-    this.pumpingType = payload.pumpingType;
-    this.spm = payload.spm;
-    this.wellNames = payload.wellNames;
-
-    this.GetAlertListWithFilters();
+  filterAndSortAlerts(payload: any){
+    this.GetAlertListWithSortFilters(payload);
   }
 
   //Create Model for search
   createModel(this: any) {
     let dateObj = {
-      "fromDate": "",
-      "toDate": ""
+      "fromDate": this.startDate ? this.startDate : "",
+      "toDate": this.endDate ? this.endDate : ""
     }
     this.model.pageSize = this.pageSize;
     this.model.pageNumber = this.pageNumber;
@@ -211,31 +196,11 @@ export class AlertsSrpComponent implements OnInit {
     this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
     this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
-    this.model.dateRange = dateObj
-      
-    // }
-
-    // {
-    //   "pageSize": 5,
-    //   "pageNumber": 1,
-    //   "searchText": "",
-    //   "sortColumn": "",
-    //   "sortDirection": "",
-    //   "searchStatus": "",
-    //   "dateRange": {
-    //     "fromDate": "",
-    //     "toDate": ""
-    //   }
-    // }
-    
+    this.model.dateRange = dateObj;
+    // this.model.wellNames = this.selectedWells ? this.selectedWells : [];
+    // this.model.wellNames = this.selectedCategory ? this.selectedCategory : [];
 
     return this.model;
-  }
-
-  search(data: Event) {
-    const val = (data.target as HTMLInputElement).value;
-    this.dataSource.filter = val;
-
   }
 
   ClearSearch() {
@@ -247,61 +212,163 @@ export class AlertsSrpComponent implements OnInit {
   }
 
   RefreshGrid() {
-        const payload = {
-          "pageSize": 5,
-          "pageNumber": 1,
-          "searchText": "",
-          "sortColumn": "",
-          "sortDirection": "",
-          "searchStatus": ""
-      }
-    
-        this.service.getAlertList(payload).subscribe((response: any) => {
-          if (response.hasOwnProperty('data')) {
-            this.loading = false;
-            this.pageSizeOption = [10, 15, 20, response.totalCount]
-            // this.getPageSizeOptions();
-            this.alertList = response.data;
-            // this.alertList.forEach(x => this.prepareChart(x));
-            // this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
-            setTimeout(() => {
-              this.paginator.pageIndex = this.currentPage;
-              this.paginator.length = response.totalCount;
-            });
-    
-            this.TotalCount = response.totalCount;
-            this.OverPumping = response.totalOverpumping;
-            this.OptimalPumping = response.totalOptimalPumping;
-            this.UnderPumping = response.totalUnderpumping;
-            this.dataSource.paginator = this.paginator;
-    
-          }
-        })
-      }
+    const payload = {
+      "pageSize": 5,
+      "pageNumber": 1,
+      "searchText": "",
+      "sortColumn": "",
+      "sortDirection": "",
+      "searchStatus": ""
+    }
 
-  onChangeDemo(event: any) {
-    if (event.checked) {
-      if (this.selectedColumn.filter(resp => event.source.value === resp)) {
-        this.selectedColumn.push(event.source.value)
-        this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({ header }) => header === column)), ...[...new Set(this.selectedColumn)]];
-        this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string, header: string }) => [...new Set(this.selectedColumn)].includes(extraColumn.header));
+    this.service.getAlertList(payload).subscribe((response: any) => {
+      // if (response.hasOwnProperty('data')) {
+        this.loading = false;
+        this.pageSizeOption = [10, 15, 20, response.totalCount]
+        // this.getPageSizeOptions();
+        this.alertList = response.alerts;
+        // this.alertList.forEach(x => this.prepareChart(x));
+        this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
+        setTimeout(() => {
+          // this.paginator.pageIndex = this.currentPage;
+          this.paginator.length = response.alertsLevelDto.totalCount;
+        });
+
+        this.TotalCount = response.alertsLevelDto.totalCount;
+        this.High = response.alertsLevelDto.totalHigh;
+        this.Medium = response.alertsLevelDto.totalMedium;
+        this.Low = response.alertsLevelDto.totalLow;
+        this.Clear = response.alertsLevelDto.totalCleared;
+        this.dataSource.paginator = this.paginator;
+
+      // }
+    })
+  }
+
+  snoozeBy(snoozeTime: any, snoozeByTime: number) {
+    this.service.snoozeBy(snoozeTime.alertId, snoozeByTime).subscribe((data: any) => {
+        console.log('snooze by response', data);
+        this.GetAlertListWithFilters();
+      });
+  }
+
+  clearAlerts(alert: any, comment: string) {
+    this.loading = true;
+    this.service.clearAlert(alert.alertId, comment).subscribe((data: any) => {
+      this.clearAlertsComments = '';
+      if (data.success == true) {
+        this.GetAlertListWithFilters();
+        this.loading = false;
+        // this.isDisable = true;
+        // this.SnoozeFlag = true;
       }
-    } else {
-      this.selectedColumn = this.selectedColumn.filter(function (e) { return e !== event.source.value })
-      this.displayedColumns = [...this.displayedColumns.filter((column: string) => !this.extraColumnsList.find(({ header }) => header === column)), ...this.selectedColumn];
-      this.displayableExtraColumns = this.extraColumnsList.filter((extraColumn: { label: string, accessor: string, header: string }) => this.selectedColumn.includes(extraColumn.header));
+    });
+  }
+
+  resetDateFilters() {
+    // this.dataSource.filter = '';
+    this.pageNumber = this.pageNumber;
+    this.seachByStatus = '';
+    this.searchText = '';
+    let todaysDate = new Date();
+    this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
+    this.selectedRangeValueChange.emit(this.selectedRangeValue);
+  }
+
+  setDateSelected(option: any) {
+    this.resetDateFilters();
+    switch (option) {
+      case DateRanges.DAY:
+        let today = new Date().toISOString();
+        let d = new Date();
+        let tomorrow = new Date();
+        tomorrow.setDate(d.getDate() + 1);
+        let tomorrowStr = tomorrow.toISOString();
+        this.startDate = today.substring(0, 10);
+        this.endDate = tomorrowStr.substring(0, 10);
+        this.GetAlertListWithFilters();
+        break;
+
+      case DateRanges.WEEK:
+        let curr = new Date(); // get current date
+        let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+        let last = first + 6; // last day is the first day + 6
+        let firstday = new Date(curr.setDate(first)).toISOString();
+        let lastday = new Date(curr.setDate(last)).toISOString();
+        this.startDate = firstday.substring(0, 10);
+        this.endDate = lastday.substring(0, 10);
+        this.GetAlertListWithFilters();
+        break;
+
+      case DateRanges.MONTH:
+        let date = new Date();
+        let firstDay = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          1
+        ).toISOString();
+        let lastDay = new Date(
+          date.getFullYear(),
+          date.getMonth() + 1,
+          0
+        ).toISOString();
+        this.startDate = firstDay.substring(0, 10);
+        this.endDate = lastDay.substring(0, 10);
+        this.GetAlertListWithFilters();
     }
   }
 
+  resetDateRangeFilters() {
+    // this.dataSource.filter = '';
+    this.RefreshGrid();
+    let todaysDate = new Date();
+    this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
+    this.selectedRangeValueChange.emit(this.selectedRangeValue);
+  }
 
+  getSelectedMonth(month: any) {
+    let m = month + 1;
+    return m.toString().padStart(2, '0');
+  }
 
-  public handlePage(e: any) {
-    this.pageNumber = e.pageIndex;
-    this.pageSize = e.pageSize;
-    this.sortDirection = this.sort.direction;
-    this.sortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
+  getSelectedDay(day: any) {
+    return day.toString().padStart(2, '0');
+  }
+
+  applyDateRangeFilter() {
+    let fromDate = this.selectedRangeValue.start;
+    let toDate = this.selectedRangeValue.end;
+    let startDate =
+      fromDate?.getFullYear() +
+      '-' +
+      this.getSelectedMonth(fromDate?.getMonth()) +
+      '-' +
+      this.getSelectedDay(fromDate?.getDate());
+    let endDate =
+      toDate?.getFullYear() +
+      '-' +
+      this.getSelectedMonth(toDate?.getMonth()) +
+      '-' +
+      this.getSelectedDay(toDate?.getDate());
+    this.startDate = startDate
+    this.endDate = endDate
     this.GetAlertListWithFilters();
   }
+
+  selectedChange(m: any) {
+    if (!this.selectedRangeValue?.start || this.selectedRangeValue?.end) {
+        this.selectedRangeValue = new DateRange<Date>(m, null);
+    } else {
+        const start = this.selectedRangeValue.start;
+        const end = m;
+        if (end < start) {
+            this.selectedRangeValue = new DateRange<Date>(end, start);
+        } else {
+            this.selectedRangeValue = new DateRange<Date>(start, end);
+        }
+    }
+    this.selectedRangeValueChange.emit(this.selectedRangeValue);
+}
 
   pageChanged(event: PageEvent) {
     console.log({ event });
@@ -325,438 +392,13 @@ export class AlertsSrpComponent implements OnInit {
     this.GetAlertListWithFilters();
   }
 
-  GetMinMaxChartData(w: WellModel) {
-    this.minmaxChartData = [];
-    this.minmaxChartData.push({ name: "min", data: w.minMaxLoad.min });
-    this.minmaxChartData.push({ name: "min", data: w.minMaxLoad.max });
-    return this.minmaxChartData;
-  }
-
-  // GetRandomNumbers(isNegative: boolean = true) {
-  //   var integers = [];
-  //   for (let index = 0; index < 7; index++) {
-  //     integers.push([index + 1, (Math.random() * (isNegative ? 21 : 10)) - (isNegative ? 10 : 0)])
-  //   }
-  //   return integers;
-  // }
-
-  // GetMinMaxRandomNumbers(isNegative: boolean = true) {   
-  //   this.minmaxChartData=[];
-  //   this.minmaxChartData.push({name:"min",data:this.GetRandomNumbers(false)});
-  //   this.minmaxChartData.push({name:"max",data:this.GetRandomNumbers(false)});
-  //   return this.minmaxChartData; 
-  // }
-
-  prepareChart(x: WellModel): void {
-
-    this.bindInferredChart(x);
-    this.bindSPMChart(x);
-    this.bindPumpFillageChart(x);
-    this.bindEffectiveRunChart(x);
-    this.bindCycleChart(x);
-    this.bindStructuralLoadChart(x);
-    this.bindMinMaxLoadChart(x);
-    this.bindGearBoxLoadChart(x);
-    this.bindRodStressChart(x);
-  }
-
-
-  bindSPMChart(x: WellModel) {
-    x.spmChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'line',
-        data: x.spm.data   //this.GetRandomNumbers(false)
-      }],
-      ...Constants.highChartCommonContext
-    }
-  }
-
-  bindPumpFillageChart(x: WellModel) {
-    x.pumpFillageChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'line',
-        data: x.pumpFillage.data
-      }],
-      ...Constants.highChartCommonContext
-    }
-  }
-
-  bindInferredChart(x: WellModel) {
-    var charobj: HighCharts.Options = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        type: 'line',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'line',
-        data: x.inferredProduction.data
-      }],
-      ...Constants.highChartCommonContext
-    }
-    x.inferredChartObj = charobj;
-  }
-
-  bindEffectiveRunChart(x: WellModel) {
-    x.effectiveRunChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'line',
-        data: x.effectiveRunTime.data //this.GetChartData(x).effectiveRuntime.data
-      }],
-      ...Constants.highChartCommonContext
-    }
-
-  }
-
-  bindCycleChart(x: WellModel) {
-    x.cycleChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'column',
-        data: x.cyclesToday.data
-      }],
-      ...Constants.highChartCommonContext
-    }
-  }
-
-  bindStructuralLoadChart(x: WellModel) {
-    x.structuralLoadChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'line',
-        data: x.structuralLoad.data
-      }],
-      ...Constants.highChartCommonContext
-    }
-  }
-
-  bindMinMaxLoadChart(x: WellModel) {
-
-    x.minMaxLoadChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        type: 'line',
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-
-      series: this.GetMinMaxChartData(x),
-      ...Constants.highChartCommonContext
-    }
-  }
-
-  bindGearBoxLoadChart(x: WellModel) {
-    x.gearBoxLoadChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'line',
-        data: x.gearboxLoad.data
-      }],
-      ...Constants.highChartCommonContext
-    }
-  }
-
-  bindRodStressChart(x: WellModel) {
-    x.roadStressChartObj = {
-      title: { text: '' },
-      chart: {
-        renderTo: 'container',
-        margin: 0,
-        spacing: [0, 0, 0, 0],
-        backgroundColor: undefined
-      },
-      yAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      xAxis: {
-        labels: {
-          enabled: false
-        },
-        tickAmount: 6,
-        gridLineWidth: 1,
-        visible:false
-
-      },
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        outside: false,
-        className: 'highchart-elevate-tooltip'
-      },
-      series: [{
-        type: 'line',
-        data: x.rodStress.data
-      }],
-      ...Constants.highChartCommonContext
-    }
-  }
-
-  navigateToWellInfo(wellId: string) {
-    //this.router.navigateByUrl(`/well-info-v2/${wellId}`)
-    this.router.navigate([]).then(result => { window.open(`/well-info-v2/${wellId}`, '_blank'); });  // in new tab
-  }
-
   openDialog() {
     this.customDialog.open(CustomAlertComponent);
   }
-
 
   searchObjC: any;
   userSearchChange(obj: any) {
     this.searchObjC = obj;
   }
 
-}
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  description: string;
 }
