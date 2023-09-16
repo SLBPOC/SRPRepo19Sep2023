@@ -43,11 +43,11 @@
                         [(ngModel)]="searchText" placeholder="Search By Well Name">
                      <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit"
                         (click)="GetWellDetailsWithFilters()">
-                        <!-- <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg"
-                           (click)="ClearSearch()"> -->
-                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z" fill="#EDDEDE" (click)="ClearSearch()" />
-                          </svg>
+                         <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg"
+                         (click)="ClearSearch()"> 
+                           <!-- <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z" fill="#EDDEDE"  />
+                          </svg> -->
                         </button>
                   </div>
                   <div class="headIcons">
@@ -131,11 +131,19 @@
                   </div> -->
                   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
                     
-                     <mat-tab label="Well List">
-                        <app-well-tree-list></app-well-tree-list>
-                        <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
-                        <!--Well List goes here.  -->
-                     </mat-tab>
+                    <mat-tab label="Well List">
+                      <!--<app-well-tree-list></app-well-tree-list>-->
+                      <div class="block-bg-border padding-15 well-list-section">
+                        <app-well-tree-search (userChanged)="userSearchChange($event)"></app-well-tree-search>
+                        <div class="devider"></div>
+                        <div class="well-check-list">
+                          <app-well-tree-view [searchObj]="searchObjC"></app-well-tree-view>
+                          <!-- <app-tree-checklist></app-tree-checklist> -->
+                        </div>
+                      </div>
+                      <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
+                      <!--Well List goes here.  -->
+                    </mat-tab>
                      <mat-tab label="Filter & Sort">
                         <app-well-filter-and-sort (filterRefresh) = "refreshGrid($event)"></app-well-filter-and-sort>
                      </mat-tab>
@@ -276,7 +284,7 @@
                      </ng-container>
                      <!-- No Of Alerts(%) -->
                      <ng-container matColumnDef="NoOfAlerts">
-                        <th mat-sort-header mat-header-cell *matHeaderCellDef>No Of Alerts</th>
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>No.Of Alerts</th>
                         <td mat-cell *matCellDef="let element" class="align-col">
                            <a [routerLink]="['/alerts',element.wellName]" target="_blank"> {{ element.noOfAlerts }}</a>
                         </td>
