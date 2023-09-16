@@ -119,7 +119,7 @@ export class WellsComponent implements OnInit {
     this.loading = true;
     var SearchModel = this.createModel();
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
-      //if (response.hasOwnProperty('data')) {
+        if (response.status != 404) { 
         this.loading = false;
         this.pageSizeOption = [10, 15, 20, response.pumpingDetails.totalCount]
         // this.getPageSizeOptions();
@@ -137,9 +137,14 @@ export class WellsComponent implements OnInit {
         this.UnderPumping = response.pumpingDetails.underPumping;
         this.dataSource.paginator = this.paginator;
 
-     // }
+      }
 
-    });
+    },(err) => {
+      this.loading = false;
+      this.WellList = []
+      this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
+    }
+    );
   }
 
 
@@ -171,7 +176,7 @@ export class WellsComponent implements OnInit {
     this.model.inferredProduction = this.inferredProduction ? this.inferredProduction : { start: 0, end: 100 };
     this.model.pumpFillage = this.pumpFillage ? this.pumpFillage : { start: 0, end: 100 };
     this.model.pumpingType = this.pumpingType ? this.pumpingType : [];
-    this.model.spm = this.spm ? this.spm : { start: 0, end: 100 };
+    this.model.spm = this.spm ? this.spm : { start: 0, end: 100,min:0,max:100 };
     this.model.wellNames = this.wellNames ? this.wellNames : [];
 
     return this.model;

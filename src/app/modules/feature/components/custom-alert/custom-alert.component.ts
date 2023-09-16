@@ -55,8 +55,8 @@ export class CustomAlertComponent {
   selectionModel!:any;
   ActualValue!:any;
   submitted = false;
-  flag=false;
-  flag1=false;
+  dateFlag=false;
+  valueFlag=false;
   // Grid column variables
   alertData!: customAlert[];
     public displayedColumns = ['CustomAlertName', 'WellName', 'IsActive'];
@@ -110,7 +110,7 @@ export class CustomAlertComponent {
         }
       }
       this.selectedRangeValueChange.emit(this.selectedRangeValue);
-      this.flag = false;
+      this.dateFlag = false;
   }
 
     //Create Model for search
@@ -189,12 +189,12 @@ export class CustomAlertComponent {
       if(this.selectionModel == this.value[0])
       {
         this.isNumeric = true;
-        this.flag1 = false;
+        this.valueFlag = false;
       }
       else
       {
       this.isNumeric = false;
-      this.flag1 = true;
+      this.valueFlag = true;
       }
     }
 
@@ -202,21 +202,21 @@ export class CustomAlertComponent {
       if(this.customAlertForm.value!=null)
       {        
         this.submitted = true;
-        this.flag = true;
+        this.dateFlag = true;
         if(this.isNumeric == true)
         {
           if(this.customAlertForm.value.actualValue=="" || this.customAlertForm.value.actualValue==undefined)
             {
-              this.flag1 = false;
+              this.valueFlag = false;
             }
             else
             {
-              this.flag1 = true;
+              this.valueFlag = true;
             }
         }
-        else{
-          this.flag1 = true;
-        }
+        // else{
+        //   this.flag1 = false;
+        // }
       let obj:any;
       let timeZone = this.date.toISOString().slice(-4);
       let time = this.date.toTimeString().slice(0,8);
@@ -237,7 +237,7 @@ export class CustomAlertComponent {
         startDate:this.startDate,
         endDate:this.endDate
       }
-      if(this.flag1 == true)
+      if(this.valueFlag == true)
       {
         this.CustomAlertService.addCustomAlert(obj).subscribe((res)=>{ 
         if(res!=null)
@@ -246,13 +246,13 @@ export class CustomAlertComponent {
         }     
           this.getAlertDetails();     
           this.clear();
-          this.flag = false;
-          this.flag1 = false;
+          this.dateFlag = false;
+          this.valueFlag = false;
         });
       }
     }
-    this.flag=false;
-    this.flag1 = true;
+    this.dateFlag=false;
+    this.valueFlag = true;
     }
 
     editAlert(Id:number)
@@ -304,7 +304,7 @@ export class CustomAlertComponent {
     clear()
     {
       this.submitted = false;
-      this.flag = false;
+      this.dateFlag = false;
       this.customAlertForm.get('CustomAlertName')?.reset();
       this.customAlertForm.get('wellName')?.reset();
       this.customAlertForm.get('NotificationType')?.reset();
