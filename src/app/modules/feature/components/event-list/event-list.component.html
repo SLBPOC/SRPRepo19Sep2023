@@ -117,19 +117,14 @@
       <div class="col-md-3 well-list-search">
         <div class="">
           <div class="col-md-12 p-0 filterborder">
-            <!-- <div class="d-flex justify-content-end">
-                    <mat-icon style="cursor: pointer; color: white;font-size: 20px;">close</mat-icon>
-                 </div> -->
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
               <mat-tab label="Well List">
                 <app-well-tree-list></app-well-tree-list>>
-                <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
-                <!--Well List goes here.  -->
               </mat-tab>
               <mat-tab label="Filter & Sort">
                 <app-well-filter-and-sort
                   (filterRefresh)="filterAndSortAlerts($event)"
-                  [isAlerts]="true"
+                  [isEvent]="true"
                 ></app-well-filter-and-sort>
               </mat-tab>
             </mat-tab-group>
@@ -137,7 +132,7 @@
         </div>
       </div>
       <div class="col-md-9">
-        <div class="category-container">
+        <!-- <div class="category-container">
           <div class="category-container-header">
             <div class="category-title">Events Categories</div>
             <div class="prioritywrapper">
@@ -199,10 +194,9 @@
             </div>
             <div class="col-md-6 pr-0">
               <app-alert-categories-table></app-alert-categories-table>
-              <!-- <app-alerts-expandable-list></app-alerts-expandable-list> -->
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="main-container main-alerts">
           <div class="tableContainer padding-tb-15">
             <div class="table-responsive table-section">
@@ -268,19 +262,6 @@
                   </td>
                 </ng-container>
 
-                <ng-container matColumnDef="Category">
-                  <th mat-sort-header mat-header-cell *matHeaderCellDef>
-                    Category
-                  </th>
-                  <td
-                    mat-cell
-                    (click)="$event.stopPropagation()"
-                    *matCellDef="let element"
-                    class="align-col"
-                  >
-                    {{ element.updatedBy }}
-                  </td>
-                </ng-container>
                 <!-- Comms Status -->
                 <ng-container matColumnDef="UpdateBy">
                   <th mat-sort-header mat-header-cell *matHeaderCellDef>

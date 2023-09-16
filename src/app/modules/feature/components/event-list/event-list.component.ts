@@ -86,7 +86,7 @@ export class EventListComponent {
     'wellName',
     'EventType',
     'date',
-    'Category',
+    // 'Category',
     'UpdateBy',
     'desc',
   ];
@@ -121,7 +121,7 @@ export class EventListComponent {
 
   categoriesChartData: any;
   minmaxChartData: any[] = []; //min max chart data array
-  pageSizeOption = [10, 20, 30];
+  pageSizeOption = [5, 10, 20, 30];
   ids: number[];
   respdata: any;
 
@@ -170,7 +170,7 @@ export class EventListComponent {
     var SearchModel = this.createModel();
     this.service.getAlertList(SearchModel).subscribe((response) => {
       this.loading = false;
-      // this.pageSizeOption = [10, 15, 20, response.eventsLevelDto.totalCount];
+      this.pageSizeOption = [10, 15, 20];
       // this.getPageSizeOptions();
       this.eventList = response.events;
       console.log(this.eventList);
@@ -180,14 +180,14 @@ export class EventListComponent {
       this.dataSource = new MatTableDataSource<EventList>(this.eventList);
       setTimeout(() => {
         this.paginator.pageIndex = this.currentPage;
-        this.paginator.length = response.alertsLevelDto.totalCount;
+        this.paginator.length = response.totalcount;
       });
 
-      this.TotalCount = response.alertsLevelDto.totalCount;
-      this.High = response.alertsLevelDto.totalHigh;
-      this.Medium = response.alertsLevelDto.totalMedium;
-      this.Low = response.alertsLevelDto.totalLow;
-      this.Clear = response.alertsLevelDto.totalCleared;
+      this.TotalCount = response.totalcount;
+      // this.High = response.alertsLevelDto.totalHigh;
+      // this.Medium = response.alertsLevelDto.totalMedium;
+      // this.Low = response.alertsLevelDto.totalLow;
+      // this.Clear = response.alertsLevelDto.totalCleared;
       this.dataSource.paginator = this.paginator;
 
       // }
@@ -199,7 +199,7 @@ export class EventListComponent {
     var SearchModel = this.createModel();
     this.service.getAlertList(SearchModel).subscribe((response) => {
       this.loading = false;
-      this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount];
+      this.pageSizeOption = [10, 15, 20, response.totalcount];
       this.eventList = response.alerts;
       this.legendCount = response.alertsLevelDto;
       this.dataSource = new MatTableDataSource<EventList>(this.eventList);
@@ -268,7 +268,7 @@ export class EventListComponent {
       this.dataSource = new MatTableDataSource<EventList>(this.eventList);
       setTimeout(() => {
         // this.paginator.pageIndex = this.currentPage;
-        this.paginator.length = response.totalCount;
+        this.paginator.length = response.totalcount;
       });
 
       this.TotalCount = response.alertsLevelDto.totalCount;
@@ -279,28 +279,6 @@ export class EventListComponent {
       this.dataSource.paginator = this.paginator;
 
       // }
-    });
-  }
-
-  snoozeBy(snoozeTime: any, snoozeByTime: number) {
-    this.service
-      .snoozeBy(snoozeTime.alertId, snoozeByTime)
-      .subscribe((data: any) => {
-        console.log('snooze by response', data);
-        this.GetAlertListWithFilters();
-      });
-  }
-
-  clearAlerts(alert: any, comment: string) {
-    this.loading = true;
-    this.service.clearAlert(alert.alertId, comment).subscribe((data: any) => {
-      this.clearAlertsComments = '';
-      if (data.success == true) {
-        this.GetAlertListWithFilters();
-        this.loading = false;
-        // this.isDisable = true;
-        // this.SnoozeFlag = true;
-      }
     });
   }
 

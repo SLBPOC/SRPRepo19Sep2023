@@ -4,9 +4,6 @@ import { EventList } from '../model/event-list';
 import { Observable, map, tap } from 'rxjs';
 import { SLBSearchParams, SortOptions } from 'src/app/models/slb-params';
 import { environment } from '@environments/environment';
-
-const eventsData = '../../../../assets/json/events-data.json';
-
 @Injectable({
   providedIn: 'root',
 })
