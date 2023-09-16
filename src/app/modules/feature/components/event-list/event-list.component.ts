@@ -36,6 +36,7 @@ import { debounceTime, distinctUntilChanged, fromEvent, map, tap } from 'rxjs';
 import { TreeViewService } from '../../services/tree-view.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 interface Food {
   value: string;
@@ -92,11 +93,8 @@ export class EventListComponent {
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   @ViewChild('searchQueryInput') searchInput: ElementRef<HTMLInputElement>;
-
-  // HighCharts: typeof HighCharts = HighCharts;
-
+  @ViewChild('TABLE', { static: false }) TABLE: ElementRef;
   searchText: string = '';
   sortDirection: string = '';
   sortColumn: string = '';
@@ -107,11 +105,7 @@ export class EventListComponent {
   model: any = {};
   seachByStatus: string = '';
   loading = true;
-
-  //filter variables;
   wellNames: any[];
-
-  //legend variables
   TotalCount: number = 0;
   High: number = 0;
   Medium: number = 0;
@@ -124,16 +118,18 @@ export class EventListComponent {
   pageSizeOption = [5, 10, 20, 30];
   ids: number[];
   respdata: any;
+  todayDate : Date = new Date();
+  dateString:string
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private service: EventListService,
     private router: Router,
-    public treeviewService: TreeViewService
+    public treeviewService: TreeViewService,
+    private datePipe: DatePipe
   ) {}
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
     fromEvent<any>(this.searchInput.nativeElement, 'keyup')
       .pipe(
         map((event) => event.target.value),
@@ -143,13 +139,12 @@ export class EventListComponent {
       )
       .subscribe((x) => {
         if (x != undefined && x.trim() != '') {
-          this.GetAlertListWithFilters();
+          this.GetEventListWithFilters();
         }
       });
   }
 
   ngOnInit(): void {
-    // this.GetAlertListWithFilters();
     this.treeviewService.selectedNodes.subscribe((x) => {
       console.log(x);
       if (
@@ -161,43 +156,32 @@ export class EventListComponent {
           .filter((m) => m.type == NodeType.Wells)
           .map((m) => m.nodeId);
       } else this.ids = [];
-      this.GetAlertListWithFilters();
+      this.GetEventListWithFilters();
     });
   }
 
-  GetAlertListWithFilters() {
+  GetEventListWithFilters() {
     this.loading = true;
     var SearchModel = this.createModel();
-    this.service.getAlertList(SearchModel).subscribe((response) => {
+    this.service.getEventList(SearchModel).subscribe((response) => {
       this.loading = false;
       this.pageSizeOption = [10, 15, 20];
-      // this.getPageSizeOptions();
       this.eventList = response.events;
       console.log(this.eventList);
-      // this.legendCount = response.alertsLevelDto;
-      // this.categoriesChartData = response.alertcategory;
-      // this.alertList.forEach(x => this.prepareChart(x));
       this.dataSource = new MatTableDataSource<EventList>(this.eventList);
       setTimeout(() => {
         this.paginator.pageIndex = this.currentPage;
         this.paginator.length = response.totalcount;
       });
-
       this.TotalCount = response.totalcount;
-      // this.High = response.alertsLevelDto.totalHigh;
-      // this.Medium = response.alertsLevelDto.totalMedium;
-      // this.Low = response.alertsLevelDto.totalLow;
-      // this.Clear = response.alertsLevelDto.totalCleared;
       this.dataSource.paginator = this.paginator;
-
-      // }
     });
   }
 
-  GetAlertListWithSortFilters(SearchModel: any) {
+  GetEventListWithSortFilters(SearchModel: any) {
     this.loading = true;
     var SearchModel = this.createModel();
-    this.service.getAlertList(SearchModel).subscribe((response) => {
+    this.service.getEventList(SearchModel).subscribe((response) => {
       this.loading = false;
       this.pageSizeOption = [10, 15, 20, response.totalcount];
       this.eventList = response.alerts;
@@ -217,7 +201,7 @@ export class EventListComponent {
   }
 
   filterAndSortAlerts(payload: any) {
-    this.GetAlertListWithSortFilters(payload);
+    this.GetEventListWithSortFilters(payload);
   }
 
   //Create Model for search
@@ -245,7 +229,7 @@ export class EventListComponent {
     this.seachByStatus = '';
     this.searchText = '';
     this.ids = [];
-    this.GetAlertListWithFilters();
+    this.GetEventListWithFilters();
   }
 
   RefreshGrid() {
@@ -258,16 +242,12 @@ export class EventListComponent {
       searchStatus: '',
     };
 
-    this.service.getAlertList(payload).subscribe((response: any) => {
-      // if (response.hasOwnProperty('data')) {
+    this.service.getEventList(payload).subscribe((response: any) => {
       this.loading = false;
       this.pageSizeOption = [10, 15, 20, response.totalCount];
-      // this.getPageSizeOptions();
       this.eventList = response.data;
-      // this.alertList.forEach(x => this.prepareChart(x));
       this.dataSource = new MatTableDataSource<EventList>(this.eventList);
       setTimeout(() => {
-        // this.paginator.pageIndex = this.currentPage;
         this.paginator.length = response.totalcount;
       });
 
@@ -302,7 +282,7 @@ export class EventListComponent {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.pageNumber = event.pageIndex + 1;
-    this.GetAlertListWithFilters();
+    this.GetEventListWithFilters();
   }
 
   public onSortChanged(e: any) {
@@ -311,17 +291,53 @@ export class EventListComponent {
     this.sortDirection = this.sort.direction;
     this.sortColumn =
       typeof this.sort.active !== 'undefined' ? this.sort.active : '';
-    this.GetAlertListWithFilters();
+    this.GetEventListWithFilters();
   }
 
   SeachByStatus(status: string) {
     this.seachByStatus = status;
     this.pageNumber = 1;
-    this.GetAlertListWithFilters();
+    this.GetEventListWithFilters();
   }
 
   searchObjC: any;
   userSearchChange(obj: any) {
     this.searchObjC = obj;
+  }
+  createModelReport(this: any) {
+    debugger;
+    this.model.pageSize = this.TotalCount;
+    this.model.pageNumber = 1;
+    this.model.searchText = this.searchText ? this.searchText : "";
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
+    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
+    this.model.ids = this.ids;
+
+    this.model.commStatus = this.commStatus ? this.commStatus : [];
+    this.model.controllerStatus = this.controllerStatus ? this.controllerStatus : [];
+    this.model.inferredProduction = this.inferredProduction ? this.inferredProduction : { start: 0, end: 100 };
+    this.model.pumpFillage = this.pumpFillage ? this.pumpFillage : { start: 0, end: 100 };
+    this.model.pumpingType = this.pumpingType ? this.pumpingType : [];
+    this.model.spm = this.spm ? this.spm : { start: 0, end: 100 };
+    this.model.wellNames = this.wellNames ? this.wellNames : [];
+    return this.model;
+  }
+  EventDownLoadReport() {
+    debugger;
+    this.loading = true;
+    var SearchModel = this.createModelReport();
+    this.service.getEventList(SearchModel).subscribe(respince =>{
+      this.dataSource = new MatTableDataSource<EventList>(this.eventList);
+     this.exportToXls(this.dataSource);
+      })
+  }
+  exportToXls(list:any){
+    debugger;
+    this.dateString = this.datePipe.transform(this.todayDate, 'dd_MM_YYYY_hh_mm');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.TABLE.nativeElement); 
+    const wb: XLSX.WorkBook = XLSX.utils.book_new(); 
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); 
+    XLSX.writeFile(wb, 'EventList_'+this.dateString +'.xlsx');
   }
 }

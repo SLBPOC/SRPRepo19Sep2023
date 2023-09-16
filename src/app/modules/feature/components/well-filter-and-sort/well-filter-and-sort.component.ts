@@ -118,7 +118,7 @@ export class WellFilterAndSortComponent implements OnInit {
   getEventDetails() {
     debugger;
     var SearchModel = this.createModel();
-    this.eventService.getAlertList(SearchModel).subscribe((resp) => {
+    this.eventService.getEventList(SearchModel).subscribe((resp) => {
       this.wellNames = resp.wellNames;
       this.eventTypes = resp.eventType;
     });
