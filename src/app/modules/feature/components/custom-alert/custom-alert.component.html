@@ -78,7 +78,7 @@
                         <mat-form-field appearance="outline" *ngIf="isNumeric">                       
                             <input matInput placeholder="Enter value" [(ngModel)]="ActualValue" formControlName="actualValue">
                         </mat-form-field>
-                        <span *ngIf="(isNumeric && flag1) && customAlertForm.controls['actualValue'].errors?.['required'] && customAlertForm.controls['actualValue'].invalid && (customAlertForm.controls['actualValue'].dirty || customAlertForm.controls['actualValue'].touched || submitted)" style="color: red;">
+                        <span *ngIf="(isNumeric && valueFlag) && customAlertForm.controls['actualValue'].errors?.['required'] && customAlertForm.controls['actualValue'].invalid && (customAlertForm.controls['actualValue'].dirty || customAlertForm.controls['actualValue'].touched || submitted)" style="color: red;">
                             Value is required.
                            </span>
                     </div>
@@ -86,10 +86,10 @@
                 <div class="col-md-6 padding20">
                     <div class="calender-alrt-filter-section-date-range">
                         <div class="calender-alrt-filter-date-range-title">Select Date & Time</div>
-                        <mat-calendar [selected]="selectedRangeValue" formControlName="dateRange" (click)="$event.stopPropagation()"
+                        <mat-calendar [selected]="selectedRangeValue" formControlName="dateRange" ngDefaultControl (click)="$event.stopPropagation()"
                         (selectedChange)="selectedChange($event)" >
                                 </mat-calendar> 
-                                <span *ngIf="customAlertForm.controls['dateRange'].errors?.['required'] && customAlertForm.controls['dateRange'].invalid && (customAlertForm.controls['dateRange'].dirty || flag )" style="color: red;">
+                                <span *ngIf="customAlertForm.controls['dateRange'].errors?.['required'] && customAlertForm.controls['dateRange'].invalid && (customAlertForm.controls['dateRange'].dirty || dateFlag )" style="color: red;">
                                     Date Range is required.
                                    </span>             
                                 <ngx-mat-timepicker [(ngModel)]="date" [ngModelOptions]="{standalone: true}" [disabled]="disabled" [showSpinners]="showSpinners"

@@ -18,14 +18,14 @@
           </td>
        </ng-container>
        <!-- No.Of Alerts -->
-       <ng-container matColumnDef="noofalerts">
+       <ng-container matColumnDef="alertCount">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>No.Of Alerts</th>
-          <td mat-cell *matCellDef="let element" class="align-col"> {{element.noofalerts}} </td>
+          <td mat-cell *matCellDef="let element" class="align-col"> {{element.alertCount}} </td>
        </ng-container>
       <!-- Snoozed Alerts -->
- <ng-container matColumnDef="snoozedalerts">
+ <ng-container matColumnDef="brozCount">
     <th mat-sort-header mat-header-cell *matHeaderCellDef>Snoozed Alerts</th>
-    <td mat-cell *matCellDef="let element" class="align-col">{{ element.snoozedalerts}}</td>
+    <td mat-cell *matCellDef="let element" class="align-col">{{ element.brozCount}}</td>
  </ng-container>
  
  <ng-container matColumnDef="priority">
@@ -38,6 +38,26 @@
         </div>
     </td>
     </ng-container>
+   <tr *matNoDataRow class="mat-mdc-row mdc-data-table__row cdk-row ng-star-inserted">
+      <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="loading==true"
+         [attr.colspan]="displayedColumns.length">
+         <mat-progress-spinner mode="indeterminate" class="table-progressbar"
+            style="margin:0 auto;"></mat-progress-spinner>
+      </td>
+      <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="loading==false"
+         [attr.colspan]="displayedColumns.length">No Record Found</td>
+   </tr>
+   <tr *matNoDataRow class="mat-mdc-row mdc-data-table__row cdk-row ng-star-inserted">
+      <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="loading == true"
+         [attr.colspan]="displayedColumns.length">
+         <mat-progress-spinner mode="indeterminate" class="table-progressbar"
+            style="margin: 0 auto"></mat-progress-spinner>
+      </td>
+      <td class="mat-mdc-cell mdc-data-table__cell cdk-cell ng-star-inserted text-center" *ngIf="loading == false"
+         [attr.colspan]="displayedColumns.length">
+         No Records Found
+      </td>
+   </tr>
        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 

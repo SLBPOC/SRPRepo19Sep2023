@@ -37,6 +37,7 @@ import { AlertsSrpComponent } from './components/alerts-srp/alerts-srp.component
 import { AlertsExpandableListComponent } from './components/alerts-srp/components/alerts-expandable-list.component';
 import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
 import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
+import { UiDynacardInfoComponent } from './components/ui-dynacard-info/ui-dynacard-info.component';
 
 
 const routes: Routes = [
@@ -48,20 +49,22 @@ const routes: Routes = [
     path: '',
     component: SidenavComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },      
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'alert-list', component: AlertListComponent },
       { path: 'alerts/:id', component: AlertListComponent },
       { path: 'event-list', component: EventListComponent },
       { path: 'wells', component: WellsComponent },
+      { path: 'uidynacardinfo', component: UiDynacardInfoComponent },
+
       { path: 'Parameter', component: ParChartComponent },
-      {path:'well-details-dynacard',component:WellDetailsDynacardComponent},
+      { path: 'well-details-dynacard', component: WellDetailsDynacardComponent },
       { path: 'wells/dyna/:id', component: WellDetailsDynacardComponent },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
       {
         path: 'well-info/:id',
         component: WellInfoComponent,
-      }, 
+      },
       {
         path: 'algorithms-and-mitigations',
         component: AlgorithmsAndMitigationComponent,
@@ -79,8 +82,8 @@ const routes: Routes = [
         component: TelemetryBarChartComponent,
       },
       {
-        path:'well-info-v2/:id',
-        component:WellInfoEntryComponent,
+        path: 'well-info-v2/:id',
+        component: WellInfoEntryComponent,
       },
       {
         path: 'srp-alerts',
@@ -126,7 +129,7 @@ const routes: Routes = [
     path: 'spm',
     component: SpmMeasuredComponent,
   },
- 
+
   {
     path: 'acchart',
     component: AlertCategoriesChartComponent,

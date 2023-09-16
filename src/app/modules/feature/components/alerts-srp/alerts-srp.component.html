@@ -29,7 +29,7 @@
                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z" fill="#EDDEDE" (click)="ClearSearch()" />
                           </svg>
-                        </button>
+                     </button>
                   </div>
                   <div class="headIcons">
                      <ul>
@@ -49,7 +49,7 @@
                            </svg>                  
                              </button>
                           </li>
-                           <li><button mat-icon-button  class="button-type-none headIcon-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <li><button mat-icon-button [matMenuTriggerFor]="calenderFilter" class="button-type-none headIcon-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.76172 7.75195H4.26172V9.25195H5.76172V7.75195ZM9.10449 7.75684H7.60449V9.25684H9.10449V7.75684ZM10.9473 7.75684H12.4473V9.25684H10.9473V7.75684ZM15.7891 7.75684H14.2891V9.25684H15.7891V7.75684ZM14.8252 11.6973L13.6055 12.917L12.3867 11.6973L11.3252 12.7578L12.5459 13.9775L11.3252 15.1973L12.3867 16.2578L13.6055 15.0381L14.8252 16.2578L15.8867 15.1973L14.667 13.9775L15.8867 12.7578L14.8252 11.6973ZM6.39551 12.917L7.61523 11.6973L8.67676 12.7578L7.45605 13.9775L8.67676 15.1973L7.61523 16.2578L6.39551 15.0381L5.17676 16.2578L4.11523 15.1973L5.33496 13.9775L4.11523 12.7578L5.17676 11.6973L6.39551 12.917ZM15.2666 4.49707V3.00977H18.502V18.5H1.50098V3.00977H4.74023V4.49707H6.24023V3.00977H13.7666V4.49707H15.2666ZM13.7666 0V1.50977H6.24023V0H4.74023V1.50977H0V20H20V1.50977H15.2666V0H13.7666Z" fill="white"/>
                              </svg>
                              </button>
@@ -61,7 +61,7 @@
          </div>
       </div>
             <!-- calender filter start-->
-            <!-- <mat-menu #calenderFilter="matMenu" class="filter-container">
+            <mat-menu #calenderFilter="matMenu" class="filter-container">
                <div class="align-center">
                    <div class="calender-alrt-filter">
                        <div class="calender-alrt-filter-header">
@@ -72,9 +72,12 @@
                            </button>
                        </div>
                        <div class="calender-alrt-filter-section-btn-grp">
-                           <button mat-flat-button class="select-btn">1 Day</button>
-                           <button mat-flat-button class="select-btn">1 Week</button>
-                           <button mat-flat-button class="select-btn">1 Month</button>
+                           <button mat-flat-button class="select-btn"
+                           (click)="setDateSelected(1)">1 Day</button>
+                           <button mat-flat-button class="select-btn"
+                           (click)="setDateSelected(2)">1 Week</button>
+                           <button mat-flat-button class="select-btn"
+                           (click)="setDateSelected(3)">1 Month</button>
                        </div>
                        <div class="calender-alrt-filter-section-date-range">
                            <div class="calender-alrt-filter-date-range-title">Select Data Range</div>
@@ -85,12 +88,12 @@
                            </div>
                        </div>
                        <div class="calender-alrt-filter-action-btn-grp">
-                           <button mat-flat-button class="action-btn">Reset</button>
-                           <button mat-flat-button class="action-btn active marginL20">Apply</button>
+                           <button mat-flat-button class="action-btn" (click)="resetDateRangeFilters()">Reset</button>
+                           <button mat-flat-button class="action-btn active marginL20" (click)="applyDateRangeFilter()">Apply</button>
                        </div>
                    </div>
                </div>
-             </mat-menu> -->
+             </mat-menu>
               <!-- calender filter end -->
               <!-- select filter start-->
        
@@ -187,7 +190,7 @@
                         </div>              
                   </div>
                   <div class="col-md-6 pr-0">
-                     <app-alert-categories-table></app-alert-categories-table>
+                     <app-alert-categories-table [barChartData]="barChartData"></app-alert-categories-table>
                      <!-- <app-alerts-expandable-list></app-alerts-expandable-list> -->
                   </div>
                </div>
@@ -198,14 +201,14 @@
                      <table matSort mat-table [dataSource]="dataSource" (matSortChange)="onSortChanged($event)" class="mat-elevation-z8">
                         <!-- Wells Name -->
                         <ng-container matColumnDef="wellName">
-                           <th mat-header-cell *matHeaderCellDef mat-sort-header> Well Name</th>
+                           <th mat-header-cell *matHeaderCellDef mat-sort-header class="well-cst"> Well Name</th>
                            <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" id="well_name" class="align-col" >{{element.wellName}}
                            </td>
                         </ng-container>
                         <!-- Time and date -->
                         <ng-container matColumnDef="date">
                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Time & Date </th>
-                           <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" class="align-col"> {{element.date }} </td>
+                           <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" class="align-col"> {{element.date | date : "yyyy-MM-dd HH:MM:ss" }} </td>
                         </ng-container>
                         <!-- Comms Status -->
                         <ng-container matColumnDef="category">
@@ -224,9 +227,9 @@
                         <!-- Controller Status -->
                         <ng-container matColumnDef="action">
                            <th mat-header-cell *matHeaderCellDef>Action</th>
-                           <td mat-cell *matCellDef="let element">
+                           <td mat-cell *matCellDef="let element" class="actionbtn">
                              <button
-                               class="button-type-none"
+                               class="button-type-none headIcon-btn margin-r-15"
                                mat-icon-button
                                [matMenuTriggerFor]="snoozefilter"
                              >
@@ -335,7 +338,7 @@
                              </mat-menu>
                    
                              <button
-                               class="button-type-none"
+                               class="button-type-none headIcon-btn"
                                mat-icon-button
                                [matMenuTriggerFor]="alertclearFilter"
                                [ngClass]="{ disabled: element.AlertLevel === 'Cleared' }"
@@ -375,10 +378,6 @@
                                      <div class="container">
                                        <div class="row">
                                          <div class="save-list-sec-section">
-                                           <div
-                                             class="col-md-12"
-                                             style="width: 388px; padding-left: 0px"
-                                           >
                                              <div class="form-field-sec-section">
                                                <div class="input-lbl">Enter Comments</div>
                                                <!-- <mat-form-field
@@ -387,6 +386,7 @@
                                                > -->
                                                  <textarea
                                                    matInput
+                                                   class="width-100p"
                                                    value="" (click)="$event.stopPropagation()"
                                                    #clearAlertComment
                                                    [(ngModel)]="clearAlertsComments"
@@ -394,7 +394,6 @@
                                                  ></textarea>
                                                <!-- </mat-form-field> -->
                                              </div>
-                                           </div>
                                          </div>
                                        </div>
                                      </div>
@@ -406,7 +405,6 @@
                                      <button
                                        mat-flat-button
                                        class="action-btn active marginL20"
-                                       style="font-size: 12px; font-weight: 400"
                                        (click)="clearAlerts(element, clearAlertComment.value)">
                                        Submit & Clear Alerts
                                      </button>

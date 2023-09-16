@@ -113,6 +113,7 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
 import { AlertCategoriesChartComponent } from './components/alert-categories-chart/alert-categories-chart.component';
 import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
 import { ErrorComponent } from 'src/app/core/error/error.component';
+import { UiDynacardInfoComponent } from './components/ui-dynacard-info/ui-dynacard-info.component';
 
 
 @NgModule({
@@ -185,7 +186,8 @@ import { ErrorComponent } from 'src/app/core/error/error.component';
     AlertCategoriesChartComponent,
     AlertCategoriesTableComponent,
     //httperrors
-    ErrorComponent
+    ErrorComponent,
+    UiDynacardInfoComponent
     
   ],
   imports: [ 
