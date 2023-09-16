@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient, HttpHeaders
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventList } from '../model/event-list';
 import { Observable, map, tap } from 'rxjs';
 import { SLBSearchParams, SortOptions } from 'src/app/models/slb-params';
 import { environment } from '@environments/environment';
-
 
 const eventsData = '../../../../assets/json/events-data.json';
 
@@ -15,79 +12,66 @@ const eventsData = '../../../../assets/json/events-data.json';
 })
 export class EventListService {
   private apiUrl: string = environment.srp_microservice_url;
+  _apiUrl: string = 'https://localhost:52906/';
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-    })
+    }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
+  // getWellAlerts(): Observable<AlertList[]> {
+  //   return this.http.get<AlertList[]>(alertsData);
+  // }
 
-  getWellEventfromDB(): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions);
-  }
-
-  getWellEvents(params: SLBSearchParams): Observable<EventList[]> {
-    //when you get api call this
-    //return this.http.post<AlertList[]>("url", params);
-    //this is local setup
-    //var eventList= this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions);  
-    return this.http.get<any[]>(this.apiUrl + "Event", this.httpOptions).pipe(
-      map((x) => {
-        return this.filterData(params, x);
-      })
+  getWellAlerts(): Observable<any> {
+    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions);
+    return this.http.get<Observable<EventList[]>>(
+      `${this._apiUrl}Alerts/GetAllWellList`
     );
   }
-  filterData(params: SLBSearchParams, res: EventList[]): EventList[] {
-    if (params.searchTerm) {
-      res = res.filter(
-        (x) =>
-          x.wellName.toLowerCase().includes(params.searchTerm.toLowerCase()) ||
-          x.eventDescription.toLowerCase().includes(params.searchTerm.toLowerCase())  // ||
-        // x.eventType.toLowerCase().includes(params.searchTerm.toLowerCase()) ||
-        // x.eventStatus.toLowerCase().includes(params.searchTerm.toLowerCase())
-      );
-    }
-    if (params.sort && params.sort.active) {
-      res = this.transform(res, params.sort);
-    }
-    if (params.params && params.params.size > 0) {
-      params.params.forEach((value, key) => {
-        if (key == 'eventType') {
-          res = res.filter(
-            (c) => c.priority.toLowerCase() == value?.toLowerCase()
-          );
-        }
-        // if (key == 'status') {
-        //   res = res.filter(
-        //     (c) => c.status.toLowerCase() == value?.toLowerCase()
-        //   );
-        // }
-        if (key == 'dateRange') {
-          let dates = value.split('$');
-          let start = dates[0],
-            end = dates[1];
-          res = res.filter(
-            (c) =>
-              new Date(c.creationDateTime).getTime() >= new Date(start).getTime() &&
-              new Date(c.creationDateTime).getTime() <= new Date(end).getTime()
-          );
-        }
-      });
-    }
-    return res;
+
+  getAlertsByAlertStatus(alertStatus: string): Observable<any> {
+    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions);
+    return this.http.get<any>(
+      `${this._apiUrl}Alerts/GetWellAlertsByAlertStatus?AlertStatus=${alertStatus}`
+    );
   }
-  transform(values: any[], sort: SortOptions): any[] {
-    return values.sort((a, b) => {
-      if (sort.direction == 'desc') {
-        if (a[sort.active] < b[sort.active]) return 1;
-        if (a[sort.active] > b[sort.active]) return -1;
-      } else if (sort.direction == 'asc') {
-        if (a[sort.active] < b[sort.active]) return -1;
-        if (a[sort.active] > b[sort.active]) return 1;
-      }
-      return 0;
-    }); //a[sort.active].localeCompare(b[sort.active]));
+
+  getAlertListFilters(payload: any): Observable<any> {
+    const url = `${this._apiUrl}Alerts/GetAlertList`;
+    return this.http.post(url, payload, {
+      headers: {},
+    });
+  }
+
+  getAlertList(SearchModel: any): Observable<any> {
+    return this.http.post<EventList[]>(
+      this._apiUrl + 'api/Event/Get',
+      SearchModel
+    );
+  }
+
+  getDefaultAlertCategory(payload?: any): Observable<any> {
+    return this.http.post<EventList[]>(
+      this._apiUrl + 'api/Alerts/GetDefaultValues',
+      payload
+    );
+  }
+
+  clearAlert(id: number, comments: string, payload?: any): Observable<any> {
+    return this.http.post<EventList[]>(
+      this._apiUrl + `api/Alerts/ClearAlert?alertId=${id}&comment=${comments}`,
+      payload
+    );
+  }
+
+  snoozeBy(id: number, time: number, payload?: any): Observable<any> {
+    return this.http.post<EventList[]>(
+      this._apiUrl + `api/Alerts/SnoozeBy?alertId=${id}&snoozeBy=${time}`,
+      payload
+    );
   }
 }
