@@ -12,6 +12,7 @@ export class customAlert {
     category!:string;
     operator!:string;
     value!:string;
+    actualValue!:number;
     isActive!:boolean;
     startDate!:string;
     endDate!:string;
