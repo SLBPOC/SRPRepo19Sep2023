@@ -72,7 +72,7 @@ export class CustomAlertComponent {
   isActive:boolean=true;
  
   //Pagination variables
-  maxPageSize: number = Math.max(...environment.pageSizeOption);
+  //maxPageSize: number = Math.max(...environment.pageSizeOption);
   pageSizeOption:any;
   pageSize: number = 10;
   pageNumber = 1;
@@ -89,9 +89,9 @@ export class CustomAlertComponent {
      this.category=environment.customAlertCategory;
      this.operator=environment.customAlertOperator;
      this.value=environment.customAlertValue;
-     //this.pageSizeOption=environment.pageSizeOption;
   }
 
+ 
   ngOnInit() {
       this.getAlertDetails();
   }
@@ -130,29 +130,18 @@ export class CustomAlertComponent {
           this.alertData = response.customAlertDto;
           this.well=response.wellFilterListDetails;
           this.totalCount=response.countDetails.totalCount;
-          
+         
           this.dataSource = new MatTableDataSource<customAlert>(this.alertData);
           this.dataSource.sort = this.sort;
           
         setTimeout(() => {
-          this.loadPageOptions();
+          this.pageSizeOption=[5,10,15,this.totalCount];    
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = response.countDetails.totalCount;          
         }); 
       })
     }
 
-    public loadPageOptions()
-    {
-      this.pageSizeOption=environment.pageSizeOption;
-      if(!this.pageSizeOption.includes(this.totalCount))
-          {
-            if(this.totalCount>this.maxPageSize)
-            {
-              this.pageSizeOption.push(this.totalCount);
-            }
-          }
-    }
     public onSortChanged(e: any) {
       this.pageNumber = this.pageNumber;
       this.pageSize = this.pageSize;
@@ -233,7 +222,7 @@ export class CustomAlertComponent {
         operator:this.customAlertForm.value.Operator,
         value:this.customAlertForm.value.Value,
         isActive:this.customAlertForm.value.IsActive,
-        actualValue:this.customAlertForm.value.actualValue,
+        actualValue:this.customAlertForm.value.actualValue=="" ? null : this.customAlertForm.value.actualValue,
         startDate:this.startDate,
         endDate:this.endDate
       }
