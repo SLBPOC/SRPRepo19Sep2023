@@ -135,7 +135,7 @@ export class CustomAlertComponent {
           this.dataSource.sort = this.sort;
           
         setTimeout(() => {
-          this.pageSizeOption=[5,10,15,this.totalCount];    
+          this.loadPageOptions();    
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = response.countDetails.totalCount;          
         }); 
