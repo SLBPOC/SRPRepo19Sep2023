@@ -45,8 +45,9 @@ export class AlertCategoriesChartComponent implements OnInit, OnChanges {
            dataLabels: {
             enabled: false
           },
+          
           showInLegend: true,
-        }
+        },
       },
       legend: {
         align: 'left', 
@@ -55,14 +56,20 @@ export class AlertCategoriesChartComponent implements OnInit, OnChanges {
         labelFormat: '<b>{name}</b>: {percentage:.1f}%',
         symbolRadius: 0,
         itemStyle:{'color':'#22263D'}
-  
         
       },
       series: [
         {
           type: 'pie',
           name: 'Cycle Status',
-          data: chartSeriesArr
+          data: chartSeriesArr,
+          point: {
+            events: {
+              click: function(oEvent: any) {
+                 console.log("chartOptions-->", oEvent.point.name);
+              }
+            }
+          }
         }
       ]
     };

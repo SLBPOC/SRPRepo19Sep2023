@@ -40,6 +40,8 @@ export class WellFilterAndSortComponent implements OnInit {
   panelOpenState7: boolean;
   wellList: any[];
   providers = new FormControl();
+  selectedWellNames = new FormControl();
+  selectedCategories = new FormControl();
   allProviders!: any;
   commsStatusOptions!: any;
   controllerStatusOptions!: any;
@@ -57,7 +59,8 @@ export class WellFilterAndSortComponent implements OnInit {
     spm: false,
     pumpFillage: false,
     inferredProduction: false,
-  };
+    category: false
+  }
   @Input() isAlerts!: any;
   @Input() isEvent!: any;
   spmSlider: ISpmSlider = { min: 0, max: 20, start: 0, end: 20 };
@@ -164,6 +167,8 @@ export class WellFilterAndSortComponent implements OnInit {
     this.selectedCategory = selectedCategoryArray;
   }
 
+  
+
   clearAppliedFilter() {
     this.clearWellNames();
     this.clearCommStatus();
@@ -201,8 +206,13 @@ export class WellFilterAndSortComponent implements OnInit {
   }
 
   clearWellNames() {
-    this.providers.setValue([]);
+    this.selectedWellNames.setValue([]);
     this.filtersApplied.wellNames = false;
+  }
+
+  clearCategories() {
+    this.selectedCategories.setValue([]);
+    this.filtersApplied.category = false;
   }
 
   applyFilter(isChecked, filterOption) {

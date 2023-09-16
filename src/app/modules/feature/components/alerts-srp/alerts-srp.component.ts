@@ -58,7 +58,7 @@ export class AlertsSrpComponent implements OnInit {
   snoozeByTime: number = 1;
   clearAlertsComments!: string;
   selectedColumn: string[] = [];
-  displayedColumns: string[] = ['wellName', 'date', 'category', 'desc', 'action'];
+  displayedColumns: string[] = ['stat', 'wellName', 'date', 'category', 'desc', 'action'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -123,7 +123,6 @@ export class AlertsSrpComponent implements OnInit {
   ngOnInit(): void {
     // this.GetAlertListWithFilters();
     this.treeviewService.selectedNodes.subscribe(x => {
-      console.log(x);
       if (x != undefined && x.length > 0 && x.some(m => m.type == NodeType.Wells)) {
         this.ids = x.filter(m => m.type == NodeType.Wells).map(m => m.nodeId);
       }
@@ -131,6 +130,17 @@ export class AlertsSrpComponent implements OnInit {
         this.ids = [];
       this.GetAlertListWithFilters();
     })
+  }
+
+  errorHandling() {
+    this.loading = false;
+    this.pageNumber = 1;
+    this.seachByStatus = "";
+    this.searchText = "";
+    this.ids = [];
+    this.TotalCount = 0;
+    this.alertList = [];
+    this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
   }
 
   GetAlertListWithFilters() {
@@ -152,14 +162,18 @@ export class AlertsSrpComponent implements OnInit {
         });
 
         this.TotalCount = response.alertsLevelDto.totalCount;
-        this.High = response.alertsLevelDto.totalHigh;
-        this.Medium = response.alertsLevelDto.totalMedium;
-        this.Low = response.alertsLevelDto.totalLow;
-        this.Clear = response.alertsLevelDto.totalCleared;
+        this.getLegendCount();
+        // this.High = response.alertsLevelDto.totalHigh;
+        // this.Medium = response.alertsLevelDto.totalMedium;
+        // this.Low = response.alertsLevelDto.totalLow;
+        // this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
 
       // }
 
+    },
+    (err) => {
+      this.errorHandling();
     });
   }
 
@@ -177,16 +191,34 @@ export class AlertsSrpComponent implements OnInit {
           this.paginator.length = response.alertsLevelDto.totalCount;
         });
         this.TotalCount = response.alertsLevelDto.totalCount;
-        this.High = response.alertsLevelDto.totalHigh;
-        this.Medium = response.alertsLevelDto.totalMedium;
-        this.Low = response.alertsLevelDto.totalLow;
-        this.Clear = response.alertsLevelDto.totalCleared;
+        this.getLegendCount();
+        // this.High = response.alertsLevelDto.totalHigh;
+        // this.Medium = response.alertsLevelDto.totalMedium;
+        // this.Low = response.alertsLevelDto.totalLow;
+        // this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
+    },
+    (err) => {
+      this.errorHandling();
     });
   }
 
   filterAndSortAlerts(payload: any){
     this.GetAlertListWithSortFilters(payload);
+  }
+
+  getLegendCount() {
+    let high = this.alertList.filter((alert) => alert.alertLevel == 'High');
+    this.High = high.length;
+
+    let med = this.alertList.filter((alert) => alert.alertLevel == 'Medium');
+    this.Medium = med.length;
+
+    let low = this.alertList.filter((alert) => alert.alertLevel == 'Low');
+    this.Low = low.length;
+
+    let clear = this.alertList.filter((alert) => alert.alertLevel == 'Cleared');
+    this.Clear = clear.length;
   }
 
   //Create Model for search
@@ -208,6 +240,11 @@ export class AlertsSrpComponent implements OnInit {
     return this.model;
   }
 
+  getWellTreeSearch(searchTxt: string){
+    this.searchText = searchTxt;
+    this.GetAlertListWithFilters();
+  }
+
   ClearSearch() {
     this.pageNumber = 1;
     this.seachByStatus = "";
@@ -217,6 +254,7 @@ export class AlertsSrpComponent implements OnInit {
   }
 
   RefreshGrid() {
+    this.searchText = "";
     const payload = {
       "pageSize": 5,
       "pageNumber": 1,
@@ -240,19 +278,54 @@ export class AlertsSrpComponent implements OnInit {
         });
 
         this.TotalCount = response.alertsLevelDto.totalCount;
-        this.High = response.alertsLevelDto.totalHigh;
-        this.Medium = response.alertsLevelDto.totalMedium;
-        this.Low = response.alertsLevelDto.totalLow;
-        this.Clear = response.alertsLevelDto.totalCleared;
+        this.getLegendCount();
+        // this.High = response.alertsLevelDto.totalHigh;
+        // this.Medium = response.alertsLevelDto.totalMedium;
+        // this.Low = response.alertsLevelDto.totalLow;
+        // this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
 
       // }
+    },
+    (err) => {
+      this.errorHandling();
     })
+  }
+
+  legendFilter(priority: any) {
+    // this.searchText = priority
+    // this.GetAlertListWithFilters();
+    let priorityList: AlertList[];
+    switch (priority) {
+      case 'High':
+        priorityList = this.alertList.filter(
+          (alert) => alert.alertLevel === 'High'
+        );
+        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
+        break;
+      case 'Medium':
+        priorityList = this.alertList.filter(
+          (alert) => alert.alertLevel === 'Medium'
+        );
+        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
+        break;
+      case 'Low':
+        priorityList = this.alertList.filter(
+          (alert) => alert.alertLevel === 'Low'
+        );
+        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
+        break;
+      case 'Cleared':
+        priorityList = this.alertList.filter(
+          (alert) => alert.alertLevel === 'Cleared'
+        );
+        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
+        break;
+    }
   }
 
   snoozeBy(snoozeTime: any, snoozeByTime: number) {
     this.service.snoozeBy(snoozeTime.alertId, snoozeByTime).subscribe((data: any) => {
-        console.log('snooze by response', data);
         this.GetAlertListWithFilters();
       });
   }
@@ -325,6 +398,8 @@ export class AlertsSrpComponent implements OnInit {
 
   resetDateRangeFilters() {
     // this.dataSource.filter = '';
+    this.startDate = "";
+    this.endDate = "";
     this.RefreshGrid();
     let todaysDate = new Date();
     this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
@@ -376,7 +451,6 @@ export class AlertsSrpComponent implements OnInit {
 }
 
   pageChanged(event: PageEvent) {
-    console.log({ event });
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.pageNumber = event.pageIndex + 1;

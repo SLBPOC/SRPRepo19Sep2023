@@ -131,22 +131,11 @@
         <div class="row mt-2 mb-3">
           <mat-form-field appearance="fill">
             <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
-            <mat-select
-              multiple
-              [formControl]="providers"
-              (valueChange)="onWellSelection($event)"
-            >
-              <input
-                #multiUserSearch
-                type="text"
-                autocomplete="off"
-                matInput
-                class="search-prov"
-                placeholder="Search By Provider"
-                (input)="onInputChange($event)"
-              />
+            <mat-select multiple [formControl]="selectedWellNames" (valueChange)="onWellSelection($event)">
+              <input #multiUserSearch type="text" autocomplete="off" matInput class="search-prov"
+                placeholder="Search By Provider" (input)="onInputChange($event)" />
               <mat-select-trigger>
-                {{ providers.value }}
+                {{selectedWellNames.value }}
               </mat-select-trigger>
 
               <mat-option
@@ -227,22 +216,11 @@
         <div class="row mt-2 mb-3">
           <mat-form-field appearance="fill">
             <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
-            <mat-select
-              multiple
-              [formControl]="providers"
-              (valueChange)="onCategorySelection($event)"
-            >
-              <input
-                #multiUserSearch
-                type="text"
-                autocomplete="off"
-                matInput
-                class="search-prov"
-                placeholder="Search By Provider"
-                (input)="onInputChange($event)"
-              />
+            <mat-select multiple [formControl]="selectedCategories" (valueChange)="onCategorySelection($event)">
+              <input #multiUserSearch type="text" autocomplete="off" matInput class="search-prov"
+                placeholder="Search By Provider" (input)="onInputChange($event)" />
               <mat-select-trigger>
-                {{ providers.value }}
+                {{selectedCategories.value }}
               </mat-select-trigger>
 
               <mat-option

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-well-tree-list',
@@ -7,8 +7,10 @@ import { Component } from '@angular/core';
 })
 export class WellTreeListComponent {
   searchObjC:any;
+  @Output() searchStr: EventEmitter<string> = new EventEmitter();
   userSearchChange(obj:any){
     this.searchObjC = obj;
+    this.searchStr.emit(this.searchObjC.searchText);
   }
 
 
