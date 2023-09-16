@@ -144,7 +144,7 @@ export class CustomAlertComponent {
 
     public loadPageOptions()
     {
-      this.pageSizeOption=environment.pageSizeOption;
+      this.pageSizeOption=[10,20,30];
       if(!this.pageSizeOption.includes(this.totalCount))
           {
             if(this.totalCount>this.maxPageSize)
@@ -233,7 +233,7 @@ export class CustomAlertComponent {
         operator:this.customAlertForm.value.Operator,
         value:this.customAlertForm.value.Value,
         isActive:this.customAlertForm.value.IsActive,
-        actualValue:this.customAlertForm.value.actualValue,
+        actualValue:this.customAlertForm.value.actualValue=="" ? null : this.customAlertForm.value.actualValue,
         startDate:this.startDate,
         endDate:this.endDate
       }
