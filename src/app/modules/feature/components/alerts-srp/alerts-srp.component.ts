@@ -14,6 +14,8 @@ import { NodeType } from '../../services/models';
 import { DateRange } from '@angular/material/datepicker';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { CustomAlertComponent } from '../custom-alert/custom-alert.component';
+import * as XLSX from 'xlsx';
+import { DatePipe } from '@angular/common';
 
 interface Food {
   value: string;
@@ -61,6 +63,7 @@ export class AlertsSrpComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   @ViewChild('searchQueryInput') searchInput: ElementRef<HTMLInputElement>;
+  @ViewChild('TABLE', { static: false }) TABLE: ElementRef;
 
   HighCharts: typeof HighCharts = HighCharts;
 
@@ -94,11 +97,13 @@ export class AlertsSrpComponent implements OnInit {
   pageSizeOption = [10, 20, 30]
   ids: number[];
   respdata: any
-
+  todayDate : Date = new Date();
+  dateString:string
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private service: AlertListService, private router: Router
     , public treeviewService: TreeViewService
-    ,public customDialog: MatDialog) { }
+    ,public customDialog: MatDialog
+    ,private datePipe: DatePipe) { }
 
 
   ngAfterViewInit() {
@@ -474,5 +479,32 @@ export class AlertsSrpComponent implements OnInit {
   userSearchChange(obj: any) {
     this.searchObjC = obj;
   }
+  createModelReport(this: any) {
+    debugger;
+    this.model.pageSize = this.TotalCount;
+    this.model.pageNumber = 1;
+    this.model.searchText = this.searchText ? this.searchText : "";
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
+    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
 
+    return this.model;
+  }
+  AlertsDownloadExcel() {
+    debugger;
+    this.loading = true;
+    var payload = this.createModelReport();
+    this.service.getAlertListFilters(payload).subscribe(response => {
+      this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
+     this.exportToXls(this.dataSource);
+      })
+  }
+  exportToXls(list:any){
+    debugger;
+    this.dateString = this.datePipe.transform(this.todayDate, 'dd_MM_YYYY_hh_mm');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.TABLE.nativeElement); 
+    const wb: XLSX.WorkBook = XLSX.utils.book_new(); 
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); 
+    XLSX.writeFile(wb, 'AlertList_'+this.dateString +'.xlsx');
+  }
 }
