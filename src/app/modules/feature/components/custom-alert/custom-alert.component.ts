@@ -72,7 +72,7 @@ export class CustomAlertComponent {
   isActive:boolean=true;
  
   //Pagination variables
-  //maxPageSize: number = Math.max(...environment.pageSizeOption);
+  maxPageSize: number = Math.max(...environment.pageSizeOption);
   pageSizeOption:any;
   pageSize: number = 10;
   pageNumber = 1;
@@ -142,6 +142,17 @@ export class CustomAlertComponent {
       })
     }
 
+    public loadPageOptions()
+    {
+      this.pageSizeOption=[10,20,30];
+      if(!this.pageSizeOption.includes(this.totalCount))
+          {
+            if(this.totalCount>this.maxPageSize)
+            {
+              this.pageSizeOption.push(this.totalCount);
+            }
+          }
+    }
     public onSortChanged(e: any) {
       this.pageNumber = this.pageNumber;
       this.pageSize = this.pageSize;
