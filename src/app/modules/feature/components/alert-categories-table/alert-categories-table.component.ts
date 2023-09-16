@@ -9,7 +9,7 @@ import * as Highcharts from 'highcharts';
 })
 export class AlertCategoriesTableComponent implements OnInit, OnChanges {
 
-  displayedColumns = ['wellname', 'alertCount', 'brozCount', 'priority'];
+  displayedColumns = ['wellname', 'alertCount', 'snoozAlertCount', 'priority'];
   dataSource: any = [];
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options;
@@ -43,15 +43,30 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
   }
 
   loadChartData(){
-    // let chartSeriesArr = []
-    // let obj = {}
-    // for (let i = 0; i < this.barChartData.length; i++) {
-    //   obj = {
-    //     name: '',
-    //     y: this.barChartData[i].value
-    //   }
-    //   chartSeriesArr.push(obj)
-    // }
+    let chartSeriesArr = []
+    let high = {}
+    let medium = {}
+    let low = {}
+    for (let i = 0; i < this.barChartData.length; i++) {
+      high = {
+        name: '',
+        y: this.barChartData[i].high,
+        color: '#D11F1F'
+      }
+      medium = {
+        name: '',
+        y: this.barChartData[i].medium,
+        color: '#FABB42'
+      }
+      low = {
+        name: '',
+        y: this.barChartData[i].low,
+        color: '#28A228'
+      }
+      chartSeriesArr.push(high,medium,low);
+      // this.chartOptions.series[i].data
+    }
+    // this.chartOptions.series[0].data
     this.chartOptions = {
       chart: {
         type: 'pie',
@@ -100,6 +115,7 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
       series: [ 
         {
           type: 'bar',
+          // data: chartSeriesArr
           data: [
             {
               name: '',

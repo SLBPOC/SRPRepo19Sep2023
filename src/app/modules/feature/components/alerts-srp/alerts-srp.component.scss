@@ -369,6 +369,37 @@ td#well_name>a:hover {
 
 .tableContainer {
     padding: 15px;
+    .high-priorityline {
+        width: 16px;
+        height: 16px;
+        background-color: #D11F1F;
+        border-radius: 8px;
+        display: block;
+    }
+
+    .med-priorityline {
+        width: 16px;
+        height: 16px;
+        background-color: #FABB42;
+        border-radius: 8px;
+        display: block;
+    }
+
+    .low-priorityline {
+        width: 16px;
+        height: 16px;
+        background-color: #28A228;
+        border-radius: 8px;
+        display: block;
+    }
+
+    .cleared-priorityline {
+        width: 16px;
+        height: 16px;
+        background-color: #9F9F9F;
+        border-radius: 8px;
+        display: block;
+    }
 }
 
 .padding-tb-15 {
