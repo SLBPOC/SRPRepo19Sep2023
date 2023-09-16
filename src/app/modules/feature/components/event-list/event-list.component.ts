@@ -8,7 +8,11 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   DateRange,
@@ -27,7 +31,11 @@ import { SLBSearchParams, SortOptions } from 'src/app/models/slb-params';
 import { ViewEncapsulation } from '@angular/compiler';
 import { WellsService } from '../../services/wells.service';
 import { WellModel } from '../../model/wellModel';
-import * as XLSX from 'xlsx';
+import { NodeType } from '../../services/models';
+import { debounceTime, distinctUntilChanged, fromEvent, map, tap } from 'rxjs';
+import { TreeViewService } from '../../services/tree-view.service';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Router } from '@angular/router';
 
 interface Food {
   value: string;
@@ -57,134 +65,222 @@ enum DateRanges {
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.scss'],
 })
-export class EventListComponent implements AfterViewInit {
-  wellList!: EventList[];
-  // date = new Date();
-  daysSelected: any[] = [];
-  event: any;
-  todayDate: Date = new Date();
-  eventFormModel: EventFormModel = new EventFormModel();
-  slbSearchParams: SLBSearchParams = new SLBSearchParams();
-  dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = [
-    'stat',
-    'wellName',
-    'priority',
-    'creationDateTime',
-    'eventDescription',
+export class EventListComponent {
+  foods: Food[] = [
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' },
   ];
-  alertTypes = ['High', 'Medium', 'Low'];
-  statuses = ['Completed', 'In Progress'];
-  highCount = 0;
-  medCount = 0;
-  lowCount = 0;
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-  });
-  pipe!: DatePipe;
-  dateString:string
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('TABLE', { static: false }) TABLE: ElementRef;
-  constructor(private service: EventListService, private wellService: WellsService) {
-    this.dataSource = new MatTableDataSource<any>([]);
-  }
-  ngOnInit() {
-    let dte = new Date();
-    dte.setDate(dte.getDate() - 1);
-    console.log(dte.toString());
-    this.service.getWellEvents(this.slbSearchParams).subscribe((resp) => {
-      this.bindGridData(resp);
-      //this.dataSource.sort = this.sort;
-    });
-    this.getWellData();
-  }
-
-  refreshGrid($event) {
-
-  }
-  getWellData() {
-    const payload = {
-      "pageSize": 5,
-      "pageNumber": 1,
-      "searchText": "",
-      "sortColumn": "",
-      "sortDirection": "",
-      "searchStatus": ""
-    }
-    this.wellService.getWellDetailsWithFilters(payload).subscribe((response: any) => {
-      if (response.hasOwnProperty('data')) {
-        console.log('===> well-list response', response.data);
-        this.dataSource = new MatTableDataSource<WellModel>(response.data);
-        setTimeout(() => {
-          this.paginator.pageIndex = 1;
-          this.paginator.length = response.totalCount;
-        });
-      }
-    })
-  }
-  test() {
-    let aDate = new Date();
-    console.log(aDate.getDate() - 1);
-  }
-  bindGridData(res: EventList[]) {
-    this.wellList = res;
-    this.dataSource = new MatTableDataSource<EventList>(this.wellList);
-    this.getLegendCount();
-    this.dataSource.paginator = this.paginator;
-  }
-
-  getLegendCount() {
-    let high = this.wellList.filter(alert => alert.priority == "High");
-    // console.log("getLegendCount--> "+ high.length);
-    this.highCount = high.length;
-
-    let med = this.wellList.filter(alert => alert.priority == "Medium");
-    this.medCount = med.length;
-
-    let low = this.wellList.filter(alert => alert.priority == "Low");
-    this.lowCount = low.length;
-  }
-
-  search(data: Event) {
-    const val = (data.target as HTMLInputElement).value;
-    this.dataSource.filter = val;
-  }
-
-  alertChange(event: any) {
-    let filterValue;
-    filterValue = event.value.trim(); // Remove whitespace
-    filterValue = event.value.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-
-  statusChange(event: any) {
-    let filterValue;
-    filterValue = event.value.trim(); // Remove whitespace
-    filterValue = event.value.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-
-  selectDate(date: any) {
-    console.log('Selelcted date range --> ' + date.value);
-    let fromDate = date.value.start.toISOString();
-    let startDate = this.range.get('start')?.value;
-    let endDate = this.range.get('end')?.value;
-    let toDate = date.value.end.toISOString();
-    this.dataSource.filterPredicate = (data: any, filter: any) => {
-      if (fromDate && toDate) {
-        return data.date >= fromDate && data.date <= toDate;
-      }
-      return true;
-    };
-    this.dataSource.filter = '' + Math.random();
-  }
 
   @Input() selectedRangeValue: DateRange<Date> | undefined;
   @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
-  // @ViewChild(MatSort) sort: MatSort;
+
+  theme = 'light';
+  dataSource: any = [];
+  eventList!: EventList[];
+  snoozeByTime: number = 1;
+  clearAlertsComments!: string;
+  selectedColumn: string[] = [];
+  displayedColumns: string[] = [
+    'No',
+    'wellName',
+    'EventType',
+    'date',
+    // 'Category',
+    'UpdateBy',
+    'desc',
+  ];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  @ViewChild('searchQueryInput') searchInput: ElementRef<HTMLInputElement>;
+
+  // HighCharts: typeof HighCharts = HighCharts;
+
+  searchText: string = '';
+  sortDirection: string = '';
+  sortColumn: string = '';
+  pageSize: number = 10;
+  pageNumber = 1;
+  currentPage = 0;
+  totalCount = 0;
+  model: any = {};
+  seachByStatus: string = '';
+  loading = true;
+
+  //filter variables;
+  wellNames: any[];
+
+  //legend variables
+  TotalCount: number = 0;
+  High: number = 0;
+  Medium: number = 0;
+  Low: number = 0;
+  Clear: number = 0;
+  legendCount: any;
+
+  categoriesChartData: any;
+  minmaxChartData: any[] = []; //min max chart data array
+  pageSizeOption = [5, 10, 20, 30];
+  ids: number[];
+  respdata: any;
+
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private service: EventListService,
+    private router: Router,
+    public treeviewService: TreeViewService
+  ) {}
+
+  ngAfterViewInit() {
+    // this.dataSource.paginator = this.paginator;
+    fromEvent<any>(this.searchInput.nativeElement, 'keyup')
+      .pipe(
+        map((event) => event.target.value),
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((x) => (this.searchText = x))
+      )
+      .subscribe((x) => {
+        if (x != undefined && x.trim() != '') {
+          this.GetAlertListWithFilters();
+        }
+      });
+  }
+
+  ngOnInit(): void {
+    // this.GetAlertListWithFilters();
+    this.treeviewService.selectedNodes.subscribe((x) => {
+      console.log(x);
+      if (
+        x != undefined &&
+        x.length > 0 &&
+        x.some((m) => m.type == NodeType.Wells)
+      ) {
+        this.ids = x
+          .filter((m) => m.type == NodeType.Wells)
+          .map((m) => m.nodeId);
+      } else this.ids = [];
+      this.GetAlertListWithFilters();
+    });
+  }
+
+  GetAlertListWithFilters() {
+    this.loading = true;
+    var SearchModel = this.createModel();
+    this.service.getAlertList(SearchModel).subscribe((response) => {
+      this.loading = false;
+      this.pageSizeOption = [10, 15, 20];
+      // this.getPageSizeOptions();
+      this.eventList = response.events;
+      console.log(this.eventList);
+      // this.legendCount = response.alertsLevelDto;
+      // this.categoriesChartData = response.alertcategory;
+      // this.alertList.forEach(x => this.prepareChart(x));
+      this.dataSource = new MatTableDataSource<EventList>(this.eventList);
+      setTimeout(() => {
+        this.paginator.pageIndex = this.currentPage;
+        this.paginator.length = response.totalcount;
+      });
+
+      this.TotalCount = response.totalcount;
+      // this.High = response.alertsLevelDto.totalHigh;
+      // this.Medium = response.alertsLevelDto.totalMedium;
+      // this.Low = response.alertsLevelDto.totalLow;
+      // this.Clear = response.alertsLevelDto.totalCleared;
+      this.dataSource.paginator = this.paginator;
+
+      // }
+    });
+  }
+
+  GetAlertListWithSortFilters(SearchModel: any) {
+    this.loading = true;
+    var SearchModel = this.createModel();
+    this.service.getAlertList(SearchModel).subscribe((response) => {
+      this.loading = false;
+      this.pageSizeOption = [10, 15, 20, response.totalcount];
+      this.eventList = response.alerts;
+      this.legendCount = response.alertsLevelDto;
+      this.dataSource = new MatTableDataSource<EventList>(this.eventList);
+      setTimeout(() => {
+        this.paginator.pageIndex = this.currentPage;
+        this.paginator.length = response.alertsLevelDto.totalCount;
+      });
+      this.TotalCount = response.alertsLevelDto.totalCount;
+      this.High = response.alertsLevelDto.totalHigh;
+      this.Medium = response.alertsLevelDto.totalMedium;
+      this.Low = response.alertsLevelDto.totalLow;
+      this.Clear = response.alertsLevelDto.totalCleared;
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  filterAndSortAlerts(payload: any) {
+    this.GetAlertListWithSortFilters(payload);
+  }
+
+  //Create Model for search
+  createModel(this: any) {
+    let dateObj = {
+      fromDate: '',
+      toDate: '',
+    };
+    this.model.pageSize = this.pageSize;
+    this.model.pageNumber = this.pageNumber;
+    this.model.searchText = this.searchText ? this.searchText : '';
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : '';
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : '';
+    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : '';
+    this.model.dateRange = dateObj;
+    this.model.wellNames = this.selectedWells ? this.selectedWells : [];
+    this.model.category = this.selectedCategory ? this.selectedCategory : [];
+    this.model.ids = this.ids ? this.ids : [];
+
+    return this.model;
+  }
+
+  ClearSearch() {
+    this.pageNumber = 1;
+    this.seachByStatus = '';
+    this.searchText = '';
+    this.ids = [];
+    this.GetAlertListWithFilters();
+  }
+
+  RefreshGrid() {
+    const payload = {
+      pageSize: 5,
+      pageNumber: 1,
+      searchText: '',
+      sortColumn: '',
+      sortDirection: '',
+      searchStatus: '',
+    };
+
+    this.service.getAlertList(payload).subscribe((response: any) => {
+      // if (response.hasOwnProperty('data')) {
+      this.loading = false;
+      this.pageSizeOption = [10, 15, 20, response.totalCount];
+      // this.getPageSizeOptions();
+      this.eventList = response.data;
+      // this.alertList.forEach(x => this.prepareChart(x));
+      this.dataSource = new MatTableDataSource<EventList>(this.eventList);
+      setTimeout(() => {
+        // this.paginator.pageIndex = this.currentPage;
+        this.paginator.length = response.totalcount;
+      });
+
+      this.TotalCount = response.alertsLevelDto.totalCount;
+      this.High = response.alertsLevelDto.totalHigh;
+      this.Medium = response.alertsLevelDto.totalMedium;
+      this.Low = response.alertsLevelDto.totalLow;
+      this.Clear = response.alertsLevelDto.totalCleared;
+      this.dataSource.paginator = this.paginator;
+
+      // }
+    });
+  }
 
   selectedChange(m: any) {
     if (!this.selectedRangeValue?.start || this.selectedRangeValue?.end) {
@@ -200,244 +296,32 @@ export class EventListComponent implements AfterViewInit {
     }
     this.selectedRangeValueChange.emit(this.selectedRangeValue);
   }
-  onKeydownAlertSearch(event: any) {
-    if (event?.key === 'Enter') {
-      this.callApi();
-    }
-  }
-  applyFilterSearch(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-  applyFilter() {
-    this.callApi();
-  }
-  callApi(sort: SortOptions = new SortOptions()) {
-    //prepare input request
-    this.slbSearchParams.pageNumber = 1;
-    this.slbSearchParams.pageSize = 10;
-    this.slbSearchParams.sort = sort;
-    this.slbSearchParams.searchTerm = this.eventFormModel.searchQueryInput;
-    if (!this.slbSearchParams.params)
-      this.slbSearchParams.params = new Map<string, string>();
-    if (this.eventFormModel.eventType) {
-      let eventTypeObj = this.EventType.find(
-        (x) => x.value == this.eventFormModel.eventType.toString()
-      );
-      this.slbSearchParams.params.set(
-        'eventType',
-        eventTypeObj?.viewValue ?? ''
-      );
-    }
-    // if (this.eventFormModel.status) {
-    //   let alertstatusObj = this.EventStatus.find(
-    //     (x) => x.value == this.eventFormModel.status.toString()
-    //   );
-    //   this.slbSearchParams.params.set(
-    //     'status',
-    //     alertstatusObj?.viewValue || ''
-    //   );
-    // }
-    if (
-      this.eventFormModel.dateRange?.start &&
-      this.eventFormModel.dateRange?.end
-    ) {
-      this.slbSearchParams.params.set(
-        'dateRange',
-        this.eventFormModel.dateRange.start.toString() +
-        '$' +
-        this.eventFormModel.dateRange.end.toString()
-      );
-    }
-    this.service.getWellEvents(this.slbSearchParams).subscribe((resp) => {
-      this.bindGridData(resp);
-    });
-  }
-  applyFilterTest(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.sort.sortChange.subscribe((x: SortOptions) => {
-      this.callApi(x);
-    });
+  pageChanged(event: PageEvent) {
+    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.pageNumber = event.pageIndex + 1;
+    this.GetAlertListWithFilters();
   }
 
-  applyFilters(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-  clearAll() {
-    this.slbSearchParams.searchTerm = '';
-    this.slbSearchParams.params = new Map<string, string>();
-    this.service.getWellEvents(this.slbSearchParams).subscribe((resp) => {
-      this.bindGridData(resp);
-    });
-  }
-  EventType: Food[] = [
-    { value: '1', viewValue: 'High' },
-    { value: '2', viewValue: 'Medium' },
-    { value: '3', viewValue: 'Low' },
-  ];
-  EventStatus: Food[] = [
-    { value: '1', viewValue: 'Completed' },
-    { value: '2', viewValue: 'In Progress' },
-  ];
-  setSelectedDateRange(range: DateRanges) {
-    this.resetCalender(false);
-
-    switch (range) {
-      case DateRanges.DAY:
-        let today = new Date();
-        let previous = new Date();
-        previous.setDate(previous.getDate() - 1);
-        this.eventFormModel.dateRange.start = previous;
-        this.eventFormModel.dateRange.end = today;
-        let dates = this.getDates(previous, today);
-        dates.forEach((element) => {
-          this.select(element, this.calendarChild);
-        });
-
-        break;
-      case DateRanges.WEEK:
-        var curr = new Date(); // get current date
-        var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-        var last = first + 6; // last day is the first day + 6
-        var firstday = new Date(curr.setDate(first));
-        var lastday = new Date(curr.setDate(last));
-        this.eventFormModel.dateRange.start = firstday;
-        this.eventFormModel.dateRange.end = lastday;
-        let datesWeek = this.getDates(firstday, lastday);
-        datesWeek.forEach((element) => {
-          this.select(element, this.calendarChild);
-        });
-        break;
-      case DateRanges.MONTH:
-        var date = new Date();
-        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        this.eventFormModel.dateRange.start = firstDay;
-        this.eventFormModel.dateRange.end = lastDay;
-        let datesM = this.getDates(firstDay, lastDay);
-        datesM.forEach((element) => {
-          this.select(element, this.calendarChild);
-        });
-        break;
-    }
-  }
-  @ViewChild('picker') datePicker: MatDatepicker<Date>;
-  openCalender() {
-    this.datePicker.open();
+  public onSortChanged(e: any) {
+    this.pageNumber = this.pageNumber;
+    this.pageSize = this.pageSize;
+    this.sortDirection = this.sort.direction;
+    this.sortColumn =
+      typeof this.sort.active !== 'undefined' ? this.sort.active : '';
+    this.GetAlertListWithFilters();
   }
 
-  getPreviousDay(dateRange: DateRanges): Date {
-    let previous = new Date();
-    switch (dateRange) {
-      case DateRanges.DAY:
-        break;
-      case DateRanges.WEEK:
-        break;
-      case DateRanges.MONTH:
-        break;
-    }
-    return previous;
-  }
-  isSelected = (event: any) => {
-    const date =
-      event.getFullYear() +
-      '-' +
-      ('00' + (event.getMonth() + 1)).slice(-2) +
-      '-' +
-      ('00' + event.getDate()).slice(-2);
-    return this.daysSelected.find((x) => x == date) ? ['selected'] : '';
-  };
-
-  @ViewChild('calendar') calendarChild: MatCalendar<any>;
-  resetCalender(initApiCall: boolean = true) {
-    this.daysSelected = [];
-    this.calendarChild.updateTodaysDate();
-    this.eventFormModel.dateRange = new DateRangeProps();
-    this.clearParams(['dateRange']);
-    if (initApiCall) this.callApi();
-  }
-  clearFilter() {
-    this.eventFormModel.eventType = 0;
-    this.eventFormModel.status = 0;
-    this.clearParams(['eventType', 'status']);
-    this.callApi();
-  }
-  clearParams(paramName: string[]) {
-    if (
-      this.slbSearchParams.params &&
-      this.slbSearchParams.params.size > 0 &&
-      paramName &&
-      paramName.length > 0
-    ) {
-      paramName.forEach((x) => this.slbSearchParams.params.delete(x));
-    }
-  }
-  getDates(startDate: Date, stopDate: Date) {
-    var dateArray = new Array();
-    var currentDate = new Date(startDate);
-    while (currentDate <= stopDate) {
-      dateArray.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return dateArray;
-  }
-  select(event: any, calendar: any) {
-    const date =
-      event.getFullYear() +
-      '-' +
-      ('00' + (event.getMonth() + 1)).slice(-2) +
-      '-' +
-      ('00' + event.getDate()).slice(-2);
-    const index = this.daysSelected.findIndex((x) => x == date);
-    if (index < 0) this.daysSelected.push(date);
-    else this.daysSelected.splice(index, 1);
-
-    calendar.updateTodaysDate();
+  SeachByStatus(status: string) {
+    this.seachByStatus = status;
+    this.pageNumber = 1;
+    this.GetAlertListWithFilters();
   }
 
   searchObjC: any;
   userSearchChange(obj: any) {
     this.searchObjC = obj;
   }
-
-  createModelReport(this: any) {
-    this.model.pageSize = this.TotalCount;
-    this.model.pageNumber = 1;
-    this.model.searchText = this.searchText ? this.searchText : "";
-    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
-    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
-    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
-
-    return this.model;
-  }
-  EventsDownloadExcel() {
-    debugger;
-    // var payload = this.createModelReport();
-    // this.service.getAlertListFilters(payload).subscribe(response => {
-    //   this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
-    //  this.exportToXls(this.dataSource);
-    //   })
-  }
-  // exportToXls(list:any){
-  //   debugger;
-  //   this.dateString = this.datePipe.transform(this.todayDate, 'dd_MM_YYYY_hh_mm');
-  //   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.TABLE.nativeElement); 
-  //   const wb: XLSX.WorkBook = XLSX.utils.book_new(); 
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); 
-  //   XLSX.writeFile(wb, 'AlertList_'+this.dateString +'.xlsx');
-  // }
 }
