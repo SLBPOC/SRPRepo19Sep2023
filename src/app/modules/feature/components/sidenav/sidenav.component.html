@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="example-toolbar">
-  <button mat-icon-button (click)="isExpanded = !isExpanded" class="menuButton"><mat-icon>menu</mat-icon></button>
+  <!-- <button mat-icon-button (click)="isExpanded = !isExpanded" class="menuButton"><mat-icon>menu</mat-icon></button> -->
 
   <img _ngcontent-qeb-c370="" matbuttonicon="" (click)="left.open()" width="20" alt="avatar" class=""
     src="./assets/app_icon.svg">
@@ -131,7 +131,7 @@
 <mat-sidenav-container class="example-container d-flex">
   <mat-sidenav #sidenav mode="side" class="example-sidenav open" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true"
     id="navopen">
-    <mat-nav-list>     
+    <mat-nav-list>
       <mat-list-item class="navcontenttxt" routerLinkActive="active-list-item" routerLink="/dashboard">
         <span class="full-width menutxt" *ngIf="isExpanded || isShowing"> Dashboard</span>
       </mat-list-item>

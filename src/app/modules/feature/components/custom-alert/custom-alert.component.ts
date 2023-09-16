@@ -89,9 +89,9 @@ export class CustomAlertComponent {
      this.category=environment.customAlertCategory;
      this.operator=environment.customAlertOperator;
      this.value=environment.customAlertValue;
-     //this.pageSizeOption=environment.pageSizeOption;
   }
 
+ 
   ngOnInit() {
       this.getAlertDetails();
   }
@@ -130,12 +130,12 @@ export class CustomAlertComponent {
           this.alertData = response.customAlertDto;
           this.well=response.wellFilterListDetails;
           this.totalCount=response.countDetails.totalCount;
-          
+         
           this.dataSource = new MatTableDataSource<customAlert>(this.alertData);
           this.dataSource.sort = this.sort;
           
         setTimeout(() => {
-          this.loadPageOptions();
+          this.pageSizeOption=[5,10,15,this.totalCount];    
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = response.countDetails.totalCount;          
         }); 
@@ -144,7 +144,7 @@ export class CustomAlertComponent {
 
     public loadPageOptions()
     {
-      this.pageSizeOption=environment.pageSizeOption;
+      this.pageSizeOption=[10,20,30];
       if(!this.pageSizeOption.includes(this.totalCount))
           {
             if(this.totalCount>this.maxPageSize)
@@ -233,7 +233,7 @@ export class CustomAlertComponent {
         operator:this.customAlertForm.value.Operator,
         value:this.customAlertForm.value.Value,
         isActive:this.customAlertForm.value.IsActive,
-        actualValue:this.customAlertForm.value.actualValue,
+        actualValue:this.customAlertForm.value.actualValue=="" ? null : this.customAlertForm.value.actualValue,
         startDate:this.startDate,
         endDate:this.endDate
       }
