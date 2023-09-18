@@ -98,12 +98,11 @@
         <div class="tableContainer padding-tb-15">
           <!-- calender filter start-->
           <mat-menu #calenderFilter="matMenu" class="filter-container">
-            <div class="align-center">
-              <div class="calender-alrt-filter" (click)="$event.stopPropagation()">
-                <div class="calender-alrt-filter-header">
-                  <div class="calender-alrt-filter-title">Select</div>
+              <div class="alrt-filter" (click)="$event.stopPropagation()">
+                <div class="alrt-filter-header">
+                  <div class="alrt-filter-title">Select</div>
                 </div>
-                <div class="calender-alrt-filter-section-btn-grp">
+                <div class="alrt-filter-section-btn-grp">
                   <button mat-flat-button class="select-btn" (click)="setSelectedDateRange(1)">
                     1 Day
                   </button>
@@ -118,17 +117,17 @@
                   <div class="calender-alrt-filter-date-range-title">
                     Select Data Range
                   </div>
-                  <div class="calender-alrt-filter-section-colender">
+                  <div class="alrt-filter-section-colender">
                     <mat-calendar #calendar [selected]="selectedRangeValue" (selectedChange)="select($event, calendar)"
                       [dateClass]="isSelected">
                     </mat-calendar>
                   </div>
                 </div>
-                <!-- <div class="calender-alrt-filter-section-date-range">
-                            <div class="calender-alrt-filter-date-range-title">
+                <!-- <div class="alrt-filter-section-date-range">
+                            <div class="alrt-filter-date-range-title">
                               Select Data Range
                             </div>
-                            <div class="calender-alrt-filter-section-calender">
+                            <div class="alrt-filter-section-calender">
                               <mat-form-field>
                                 <mat-label>Enter a date range</mat-label>
                                 <mat-date-range-input [rangePicker]="picker">
@@ -164,7 +163,7 @@
                               </mat-form-field>
                             </div>
                           </div> -->
-                <div class="calender-alrt-filter-action-btn-grp">
+                <div class="alrt-filter-action-btn-grp">
                   <button mat-flat-button class="action-btn" (click)="resetCalender()">
                     Reset
                   </button>
@@ -173,7 +172,6 @@
                   </button>
                 </div>
               </div>
-            </div>
           </mat-menu>
           <mat-menu #SelectionFilter="matMenu" class="filter-container">
             <div class="align-center">
