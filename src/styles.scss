@@ -1138,6 +1138,31 @@ button:hover {
     //css added for dynacard info by swapnil starts
     .dynacardinfo-wrapper {
 
+        .timeframe{
+            background: #ececec;
+            border-radius: 30px;
+            border: 1px solid #ececec;
+            padding: 2px;
+            text-align: right;
+
+            button{
+                margin: 0px 10px;
+                border-radius: 0px;
+                padding: 10px;
+                border:none !important;
+
+                &.selected{
+                    background: #fff !important;
+                    border-radius: 30px;
+                    color: #000;
+
+                }
+            }
+            
+        }
+
+        
+
         .action-btn-info{
             font-size: 12px;
     font-weight: 700;
@@ -1605,7 +1630,12 @@ button:hover {
         }
 
         /*added for right section end*/
-
+        .card-details-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #272C39;
+            margin: 20px 10px;
+        }
 
         .dynacardinfo-card-deatils {
             background-color: #fff;
@@ -1617,12 +1647,7 @@ button:hover {
                 vertical-align: top;
             }
 
-            .card-details-title {
-                font-size: 24px;
-                font-weight: 700;
-                color: #272C39;
-                margin-bottom: 20px;
-            }
+       
 
             .dynacard-cust-table-sec {
                 background-color: #EBECF2 !important;
