@@ -1142,6 +1142,41 @@ button:hover {
 
     //css added for dynacard info by swapnil starts
     .dynacardinfo-wrapper {
+
+        .timeframe{
+            background: #ececec;
+            border-radius: 30px;
+            border: 1px solid #ececec;
+            padding: 2px;
+            text-align: right;
+
+            button{
+                margin: 0px 10px;
+                border-radius: 0px;
+                padding: 10px;
+                border:none !important;
+
+                &.selected{
+                    background: #fff !important;
+                    border-radius: 30px;
+                    color: #000;
+
+                }
+            }
+            
+        }
+
+        
+
+        .action-btn-info{
+            font-size: 12px;
+    font-weight: 700;
+    background-color: #0014DC;
+    border: 1px solid #0014DC;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 40px;
+        }
         /*Css added by mg for dynacard info left panel start*/
 
         .well-search {
@@ -1435,8 +1470,8 @@ button:hover {
 
             .tabrightsec {
                 position: absolute;
-                top: 0px;
-                right: 0px;
+                top: 20px;
+                right: 100px;
                 display: inline-flex;
             }
 
@@ -1604,7 +1639,12 @@ button:hover {
 
 
         /*added for right section end*/
-
+        .card-details-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #272C39;
+            margin: 20px 10px;
+        }
         .card-details-section {
             .mat-mdc-card-content {
                 padding-left: 0px;
@@ -1663,7 +1703,15 @@ button:hover {
                 }
             }
         }
+
+        .secondcard-grid{
+            .tableContainer .mdc-data-table__cell{
+                font-size: 14px !important;
+            }
+        }
     }
+
+    
 
     //css added for dynacard info by swapnil ends
 
