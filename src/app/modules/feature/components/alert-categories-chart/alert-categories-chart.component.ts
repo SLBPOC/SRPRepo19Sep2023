@@ -66,9 +66,9 @@ export class AlertCategoriesChartComponent implements OnInit, OnChanges {
           data: chartSeriesArr,
           point: {
             events: {
-              // click: (oEvent: any) => {
-              //   this.refreshGrid.emit(oEvent.point.name)
-              // }
+              click: (oEvent: any) => {
+                this.refreshGrid.emit(oEvent.point.name)
+              }
             }
           }
         }

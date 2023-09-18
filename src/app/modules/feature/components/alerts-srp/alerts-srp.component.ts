@@ -265,28 +265,19 @@ export class AlertsSrpComponent implements OnInit {
     }
 
     this.service.getAlertList(payload).subscribe((response: any) => {
-      // if (response.hasOwnProperty('data')) {
         this.loading = false;
         this.pageSizeOption = [10, 15, 20, response.totalCount]
-        // this.getPageSizeOptions();
         this.alertList = response.alerts;
         this.barChartData = response.alertcount
-        // this.alertList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
-          // this.paginator.pageIndex = this.currentPage;
           this.paginator.length = response.alertsLevelDto.totalCount;
         });
 
         this.TotalCount = response.alertsLevelDto.totalCount;
         this.getLegendCount();
-        // this.High = response.alertsLevelDto.totalHigh;
-        // this.Medium = response.alertsLevelDto.totalMedium;
-        // this.Low = response.alertsLevelDto.totalLow;
-        // this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
 
-      // }
     },
     (err) => {
       this.errorHandling();
@@ -325,13 +316,13 @@ export class AlertsSrpComponent implements OnInit {
     }
   }
 
-  // filterGridByCategory(category: any) {
-  //   let categoryList: AlertList[];
-  //   categoryList = this.alertList.filter(
-  //     (alert) => alert.category === category
-  //   );
-  //   this.dataSource = new MatTableDataSource<AlertList>(categoryList);
-  // }
+  filterGridByCategory(category: any) {
+    let categoryList: AlertList[];
+    categoryList = this.alertList.filter(
+      (alert) => alert.category === category
+    );
+    this.dataSource = new MatTableDataSource<AlertList>(categoryList);
+  }
 
   snoozeBy(snoozeTime: any, snoozeByTime: number) {
     this.service.snoozeBy(snoozeTime.alertId, snoozeByTime).subscribe((data: any) => {

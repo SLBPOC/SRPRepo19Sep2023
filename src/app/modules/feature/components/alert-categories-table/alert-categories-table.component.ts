@@ -24,8 +24,8 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
   @Input() barChartData: any;
 
 
-  constructor(){}
-
+  // constructor(private dialogRef: MatDialogRef<any>){}
+  constructor() {}
   ngOnInit(){
     this.loading = true;
     this.loadChartData();
@@ -141,6 +141,10 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
 
   onSortChanged(event:any){
 
+  }
+
+  close(){
+    // this.dialogRef.close();
   }
 
 }
