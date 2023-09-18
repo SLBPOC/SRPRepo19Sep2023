@@ -672,22 +672,22 @@ button {
         cursor: pointer;
     }
 
-    .select-filter-header {
-        display: flex;
-        justify-content: space-between;
+    // .select-filter-header {
+    //     display: flex;
+    //     justify-content: space-between;
 
-        .select-filter-title {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-        }
+    //     .select-filter-title {
+    //         color: #fff;
+    //         font-size: 14px;
+    //         font-weight: 700;
+    //     }
 
-        .select-filter-close {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-        }
-    }
+    //     .select-filter-close {
+    //         color: #fff;
+    //         font-size: 14px;
+    //         font-weight: 700;
+    //     }
+    // }
 
     .select-filter-section {
         margin-top: 18px;
@@ -1714,9 +1714,32 @@ button:hover {
     }
 
     .filterborder {
-        border: 1px solid #e6e6e6;
-        border-radius: 8px;
+        // border: 1px solid #e6e6e6;
+        // border-radius: 8px;
         overflow: hidden;
+        .mat-mdc-tab-list {
+            border-bottom: 1px solid #CCCFDE;
+        }
+        .mat-mdc-tab.mdc-tab {
+            height: 52px;
+            flex-grow: 1;
+            .mdc-tab__content .mdc-tab__text-label{
+                font-size: 16px !important;
+                color:#22263D;
+                font-family: "SLB SANS MEDIUM";
+                font-weight: 700;
+                }
+            .mdc-tab-indicator {
+                padding: 0 30px;
+                background: #fff;
+            }
+        }
+        .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label, .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+            color: #000B9E;
+        }
+        .mat-mdc-tab:not(.mat-mdc-tab-disabled) .mdc-tab-indicator__content--underline {
+            border-color: #000B9E;
+        }
     }
 
     .mdc-tab--active {
@@ -2099,16 +2122,16 @@ button:hover {
     }
 
     .select-filter {
-        background: rgba(251, 251, 253, 1) !important;
-        border: 1px solid rgba(110, 114, 141, 1) !important;
-        width: 340px;
-        border-radius: 12px;
+        // background: rgba(251, 251, 253, 1) !important;
+        // border: 1px solid rgba(110, 114, 141, 1) !important;
+        // width: 340px;
+        // border-radius: 12px;
 
-        .select-filter-header {
-            .select-filter-title {
-                color: rgba(5, 20, 100, 1) !important;
-            }
-        }
+        // .select-filter-header {
+        //     .select-filter-title {
+        //         color: rgba(5, 20, 100, 1) !important;
+        //     }
+        // }
 
         .select-filter-section {
             .select-lbl {
