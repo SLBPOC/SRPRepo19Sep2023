@@ -2,24 +2,25 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { WellsService } from '../../services/wells.service';
 import { AlertListService } from '../../services/alert-list.service';
+import { EventListService } from '../../services/event-list.service';
 
-interface ISpmSlider{
-  min: 0,
-  max: 20,
-  start: 0,
-  end: 20
+interface ISpmSlider {
+  min: 0;
+  max: 20;
+  start: 0;
+  end: 20;
 }
-interface IPumpFillageSlider{
-  min: 0,
-  max: 100,
-  start: 0,
-  end: 100
+interface IPumpFillageSlider {
+  min: 0;
+  max: 100;
+  start: 0;
+  end: 100;
 }
-interface IInferredProductionSlider{
-  min: 0,
-  max: 100,
-  start: 0,
-  end: 100
+interface IInferredProductionSlider {
+  min: 0;
+  max: 100;
+  start: 0;
+  end: 100;
 }
 
 @Component({
@@ -27,8 +28,9 @@ interface IInferredProductionSlider{
   templateUrl: './well-filter-and-sort.component.html',
   styleUrls: ['./well-filter-and-sort.component.scss'],
 })
-export class WellFilterAndSortComponent implements OnInit{
-  @Output('filterRefresh') filterRefresh: EventEmitter<any> = new EventEmitter();
+export class WellFilterAndSortComponent implements OnInit {
+  @Output('filterRefresh') filterRefresh: EventEmitter<any> =
+    new EventEmitter();
   panelOpenState: boolean;
   panelOpenState2: boolean;
   panelOpenState3: boolean;
@@ -36,8 +38,10 @@ export class WellFilterAndSortComponent implements OnInit{
   panelOpenState5: boolean;
   panelOpenState6: boolean;
   panelOpenState7: boolean;
-  wellList:any[];
+  wellList: any[];
   providers = new FormControl();
+  selectedWellNames = new FormControl();
+  selectedCategories = new FormControl();
   allProviders!: any;
   commsStatusOptions!: any;
   controllerStatusOptions!: any;
@@ -45,7 +49,8 @@ export class WellFilterAndSortComponent implements OnInit{
   selectedWells = [];
   selectedCategory = [];
   wellNames: any;
-  category: any
+  category: any;
+  eventTypes = [];
   filtersApplied = {
     wellNames: false,
     commsStatus: false,
@@ -53,21 +58,41 @@ export class WellFilterAndSortComponent implements OnInit{
     pumpingTypes: false,
     spm: false,
     pumpFillage: false,
-    inferredProduction: false
+    inferredProduction: false,
+    category: false
   }
   @Input() isAlerts!: any;
-  spmSlider: ISpmSlider = { min: 0, max: 20, start: 0, end: 20 }
-  pumpFillageSlider: IPumpFillageSlider = { min: 0, max: 100, start: 0, end: 100 };
-  inferredProductionSlider: IInferredProductionSlider = { min: 0, max: 100, start: 0, end: 100 }
+  @Input() isEvent!: any;
+  spmSlider: ISpmSlider = { min: 0, max: 20, start: 0, end: 20 };
+  pumpFillageSlider: IPumpFillageSlider = {
+    min: 0,
+    max: 100,
+    start: 0,
+    end: 100,
+  };
+  inferredProductionSlider: IInferredProductionSlider = {
+    min: 0,
+    max: 100,
+    start: 0,
+    end: 100,
+  };
   filteredProviders: any[] = this.allProviders;
 
-  constructor(private service: WellsService, private alertService: AlertListService,) {}
+  constructor(
+    private service: WellsService,
+    private alertService: AlertListService,
+    private eventService: EventListService
+  ) {}
 
   ngOnInit(): void {
     this.getDefaultValues();
     this.isAlerts;
-    if(this.isAlerts){
+    this.isEvent;
+    if (this.isAlerts) {
       this.getAlertDetails();
+    }
+    if (this.isEvent) {
+      this.getEventDetails();
     }
   }
 
@@ -80,15 +105,43 @@ export class WellFilterAndSortComponent implements OnInit{
       this.spmSlider = response.spmSlider;
       this.pumpFillageSlider = response.pumpFillageSlider;
       this.inferredProductionSlider = response.inferredProductionSlider;
-      this.wellList=response.wellNames; 
-    })
+      this.wellList = response.wellNames;
+    });
   }
 
-  getAlertDetails(){
+  getAlertDetails() {
     this.alertService.getDefaultAlertCategory().subscribe((resp) => {
       this.wellNames = resp.wellNames;
       this.category = resp.category;
-    })
+    });
+  }
+  getEventDetails() {
+    debugger;
+    var SearchModel = this.createModel();
+    this.eventService.getEventList(SearchModel).subscribe((resp) => {
+      this.wellNames = resp.wellNames;
+      this.eventTypes = resp.eventType;
+    });
+  }
+
+  ///for Events
+  createModel(this: any) {
+    let dateObj = {
+      fromDate: '',
+      toDate: '',
+    };
+    this.model.pageSize = this.pageSize;
+    this.model.pageNumber = this.pageNumber;
+    this.model.searchText = this.searchText ? this.searchText : '';
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : '';
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : '';
+    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : '';
+    this.model.dateRange = dateObj;
+    this.model.wellNames = this.selectedWells ? this.selectedWells : [];
+    this.model.category = this.selectedCategory ? this.selectedCategory : [];
+    this.model.ids = this.ids ? this.ids : [];
+
+    return this.model;
   }
 
   onInputChange(event: any) {
@@ -98,11 +151,10 @@ export class WellFilterAndSortComponent implements OnInit{
       return prov.includes(searchInput);
     });
   }
-
+  ////For Events
   onOpenChange(searchInput: any) {
-    searchInput.value = "";
+    searchInput.value = '';
     this.filteredProviders = this.allProviders;
-
   }
 
   onWellSelection(selectedWellNamesArray: any) {
@@ -111,9 +163,11 @@ export class WellFilterAndSortComponent implements OnInit{
     // this.updateAppliedFilter();
   }
 
-  onCategorySelection(selectedCategoryArray: any){
+  onCategorySelection(selectedCategoryArray: any) {
     this.selectedCategory = selectedCategoryArray;
   }
+
+  
 
   clearAppliedFilter() {
     this.clearWellNames();
@@ -125,45 +179,60 @@ export class WellFilterAndSortComponent implements OnInit{
     this.clearPumpFillage();
     this.updateAppliedFilter();
     this.filterRefresh.emit({
-      "pageSize": 5,
-      "pageNumber": 1,
-      "searchText": "",
-      "sortColumn": "",
-      "sortDirection": "",
-      "searchStatus": ""
-  })
+      pageSize: 5,
+      pageNumber: 1,
+      searchText: '',
+      sortColumn: '',
+      sortDirection: '',
+      searchStatus: '',
+    });
   }
 
   clearCommStatus() {
-    this.commsStatusOptions.map((element: any) => element.checked = false);
+    this.commsStatusOptions.map((element: any) => (element.checked = false));
     this.filtersApplied.commsStatus = false;
   }
 
   clearControllerStatus() {
-    this.controllerStatusOptions.map((element: any) => element.checked = false);
+    this.controllerStatusOptions.map(
+      (element: any) => (element.checked = false)
+    );
     this.filtersApplied.controllerStatus = false;
   }
 
   clearPumpingTypes() {
-    this.pumpingTypeOptions.map((element: any) => element.checked = false);
+    this.pumpingTypeOptions.map((element: any) => (element.checked = false));
     this.filtersApplied.pumpingTypes = false;
   }
 
   clearWellNames() {
-    this.providers.setValue([]);
+    this.selectedWellNames.setValue([]);
     this.filtersApplied.wellNames = false;
   }
 
-  applyFilter(isChecked, filterOption) {
-      let isCommsStatus = this.commsStatusOptions.find((e: any) => e.value === filterOption);
-      let isControllerStatus = this.controllerStatusOptions.find((e: any) => e.value === filterOption);
+  clearCategories() {
+    this.selectedCategories.setValue([]);
+    this.filtersApplied.category = false;
+  }
 
-    if(isCommsStatus) {
-      const index = this.commsStatusOptions.findIndex((element: any) => element.value === filterOption);
+  applyFilter(isChecked, filterOption) {
+    let isCommsStatus = this.commsStatusOptions.find(
+      (e: any) => e.value === filterOption
+    );
+    let isControllerStatus = this.controllerStatusOptions.find(
+      (e: any) => e.value === filterOption
+    );
+
+    if (isCommsStatus) {
+      const index = this.commsStatusOptions.findIndex(
+        (element: any) => element.value === filterOption
+      );
       this.commsStatusOptions[index].checked = isChecked;
     }
-    if(isControllerStatus) {
-      const index = this.controllerStatusOptions.findIndex((element: any) => element.value === filterOption);
+    if (isControllerStatus) {
+      const index = this.controllerStatusOptions.findIndex(
+        (element: any) => element.value === filterOption
+      );
       this.controllerStatusOptions[index].checked = isChecked;
     }
     this.updateAppliedFilter();
@@ -179,7 +248,6 @@ export class WellFilterAndSortComponent implements OnInit{
     this.pumpFillageSlider.start = 0;
     this.pumpFillageSlider.end = 100;
     this.filtersApplied.pumpFillage = false;
- 
   }
 
   clearInferredProduction() {
@@ -206,65 +274,73 @@ export class WellFilterAndSortComponent implements OnInit{
     //   acc.push(element.value)
     //   return acc;
     // }, [])
-    let payload = {}
+    let payload = {};
     if (this.isAlerts) {
       payload = {
-        "pageSize": 5,
-        "pageNumber": 1,
-        "searchText": "",
-        "sortColumn": "",
-        "sortDirection": "",
-        "searchStatus": "",
-        "dateRange": {
-          "fromDate": "",
-        "toDate": ""
+        pageSize: 5,
+        pageNumber: 1,
+        searchText: '',
+        sortColumn: '',
+        sortDirection: '',
+        searchStatus: '',
+        dateRange: {
+          fromDate: '',
+          toDate: '',
         },
-        "wellNames": this.selectedWells,
-        "category": this.selectedCategory,
-        "ids" : []
-      }
-    }
-    else {
+        wellNames: this.selectedWells,
+        category: this.selectedCategory,
+        ids: [],
+      };
+    } else {
       payload = {
-        "pageSize": 5,
-        "pageNumber": 1,
-        "searchText": "",
-        "sortColumn": "",
-        "sortDirection": "",
-        "searchStatus": "",
-        "wellNames": this.providers.value,
+        pageSize: 5,
+        pageNumber: 1,
+        searchText: '',
+        sortColumn: '',
+        sortDirection: '',
+        searchStatus: '',
+        wellNames: this.providers.value,
         // "commStatus": commStatus,
         // "controllerStatus": controllerStatus,
         // "pumpingType": pumpingType,
-        "spm": {
+        spm: {
           start: this.spmSlider.start,
-          end: this.spmSlider.end
-        }, "pumpFillage": {
-          start: this.pumpFillageSlider.start,
-          end: this.pumpFillageSlider.end
-        }, "inferredProduction": {
-          start: this.inferredProductionSlider.start,
-          end: this.inferredProductionSlider.end
+          end: this.spmSlider.end,
         },
-      }
+        pumpFillage: {
+          start: this.pumpFillageSlider.start,
+          end: this.pumpFillageSlider.end,
+        },
+        inferredProduction: {
+          start: this.inferredProductionSlider.start,
+          end: this.inferredProductionSlider.end,
+        },
+      };
     }
-  this.filterRefresh.emit(payload);
+    this.filterRefresh.emit(payload);
   }
-  
+
   updateAppliedFilter() {
-    this.commsStatusOptions.every((element: any) => element.checked === false) ? this.filtersApplied.commsStatus = false : this.filtersApplied.commsStatus = true;
-    this.controllerStatusOptions.every((element: any) => element.checked === false) ? this.filtersApplied.controllerStatus = false : this.filtersApplied.controllerStatus = true;
-    this.pumpingTypeOptions.every((element: any) => element.checked === false) ? this.filtersApplied.pumpingTypes = false : this.filtersApplied.pumpingTypes = true;
+    this.commsStatusOptions.every((element: any) => element.checked === false)
+      ? (this.filtersApplied.commsStatus = false)
+      : (this.filtersApplied.commsStatus = true);
+    this.controllerStatusOptions.every(
+      (element: any) => element.checked === false
+    )
+      ? (this.filtersApplied.controllerStatus = false)
+      : (this.filtersApplied.controllerStatus = true);
+    this.pumpingTypeOptions.every((element: any) => element.checked === false)
+      ? (this.filtersApplied.pumpingTypes = false)
+      : (this.filtersApplied.pumpingTypes = true);
   }
 
   formatLabel(value: number): string {
-    let percentageValue = Math.round((value)*100) / 100 
+    let percentageValue = Math.round(value * 100) / 100;
     return `${percentageValue}%`;
   }
 
   formatLabelSPM(value: number): string {
-    let percentageValue = Math.round((value)*100) / 100 
+    let percentageValue = Math.round(value * 100) / 100;
     return `${percentageValue}`;
   }
-
 }

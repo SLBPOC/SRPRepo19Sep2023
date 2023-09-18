@@ -25,7 +25,7 @@
                      <input id="searchQueryInput" #searchQueryInput type="text" name="searchQueryInput"
                         [(ngModel)]="searchText" placeholder="Search By Well Name">
                      <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit"
-                        (click)="GetAlertListWithFilters()">
+                        (click)="RefreshGrid()">
                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z" fill="#EDDEDE" (click)="ClearSearch()" />
                           </svg>
@@ -33,13 +33,6 @@
                   </div>
                   <div class="headIcons">
                      <ul>
-                      <li style="cursor:pointer;" (click)="AlertsDownloadExcel()">
-                        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1" y="1" width="36" height="36" rx="18" fill="#000B9E"/>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M27.5 10.499H10.5V20.1035H14.1318V21.6016H9V8.99951H29V21.6016H23.8691V20.1035H27.5V10.499ZM19.7515 12.6304V24.002H24.002L19.002 29L14.002 24.002H18.2524V12.6304H19.7515Z" fill="white"/>
-                        <rect x="1" y="1" width="36" height="36" rx="18" stroke="#FABB42" stroke-width="2" stroke-miterlimit="0" stroke-linejoin="bevel"/>
-                        </svg>
-                    </li>
                         <li (click)="RefreshGrid()"> 
                            <button mat-icon-button class="button-type-none headIcon-btn">
                               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,6 +54,13 @@
                              </svg>
                              </button>
                           </li>
+                          <li style="cursor:pointer;" (click)="AlertsDownloadExcel()">
+                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="36" height="36" rx="18" fill="#000B9E"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M27.5 10.499H10.5V20.1035H14.1318V21.6016H9V8.99951H29V21.6016H23.8691V20.1035H27.5V10.499ZM19.7515 12.6304V24.002H24.002L19.002 29L14.002 24.002H18.2524V12.6304H19.7515Z" fill="white"/>
+                            <rect x="1" y="1" width="36" height="36" rx="18" stroke="#FABB42" stroke-width="2" stroke-miterlimit="0" stroke-linejoin="bevel"/>
+                            </svg>
+                        </li>
                      </ul>
                   </div>
                </div>
@@ -152,7 +152,7 @@
                   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
                     
                      <mat-tab label="Well List">
-                        <app-well-tree-list></app-well-tree-list>>
+                        <app-well-tree-list (searchStr)="getWellTreeSearch($event)"></app-well-tree-list>>
                         <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
                         <!--Well List goes here.  -->
                      </mat-tab>
@@ -171,9 +171,9 @@
                   <div class="category-title">Alert Categories</div>
                    <div class="prioritywrapper">
                      <ul>
-                        <li class="button-type-none priority high" (click)="SeachByStatus('Over Pumping')">High</li>
-                        <li class="button-type-none priority medium" (click)="SeachByStatus('Optimum Pumping')">Medium</li>
-                        <li class="button-type-none priority low" (click)="SeachByStatus('Under Pumping')">Low</li>
+                        <li class="button-type-none priority high">High</li>
+                        <li class="button-type-none priority medium">Medium</li>
+                        <li class="button-type-none priority low">Low</li>
                      </ul>
                   </div>
                </div>
@@ -182,15 +182,15 @@
                         <app-alert-categories-chart [chartData]="categoriesChartData"></app-alert-categories-chart>  
                         <div class="prioritywrapper align-center margin-t-20 position-cust">
                            <ul>
-                              <li class="button-type-none priority high" (click)="SeachByStatus('Over Pumping')">High
+                              <li class="button-type-none priority high" (click)="legendFilter('High')">High
                                  ({{High}})
                               </li>
-                              <li class="button-type-none priority medium" (click)="SeachByStatus('Optimum Pumping')">Medium
+                              <li class="button-type-none priority medium" (click)="legendFilter('Medium')">Medium
                                  ({{Medium}})</li>
-                              <li class="button-type-none priority low" (click)="SeachByStatus('Under Pumping')">Low
+                              <li class="button-type-none priority low" (click)="legendFilter('Low')">Low
                                  ({{Low}})
                               </li>
-                              <li class="button-type-none priority cleared" (click)="SeachByStatus('Under Pumping')">Cleared
+                              <li class="button-type-none priority cleared" (click)="legendFilter('Cleared')">Cleared
                                  ({{Clear}})
                               </li>
                            </ul>
@@ -206,27 +206,45 @@
                <div class="tableContainer padding-tb-15">
                   <div class="table-responsive table-section">
                      <table matSort mat-table [dataSource]="dataSource" (matSortChange)="onSortChanged($event)" class="mat-elevation-z8">
+                        <!-- Priority Status Column -->
+      <ng-container matColumnDef="stat">
+         <th mat-header-cell *matHeaderCellDef></th>
+         <td mat-cell *matCellDef="let element">
+           <!-- <span class="high-priorityline">{{element?.status}}</span>  -->
+           <span
+             [ngClass]="
+               element.alertLevel === 'High'
+                 ? 'high-priorityline'
+                 : element.alertLevel === 'Medium'
+                 ? 'med-priorityline'
+                 : element.alertLevel === 'Low'
+                 ? 'low-priorityline'
+                 : 'cleared-priorityline'
+             "
+           ></span>
+         </td>
+       </ng-container>
                         <!-- Wells Name -->
                         <ng-container matColumnDef="wellName">
-                           <th mat-header-cell *matHeaderCellDef mat-sort-header class="well-cst"> Well Name</th>
+                           <th mat-header-cell *matHeaderCellDef class="well-cst"> Well Name</th>
                            <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" id="well_name" class="align-col" >{{element.wellName}}
                            </td>
                         </ng-container>
                         <!-- Time and date -->
                         <ng-container matColumnDef="date">
-                           <th mat-header-cell *matHeaderCellDef mat-sort-header> Time & Date </th>
+                           <th mat-header-cell *matHeaderCellDef> Time & Date </th>
                            <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" class="align-col"> {{element.date | date : "yyyy-MM-dd HH:MM:ss" }} </td>
                         </ng-container>
                         <!-- Comms Status -->
                         <ng-container matColumnDef="category">
-                           <th mat-sort-header mat-header-cell *matHeaderCellDef>Category</th>
+                           <th mat-header-cell *matHeaderCellDef>Category</th>
                            <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" class="align-col">
                               {{ element.category }}
                            </td>
                         </ng-container>
                         <!-- Comms Status -->
                         <ng-container matColumnDef="desc">
-                           <th mat-sort-header mat-header-cell *matHeaderCellDef>Description</th>
+                           <th mat-header-cell *matHeaderCellDef>Description</th>
                            <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let element" class="align-col">
                               {{ element.desc }}
                            </td>
