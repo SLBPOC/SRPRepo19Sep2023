@@ -18,160 +18,160 @@
 }
 
 
-.calender-alrt-filter {
-    width: 400px;
-    background: #404352;
-    height: auto;
-    border: 1px solid #404352;
-    padding: 17px;
-    margin: auto;
+// .calender-alrt-filter {
+//     width: 400px;
+//     background: #404352;
+//     height: auto;
+//     border: 1px solid #404352;
+//     padding: 17px;
+//     margin: auto;
 
-    .calender-alrt-filter-header {
-        display: flex;
-        justify-content: space-between;
+//     .calender-alrt-filter-header {
+//         display: flex;
+//         justify-content: space-between;
 
-        .calender-alrt-filter-title {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-        }
+//         .calender-alrt-filter-title {
+//             color: #fff;
+//             font-size: 14px;
+//             font-weight: 700;
+//         }
 
-        .calender-alrt-filter-close {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-        }
-    }
+//         .calender-alrt-filter-close {
+//             color: #fff;
+//             font-size: 14px;
+//             font-weight: 700;
+//         }
+//     }
 
-    .calender-alrt-filter-section-btn-grp {
-        display: flex;
-        justify-content: space-around;
-        padding: 12px 30px;
+//     .calender-alrt-filter-section-btn-grp {
+//         display: flex;
+//         justify-content: space-around;
+//         padding: 12px 30px;
 
-        .select-btn {
-            font-size: 10px;
-            background-color: #080912;
-            border: 1px solid #6BA7FF;
-            color: #fff;
-            padding: 6px 16px;
-            height: 35px;
-            border-radius: 40px;
-            width: 96px;
-        }
-    }
+//         .select-btn {
+//             font-size: 10px;
+//             background-color: #080912;
+//             border: 1px solid #6BA7FF;
+//             color: #fff;
+//             padding: 6px 16px;
+//             height: 35px;
+//             border-radius: 40px;
+//             width: 96px;
+//         }
+//     }
 
-    .calender-alrt-filter-section-date-range {
-        .calender-alrt-filter-date-range-title {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-        }
+//     // .calender-alrt-filter-section-date-range {
+//     //     .calender-alrt-filter-date-range-title {
+//     //         color: #fff;
+//     //         font-size: 14px;
+//     //         font-weight: 700;
+//     //     }
 
-        ::ng-deep {
-            .mat-mdc-button.mat-unthemed {
-                --mdc-text-button-label-text-color: #fff;
-            }
+//     //     ::ng-deep {
+//     //         .mat-mdc-button.mat-unthemed {
+//     //             --mdc-text-button-label-text-color: #fff;
+//     //         }
 
-            .mat-calendar-arrow {
-                fill: #fff;
-            }
+//     //         .mat-calendar-arrow {
+//     //             fill: #fff;
+//     //         }
 
-            .mat-calendar-previous-button::after,
-            .mat-calendar-next-button::after {
-                color: #fff;
-            }
+//     //         .mat-calendar-previous-button::after,
+//     //         .mat-calendar-next-button::after {
+//     //             color: #fff;
+//     //         }
 
-            .mat-calendar-table-header {
-                color: #8B90AD;
+//     //         .mat-calendar-table-header {
+//     //             color: #8B90AD;
 
-            }
+//     //         }
 
-            .mat-calendar-body-label,
-            .mat-calendar-body-cell-content {
-                color: #EBECF2;
-            }
+//     //         .mat-calendar-body-label,
+//     //         .mat-calendar-body-cell-content {
+//     //             color: #EBECF2;
+//     //         }
 
-            .mat-calendar-table-header-divider::after {
-                background: #8B90AD;
-            }
+//     //         .mat-calendar-table-header-divider::after {
+//     //             background: #8B90AD;
+//     //         }
 
-            .mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
-                border-color: #6BA7FF;
-            }
+//     //         .mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+//     //             border-color: #6BA7FF;
+//     //         }
 
-            .mat-calendar-body-selected {
-                background-color: #3A83FF;
-                color: #fff !important;
-                border-color: #FABB42;
-                border-width: 2px !important;
-            }
+//     //         .mat-calendar-body-selected {
+//     //             background-color: #3A83FF;
+//     //             color: #fff !important;
+//     //             border-color: #FABB42;
+//     //             border-width: 2px !important;
+//     //         }
 
-            .mat-calendar-body-in-range::before {
-                background: #505575;
-            }
-        }
+//     //         .mat-calendar-body-in-range::before {
+//     //             background: #505575;
+//     //         }
+//     //     }
 
-    }
+//     // }
 
-    .calender-alrt-filter-action-btn-grp {
-        display: flex;
-        justify-content: center;
-        padding: 30px 30px;
-        border-top: 1px solid #313652;
+//     // .calender-alrt-filter-action-btn-grp {
+//     //     display: flex;
+//     //     justify-content: center;
+//     //     padding: 30px 30px;
+//     //     border-top: 1px solid #313652;
 
-        .action-btn {
-            font-size: 10px;
-            background-color: #080912;
-            border: 1px solid #6BA7FF;
-            color: #fff;
-            padding: 6px 16px;
-            height: 35px;
-            border-radius: 40px;
-            width: 112px;
-        }
+//     //     .action-btn {
+//     //         font-size: 10px;
+//     //         background-color: #080912;
+//     //         border: 1px solid #6BA7FF;
+//     //         color: #fff;
+//     //         padding: 6px 16px;
+//     //         height: 35px;
+//     //         border-radius: 40px;
+//     //         width: 112px;
+//     //     }
 
-        .active {
-            background-color: #6BA7FF;
-            color: #080912;
-        }
-    }
-}
+//     //     .active {
+//     //         background-color: #6BA7FF;
+//     //         color: #080912;
+//     //     }
+//     // }
+// }
 
 
 
 .select-filter {
-    width: 340px;
-    background: #404352;
-    height: auto;
-    border: 1px solid #404352;
-    padding: 17px;
-    margin: auto;
+    // width: 340px;
+    // background: #404352;
+    // height: auto;
+    // border: 1px solid #404352;
+    // padding: 17px;
+    // margin: auto;
 
 
-    .button-type-none {
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
+    // .button-type-none {
+    //     background: none;
+    //     border: none;
+    //     cursor: pointer;
+    // }
 
-    .select-filter-header {
-        display: flex;
-        justify-content: space-between;
+    // .select-filter-header {
+    //     display: flex;
+    //     justify-content: space-between;
 
-        .select-filter-title {
-            color: #fff;
-            font-size: 18px;
-            font-weight: 700;
-            padding: 10px 0px;
-        }
+    //     .select-filter-title {
+    //         color: #fff;
+    //         font-size: 18px;
+    //         font-weight: 700;
+    //         padding: 10px 0px;
+    //     }
 
-        .select-filter-close {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
+    //     .select-filter-close {
+    //         color: #fff;
+    //         font-size: 14px;
+    //         font-weight: 700;
             
-        }
-    }
+    //     }
+    // }
 
     .select-filter-section {
         margin-top: 0px;
@@ -416,10 +416,10 @@ td#well_name>a:hover {
             width: 90% !important;
         }
     }
-    .mat-mdc-tab.mdc-tab {
-        height: 75px !important;
-        flex-grow: 1 !important;
-    }
+    // .mat-mdc-tab.mdc-tab {
+    //     height: 75px !important;
+    //     flex-grow: 1 !important;
+    // }
 
     .mat-mdc-tab .mdc-tab__text-label{
         font-size: 21px !important;
@@ -485,10 +485,10 @@ td#well_name>a:hover {
             width: 90% !important;
         }
     }
-    .mat-mdc-tab.mdc-tab {
-        height: 48px;
-        flex-grow: 1 !important;
-    }
+    // .mat-mdc-tab.mdc-tab {
+    //     height: 48px;
+    //     flex-grow: 1 !important;
+    // }
     // .tableContainer .mdc-data-table__cell {
     //     padding: 15px !important;
     //     color: #ADB1C7 !important;

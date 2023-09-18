@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 @Component({
   selector: 'app-alert-categories-chart',
@@ -7,6 +7,7 @@ import * as Highcharts from 'highcharts';
 })
 export class AlertCategoriesChartComponent implements OnInit, OnChanges {
   @Input() chartData: any;
+  @Output('refreshGrid') refreshGrid: EventEmitter<any> = new EventEmitter();
 
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options;
@@ -65,8 +66,8 @@ export class AlertCategoriesChartComponent implements OnInit, OnChanges {
           data: chartSeriesArr,
           point: {
             events: {
-              click: function(oEvent: any) {
-                 console.log("chartOptions-->", oEvent.point.name);
+              click: (oEvent: any) => {
+                this.refreshGrid.emit(oEvent.point.name)
               }
             }
           }

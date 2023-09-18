@@ -16,51 +16,54 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./custom-alert.component.scss']
 })
 export class CustomAlertComponent {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @Input() selectedRangeValue!: DateRange<Date>;
-  @Output() selectedRangeValueChange = new EventEmitter<DateRange<Date>>();
+  @ViewChild(MatPaginator) Paginator!: MatPaginator;
+  @Input() SelectedRangeValue!: DateRange<Date>;
+  @Output() SelectedRangeValueChange = new EventEmitter<DateRange<Date>>();
 
 
   // public dateControl = new FormControl(new Date(2021,9,4,5,6,7));
   //     public dateControlMinMax = new FormControl(new Date());
-      customAlertForm = this.fb.group({
+      CustomAlertForm = this.fb.group({
+        CustomAlertId:[],
       CustomAlertName: ['', [Validators.required]],
-      wellName: ['', [Validators.required]],
+      WellName: ['', [Validators.required]],
       NotificationType: ['', [Validators.required]],
       Priority: ['', [Validators.required]],
       Category: ['', [Validators.required]],
       Operator: ['', [Validators.required]],
       Value: ['', [Validators.required]],
-      actualValue: ['', [Validators.required]],
+      ActualValue: ['', [Validators.required]],
       IsActive: ['', [Validators.required]],
-      dateRange: ['', [Validators.required]]       
+      DateRange: ['', [Validators.required]]       
     });
 
-  customTime: any;
-  date = new Date();
-  public disabled = false;
-  public showSpinners = true;
-  public showSeconds = true;
-  public touchUi = false;
-  public enableMeridian = false; 
-  public stepHour = 1;
-  public stepMinute = 1;
-  public stepSecond = 1;
-  public color: ThemePalette = 'primary';
-  startDate:any;
-  endDate:any;
-  disableSelect:any;
-  selected!: Date;
-  isNumeric:boolean = false;
-  selectionModel!:any;
+  //CustomTime: any;
+  CustomDate = new Date();
+  public Disabled = false;
+  public ShowSpinners = true;
+  public ShowSeconds = true;
+  //public TouchUi = false;
+  public EnableMeridian = false; 
+  public StepHour = 1;
+  public StepMinute = 1;
+  public StepSecond = 1;
+  public Color: ThemePalette = 'primary';
+  StartDate:any;
+  EndDate:any;
+ // DisableSelect:any;
+  //Selected!: Date;
+  IsNumeric:boolean = false;
+  SelectionModel!:any;
   ActualValue!:any;
-  submitted = false;
-  dateFlag=false;
-  valueFlag=false;
+  AlertId!:any;
+  Submitted = false;
+  DateFlag=false;
+  ValueFlag=false;
+  IsUpdateCondition = false;  
   // Grid column variables
-  alertData!: customAlert[];
-    public displayedColumns = ['CustomAlertName', 'WellName', 'IsActive'];
-    dataSource:any;
+  AlertData!: customAlert[];
+    public DisplayedColumns = ['CustomAlertName', 'WellName', 'IsActive'];
+    DataSource:any;
 
   // Filter variable
   well:any[];
@@ -69,7 +72,7 @@ export class CustomAlertComponent {
   category:any;
   operator:any;
   value:any;
-  isActive:boolean=true;
+  IsActiveValue:boolean=true;
  
   //Pagination variables
   maxPageSize: number = Math.max(...environment.pageSizeOption);
@@ -98,19 +101,19 @@ export class CustomAlertComponent {
       
 
   selectedChange(m: any) {
-      if (!this.selectedRangeValue?.start || this.selectedRangeValue?.end) {
-        this.selectedRangeValue = new DateRange<Date>(m, null);
+      if (!this.SelectedRangeValue?.start || this.SelectedRangeValue?.end) {
+        this.SelectedRangeValue = new DateRange<Date>(m, null);
       } else {
-        const start = this.selectedRangeValue.start;
+        const start = this.SelectedRangeValue.start;
         const end = m;
         if (end < start) {
-          this.selectedRangeValue = new DateRange<Date>(end, start);
+          this.SelectedRangeValue = new DateRange<Date>(end, start);
         } else {
-          this.selectedRangeValue = new DateRange<Date>(start, end);
+          this.SelectedRangeValue = new DateRange<Date>(start, end);
         }
       }
-      this.selectedRangeValueChange.emit(this.selectedRangeValue);
-      this.dateFlag = false;
+      this.SelectedRangeValueChange.emit(this.SelectedRangeValue);
+      this.DateFlag = false;
   }
 
     //Create Model for search
@@ -123,21 +126,21 @@ export class CustomAlertComponent {
   }
 
   getAlertDetails(){
-    this.submitted = false;
+    this.Submitted = false;
     var SearchModel = this.createModel();
       this.CustomAlertService.displayDetails(SearchModel)
         .subscribe(response=>{          
-          this.alertData = response.customAlertDto;
+          this.AlertData = response.customAlertDto;
           this.well=response.wellFilterListDetails;
           this.totalCount=response.countDetails.totalCount;
          
-          this.dataSource = new MatTableDataSource<customAlert>(this.alertData);
-          this.dataSource.sort = this.sort;
+          this.DataSource = new MatTableDataSource<customAlert>(this.AlertData);
+          this.DataSource.sort = this.sort;
           
         setTimeout(() => {
           this.loadPageOptions();    
-          this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.countDetails.totalCount;          
+          this.Paginator.pageIndex = this.currentPage;
+          this.Paginator.length = response.countDetails.totalCount;          
         }); 
       })
     }
@@ -178,66 +181,71 @@ export class CustomAlertComponent {
     }
   
     applyDateRangeFilter() {
-      let fromDate = this.selectedRangeValue.start;
-      let toDate = this.selectedRangeValue.end;
-      this.startDate = fromDate?.getFullYear() + '-' + this.getSelectedMonth(fromDate?.getMonth()) + '-' + this.getSelectedDay(fromDate?.getDate());
-      this.endDate = toDate?.getFullYear() + '-' + this.getSelectedMonth(toDate?.getMonth()) + '-' + this.getSelectedDay(toDate?.getDate()); 
+      let fromDate = this.SelectedRangeValue.start;
+      let toDate = this.SelectedRangeValue.end;
+      this.StartDate = fromDate?.getFullYear() + '-' + this.getSelectedMonth(fromDate?.getMonth()) + '-' + this.getSelectedDay(fromDate?.getDate());
+      this.EndDate = toDate?.getFullYear() + '-' + this.getSelectedMonth(toDate?.getMonth()) + '-' + this.getSelectedDay(toDate?.getDate()); 
     }
 
     onChange()
     {
-      if(this.selectionModel == this.value[0])
+      if(this.SelectionModel == this.value[0])
       {
-        this.isNumeric = true;
-        this.valueFlag = false;
+        this.IsNumeric = true;
+        this.ValueFlag = false;
       }
       else
       {
-      this.isNumeric = false;
-      this.valueFlag = true;
+      this.IsNumeric = false;
+      this.ValueFlag = true;
       }
     }
 
+    CustomDateTime()
+    {
+      let timeZone = this.CustomDate.toISOString().slice(-4);
+      let time = this.CustomDate.toTimeString().slice(0,8);
+      let CustomTime = "T" + time + "." + timeZone;
+      this.applyDateRangeFilter();
+      this.StartDate = this.StartDate +  CustomTime;      
+      this.EndDate = this.EndDate +  CustomTime;
+    }
+
     onSubmit(){
-      if(this.customAlertForm.value!=null)
+      if(this.CustomAlertForm.value!=null)
       {        
-        this.submitted = true;
-        this.dateFlag = true;
-        if(this.isNumeric == true)
+        this.Submitted = true;
+        this.DateFlag = true;
+        if(this.IsNumeric == true)
         {
-          if(this.customAlertForm.value.actualValue=="" || this.customAlertForm.value.actualValue==undefined)
+          if(this.CustomAlertForm.value.ActualValue=="" || this.CustomAlertForm.value.ActualValue==undefined)
             {
-              this.valueFlag = false;
+              this.ValueFlag = false;
             }
             else
             {
-              this.valueFlag = true;
+              this.ValueFlag = true;
             }
         }
         // else{
         //   this.flag1 = false;
         // }
       let obj:any;
-      let timeZone = this.date.toISOString().slice(-4);
-      let time = this.date.toTimeString().slice(0,8);
-      let customTime = "T" + time + "." + timeZone;
-      this.applyDateRangeFilter();
-      this.startDate = this.startDate +  customTime;      
-      this.endDate = this.endDate +  customTime;
+      this.CustomDateTime();
       obj = { 
-        wellName:this.customAlertForm.value.wellName,
-        customAlertName:this.customAlertForm.value.CustomAlertName,     
-        notificationType:this.customAlertForm.value.NotificationType,
-        priority:this.customAlertForm.value.Priority,
-        category:this.customAlertForm.value.Category,
-        operator:this.customAlertForm.value.Operator,
-        value:this.customAlertForm.value.Value,
-        isActive:this.customAlertForm.value.IsActive,
-        actualValue:this.customAlertForm.value.actualValue=="" ? null : this.customAlertForm.value.actualValue,
-        startDate:this.startDate,
-        endDate:this.endDate
+        wellName:this.CustomAlertForm.value.WellName,
+        customAlertName:this.CustomAlertForm.value.CustomAlertName,     
+        notificationType:this.CustomAlertForm.value.NotificationType,
+        priority:this.CustomAlertForm.value.Priority,
+        category:this.CustomAlertForm.value.Category,
+        operator:this.CustomAlertForm.value.Operator,
+        value:this.CustomAlertForm.value.Value,
+        isActive:this.CustomAlertForm.value.IsActive,
+        actualValue:this.CustomAlertForm.value.ActualValue=="" ? null : this.CustomAlertForm.value.ActualValue,
+        startDate:this.StartDate,
+        endDate:this.EndDate
       }
-      if(this.valueFlag == true)
+      if(this.ValueFlag == true)
       {
         this.CustomAlertService.addCustomAlert(obj).subscribe((res)=>{ 
         if(res!=null)
@@ -246,74 +254,121 @@ export class CustomAlertComponent {
         }     
           this.getAlertDetails();     
           this.clear();
-          this.dateFlag = false;
-          this.valueFlag = false;
+          this.IsNumeric = false;
+          this.DateFlag = false;
+          this.ValueFlag = false;
         });
       }
     }
-    this.dateFlag=false;
-    this.valueFlag = true;
+    this.DateFlag=false;
+    this.ValueFlag = true;
     }
 
-    editAlert(Id:number)
+    EditAlert(alertId:number)
     {
-      
-      var GetRecord=this.alertData.filter(a=> a.id==Id)
+      this.CloneAlert(alertId);
+      this.IsUpdateCondition = true;
+    }
+
+    UpdateAlert()
+    {
+      let obj:any;
+      this.CustomDateTime();
+      var actual=null;
+      if(this.CustomAlertForm.value.Value=="Any numerical value")
+      {
+        actual=this.CustomAlertForm.value.ActualValue== ""? null : this.CustomAlertForm.value.ActualValue;
+        
+      }
+      obj = { 
+        id:this.AlertId,
+        wellName:this.CustomAlertForm.value.WellName,
+        customAlertName:this.CustomAlertForm.value.CustomAlertName,     
+        notificationType:this.CustomAlertForm.value.NotificationType,
+        priority:this.CustomAlertForm.value.Priority,
+        category:this.CustomAlertForm.value.Category,
+        operator:this.CustomAlertForm.value.Operator,
+        value:this.CustomAlertForm.value.Value,
+        isActive:this.CustomAlertForm.value.IsActive,
+        actualValue:actual,//this.CustomAlertForm.value.ActualValue== ? null : this.CustomAlertForm.value.ActualValue,
+        startDate:this.StartDate,
+        endDate:this.EndDate
+      }
+      this.CustomAlertService.EditCustomAlert(obj).subscribe((res)=>{ 
+        if(res!=null)
+        {
+          alert("Records Updated successfully");
+        }     
+          this.getAlertDetails();     
+          this.clear();
+          this.IsUpdateCondition = false;
+        });
+    }
+
+    CloneAlert(Id:number)
+    {      
+      this.IsUpdateCondition=false;
+      var GetRecord=this.AlertData.filter(a=> a.id==Id)
       if(GetRecord != null)
       {
-        this.isActive=GetRecord[0].isActive;
-        this.customAlertForm.controls.CustomAlertName.setValue(GetRecord[0].customAlertName);
-        this.customAlertForm.controls.wellName.setValue(GetRecord[0].wellName);
-        this.customAlertForm.controls.NotificationType.setValue(GetRecord[0].notificationType);
-        this.customAlertForm.controls.NotificationType.setValue(GetRecord[0].notificationType);        
-        this.customAlertForm.controls.Priority.setValue(GetRecord[0].priority);
-        this.customAlertForm.controls.Category.setValue(GetRecord[0].category);
-        this.customAlertForm.controls.Operator.setValue(GetRecord[0].operator);
-        this.customAlertForm.controls.Value.setValue(GetRecord[0].value);
+        this.AlertId = GetRecord[0].id;
+        this.IsActiveValue=GetRecord[0].isActive;
+        this.CustomAlertForm.controls.CustomAlertName.setValue(GetRecord[0].customAlertName);
+        this.CustomAlertForm.controls.WellName.setValue(GetRecord[0].wellName);
+        this.CustomAlertForm.controls.NotificationType.setValue(GetRecord[0].notificationType);
+        this.CustomAlertForm.controls.NotificationType.setValue(GetRecord[0].notificationType);        
+        this.CustomAlertForm.controls.Priority.setValue(GetRecord[0].priority);
+        this.CustomAlertForm.controls.Category.setValue(GetRecord[0].category);
+        this.CustomAlertForm.controls.Operator.setValue(GetRecord[0].operator);
+        this.CustomAlertForm.controls.Value.setValue(GetRecord[0].value);
         this.ActualValue=GetRecord[0].actualValue;
         
         if(this.ActualValue!=null)
         {
-          this.isNumeric=true;
+          this.IsNumeric=true;
         }
         else
         {
-          this.isNumeric=false;
+          this.IsNumeric=false;
         }
         let startDate = GetRecord[0].startDate;
         let sDate = startDate.slice(0,10);
         let endDate = GetRecord[0].endDate;
         let eDate =  endDate.slice(0,10);
-        this.selectedRangeValue = new DateRange<Date>(new Date(sDate), new Date(eDate));       
+        this.SelectedRangeValue = new DateRange<Date>(new Date(sDate), new Date(eDate));       
       }
     }
 
     deleteAlert(id:number)
     {
+      if(confirm('Are you sure to delete record?'))
       this.CustomAlertService.deleteCustomAlert(id).subscribe((res)=>{
+        alert('Record deleted successfully');
         this.getAlertDetails();
       })
     }
 
     toggle(id:number,event:any){
       let val=event.checked;
-      this.CustomAlertService.isActiveCustomAlert(id,val).subscribe((res)=>{        
+      this.CustomAlertService.isActiveCustomAlert(id,val).subscribe((res)=>{    
+        this.getAlertDetails();    
       })
     }
 
     clear()
     {
-      this.submitted = false;
-      this.dateFlag = false;
-      this.customAlertForm.get('CustomAlertName')?.reset();
-      this.customAlertForm.get('wellName')?.reset();
-      this.customAlertForm.get('NotificationType')?.reset();
-      this.customAlertForm.get('Priority')?.reset();
-      this.customAlertForm.get('Category')?.reset();
-      this.customAlertForm.get('Operator')?.reset();
-      this.customAlertForm.get('Value')?.reset();
-      this.customAlertForm.get('actualValue')?.reset();
-      this.selectedRangeValue = new DateRange<Date>(null, null);
+      this.Submitted = false;
+      this.DateFlag = false;
+      this.IsNumeric = false;
+      this.CustomAlertForm.get('CustomAlertName')?.reset();
+      this.CustomAlertForm.get('WellName')?.reset();
+      this.CustomAlertForm.get('NotificationType')?.reset();
+      this.CustomAlertForm.get('Priority')?.reset();
+      this.CustomAlertForm.get('Category')?.reset();
+      this.CustomAlertForm.get('Operator')?.reset();
+      this.CustomAlertForm.get('Value')?.reset();
+      this.CustomAlertForm.get('ActualValue')?.reset();
+      this.SelectedRangeValue = new DateRange<Date>(null, null);
     }
 
     cancel()
