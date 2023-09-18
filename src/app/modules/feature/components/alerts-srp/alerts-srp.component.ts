@@ -270,6 +270,7 @@ export class AlertsSrpComponent implements OnInit {
         this.pageSizeOption = [10, 15, 20, response.totalCount]
         // this.getPageSizeOptions();
         this.alertList = response.alerts;
+        this.barChartData = response.alertcount
         // this.alertList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
@@ -323,6 +324,14 @@ export class AlertsSrpComponent implements OnInit {
         break;
     }
   }
+
+  // filterGridByCategory(category: any) {
+  //   let categoryList: AlertList[];
+  //   categoryList = this.alertList.filter(
+  //     (alert) => alert.category === category
+  //   );
+  //   this.dataSource = new MatTableDataSource<AlertList>(categoryList);
+  // }
 
   snoozeBy(snoozeTime: any, snoozeByTime: number) {
     this.service.snoozeBy(snoozeTime.alertId, snoozeByTime).subscribe((data: any) => {
