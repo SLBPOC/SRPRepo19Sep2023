@@ -61,7 +61,7 @@
                               </svg>
                            </button>
                         </li>
-                        <li>
+                        <li style="cursor:pointer;" (click)="GetWellDetailsWithFiltersReport()">
                            <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <rect x="1" y="1" width="36" height="36" rx="18" fill="#000B9E" />
@@ -157,7 +157,11 @@
                      </div>
                </mat-menu>
                <!-- select filter end -->
-               <div class="table-responsive table-section">
+               <!-- <div class="table-responsive table-section" #TABLE #table style="display: none;">
+                  <table matSort mat-table [dataSource]="dataSourceReport">
+                  </table>
+               </div> -->
+               <div class="table-responsive table-section" #TABLE #table>
                   <table matSort mat-table [dataSource]="dataSource" (matSortChange)="onSortChanged($event)">
                      <!-- Priority Status Column -->
                      <ng-container matColumnDef="WellStatus">
