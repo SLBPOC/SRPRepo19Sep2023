@@ -1572,33 +1572,36 @@ button:hover {
             min-height: 500px;
         }
 
-        .tableContainer {
-            .mat-mdc-row td:first-child {
-                width: auto;
-            }
+        .left-sec-table {
+            .tableContainer {
+                .mat-mdc-row td:first-child {
+                    width: auto;
+                }
 
-            .align-center {
-                text-align: center;
-            }
+                .align-center {
+                    text-align: center;
+                }
 
-            .mat-mdc-row td:nth-child(3) {
-                width: 30%;
-            }
+                .mat-mdc-row td:nth-child(3) {
+                    width: 30%;
+                }
 
-            .svg1 {
-                display: inline;
-            }
+                .svg1 {
+                    display: inline;
+                }
 
-            img,
-            svg {
-                vertical-align: text-bottom;
-            }
+                img,
+                svg {
+                    vertical-align: text-bottom;
+                }
 
-            .mdc-data-table__cell,
-            .mdc-data-table__header-cell {
-                padding: 0px 6px !important;
+                .mdc-data-table__cell,
+                .mdc-data-table__header-cell {
+                    padding: 0px 6px !important;
+                }
             }
         }
+
 
         /*added for right section end*/
 
