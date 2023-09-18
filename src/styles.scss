@@ -22,15 +22,19 @@ button,
 a {
     cursor: pointer;
 }
+
 .margin-l-10 {
     margin-left: 10px;
 }
+
 .margin-l-15 {
     margin-left: 15px;
 }
+
 .margin-t-10 {
     margin-top: 10px;
 }
+
 .align-center {
     text-align: center !important;
 }
@@ -1135,6 +1139,7 @@ button:hover {
 
 // light theme css start from here.
 .light-theme {
+
     //css added for dynacard info by swapnil starts
     .dynacardinfo-wrapper {
         /*Css added by mg for dynacard info left panel start*/
@@ -1273,7 +1278,7 @@ button:hover {
 
                         list-style: none;
 
-                        padding: 0px 10px 10px 10px;
+                        padding: 0px 0px 10px 0px;
 
 
 
@@ -1529,6 +1534,7 @@ button:hover {
                             font-family: var(--font-Slb-San-Medium);
 
                             line-height: 23px;
+
                             span {
                                 margin: 3px 10px 3px 0px;
                                 vertical-align: middle;
@@ -1561,7 +1567,7 @@ button:hover {
             padding: 0px;
             float: left;
             display: block;
-            margin: 10px;
+            margin: 10px 0px;
             width: 100%;
             min-height: 500px;
         }
@@ -1596,6 +1602,12 @@ button:hover {
 
         /*added for right section end*/
 
+        .card-details-section {
+            .mat-mdc-card-content {
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+        }
 
         .dynacardinfo-card-deatils {
             background-color: #fff;
@@ -1612,6 +1624,7 @@ button:hover {
                 font-weight: 700;
                 color: #272C39;
                 margin-bottom: 20px;
+                font-family: var(--font-Slb-San-bold)
             }
 
             .dynacard-cust-table-sec {
@@ -2538,8 +2551,9 @@ button:hover {
                 svg {
                     width: 16px;
                     height: 16px;
+
                     path {
-                        fill:#6D7189 ;
+                        fill: #6D7189;
                     }
                 }
             }
