@@ -47,7 +47,7 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
     let high = {}
     let medium = {}
     let low = {}
-    for (let i = 0; i < this.barChartData.length; i++) {
+    for (let i = 0; i < this.barChartData?.length; i++) {
       high = {
         name: '',
         y: this.barChartData[i].high,
