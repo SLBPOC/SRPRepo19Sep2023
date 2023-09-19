@@ -45,12 +45,16 @@ export class AlertListService {
     return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/Get`,payload);
   }
 
+  getSnoozeByWellName(wellName: string) {
+    return this.http.post<any>(`${this.baseUrl}Alerts/GetSnoozbyWells?wellId=${wellName}`,wellName);
+  }
+
   getDefaultAlertCategory(payload?: any): Observable<any> {
     return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/GetDefaultValues`,payload);
   }
 
   getDefaultEventCategory(payload?: any): Observable<any> {
-    return this.http.post<EventList[]>(this._apiUrl + 'api/Event/Get', payload);
+    return this.http.post<EventList[]>(this.baseUrl + 'api/Event/Get', payload);
   }
 
   clearAlert(id: number, comments: string, payload?: any): Observable<any> {

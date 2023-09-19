@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import * as Highcharts from 'highcharts';
+import { AlertListService } from '../../services/alert-list.service';
 
 @Component({
   selector: 'app-alert-categories-table',
@@ -22,10 +23,10 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
   pageSizeOption = [10, 20, 30]
 
   @Input() barChartData: any;
+  snoozeData!: any[];
 
+  constructor(private alertService: AlertListService) {}
 
-  // constructor(private dialogRef: MatDialogRef<any>){}
-  constructor() {}
   ngOnInit(){
     this.loading = true;
     this.loadChartData();
@@ -143,8 +144,11 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
 
   }
 
-  close(){
-    // this.dialogRef.close();
+  getSnoozeByWellName(wellName: string) {
+    wellName = 'W012';
+    this.alertService.getSnoozeByWellName(wellName).subscribe((data: any) => {
+      this.snoozeData = data;
+    })
   }
 
 }
