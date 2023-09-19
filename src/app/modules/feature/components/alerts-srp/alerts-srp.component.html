@@ -90,7 +90,7 @@
                                </svg>
                            </button>
                        </div>
-                       <div class="alrt-filter-section-btn-grp">
+                       <div class="alrt-filter-section-btn-grp" (click)="$event.stopPropagation()">
                            <button mat-flat-button class="select-btn"
                            (click)="setDateSelected(1)">1 Day</button>
                            <button mat-flat-button class="select-btn"
@@ -206,7 +206,7 @@
 
       <div class="col-md-12">
          <div class="col-md-3 well-list-search">
-            <div class="" >
+            <div class="h-100">
                <div class="col-md-12 p-0 filterborder">
                   <!-- <div class="d-flex justify-content-end">
                      <mat-icon style="cursor: pointer; color: white;font-size: 20px;">close</mat-icon>
