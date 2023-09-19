@@ -235,38 +235,38 @@
         }
       }
 
-      .checkbox-section p {
-        margin: 0 !important;
-      }
+      // .checkbox-section p {
+      //   margin: 0 !important;
+      // }
 
-      .mat-mdc-checkbox-touch-target {
-        height: 36px;
-        width: 36px;
-      }
+      // .mat-mdc-checkbox-touch-target {
+      //   height: 36px;
+      //   width: 36px;
+      // }
 
-      .mdc-checkbox .mdc-checkbox__background {
-        top: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
-        left: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
-      }
+      // .mdc-checkbox .mdc-checkbox__background {
+      //   top: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
+      //   left: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
+      // }
 
-      .mdc-checkbox {
-        height: 12px;
-        flex: 0 0 14px;
-      }
+      // .mdc-checkbox {
+      //   height: 12px;
+      //   flex: 0 0 14px;
+      // }
 
-      .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not( :indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
-        border-color: #adb1c7;
-        background-color: #080912;
-      }
+      // .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not( :indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
+      //   border-color: #adb1c7;
+      //   background-color: #080912;
+      // }
 
-      .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
-        border-color: #fabb42;
-        background-color: #3a83ff;
-      }
+      // .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
+      //   border-color: #fabb42;
+      //   background-color: #3a83ff;
+      // }
 
-      .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
-        color: #080912;
-      }
+      // .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
+      //   color: #080912;
+      // }
     }
   }
 
@@ -348,10 +348,10 @@ table {
   max-width: 124px;
 }
 
-.tableContainer {
-  padding: 15px;
-}
+// .tableContainer {
+//   padding: 15px;
+// }
 
-.padding-tb-15 {
-  padding: 15px 0px;
-}
+// .padding-tb-15 {
+//   padding: 15px 0px;
+// }

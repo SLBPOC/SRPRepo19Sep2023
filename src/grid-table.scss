@@ -1,7 +1,6 @@
 //Grid Table common Css
 .tableContainer {
-    // padding: 20px;
-
+    padding: 15px;
     .mat-mdc-row {
         td {
             &:first-child {
@@ -736,6 +735,16 @@
             background-color: #FBFBFD;
             color: #051464;
             border-color: #6BA7FF;
+        }
+        .alrt-filter-section-btn-grp .select-btn:active {
+            background-color: #0014DC;
+            color: #fff;
+            border-color: #0014DC;
+        }
+        .alrt-filter-section-btn-grp .select-btn .active {
+            background-color: #0014DC;
+            color: #fff;
+            border-color: #0014DC;
         }
         .alrt-filter-section-date-range .alrt-filter-date-range-title {
             color: #22263D;

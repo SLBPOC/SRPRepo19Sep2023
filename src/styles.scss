@@ -1717,6 +1717,10 @@ button:hover {
         // border: 1px solid #e6e6e6;
         // border-radius: 8px;
         overflow: hidden;
+        height: 100%;
+        .mat-mdc-tab-group {
+            height: 98%;
+        }
         .mat-mdc-tab-list {
             border-bottom: 1px solid #CCCFDE;
         }
@@ -1964,6 +1968,7 @@ button:hover {
             border-radius: 8px;
             border: 1px solid #ADB1C7;
             background-color: #EFF0F5;
+            color: #22263D;
         }
 
         .mdc-slider .mdc-slider__value-indicator::after,
@@ -2218,6 +2223,7 @@ button:hover {
 
     .mat-mdc-tab-body-wrapper {
         background-color: #FBFBFD;
+        height: 100%;
     }
 
     .well-list-section {
@@ -2322,6 +2328,7 @@ button:hover {
                 p {
                     width: 50%;
                     float: left;
+                    margin-bottom: 0;
                     // .mat-mdc-checkbox 
                     // {
                     //     label 
