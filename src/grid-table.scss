@@ -749,7 +749,7 @@
         .alrt-filter-section-date-range .alrt-filter-date-range-title {
             color: #22263D;
         }
-        .alrt-filter-action-btn-grp {
+        .alrt-filter-action-btn-grp, .alrt-confirmation-action-btn-grp {
             .action-btn {
                 background-color: #fff;
                 border-color: #CCCFDE;
@@ -997,6 +997,28 @@
         padding: 12px 30px;
         border-top: 1px solid #999999;
 
+        .action-btn {
+            font-size: 12px;
+            background-color: #080912;
+            border: 1px solid #6BA7FF;
+            color: #fff;
+            padding: 10px 16px;
+            // height: 35px;
+            border-radius: 40px;
+            // width: 112px;
+            font-weight: 700;
+            line-height: 15px;
+        }
+
+        .active {
+            background-color: #6BA7FF;
+            color: #080912;
+        }
+    }
+    .alrt-confirmation-action-btn-grp {
+        display: flex;
+        justify-content: right;
+        padding: 12px 0px;
         .action-btn {
             font-size: 12px;
             background-color: #080912;
