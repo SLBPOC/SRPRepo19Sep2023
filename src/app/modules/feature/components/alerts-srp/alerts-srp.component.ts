@@ -152,8 +152,7 @@ export class AlertsSrpComponent implements OnInit {
         // this.getPageSizeOptions();
         this.alertList = response.alerts;
         this.legendCount = response.alertsLevelDto;
-        this.categoriesChartData = response.alertcategory;
-        this.barChartData = response.alertcount;
+        this.refreshAlertCategory(response);
         // this.alertList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
@@ -185,6 +184,7 @@ export class AlertsSrpComponent implements OnInit {
         this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount]
         this.alertList = response.alerts;
         this.legendCount = response.alertsLevelDto;
+        this.refreshAlertCategory(response);
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
@@ -201,6 +201,11 @@ export class AlertsSrpComponent implements OnInit {
     (err) => {
       this.errorHandling();
     });
+  }
+
+  refreshAlertCategory(response: any) {
+  this.categoriesChartData = response.alertcategory;
+  this.barChartData = response.alertcount;
   }
 
   filterAndSortAlerts(payload: any){
@@ -268,7 +273,7 @@ export class AlertsSrpComponent implements OnInit {
         this.loading = false;
         this.pageSizeOption = [10, 15, 20, response.totalCount]
         this.alertList = response.alerts;
-        this.barChartData = response.alertcount
+        this.refreshAlertCategory(response);
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
         setTimeout(() => {
           this.paginator.length = response.alertsLevelDto.totalCount;

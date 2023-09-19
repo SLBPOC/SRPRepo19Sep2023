@@ -24,7 +24,7 @@ export class AlertCategoriesChartComponent implements OnInit, OnChanges {
   loadChartData() {
     let chartSeriesArr = []
     let obj = {}
-    for (let i = 0; i < this.chartData.length; i++) {
+    for (let i = 0; i < this.chartData?.length; i++) {
       obj = {
         name: this.chartData[i].name,
         y: this.chartData[i].value
