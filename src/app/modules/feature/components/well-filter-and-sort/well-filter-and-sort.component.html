@@ -1,4 +1,4 @@
-<div class="container-fluid pt-2 left-wellFilter">
+<div class="container-fluid pt-2 left-wellFilter" *ngIf="customizeComponentName !== 'alerts'">
   <div class="row pt-2 pb-2">
     <div class="col-9">
       <span class="label applyfilterHead">Applied filters</span>
@@ -216,6 +216,127 @@
     </mat-accordion>
   </div>
 
+  <div class="row pt-2 pb-2 margin0 applyfilterBtn">
+    <button class="filterapplyBtn" mat-raised-button (click)="submitAppliedFilters()">
+      <div>Apply Filter</div>
+      <div>
+        <svg width="35" height="18" viewBox="0 0 35 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M26.0513 18L25.001 16.9436L32.8994 8.99805L25 1.05642L26.0503 -3.91204e-07L35 8.99805L26.0513 18Z"
+                fill="#FBFBFD" />
+          <path d="M0 9L33 9" stroke="#FBFBFD" stroke-width="1.5" />
+        </svg>
+      </div>
+    </button>
+
+  </div>
+</div>
+
+
+<div class="container-fluid pt-2 left-wellFilter" *ngIf="customizeComponentName === 'alerts'">
+
+  <div class="row pt-2 pb-2">
+    <div class="col-9">
+      <span class="label applyfilterHead">Applied filters</span>
+    </div>
+    <div class="col-3">
+      <span class="label" style="text-decoration: underline; cursor: pointer;" (click)="clearAppliedFilter()">
+        Clear All
+        <mat-icon (click)="clearAppliedFilter()"
+                  style="cursor: pointer; color: white;font-size: 20px; margin-left: 5px;margin-bottom: -10px;">close</mat-icon>
+
+      </span>
+      <!-- <i class="fa fa-close" (click)="clearAppliedFilter()"></i> -->
+    </div>
+  </div>
+
+  <div class="row pt-2 pb-2">
+    <div class="col-12">
+
+    </div>
+    <div class="col-12">
+      <!-- <button mat-raised-button class="mr-2" *ngIf="filtersApplied.wellNames" (click) = "clearWellNames()"> <mat-icon >close</mat-icon> Well Names</button>
+      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.commsStatus" (click) = "clearCommStatus()"> <mat-icon >close</mat-icon> Comms Status</button>
+      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.controllerStatus" (click) = "clearControllerStatus()"> <mat-icon >close</mat-icon>Controller Status</button>
+      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.pumpingTypes" (click) = "clearPumpingTypes()"> <mat-icon >close</mat-icon>Pumping Types</button>
+      -->
+
+      <button mat-raised-button type="button" class="close filterBtn" aria-label="Close"
+              *ngIf="filtersApplied.wellNames">
+        <span aria-hidden="true" class="close-icon" (click)="clearWellNames()">&times;</span> Well Names
+      </button>
+    </div>
+  </div>
+
+    <div class="row pt-2 pb-2">
+      <mat-accordion>
+        <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                             [expanded]="true">
+          <mat-expansion-panel-header class="pb-2">
+            <mat-panel-title>
+              <h4 style="font-size: 12px;">Sort By Well Name</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+  
+          <div class="row mt-2 mb-3">
+  
+            <mat-form-field appearance="fill">
+              <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
+              <mat-select multiple [formControl]="providers" (valueChange)="onWellSelection($event)">
+                <input #multiUserSearch type="text" autocomplete="off" matInput class="search-prov"
+                       placeholder="Search By Provider" (input)="onInputChange($event)" />
+                <mat-select-trigger>
+                  {{providers.value }}
+                </mat-select-trigger>
+  
+  
+                <mat-option *ngFor="let provider of wellList"
+                            [value]="provider.wellName">{{provider.wellName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  
+    <div class="row pt-2 pb-2">
+      <mat-accordion>
+        <mat-expansion-panel
+          class="bg-transparent"
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+          [expanded]="true"
+        >
+          <mat-expansion-panel-header class="pb-2">
+            <mat-panel-title>
+              <h4 style="font-size: 12px">Sort By Category</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+  
+          <div class="row mt-2 mb-3">
+            <mat-form-field appearance="fill">
+              <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
+              <mat-select multiple [formControl]="selectedCategories" (valueChange)="onCategorySelection($event)">
+                <input #multiUserSearch type="text" autocomplete="off" matInput class="search-prov"
+                  placeholder="Search By Provider" (input)="onInputChange($event)" />
+                <mat-select-trigger>
+                  {{selectedCategories.value }}
+                </mat-select-trigger>
+  
+                <mat-option
+                  *ngFor="let provider of category"
+                  [value]="provider.value"
+                  >{{ provider.value }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+
+  
   <div class="row pt-2 pb-2 margin0 applyfilterBtn">
     <button class="filterapplyBtn" mat-raised-button (click)="submitAppliedFilters()">
       <div>Apply Filter</div>
