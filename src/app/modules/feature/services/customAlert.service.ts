@@ -25,6 +25,10 @@ export class CustomAlertService {
     return this.http.post<customAlert>(this.apiUrl + 'CustomAlert/create', customAlert,this.httpOptions);
   }
 
+  EditCustomAlert(customAlert:customAlert):Observable<any>{
+    return this.http.put<customAlert>(this.apiUrl + 'CustomAlert/Update', customAlert,this.httpOptions);
+  }
+
   displayDetails(searchModel:any):Observable<any>{
     return this.http.post<customAlert[]>(this.apiUrl + 'CustomAlert', searchModel,this.httpOptions);
   }

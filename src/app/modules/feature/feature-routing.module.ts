@@ -86,6 +86,10 @@ const routes: Routes = [
         component: WellInfoEntryComponent,
       },
       {
+        path: 'uidynacardinfo/:id',
+        component: UiDynacardInfoComponent,
+      },
+      {
         path: 'srp-alerts',
         component: AlertsSrpComponent,
       },
