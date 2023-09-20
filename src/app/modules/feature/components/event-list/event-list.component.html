@@ -202,7 +202,10 @@
           <div class="col-md-12 p-0 filterborder">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
               <mat-tab label="Well List">
-                <app-well-tree-list></app-well-tree-list>
+                <app-well-tree-list
+                  (searchStr)="getWellTreeSearch($event)"
+                ></app-well-tree-list
+                >>
               </mat-tab>
               <mat-tab label="Filter & Sort">
                 <!-- <app-well-filter-and-sort

@@ -14,8 +14,8 @@ $background-color_2: #051464;
 $background-color_3: var(--mdc-theme-surface, #131629);
 $background-color_4: #131629;
 $background-color_5: var(#424242);
-$left-panel-bg:#CCCFDE;
-$left-text-color:#505575;
+$left-panel-bg: #CCCFDE;
+$left-text-color: #505575;
 
 $slbdeepblue :#051464;
 $white :#fff;
@@ -487,7 +487,8 @@ mat-toolbar {
         }
       }
 
-      .active-list-item {//change start for active side menu
+      .active-list-item {
+        //change start for active side menu
         background: rgb(2 14 76);
 
         span.mdc-list-item__content {
@@ -495,7 +496,9 @@ mat-toolbar {
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
         }
-      } //change end
+      }
+
+      //change end
     }
 
     .mat-mdc-list-base {
@@ -512,7 +515,9 @@ mat-toolbar {
   }
 
   .mdc-list-item {
-    &:hover,&.active {
+
+    &:hover,
+    &.active {
       span.mdc-list-item__content {
         border-left: 2px solid #FABB42;
       }
@@ -770,9 +775,10 @@ mat-list-item.mat-mdc-list-item.mdc-list-item.parent.mat-mdc-list-item-interacti
 }
 
 .mat-drawer {
-  background-color:$left-panel-bg;
+  background-color: $left-panel-bg;
   color: $left-text-color;
   transition: all 0.5s ease 0s;
+  overflow-x: hidden;
 }
 
 .navcontenttxt {
@@ -881,15 +887,15 @@ button.mat-mdc-menu-trigger.userbutton {
 
 mat-nav-list {
   mat-list-item.active-list-item {
-    background:#A5A8B8;
+    background: #A5A8B8;
     border-radius: 10px;
-    color:#000;
+    color: #000;
 
     span {
       border-left: 2px solid rgba(250, 187, 66, 1) !important;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
-      color:#000 !important;
+      color: #000 !important;
       font-family: 'SLB SANS BOLD';
     }
   }
