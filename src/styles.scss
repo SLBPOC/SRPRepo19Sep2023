@@ -193,7 +193,9 @@ button {
 .margin-t-20 {
   margin-top: 20px;
 }
-
+.padding-l-0 {
+  padding-left: 0;
+}
 .main-container-dashboard {
   padding: 20px;
   margin: 0;
@@ -578,7 +580,7 @@ button {
     }
 
     .mdc-switch__track::after {
-      background: #6ba7ff !important;
+      background: #0014dc !important;
     }
 
     .mdc-switch__handle::before,
@@ -1219,7 +1221,7 @@ button:hover {
       button {
         margin: 0px 10px;
         border-radius: 0px;
-        padding: 10px;
+        padding: 5px 10px;
         border: none !important;
 
         &.selected {
@@ -1239,6 +1241,7 @@ button:hover {
       padding: 12px 20px;
       border-radius: 40px;
     }
+
     /*Css added by mg for dynacard info left panel start*/
 
     .well-search {
@@ -1403,9 +1406,13 @@ button:hover {
 
       .tabrightsec {
         position: absolute;
-        top: 20px;
-        right: 100px;
+        top: 14px;
+        right: 10px;
         display: inline-flex;
+
+        .action-btn-info {
+          padding: 10px 20px;
+        }
       }
 
       .status-cards {
@@ -1753,6 +1760,40 @@ button:hover {
     position: relative;
     background-color: #fff !important;
 
+    .wellfilter-header-section {
+      display: flex;
+      justify-content: space-between;
+      margin: 15px -15px;
+      align-items: baseline;
+      border-bottom: 1px solid#CCCFDE;
+      padding: 10px 25px 15px;
+
+      .card-title {
+        font-size: 18px;
+        color: #22263d;
+        font-weight: 700;
+      }
+
+      .savelist {
+        background: #0014dc;
+        border-radius: 40px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 23px 20px;
+      }
+
+      .clearlist {
+        background: #fff;
+        border-radius: 40px;
+        color: #505575;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid #cccfde;
+        padding: 23px 20px;
+      }
+    }
+
     .filterapplyBtn {
       position: fixed;
       bottom: 10px;
@@ -1817,13 +1858,19 @@ button:hover {
     }
 
     .filterBtn {
-      background-color: #cccfde;
-      border-radius: 4px;
+      background-color: #fff;
+      border: 1px solid #cccfde;
+      border-radius: 20px;
       padding: 10px;
-      color: #000;
+      color: #505575;
       margin: 20px 0 0 20px;
       box-shadow: none !important;
       font-family: "SLB SANS MEDIUM";
+      svg {
+        height: 17px;
+        width: 13px;
+        vertical-align: text-top;
+      }
     }
 
     .mat-expansion-panel:not([class*="mat-elevation-z"]) {
@@ -1884,6 +1931,8 @@ button:hover {
 
     .mat-accordion {
       border-bottom: 1px solid #eceff1;
+      border-bottom: 1px solid #cccfde;
+
       padding: 0px;
 
       .mat-expansion-panel-header-description,
@@ -2096,29 +2145,34 @@ button:hover {
 
       .card-title {
         font-size: 18px;
-        color: #051464;
+        color: #22263d;
         font-weight: 700;
       }
 
       .savelist {
-        background: #051464;
+        background: #0014dc;
         border-radius: 40px;
-        color: #fdfdfd;
-        font-size: 14px;
-        font-weight: 500;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 23px 20px;
       }
 
       .clearlist {
-        font-size: 15px;
+        background: #fff;
+        border-radius: 40px;
         color: #505575;
-        font-weight: 500;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid #cccfde;
+        padding: 23px 20px;
       }
     }
 
     .select-list {
       margin-top: 15px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
 
       .mat-mdc-slide-toggle {
         label {
@@ -2129,7 +2183,7 @@ button:hover {
       }
 
       span {
-        color: #505575;
+        color: #22263d;
         font-size: 16px;
         font-weight: 500;
       }
@@ -2279,14 +2333,16 @@ button:hover {
       margin-top: 20px;
 
       .savelist {
-        background: #051464;
+        background: #0014dc;
         border-radius: 40px;
-        color: #fdfdfd;
-        font-size: 14px;
-        font-weight: 500;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 23px 20px;
       }
     }
   }
+
   //    srp alert page css for light theme
 
   .main-alerts {
