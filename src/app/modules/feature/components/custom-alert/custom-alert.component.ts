@@ -171,20 +171,20 @@ export class CustomAlertComponent {
       this.getAlertDetails();
     }
 
-    getSelectedMonth(month: any){
-      let m = month + 1;
+    getSelectedMonth(Month: any){
+      let m = Month + 1;
       return m.toString().padStart(2,'0');
     }
   
-    getSelectedDay(day: any){
-      return day.toString().padStart(2,'0');
+    getSelectedDay(Day: any){
+      return Day.toString().padStart(2,'0');
     }
   
     applyDateRangeFilter() {
-      let fromDate = this.SelectedRangeValue.start;
-      let toDate = this.SelectedRangeValue.end;
-      this.StartDate = fromDate?.getFullYear() + '-' + this.getSelectedMonth(fromDate?.getMonth()) + '-' + this.getSelectedDay(fromDate?.getDate());
-      this.EndDate = toDate?.getFullYear() + '-' + this.getSelectedMonth(toDate?.getMonth()) + '-' + this.getSelectedDay(toDate?.getDate()); 
+      let FromDate = this.SelectedRangeValue.start;
+      let ToDate = this.SelectedRangeValue.end;
+      this.StartDate = FromDate?.getFullYear() + '-' + this.getSelectedMonth(FromDate?.getMonth()) + '-' + this.getSelectedDay(FromDate?.getDate());
+      this.EndDate = ToDate?.getFullYear() + '-' + this.getSelectedMonth(ToDate?.getMonth()) + '-' + this.getSelectedDay(ToDate?.getDate()); 
     }
 
     onChange()
@@ -203,9 +203,9 @@ export class CustomAlertComponent {
 
     customDateTime()
     {
-      let timeZone = this.CustomDate.toISOString().slice(-4);
-      let time = this.CustomDate.toTimeString().slice(0,8);
-      let CustomTime = "T" + time + "." + timeZone;
+      let TimeZone = this.CustomDate.toISOString().slice(-4);
+      let Time = this.CustomDate.toTimeString().slice(0,8);
+      let CustomTime = "T" + Time + "." + TimeZone;
       this.applyDateRangeFilter();
       this.StartDate = this.StartDate +  CustomTime;      
       this.EndDate = this.EndDate +  CustomTime;
@@ -227,12 +227,16 @@ export class CustomAlertComponent {
               this.ValueFlag = true;
             }
         }
-        // else{
-        //   this.flag1 = false;
-        // }
-      let obj:any;
+      let Obj:any;
+      var Actual=null;
+      if(this.CustomAlertForm.value.Value=="Any numerical value")
+      {
+        Actual=this.CustomAlertForm.value.ActualValue== ""? null : this.CustomAlertForm.value.ActualValue;
+        
+      }
       this.customDateTime();
-      obj = { 
+      
+      Obj = { 
         wellName:this.CustomAlertForm.value.WellName,
         customAlertName:this.CustomAlertForm.value.CustomAlertName,     
         notificationType:this.CustomAlertForm.value.NotificationType,
@@ -241,13 +245,13 @@ export class CustomAlertComponent {
         operator:this.CustomAlertForm.value.Operator,
         value:this.CustomAlertForm.value.Value,
         isActive:this.CustomAlertForm.value.IsActive,
-        actualValue:this.CustomAlertForm.value.ActualValue=="" ? null : this.CustomAlertForm.value.ActualValue,
+        actualValue:Actual,
         startDate:this.StartDate,
         endDate:this.EndDate
       }
       if(this.ValueFlag == true)
       {
-        this.CustomAlertService.addCustomAlert(obj).subscribe((res)=>{ 
+        this.CustomAlertService.addCustomAlert(Obj).subscribe((res)=>{ 
         if(res!=null)
         {
           alert("Records added successfully");
@@ -275,15 +279,15 @@ export class CustomAlertComponent {
 
     updateAlert()
     {
-      let obj:any;
+      let Obj:any;
       this.customDateTime();
-      var actual=null;
+      var Actual=null;
       if(this.CustomAlertForm.value.Value=="Any numerical value")
       {
-        actual=this.CustomAlertForm.value.ActualValue== ""? null : this.CustomAlertForm.value.ActualValue;
+        Actual=this.CustomAlertForm.value.ActualValue== ""? null : this.CustomAlertForm.value.ActualValue;
         
       }
-      obj = { 
+      Obj = { 
         id:this.AlertId,
         wellName:this.CustomAlertForm.value.WellName,
         customAlertName:this.CustomAlertForm.value.CustomAlertName,     
@@ -293,11 +297,11 @@ export class CustomAlertComponent {
         operator:this.CustomAlertForm.value.Operator,
         value:this.CustomAlertForm.value.Value,
         isActive:this.CustomAlertForm.value.IsActive,
-        actualValue:actual,//this.CustomAlertForm.value.ActualValue== ? null : this.CustomAlertForm.value.ActualValue,
+        actualValue:Actual,//this.CustomAlertForm.value.ActualValue== ? null : this.CustomAlertForm.value.ActualValue,
         startDate:this.StartDate,
         endDate:this.EndDate
       }
-      this.CustomAlertService.EditCustomAlert(obj).subscribe((res)=>{ 
+      this.CustomAlertService.EditCustomAlert(Obj).subscribe((res)=>{ 
         if(res!=null)
         {
           alert("Records Updated successfully");
@@ -334,25 +338,25 @@ export class CustomAlertComponent {
         {
           this.IsNumeric=false;
         }
-        let startDate = GetRecord[0].startDate;
-        let sDate = startDate.slice(0,10);
-        let endDate = GetRecord[0].endDate;
-        let eDate =  endDate.slice(0,10);
-        this.SelectedRangeValue = new DateRange<Date>(new Date(sDate), new Date(eDate));       
+        let StartDate = GetRecord[0].startDate;
+        let Sdate = StartDate.slice(0,10);
+        let EndDate = GetRecord[0].endDate;
+        let Edate =  EndDate.slice(0,10);
+        this.SelectedRangeValue = new DateRange<Date>(new Date(Sdate), new Date(Edate));       
       }
     }
 
-    deleteAlert(id:number)
+    deleteAlert(Id:number)
     {
-      this.CustomAlertService.deleteCustomAlert(id).subscribe((res)=>{
+      this.CustomAlertService.deleteCustomAlert(Id).subscribe((res)=>{
         alert('Record deleted successfully');
         this.getAlertDetails();
       })
     }
 
-    toggle(id:number,event:any){
-      let val=event.checked;
-      this.CustomAlertService.isActiveCustomAlert(id,val).subscribe((res)=>{    
+    toggle(Id:number,event:any){
+      let Val=event.checked;
+      this.CustomAlertService.isActiveCustomAlert(Id,Val).subscribe((res)=>{    
         this.getAlertDetails();    
       })
     }
