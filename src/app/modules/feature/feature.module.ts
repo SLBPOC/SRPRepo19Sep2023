@@ -114,6 +114,7 @@ import { AlertCategoriesChartComponent } from './components/alert-categories-cha
 import { AlertCategoriesTableComponent } from './components/alert-categories-table/alert-categories-table.component';
 import { ErrorComponent } from 'src/app/core/error/error.component';
 import { UiDynacardInfoComponent } from './components/ui-dynacard-info/ui-dynacard-info.component';
+import { EventFilterAndSortComponent } from './components/event-filter-and-sort/event-filter-and-sort.component';
 
 
 @NgModule({
@@ -187,7 +188,8 @@ import { UiDynacardInfoComponent } from './components/ui-dynacard-info/ui-dynaca
     AlertCategoriesTableComponent,
     //httperrors
     ErrorComponent,
-    UiDynacardInfoComponent
+    UiDynacardInfoComponent,
+    EventFilterAndSortComponent
     
   ],
   imports: [ 

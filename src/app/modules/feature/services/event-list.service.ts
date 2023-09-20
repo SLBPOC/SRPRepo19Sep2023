@@ -23,37 +23,23 @@ export class EventListService {
   //   return this.http.get<AlertList[]>(alertsData);
   // }
 
-  getWellAlerts(): Observable<any> {
+  getWellEvents(): Observable<any> {
     // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions);
     return this.http.get<Observable<EventList[]>>(
-      `${this._apiUrl}Alerts/GetAllWellList`
+      `${this._apiUrl}Events/GetAllWellList`
     );
-  }
-
-  getAlertsByAlertStatus(alertStatus: string): Observable<any> {
-    // return this.http.get<any>(this.apiUrl + `Well/GetWellInfoById/${wellId}`, this.httpOptions);
-    return this.http.get<any>(
-      `${this._apiUrl}Alerts/GetWellAlertsByAlertStatus?AlertStatus=${alertStatus}`
-    );
-  }
-
-  getAlertListFilters(payload: any): Observable<any> {
-    const url = `${this._apiUrl}Alerts/GetAlertList`;
-    return this.http.post(url, payload, {
-      headers: {},
-    });
   }
 
   getEventList(SearchModel: any): Observable<any> {
     return this.http.post<EventList[]>(
       this._apiUrl + 'api/Event/Get',
-      SearchModel 
+      SearchModel
     );
   }
 
-  getDefaultAlertCategory(payload?: any): Observable<any> {
+  getDefaultEvents(payload?: null): Observable<any> {
     return this.http.post<EventList[]>(
-      this._apiUrl + 'api/Alerts/GetDefaultValues',
+      this._apiUrl + 'api/Event/GetDefaultValues',
       payload
     );
   }

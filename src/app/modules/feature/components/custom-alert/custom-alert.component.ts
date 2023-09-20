@@ -66,32 +66,32 @@ export class CustomAlertComponent {
     DataSource:any;
 
   // Filter variable
-  well:any[];
-  notification:any;
-  priority:any;
-  category:any;
-  operator:any;
-  value:any;
+  Well:any[];
+  Notification:any;
+  Priority:any;
+  Category:any;
+  Operator:any;
+  Value:any;
   IsActiveValue:boolean=true;
  
   //Pagination variables
-  maxPageSize: number = Math.max(...environment.pageSizeOption);
-  pageSizeOption:any;
-  pageSize: number = 10;
-  pageNumber = 1;
-  currentPage = 0;
-  totalCount = 0;
-  model: any = {}   
-  sortDirection: string = "";
-  sortColumn: string = "";  
+  MaxPageSize: number = Math.max(...environment.pageSizeOption);
+  PageSizeOption:any;
+  PageSize: number = 10;
+  PageNumber = 1;
+  CurrentPage = 0;
+  TotalCount = 0;
+  Model: any = {}   
+  SortDirection: string = "";
+  SortColumn: string = "";  
   @ViewChild(MatSort) sort!: MatSort; 
 
   constructor(private fb: FormBuilder,private CustomAlertService:CustomAlertService ,private dialogRef: MatDialogRef<CustomAlertComponent>) {
-     this.notification=environment.customAlertNotification;
-     this.priority=environment.customAlertPriority;
-     this.category=environment.customAlertCategory;
-     this.operator=environment.customAlertOperator;
-     this.value=environment.customAlertValue;
+     this.Notification=environment.customAlertNotification;
+     this.Priority=environment.customAlertPriority;
+     this.Category=environment.customAlertCategory;
+     this.Operator=environment.customAlertOperator;
+     this.Value=environment.customAlertValue;
   }
 
  
@@ -118,11 +118,11 @@ export class CustomAlertComponent {
 
     //Create Model for search
   createModel(this: any) {
-    this.model.pageSize = this.pageSize;
-    this.model.pageNumber = this.pageNumber;
-    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
-    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
-    return this.model;
+    this.Model.PageSize = this.PageSize;
+    this.Model.PageNumber = this.PageNumber;
+    this.Model.SortColumn = this.SortColumn ? this.SortColumn : "Id";
+    this.Model.SortDirection = this.SortDirection ? this.SortDirection : "desc";
+    return this.Model;
   }
 
   getAlertDetails(){
@@ -131,15 +131,15 @@ export class CustomAlertComponent {
       this.CustomAlertService.displayDetails(SearchModel)
         .subscribe(response=>{          
           this.AlertData = response.customAlertDto;
-          this.well=response.wellFilterListDetails;
-          this.totalCount=response.countDetails.totalCount;
+          this.Well=response.wellFilterListDetails;
+          this.TotalCount=response.countDetails.totalCount;
          
           this.DataSource = new MatTableDataSource<customAlert>(this.AlertData);
           this.DataSource.sort = this.sort;
           
         setTimeout(() => {
           this.loadPageOptions();    
-          this.Paginator.pageIndex = this.currentPage;
+          this.Paginator.pageIndex = this.CurrentPage;
           this.Paginator.length = response.countDetails.totalCount;          
         }); 
       })
@@ -147,27 +147,27 @@ export class CustomAlertComponent {
 
     public loadPageOptions()
     {
-      this.pageSizeOption=[10,20,30];
-      if(!this.pageSizeOption.includes(this.totalCount))
+      this.PageSizeOption=[10,20,30];
+      if(!this.PageSizeOption.includes(this.TotalCount))
           {
-            if(this.totalCount>this.maxPageSize)
+            if(this.TotalCount>this.MaxPageSize)
             {
-              this.pageSizeOption.push(this.totalCount);
+              this.PageSizeOption.push(this.TotalCount);
             }
           }
     }
     public onSortChanged(e: any) {
-      this.pageNumber = this.pageNumber;
-      this.pageSize = this.pageSize;
-      this.sortDirection = this.sort.direction;
-      this.sortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
+      this.PageNumber = this.PageNumber;
+      this.PageSize = this.PageSize;
+      this.SortDirection = this.sort.direction;
+      this.SortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
       this.getAlertDetails();
     }
 
     pageChanged(event: PageEvent) {      
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
-      this.pageNumber = event.pageIndex + 1;
+      this.PageSize = event.pageSize;
+      this.CurrentPage = event.pageIndex;
+      this.PageNumber = event.pageIndex + 1;
       this.getAlertDetails();
     }
 
@@ -189,7 +189,7 @@ export class CustomAlertComponent {
 
     onChange()
     {
-      if(this.SelectionModel == this.value[0])
+      if(this.SelectionModel == this.Value[0])
       {
         this.IsNumeric = true;
         this.ValueFlag = false;
@@ -201,7 +201,7 @@ export class CustomAlertComponent {
       }
     }
 
-    CustomDateTime()
+    customDateTime()
     {
       let timeZone = this.CustomDate.toISOString().slice(-4);
       let time = this.CustomDate.toTimeString().slice(0,8);
@@ -231,7 +231,7 @@ export class CustomAlertComponent {
         //   this.flag1 = false;
         // }
       let obj:any;
-      this.CustomDateTime();
+      this.customDateTime();
       obj = { 
         wellName:this.CustomAlertForm.value.WellName,
         customAlertName:this.CustomAlertForm.value.CustomAlertName,     
@@ -251,7 +251,10 @@ export class CustomAlertComponent {
         if(res!=null)
         {
           alert("Records added successfully");
-        }     
+        }   
+          this.SortColumn = "Id"; 
+          this.SortDirection = "desc";
+          this.PageNumber = 1; 
           this.getAlertDetails();     
           this.clear();
           this.IsNumeric = false;
@@ -264,16 +267,16 @@ export class CustomAlertComponent {
     this.ValueFlag = true;
     }
 
-    EditAlert(alertId:number)
+    editAlert(alertId:number)
     {
-      this.CloneAlert(alertId);
+      this.cloneAlert(alertId);
       this.IsUpdateCondition = true;
     }
 
-    UpdateAlert()
+    updateAlert()
     {
       let obj:any;
-      this.CustomDateTime();
+      this.customDateTime();
       var actual=null;
       if(this.CustomAlertForm.value.Value=="Any numerical value")
       {
@@ -305,7 +308,7 @@ export class CustomAlertComponent {
         });
     }
 
-    CloneAlert(Id:number)
+    cloneAlert(Id:number)
     {      
       this.IsUpdateCondition=false;
       var GetRecord=this.AlertData.filter(a=> a.id==Id)
@@ -341,7 +344,6 @@ export class CustomAlertComponent {
 
     deleteAlert(id:number)
     {
-      if(confirm('Are you sure to delete record?'))
       this.CustomAlertService.deleteCustomAlert(id).subscribe((res)=>{
         alert('Record deleted successfully');
         this.getAlertDetails();
