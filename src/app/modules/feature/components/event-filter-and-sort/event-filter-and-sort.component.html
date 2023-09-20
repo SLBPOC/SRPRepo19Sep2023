@@ -25,6 +25,42 @@
       <!-- <i class="fa fa-close" (click)="clearAppliedFilter()"></i> -->
     </div>
   </div>
+  <div class="row pt-2 pb-2">
+    <div class="col-12"></div>
+    <div class="col-12">
+      <!-- <button mat-raised-button class="mr-2" *ngIf="filtersApplied.wellNames" (click) = "clearWellNames()"> <mat-icon >close</mat-icon> Well Names</button>
+      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.commsStatus" (click) = "clearCommStatus()"> <mat-icon >close</mat-icon> Comms Status</button>
+      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.controllerStatus" (click) = "clearControllerStatus()"> <mat-icon >close</mat-icon>Controller Status</button>
+      <button mat-raised-button class="mr-2" *ngIf="filtersApplied.pumpingTypes" (click) = "clearPumpingTypes()"> <mat-icon >close</mat-icon>Pumping Types</button>
+      -->
+
+      <button
+        mat-raised-button
+        type="button"
+        class="close filterBtn"
+        aria-label="Close"
+        *ngIf="filtersApplied.wellNames"
+      >
+        <span aria-hidden="true" class="close-icon" (click)="clearWellNames()"
+          >&times;</span
+        >
+        Well Names
+      </button>
+
+      <button
+        mat-raised-button
+        type="button"
+        class="close filterBtn"
+        aria-label="Close"
+        *ngIf="filtersApplied.eventType"
+      >
+        <span aria-hidden="true" class="close-icon" (click)="clearWellNames()"
+          >&times;</span
+        >
+        Event Types
+      </button>
+    </div>
+  </div>
 
   <div class="row pt-2 pb-2" *ngIf="isEvent">
     <mat-accordion>

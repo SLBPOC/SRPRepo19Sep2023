@@ -1246,51 +1246,33 @@ button:hover {
 
       .label-title {
         color: #272c39;
-
         font-size: 12px;
-
         font-family: var(--font-Slb-San-bold);
-
         font-weight: 700;
-
         padding: 9px 15px;
       }
 
       .search-list {
         margin-top: 10px;
-
         padding: 10px 10px 10px 10px;
 
         .searchBar {
           width: auto;
-
           display: block;
 
           #searchQueryInput {
             background: rgba(239, 240, 245, 1);
-
             border-color: rgba(139, 144, 173, 1);
-
             background-image: url("./assets/images/light-search.svg");
-
             background-repeat: no-repeat;
-
             background-position: 12px 10px;
-
             width: 100%;
-
             height: 36px;
-
             outline: none;
-
             border: 1px solid #8b90ad;
-
             border-radius: 20px;
-
             padding: 0 10px 0px 45px;
-
             font-size: 16px;
-
             color: #adb1c7;
 
             &::placeholder {
@@ -1300,11 +1282,8 @@ button:hover {
 
           #searchQuerySubmit {
             margin-left: -2.5rem;
-
             background: none;
-
             border: none;
-
             outline: none;
 
             svg {
@@ -1320,95 +1299,61 @@ button:hover {
         .wellname-list-section {
           h2 {
             font-size: 16px;
-
             color: #272c39;
-
             font-family: "SLB Sans Bold";
-
             font-weight: 700;
-
             padding: 15px 10px 10px 10px;
-
             margin: 0px;
           }
 
           ul {
             list-style: none;
-
             padding: 0px 0px 10px 0px;
 
             li {
               display: inline-flex;
-
               padding: 10px 10px;
-
               width: 100%;
-
               border-bottom: 1px solid #c7d0d8;
-
               color: #000000;
-
               font-size: 14px;
-
               font-weight: 500;
-
               font-family: var(--font-Slb-San-Medium);
-
               line-height: 23px;
 
               .success-priorityCircle {
                 width: 16px;
-
                 height: 16px;
-
                 background-color: #008da9;
-
                 border-radius: 8px;
-
                 display: block;
-
                 margin: 3px 10px 3px 0px;
               }
 
               .high-priorityCircle {
                 width: 16px;
-
                 height: 16px;
-
                 background-color: #d11f1f;
-
                 border-radius: 8px;
-
                 display: block;
-
                 margin: 3px 10px 3px 0px;
               }
 
               .med-priorityCircle {
                 width: 16px;
-
                 height: 16px;
-
                 background-color: #ea910d;
-
                 border-radius: 8px;
-
                 display: block;
-
                 margin: 3px 10px 3px 0px;
               }
 
               .defaul-priorityCircle {
                 width: 16px;
-
                 height: 16px;
-
                 background-color: #939393;
-
                 border-radius: 8px;
-
                 display: block;
-
                 margin: 3px 10px 3px 0px;
               }
             }
@@ -1420,7 +1365,6 @@ button:hover {
         }
       }
     }
-
     /*Css added by mg for dynacard info left panel end*/
     .well-tabs {
       position: relative;
@@ -1500,26 +1444,17 @@ button:hover {
         .chart-categories {
           ul {
             list-style: none;
-
             padding: 0px 10px 10px 10px;
 
             li {
               display: inline-flex;
-
               padding: 10px 10px;
-
               width: 100%;
-
               border-bottom: 1px solid #c7d0d8;
-
               color: #000000;
-
               font-size: 14px;
-
               font-weight: 500;
-
               font-family: var(--font-Slb-San-Medium);
-
               line-height: 23px;
             }
           }
@@ -1532,26 +1467,17 @@ button:hover {
         .chart-categories {
           ul {
             list-style: none;
-
             padding: 0px 10px 10px 10px;
 
             li {
               display: block;
-
               padding: 10px 10px;
-
               width: 100%;
-
               border-bottom: 1px solid #c7d0d8;
-
               color: #000000;
-
               font-size: 14px;
-
               font-weight: 500;
-
               font-family: var(--font-Slb-San-Medium);
-
               line-height: 23px;
 
               span {
@@ -1571,7 +1497,6 @@ button:hover {
         }
       }
     }
-
     /*added for right section table start*/
     .padding0px {
       padding: 0px;
@@ -1617,7 +1542,6 @@ button:hover {
         }
       }
     }
-
     /*added for right section end*/
     .card-details-title {
       font-size: 24px;
@@ -1625,6 +1549,7 @@ button:hover {
       color: #272c39;
       margin: 20px 10px;
     }
+
     .card-details-section {
       .mat-mdc-card-content {
         padding-left: 0px;
@@ -1689,7 +1614,6 @@ button:hover {
       }
     }
   }
-
   //css added for dynacard info by swapnil ends
 
   .mat-mdc-paginator-container {
@@ -1705,30 +1629,27 @@ button:hover {
   }
 
   .controller-status-btn-danger {
-    // background: rgba(220, 87, 87, 0.2) !important;
-    background: #cccfde !important;
-    // border: 1px solid rgba(220, 87, 87, 1) !important;
+    background: rgba(209, 31, 31, 0.15);
     box-shadow: none;
-    color: #d11f1f !important;
+    color: #000 !important;
     border-radius: 4px !important;
+    border: 1px solid #d11f1f;
   }
 
   .controller-status-btn-info {
-    background: #cccfde !important;
-    // background: rgba(8, 138, 231, 0.2) !important;
-    // border: 1px solid rgba(8, 138, 231, 1) !important;
+    background: rgba(234, 145, 13, 0.15) !important;
     box-shadow: none !important;
-    color: #1946a2 !important;
+    color: #000 !important;
     border-radius: 4px !important;
+    border: 1px solid #ea910d;
   }
 
   .controller-status-btn-default {
-    background: #cccfde !important;
-    // background: rgba(106, 106, 106, 0.2) !important;
-    // border: 1px solid rgba(106, 106, 106, 1) !important;
+    background: rgba(22, 130, 68, 0.15) !important;
     box-shadow: none !important;
-    color: #168244 !important;
+    color: #000 !important;
     border-radius: 4px !important;
+    border: 1px solid #168244;
   }
 
   .mat-drawer-content {
@@ -1746,32 +1667,39 @@ button:hover {
     // border-radius: 8px;
     overflow: hidden;
     height: 100%;
+
     .mat-mdc-tab-group {
       height: 100%;
     }
+
     .mat-mdc-tab-list {
       border-bottom: 1px solid #cccfde;
     }
+
     .mat-mdc-tab.mdc-tab {
       height: 52px;
       flex-grow: 1;
+
       .mdc-tab__content .mdc-tab__text-label {
         font-size: 16px !important;
         color: #22263d;
         font-family: "SLB SANS MEDIUM";
         font-weight: 700;
       }
+
       .mdc-tab-indicator {
         padding: 0 30px;
         background: #fff;
       }
     }
+
     .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active
       .mdc-tab__text-label,
     .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active
       .mdc-tab__text-label {
       color: #000b9e;
     }
+
     .mat-mdc-tab:not(.mat-mdc-tab-disabled)
       .mdc-tab-indicator__content--underline {
       border-color: #000b9e;
@@ -1784,7 +1712,6 @@ button:hover {
 
   .mat-mdc-tab:hover .mdc-tab__ripple::before {
     opacity: 0.04;
-
     background-color: #080912;
   }
 
@@ -1803,29 +1730,24 @@ button:hover {
 
   .mat-mdc-tab:hover .mdc-tab__ripple::before {
     opacity: 0.04;
-
     background-color: #080912;
   }
 
   .mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
   .mat-mdc-tab.mdc-tab--active .mat-ripple-element {
     opacity: 0.04;
-
     background-color: #080912;
   }
 
   .mat-mdc-tab-body-wrapper {
     background: #171a2e;
-
     box-shadow: 0px 0px 1px #fff;
   }
 
   .mat-mdc-tab .mat-ripple-element {
     opacity: 0.12;
-
     background-color: #080912;
   }
-
   //added css for left filter and sort
   .left-wellFilter {
     position: relative;
@@ -1864,26 +1786,22 @@ button:hover {
 
       .mat-mdc-tab:hover .mdc-tab__ripple::before {
         opacity: 0.04;
-
         background-color: #080912;
       }
 
       .mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before,
       .mat-mdc-tab.mdc-tab--active .mat-ripple-element {
         opacity: 0.04;
-
         background-color: #080912;
       }
 
       .mat-mdc-tab-body-wrapper {
         background: #171a2e;
-
         box-shadow: 0px 0px 1px #fff;
       }
 
       .mat-mdc-tab .mat-ripple-element {
         opacity: 0.12;
-
         background-color: #080912;
       }
     }
@@ -1938,7 +1856,7 @@ button:hover {
       border-radius: 8px;
       border: 1px solid #adb1c7;
       background-color: #eff0f5;
-      color: #22263d;
+      color: #000 !important;
     }
 
     .mdc-slider .mdc-slider__value-indicator::after,
@@ -1966,7 +1884,6 @@ button:hover {
 
     .mat-accordion {
       border-bottom: 1px solid #eceff1;
-
       padding: 0px;
 
       .mat-expansion-panel-header-description,
@@ -2018,28 +1935,22 @@ button:hover {
             color: black !important;
           }
         }
-
         // .mdc-checkbox__background{
         //     border: 2px solid #ADB1C7 !important;
         //     border-radius: 5px;
         // }
-
         // .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background{
         //     background-color: #051464 !important;
-
         // }
-
         // .mdc-checkbox__mixedmark {
         //     width: 94%;
         // }
-
         // .mdc-checkbox__checkmark{
         //     width:85%;
         //     left:1px;
         //     top:1px;
         // }
       }
-
       // .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__mixedmark {
       //     border-color:#fff !important;
       // }
@@ -2082,7 +1993,6 @@ button:hover {
     // border: 1px solid rgba(110, 114, 141, 1) !important;
     // width: 340px;
     // border-radius: 12px;
-
     // .select-filter-header {
     //     .select-filter-title {
     //         color: rgba(5, 20, 100, 1) !important;
@@ -2094,23 +2004,19 @@ button:hover {
         color: rgba(5, 20, 100, 1) !important;
       }
     }
-
     // .mat-mdc-checkbox {
     //     .mdc-form-field {
     //         color: rgba(80, 85, 117, 1);
     //     }
     // }
-
     // .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
     //     border-color: rgba(173, 177, 199, 1) !important;
     //     background-color: rgba(239, 240, 245, 1) !important;
     // }
-
     // .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
     //     border-color: #ADB1C7 !important;
     //     background-color:#051464 !important;
     // }
-
     // .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
     //     color: #fff !important;
     // }
@@ -2126,9 +2032,7 @@ button:hover {
       }
     }
   }
-
   // krishna's css for light theme
-
   // all checkbox css for light theme ------------- start
 
   .mat-mdc-checkbox {
@@ -2176,7 +2080,6 @@ button:hover {
   .mat-mdc-checkbox.mat-accent .mdc-checkbox--selected ~ .mdc-checkbox__ripple {
     background: #000;
   }
-
   // all checkbox css for light theme ------------- end
 
   .mat-mdc-tab-body-wrapper {
@@ -2309,7 +2212,6 @@ button:hover {
           //     .mdc-checkbox .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background .mdc-checkbox__checkmark {
           //         color: #fff;
           //     }
-
           // }
         }
       }
@@ -2327,8 +2229,6 @@ button:hover {
       font-weight: 700;
       font-size: 18px !important;
       color: #051464 !important;
-      min-height: 38px;
-      max-height: 38px;
     }
 
     .button__arrow {
@@ -2345,7 +2245,6 @@ button:hover {
         font-size: 30px;
       }
     }
-
     // .mat-mdc-checkbox .mdc-form-field {
     //     margin-right: 4px;
     //     vertical-align: bottom;
@@ -2358,9 +2257,7 @@ button:hover {
     //     color: #505575;
     //     font-size: 16px !important;
     //     font-weight: 500;
-
     // }
-
     // .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true]) ~ .mdc-checkbox__background {
     //     border-color: #ADB1C7;
     //     background-color: #EFF0F5;
@@ -2390,7 +2287,6 @@ button:hover {
       }
     }
   }
-
   //    srp alert page css for light theme
 
   .main-alerts {
@@ -2501,7 +2397,6 @@ button:hover {
       }
     }
   }
-
   // srp custom alerts css for light theme
   .border-bottom {
     border-bottom: 1px solid #cccfde;
@@ -2553,31 +2448,25 @@ button:hover {
         transform: translate(-50%, -50%);
       }
     }
-
     // .mat-mdc-checkbox-touch-target {
     //     height: 36px;
     //     width: 36px;
     // }
-
     // .mdc-checkbox .mdc-checkbox__background {
     //     top: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
     //     left: calc((var(--mdc-checkbox-state-layer-size) - 23px) / 2);
     // }
-
     // .mdc-checkbox {
     //     flex: 0 0 14px;
     // }
-
     // .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
     //     border-color: #ADB1C7;
     //     background-color: #080912;
     // }
-
     // .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
     //     border-color: #FABB42;
     //     background-color: #3A83FF;
     // }
-
     // .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
     //     color: #080912;
     // }

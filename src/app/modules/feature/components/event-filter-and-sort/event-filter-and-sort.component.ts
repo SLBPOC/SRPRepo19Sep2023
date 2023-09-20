@@ -189,11 +189,11 @@ export class EventFilterAndSortComponent {
       };
     }
     this.filterRefresh.emit(payload);
-    console.log(payload, 'hbdhsbcidbcidcbibdshbb');
   }
   clearWellNames() {
     this.selectedWellNames.setValue([]);
     this.filtersApplied.wellNames = false;
+    this.filtersApplied.eventType = false;
   }
 
   formatLabel(value: number): string {
