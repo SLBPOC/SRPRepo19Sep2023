@@ -403,6 +403,11 @@ export class EventListComponent {
     this.model.eventType = this.eventType ? this.eventType : [];
     return this.model;
   }
+
+  getWellTreeSearch(searchTxt: string) {
+    this.searchText = searchTxt;
+    this.GetEventListWithFilters();
+  }
   EventDownLoadReport() {
     this.loading = true;
     var SearchModel = this.createModelReport();
