@@ -1,29 +1,7 @@
 <div class="container-fluid pt-2 left-wellFilter">
-  <div class="row pt-2 pb-2">
-    <div class="col-9">
-      <span class="label applyfilterHead">Applied filters</span>
-    </div>
-    <div class="col-3">
-      <span
-        class="label"
-        style="text-decoration: underline; cursor: pointer"
-        (click)="clearAppliedFilter()"
-      >
-        Clear All
-        <mat-icon
-          (click)="clearAppliedFilter()"
-          style="
-            cursor: pointer;
-            color: white;
-            font-size: 20px;
-            margin-left: 5px;
-            margin-bottom: -10px;
-          "
-          >close</mat-icon
-        >
-      </span>
-      <!-- <i class="fa fa-close" (click)="clearAppliedFilter()"></i> -->
-    </div>
+  <div class="wellfilter-header-section">
+    <div class="card-title">Applied filters</div>
+    <button mat-flat-button class="clearlist" (click)="clearAppliedFilter()">Clear All</button>
   </div>
 
   <div class="row pt-2 pb-2" *ngIf="isEvent">
