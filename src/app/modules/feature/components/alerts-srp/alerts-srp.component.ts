@@ -161,7 +161,7 @@ export class AlertsSrpComponent implements OnInit {
         });
 
         this.TotalCount = response.alertsLevelDto.totalCount;
-        this.getLegendCount();
+        this.getLegendCount(this.alertList);
         // this.High = response.alertsLevelDto.totalHigh;
         // this.Medium = response.alertsLevelDto.totalMedium;
         // this.Low = response.alertsLevelDto.totalLow;
@@ -191,7 +191,7 @@ export class AlertsSrpComponent implements OnInit {
           this.paginator.length = response.alertsLevelDto.totalCount;
         });
         this.TotalCount = response.alertsLevelDto.totalCount;
-        this.getLegendCount();
+        this.getLegendCount(this.alertList);
         // this.High = response.alertsLevelDto.totalHigh;
         // this.Medium = response.alertsLevelDto.totalMedium;
         // this.Low = response.alertsLevelDto.totalLow;
@@ -212,17 +212,17 @@ export class AlertsSrpComponent implements OnInit {
     this.GetAlertListWithSortFilters(payload);
   }
 
-  getLegendCount() {
-    let high = this.alertList.filter((alert) => alert.alertLevel == 'High');
+  getLegendCount(alertList: any) {
+    let high = alertList.filter((alert) => alert.alertLevel == 'High');
     this.High = high.length;
 
-    let med = this.alertList.filter((alert) => alert.alertLevel == 'Medium');
+    let med = alertList.filter((alert) => alert.alertLevel == 'Medium');
     this.Medium = med.length;
 
-    let low = this.alertList.filter((alert) => alert.alertLevel == 'Low');
+    let low = alertList.filter((alert) => alert.alertLevel == 'Low');
     this.Low = low.length;
 
-    let clear = this.alertList.filter((alert) => alert.alertLevel == 'Cleared');
+    let clear = alertList.filter((alert) => alert.alertLevel == 'Cleared');
     this.Clear = clear.length;
   }
 
@@ -280,7 +280,7 @@ export class AlertsSrpComponent implements OnInit {
         });
 
         this.TotalCount = response.alertsLevelDto.totalCount;
-        this.getLegendCount();
+        this.getLegendCount(this.alertList);
         this.dataSource.paginator = this.paginator;
 
     },
@@ -327,6 +327,7 @@ export class AlertsSrpComponent implements OnInit {
       (alert) => alert.category === category
     );
     this.dataSource = new MatTableDataSource<AlertList>(categoryList);
+    this.getLegendCount(categoryList);
   }
 
   snoozeBy(snoozeTime: any, snoozeByTime: number) {
