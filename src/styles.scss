@@ -386,10 +386,7 @@ button {
         color: #fff;
       }
 
-      .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
-          .mdc-text-field--textarea
-        )
-        .mat-mdc-form-field-infix {
+      .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
         padding-top: 1px;
         padding-bottom: 1px;
         padding-left: 2px;
@@ -432,44 +429,27 @@ button {
       flex: 0 0 14px;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:not(:checked):not(
-        :indeterminate
-      ):not([data-indeterminate="true"])
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not( :indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
       border-color: #adb1c7;
       background-color: #080912;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:checked
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
       border-color: #fabb42;
       background-color: #3a83ff;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled
-      ~ .mdc-checkbox__background
-      .mdc-checkbox__checkmark {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
       color: #080912;
     }
   }
 }
 
-.mat-mdc-radio-button
-  .mdc-radio
-  .mdc-radio__native-control:enabled:checked
-  + .mdc-radio__background
-  .mdc-radio__outer-circle {
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
   border-color: #fabb42 !important;
 }
 
-.mat-mdc-radio-button
-  .mdc-radio
-  .mdc-radio__native-control:enabled
-  + .mdc-radio__background
-  .mdc-radio__inner-circle {
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
   border-color: #3a83ff !important;
 }
 
@@ -516,10 +496,7 @@ button {
     color: #505575;
   }
 
-  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
-      .mdc-text-field--textarea
-    )
-    .mat-mdc-form-field-infix {
+  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
     padding-top: 1px;
     padding-bottom: 1px;
     padding-left: 2px;
@@ -615,41 +592,22 @@ button {
     //     flex: 0 0 14px;
     // }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:not(:checked):not(
-        :indeterminate
-      ):not([data-indeterminate="true"])
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not( :indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
       border-color: #adb1c7;
       background-color: #080912;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:checked
-      ~ .mdc-checkbox__background,
-    .mdc-checkbox:hover
-      .mdc-checkbox__native-control:enabled:checked
-      ~ .mdc-checkbox__background,
-    .mdc-checkbox:not(:disabled):active
-      .mdc-checkbox__native-control:enabled:checked
-      ~ .mdc-checkbox__background,
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:indeterminate
-      ~ .mdc-checkbox__background,
-    .mdc-checkbox
-      .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-      ~ .mdc-checkbox__background,
-    .mdc-checkbox:focus
-      .mdc-checkbox__native-control:enabled:checked
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+    .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+    .mdc-checkbox:not(:disabled):active .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+    .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background,
+    .mdc-checkbox:focus .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
       border-color: #fabb42;
       background-color: #3a83ff;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled
-      ~ .mdc-checkbox__background
-      .mdc-checkbox__checkmark {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
       color: #080912;
     }
   }
@@ -748,10 +706,7 @@ button {
         color: #fff;
       }
 
-      .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
-          .mdc-text-field--textarea
-        )
-        .mat-mdc-form-field-infix {
+      .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
         padding-top: 1px;
         padding-bottom: 1px;
         padding-left: 2px;
@@ -781,27 +736,18 @@ button {
     //     flex: 0 0 14px;
     // }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:not(:checked):not(
-        :indeterminate
-      ):not([data-indeterminate="true"])
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not( :indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
       border-color: #adb1c7;
       background-color: #080912;
     }
 
     ::ng-deep {
-      .mdc-checkbox
-        .mdc-checkbox__native-control:enabled:checked
-        ~ .mdc-checkbox__background {
+      .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
         border-color: #adb1c7 !important;
         background-color: #051464 !important;
       }
 
-      .mdc-checkbox
-        .mdc-checkbox__native-control:enabled
-        ~ .mdc-checkbox__background
-        .mdc-checkbox__checkmark {
+      .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
         color: #fff !important;
       }
     }
@@ -949,26 +895,17 @@ button:hover {
       flex: 0 0 14px;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:not(:checked):not(
-        :indeterminate
-      ):not([data-indeterminate="true"])
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not( :indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
       border-color: #adb1c7;
       background-color: #080912;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:checked
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
       border-color: #fabb42;
       background-color: #3a83ff;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled
-      ~ .mdc-checkbox__background
-      .mdc-checkbox__checkmark {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
       color: #080912;
     }
 
@@ -997,54 +934,27 @@ button:hover {
           border-color: #fff;
         }
 
-        mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__leading,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__notch,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__trailing {
+        mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
           border: none;
         }
 
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(
-            .mdc-text-field--focused
-          ):hover
-          .mdc-notched-outline
-          .mdc-notched-outline__leading,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(
-            .mdc-text-field--focused
-          ):hover
-          .mdc-notched-outline
-          .mdc-notched-outline__notch,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(
-            .mdc-text-field--focused
-          ):hover
-          .mdc-notched-outline
-          .mdc-notched-outline__trailing {
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing {
           border: none;
         }
 
-        .mdc-text-field--outlined:not(
-            .mdc-text-field--disabled
-          ).mdc-text-field--focused
-          .mdc-notched-outline__leading,
-        .mdc-text-field--outlined:not(
-            .mdc-text-field--disabled
-          ).mdc-text-field--focused
-          .mdc-notched-outline__notch,
-        .mdc-text-field--outlined:not(
-            .mdc-text-field--disabled
-          ).mdc-text-field--focused
-          .mdc-notched-outline__trailing {
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
           border: none;
         }
 
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__leading,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__notch,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__trailing {
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
           border: none;
         }
 
@@ -1069,10 +979,7 @@ button:hover {
           color: #fff;
         }
 
-        .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
-            .mdc-text-field--textarea
-          )
-          .mat-mdc-form-field-infix {
+        .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
           padding-top: 1px;
           padding-bottom: 1px;
           padding-left: 2px;
@@ -1122,9 +1029,7 @@ button:hover {
         background: #8b90ad;
       }
 
-      .mat-calendar-body-today:not(.mat-calendar-body-selected):not(
-          .mat-calendar-body-comparison-identical
-        ) {
+      .mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
         border-color: #6ba7ff;
       }
 
@@ -1207,6 +1112,7 @@ button:hover {
 
 // light theme css start from here.
 .light-theme {
+
   //css added for dynacard info by swapnil starts
   .dynacardinfo-wrapper {
     .timeframe {
@@ -1219,7 +1125,7 @@ button:hover {
       button {
         margin: 0px 10px;
         border-radius: 0px;
-        padding: 10px;
+        padding: 5px 10px;
         border: none !important;
 
         &.selected {
@@ -1239,6 +1145,7 @@ button:hover {
       padding: 12px 20px;
       border-radius: 40px;
     }
+
     /*Css added by mg for dynacard info left panel start*/
 
     .well-search {
@@ -1459,9 +1366,13 @@ button:hover {
 
       .tabrightsec {
         position: absolute;
-        top: 20px;
-        right: 100px;
+        top: 14px;
+        right: 10px;
         display: inline-flex;
+
+        .action-btn-info {
+          padding: 10px 20px;
+        }
       }
 
       .status-cards {
@@ -1625,6 +1536,7 @@ button:hover {
       color: #272c39;
       margin: 20px 10px;
     }
+
     .card-details-section {
       .mat-mdc-card-content {
         padding-left: 0px;
@@ -1653,8 +1565,7 @@ button:hover {
         background-color: #ebecf2 !important;
       }
 
-      .mat-mdc-form-field
-        .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         border: 1px solid #50557580;
         background-color: #ebecf2bf;
         border-radius: 8px;
@@ -1746,34 +1657,38 @@ button:hover {
     // border-radius: 8px;
     overflow: hidden;
     height: 100%;
+
     .mat-mdc-tab-group {
       height: 100%;
     }
+
     .mat-mdc-tab-list {
       border-bottom: 1px solid #cccfde;
     }
+
     .mat-mdc-tab.mdc-tab {
       height: 52px;
       flex-grow: 1;
+
       .mdc-tab__content .mdc-tab__text-label {
         font-size: 16px !important;
         color: #22263d;
         font-family: "SLB SANS MEDIUM";
         font-weight: 700;
       }
+
       .mdc-tab-indicator {
         padding: 0 30px;
         background: #fff;
       }
     }
-    .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active
-      .mdc-tab__text-label,
-    .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active
-      .mdc-tab__text-label {
+
+    .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label,
+    .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
       color: #000b9e;
     }
-    .mat-mdc-tab:not(.mat-mdc-tab-disabled)
-      .mdc-tab-indicator__content--underline {
+
+    .mat-mdc-tab:not(.mat-mdc-tab-disabled) .mdc-tab-indicator__content--underline {
       border-color: #000b9e;
     }
   }
@@ -1857,8 +1772,7 @@ button:hover {
         border-color: var(--tabBorder);
       }
 
-      .mat-mdc-tab.mdc-tab--active:hover
-        .mdc-tab-indicator__content--underline {
+      .mat-mdc-tab.mdc-tab--active:hover .mdc-tab-indicator__content--underline {
         border-color: var(--tabBorder);
       }
 
@@ -1976,8 +1890,7 @@ button:hover {
         height: 14px;
       }
 
-      .mat-mdc-form-field
-        .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         border: 1px solid #8b90ad;
         background-color: #eff0f5;
         border-radius: 28px;
@@ -2138,33 +2051,22 @@ button:hover {
       font-weight: 500;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled:not(:checked):not(
-        :indeterminate
-      ):not([data-indeterminate="true"])
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not( :indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
       border-color: #adb1c7;
       background-color: #eff0f5;
     }
 
-    .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
-    .mdc-checkbox__native-control:enabled:indeterminate
-      ~ .mdc-checkbox__background {
+    .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+    .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background {
       border-color: #fabb42 !important;
       background-color: #000b9e !important;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled
-      ~ .mdc-checkbox__background
-      .mdc-checkbox__mixedmark {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__mixedmark {
       border-color: #fff;
     }
 
-    .mdc-checkbox
-      .mdc-checkbox__native-control:enabled
-      ~ .mdc-checkbox__background
-      .mdc-checkbox__checkmark {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
       color: #fff;
     }
 
@@ -2173,7 +2075,7 @@ button:hover {
     }
   }
 
-  .mat-mdc-checkbox.mat-accent .mdc-checkbox--selected ~ .mdc-checkbox__ripple {
+  .mat-mdc-checkbox.mat-accent .mdc-checkbox--selected~.mdc-checkbox__ripple {
     background: #000;
   }
 
@@ -2608,54 +2510,27 @@ button:hover {
           border-color: #8b90ad;
         }
 
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__leading,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__notch,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__trailing {
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
           border: none;
         }
 
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(
-            .mdc-text-field--focused
-          ):hover
-          .mdc-notched-outline
-          .mdc-notched-outline__leading,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(
-            .mdc-text-field--focused
-          ):hover
-          .mdc-notched-outline
-          .mdc-notched-outline__notch,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(
-            .mdc-text-field--focused
-          ):hover
-          .mdc-notched-outline
-          .mdc-notched-outline__trailing {
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing {
           border: none;
         }
 
-        .mdc-text-field--outlined:not(
-            .mdc-text-field--disabled
-          ).mdc-text-field--focused
-          .mdc-notched-outline__leading,
-        .mdc-text-field--outlined:not(
-            .mdc-text-field--disabled
-          ).mdc-text-field--focused
-          .mdc-notched-outline__notch,
-        .mdc-text-field--outlined:not(
-            .mdc-text-field--disabled
-          ).mdc-text-field--focused
-          .mdc-notched-outline__trailing {
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
           border: none;
         }
 
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__leading,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__notch,
-        .mdc-text-field--invalid:not(.mdc-text-field--disabled)
-          .mdc-notched-outline__trailing {
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+        .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
           border: none;
         }
 
@@ -2694,10 +2569,7 @@ button:hover {
           color: #505575;
         }
 
-        .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
-            .mdc-text-field--textarea
-          )
-          .mat-mdc-form-field-infix {
+        .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
           padding-top: 1px;
           padding-bottom: 1px;
           padding-left: 2px;
@@ -2770,9 +2642,7 @@ button:hover {
         background: #8b90ad;
       }
 
-      .mat-calendar-body-today:not(.mat-calendar-body-selected):not(
-          .mat-calendar-body-comparison-identical
-        ) {
+      .mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
         border-color: #0014dc;
       }
 
