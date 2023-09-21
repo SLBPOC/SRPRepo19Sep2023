@@ -144,8 +144,13 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
 
   }
 
-  getSnoozeByWellName(wellName: string) {
-    wellName = 'W012';
+  closeDialog(dialog: any) {
+    dialog.close.emit();
+  }
+
+  getSnoozeByWellName(el: any) {
+    // wellName = 'W012';
+    let wellName = el.wellname;
     this.alertService.getSnoozeByWellName(wellName).subscribe((data: any) => {
       this.snoozeData = data;
     })

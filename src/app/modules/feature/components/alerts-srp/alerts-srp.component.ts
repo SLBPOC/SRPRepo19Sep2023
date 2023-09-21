@@ -250,6 +250,10 @@ export class AlertsSrpComponent implements OnInit {
     this.GetAlertListWithFilters();
   }
 
+  closeDialog(dialog: any) {
+    dialog.close.emit();
+  }
+
   ClearSearch() {
     this.pageNumber = 1;
     this.seachByStatus = "";
