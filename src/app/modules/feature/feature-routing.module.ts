@@ -54,7 +54,7 @@ const routes: Routes = [
       { path: 'alerts/:id', component: AlertListComponent },
       { path: 'event-list', component: EventListComponent },
       { path: 'wells', component: WellsComponent },
-      { path: 'uidynacardinfo', component: UiDynacardInfoComponent },
+      { path: 'well-info-v3/:id', component: UiDynacardInfoComponent },
 
       { path: 'Parameter', component: ParChartComponent },
       { path: 'well-details-dynacard', component: WellDetailsDynacardComponent },

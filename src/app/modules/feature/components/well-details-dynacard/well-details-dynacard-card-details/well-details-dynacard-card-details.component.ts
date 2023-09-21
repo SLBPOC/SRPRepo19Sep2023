@@ -23,7 +23,7 @@ interface welldata {
 })
 export class WellDetailsDynacardCardDetailsComponent {
 
-  selectedTimeDetails: CardDetailsModel = new CardDetailsModel();;
+  selectedTimeDetails: CardDetailsModel =  null;//new CardDetailsModel();;
 
   mappingOfFields = {
     pumpFillage_per: 'Pump Fillage(%) ',
@@ -43,7 +43,7 @@ export class WellDetailsDynacardCardDetailsComponent {
         });
       }
       else {
-        this.selectedTimeDetails = new CardDetailsModel();
+        this.selectedTimeDetails = null;//new CardDetailsModel();
       }
     });
     this.dynaService.selectedTimeInGraph.subscribe(x => {

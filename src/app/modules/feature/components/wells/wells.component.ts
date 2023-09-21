@@ -709,7 +709,7 @@ export class WellsComponent implements OnInit {
 
   navigateToWellInfo(wellId: string) {
     //this.router.navigateByUrl(`/well-info-v2/${wellId}`)
-    this.router.navigate([]).then(result => { window.open(`/uidynacardinfo/${wellId}`, '_blank'); });  // in new tab
+    this.router.navigate([]).then(result => { window.open(`/well-info-v3/${wellId}`, '_blank'); });  // in new tab
   }
 
 
