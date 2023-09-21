@@ -114,7 +114,7 @@
                         <!--Well List goes here.  -->
                      </mat-tab>
                      <mat-tab label="Filter & Sort">
-                        <app-well-filter-and-sort (filterRefresh)="refreshGrid($event)"></app-well-filter-and-sort>
+                        <app-well-filter-and-sort (filterRefresh)="refreshGrid($event)" [DynamicColumn] ="displayableExtraColumns"  ></app-well-filter-and-sort>
                      </mat-tab>
 
                   </mat-tab-group>
