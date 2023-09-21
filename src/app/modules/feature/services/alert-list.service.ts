@@ -46,7 +46,7 @@ export class AlertListService {
   }
 
   getSnoozeByWellName(wellName: string) {
-    return this.http.post<any>(`${this.baseUrl}Alerts/GetSnoozbyWells?wellId=${wellName}`,wellName);
+    return this.http.post<any>(`${this.baseUrl}Alerts/GetSnoozbyWells?WellName=${wellName}`,wellName);
   }
 
   getDefaultAlertCategory(payload?: any): Observable<any> {
