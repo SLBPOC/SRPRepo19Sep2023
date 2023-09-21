@@ -2086,7 +2086,7 @@ button:hover {
 
   .mat-mdc-checkbox {
     label {
-      color: #505575;
+      color: #000;
       font-size: 16px;
       font-weight: 500;
     }
@@ -2282,13 +2282,13 @@ button:hover {
     .mat-nested-tree-node {
       font-weight: 700;
       font-size: 18px !important;
-      color: #051464 !important;
+      color: #000 !important;
     }
 
     .button__arrow {
-      color: #051464 !important;
-      width: 28px !important;
-      height: 30px !important;
+      color: #000 !important;
+      width: 26px !important;
+      height: 28px !important;
 
       .mat-icon {
         height: 30px;
