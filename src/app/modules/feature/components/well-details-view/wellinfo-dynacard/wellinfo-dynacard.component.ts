@@ -101,7 +101,7 @@ export class WellinfoDynacardComponent implements OnInit {
         });
       }
       else {
-        this.selectedTimeDetails = new CardDetailsModel();
+        this.selectedTimeDetails = null//new CardDetailsModel();
       }
     });
     this.dynaService.selectedTime.pipe(takeUntil(this.$takUntil), switchMap(obj => {
@@ -592,7 +592,7 @@ export class WellinfoDynacardComponent implements OnInit {
 
   ///Seleed Time series
 
-  selectedTimeDetails: CardDetailsModel = new CardDetailsModel();;
+  selectedTimeDetails: CardDetailsModel = null//new CardDetailsModel();;
 
   mappingOfFields = {
     pumpFillage_per: 'Pump Fillage(%) ',
