@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable, map } from 'rxjs';
-import { CardDetailsModel, DynacardModel2, FramesDynameter } from '../model/dyna-card.model';
+import { CardDetailsModel, DynacardModel2, FramesDynameter, DynaCardDetailsModel } from '../model/dyna-card.model';
 import { environment } from '@environments/environment';
 
 
@@ -27,9 +27,9 @@ export class DynacardService {
     return this.client.get<CardDetailsModel[]>(url);
   }
 
-  getListOfCategory(classfication: string, startDate: string, endDate: string): Observable<CardDetailsModel[]> {
+  getListOfCategory(classfication: string, startDate: string, endDate: string): Observable<DynaCardDetailsModel[]> {
     var url = this.baseUrl + `dynameter/dynacards/${classfication}/timeframes/from/${startDate}/to/${endDate}`;
-    return this.client.get<CardDetailsModel[]>(url);
+    return this.client.get<DynaCardDetailsModel[]>(url);
   }
 
   getDynaCardDetailsForATime(time: string): Observable<DynacardModel2[]> {
