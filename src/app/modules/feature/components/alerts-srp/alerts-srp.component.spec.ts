@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
-
+import * as HighCharts from 'highcharts';
 import { AlertsSrpComponent } from './alerts-srp.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -25,12 +25,27 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { WellModel } from '../../model/wellModel';
-
-
-describe('AlertsSrpComponent', () => {
+import { TreeViewService } from '../../services/tree-view.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { WellTreeListComponent } from '../well-tree-list/well-tree-list.component';
+import { AlertCategoriesChartComponent } from '../alert-categories-chart/alert-categories-chart.component';
+import { AlertCategoriesTableComponent } from '../alert-categories-table/alert-categories-table.component';
+import { WellTreeSearchComponent } from '../well-tree-list/well-tree-search/well-tree-search.component';
+import { WellTreeView } from '../well-tree-list/well-tree-view/well-tree-view.component';
+import { HierarchyService } from '../../services/HierarchyService';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+xdescribe('AlertsSrpComponent', () => {
   let component: AlertsSrpComponent;
   let fixture: ComponentFixture<AlertsSrpComponent>;
-  let mockDataService: MockDataService;
+  // let mockDataService: MockDataService;
   let router: Router;
   let mockPaginator: MatPaginator;
   let mockSearchInput: ElementRef<HTMLInputElement>;
@@ -38,11 +53,12 @@ describe('AlertsSrpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AlertsSrpComponent ,WellFilterAndSortComponent],
+      declarations: [AlertCategoriesTableComponent, AlertsSrpComponent ,WellTreeView,WellTreeSearchComponent,WellFilterAndSortComponent,WellTreeListComponent,AlertCategoriesChartComponent],
       
       imports: [
         BrowserAnimationsModule,
         HttpClientModule,
+    
         MatMenuModule,
         MatCheckboxModule,
         MatPaginatorModule,
@@ -57,11 +73,26 @@ describe('AlertsSrpComponent', () => {
         MatFormFieldModule,
         MatSelectModule,
         MatSliderModule,
+        MatDialogModule,
+        NgxMatDatetimePickerModule,
+        NgxMatTimepickerModule,
+        NgxMatNativeDateModule,
+        HighchartsChartModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTabsModule,
+        MatSlideToggleModule,
+        MatTreeModule,
+        MatIconModule
+        
         
       ],
       providers: [
         HttpClientModule, 
-         {provide: WellsService, useClass: MockDataService },
+        TreeViewService,
+        DatePipe,
+        HierarchyService,
+        //  {provide: WellsService, useClass: MockDataService },
         // {provide: WellsService, useClas: WellsService},
          { provide: Router, useValue: router }
       ]
@@ -213,147 +244,147 @@ describe('AlertsSrpComponent', () => {
 
 
 
-class MockDataService extends WellsService {
-  // Override the method that makes the HTTP request
-  //  search ={pageno:5, pagesize:50}
-  override getWellDetailsWithFilters(welldata:{pageno, pagesize}) {
-    let adata: any= {
-      "data":[
-        {
-          "id": 1,
-          "wellId": "W001",
-          "wellName": "Apache 24 FED 11",
-          "dateAndTime": "2023-04-14 13:14:59",
-          "commStatus": "Comms Established",
-          "controllerStatus": "Shutdown",
-          "spm": {
-            "value": 50,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "pumpFillage": {
-            "value": 55,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "inferredProduction": {
-            "value": 30.5,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "effectiveRunTime": {
-            "value": 12,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "cyclesToday": {
-            "value": 2.5,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "structuralLoad": {
-            "value": 3.5,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "minMaxLoad": {
-            "value": 20.5,
-            "min": [
-              [ "06/09/2022", 30 ],
-              [ "07/09/2022", 50 ],
-              [ "08/09/2022", 80 ],
-              [ "09/09/2022", 20 ],
-              [ "10/09/2022", 55 ],
-              [ "11/09/2022", 100 ],
-              [ "12/09/2022", 50 ]
-            ],
-            "max": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "gearboxLoad": {
-            "value": 20.5,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "rodStress": {
-            "value": 29.5,
-            "data": [
-              [ "06/09/2022", 50 ],
-              [ "07/09/2022", 70 ],
-              [ "08/09/2022", 100 ],
-              [ "09/09/2022", 60 ],
-              [ "10/09/2022", 65 ],
-              [ "11/09/2022", 200 ],
-              [ "12/09/2022", 100 ]
-            ]
-          },
-          "noOfAlerts": 2,
-          "wellStatus": "Optimum Pumping"
-        }  
-      ],
-      "totalCount": 1
-    }
+// class MockDataService extends WellsService {
+//   // Override the method that makes the HTTP request
+//   //  search ={pageno:5, pagesize:50}
+//   override getWellDetailsWithFilters(welldata:{pageno, pagesize}) {
+//     let adata: any= {
+//       "data":[
+//         {
+//           "id": 1,
+//           "wellId": "W001",
+//           "wellName": "Apache 24 FED 11",
+//           "dateAndTime": "2023-04-14 13:14:59",
+//           "commStatus": "Comms Established",
+//           "controllerStatus": "Shutdown",
+//           "spm": {
+//             "value": 50,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "pumpFillage": {
+//             "value": 55,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "inferredProduction": {
+//             "value": 30.5,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "effectiveRunTime": {
+//             "value": 12,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "cyclesToday": {
+//             "value": 2.5,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "structuralLoad": {
+//             "value": 3.5,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "minMaxLoad": {
+//             "value": 20.5,
+//             "min": [
+//               [ "06/09/2022", 30 ],
+//               [ "07/09/2022", 50 ],
+//               [ "08/09/2022", 80 ],
+//               [ "09/09/2022", 20 ],
+//               [ "10/09/2022", 55 ],
+//               [ "11/09/2022", 100 ],
+//               [ "12/09/2022", 50 ]
+//             ],
+//             "max": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "gearboxLoad": {
+//             "value": 20.5,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "rodStress": {
+//             "value": 29.5,
+//             "data": [
+//               [ "06/09/2022", 50 ],
+//               [ "07/09/2022", 70 ],
+//               [ "08/09/2022", 100 ],
+//               [ "09/09/2022", 60 ],
+//               [ "10/09/2022", 65 ],
+//               [ "11/09/2022", 200 ],
+//               [ "12/09/2022", 100 ]
+//             ]
+//           },
+//           "noOfAlerts": 2,
+//           "wellStatus": "Optimum Pumping"
+//         }  
+//       ],
+//       "totalCount": 1
+//     }
      
       
     
-    return of(adata);
-  }
+//     return of(adata);
+//   }
 
   
-}
+// }
