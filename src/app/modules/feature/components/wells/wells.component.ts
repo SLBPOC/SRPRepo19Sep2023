@@ -31,6 +31,7 @@ export class WellsComponent implements OnInit {
   //dataSourceReport:any=[];
   WellList!: WellModel[];
   selectedColumn: string[] = [];
+  selectedExtraColumn:[];
   displayedColumns: string[] = ['WellStatus', 'WellName', 'DateAndTime', 'CommStatus', 'ControllerStatus', 'SPM.value', 'PumpFillage.value', 'InferredProduction.value', 'NoOfAlerts'];
   displayableExtraColumns: { label: string, accessor: string, header: string }[] = [];
   extraColumnsCtrl: any = new FormControl('');
@@ -55,7 +56,7 @@ export class WellsComponent implements OnInit {
   searchText: string = "";
   sortDirection: string = "";
   sortColumn: string = "";
-  pageSize: number = 5;
+  pageSize: number = 10;
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
@@ -71,7 +72,12 @@ export class WellsComponent implements OnInit {
   pumpingType: any[];
   spm: any[];
   wellNames: any[];
-
+  effectiveRuntime: any[];
+  cyclesToday: any[];
+  structuralLoad: any[];
+  minMaxLoad: any[];
+  gearboxLoad: any[];
+  rodStress: any[];
 
   //legend variables
   TotalCount: number = 0;
@@ -127,14 +133,14 @@ export class WellsComponent implements OnInit {
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
         if (response.status != 404) { 
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.pumpingDetails.totalCount]
+        this.pageSizeOption = [10, 20, 30, response.pumpingDetails.totalCount]
         // this.getPageSizeOptions();
         this.WellList = response.wellDtos;
         this.WellList.forEach(x => this.prepareChart(x));
         this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.pumpingDetails.totalCount;
+          this.paginator.length = response.totalCount;
         });
 
         this.TotalCount = response.pumpingDetails.totalCount;
@@ -162,6 +168,12 @@ export class WellsComponent implements OnInit {
     this.pumpFillage = payload.pumpFillage;
     this.pumpingType = payload.pumpingType;
     this.spm = payload.spm;
+    this.effectiveRuntime= payload.effectiveRuntime;
+    this.cyclesToday=payload.cyclesToday;
+    this.structuralLoad=payload.structuralLoad;
+    this.minMaxLoad=payload.minMaxLoad;
+    this.gearboxLoad=payload.gearboxLoad;
+    this.rodStress=payload.rodStress;
     this.wellNames = payload.wellNames;
     this.currentPage=0;
     this.GetWellDetailsWithFilters();
@@ -183,6 +195,12 @@ export class WellsComponent implements OnInit {
     this.model.pumpFillage = this.pumpFillage ? this.pumpFillage : { start: 0, end: 100 };
     this.model.pumpingType = this.pumpingType ? this.pumpingType : [];
     this.model.spm = this.spm ? this.spm : { start: 0, end: 100,min:0,max:100 };
+    this.model.effectiveRuntime = this.effectiveRuntime ? this.effectiveRuntime : { start: 0, end: 100,min:0,max:100 };
+    this.model.cyclesToday = this.cyclesToday ? this.cyclesToday : { start: 0, end: 100,min:0,max:100 };
+    this.model.structuralLoad = this.structuralLoad ? this.structuralLoad : { start: 0, end: 100,min:0,max:100 };
+    this.model.minMaxLoad = this.minMaxLoad ? this.minMaxLoad : { start: 0, end: 100,min:0,max:100 };
+    this.model.gearboxLoad = this.gearboxLoad ? this.gearboxLoad : { start: 0, end: 100,min:0,max:100 };
+    this.model.rodStress = this.rodStress ? this.rodStress : { start: 0, end: 100,min:0,max:100 };
     this.model.wellNames = this.wellNames ? this.wellNames : [];
 
     return this.model;
@@ -213,7 +231,9 @@ export class WellsComponent implements OnInit {
     this.sortDirection = "";
     this.seachByStatus="";
     this.currentPage=0;
-
+    this.commStatus = [];
+    this.controllerStatus =[];
+    this.pumpingType = [];
     this.GetWellDetailsWithFilters();
   }
 
