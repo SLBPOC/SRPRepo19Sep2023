@@ -43,7 +43,7 @@
                 type="text"
                 name="searchQueryInput"
                 [(ngModel)]="searchText"
-                placeholder="Search By Well Name"
+                placeholder="Search"
               />
               <button
                 id="searchQuerySubmit"
@@ -202,10 +202,21 @@
           <div class="col-md-12 p-0 filterborder">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
               <mat-tab label="Well List">
-                <app-well-tree-list
-                  (searchStr)="getWellTreeSearch($event)"
-                ></app-well-tree-list
-                >>
+                <!--<app-well-tree-list></app-well-tree-list>-->
+                <div class="block-bg-border padding-15 well-list-section">
+                  <app-well-tree-search
+                    (userChanged)="userSearchChange($event)"
+                  ></app-well-tree-search>
+                  <div class="devider"></div>
+                  <div class="well-check-list">
+                    <app-well-tree-view
+                      [searchObj]="searchObjC"
+                    ></app-well-tree-view>
+                    <!-- <app-tree-checklist></app-tree-checklist> -->
+                  </div>
+                </div>
+                <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
+                <!--Well List goes here.  -->
               </mat-tab>
               <mat-tab label="Filter & Sort">
                 <!-- <app-well-filter-and-sort
