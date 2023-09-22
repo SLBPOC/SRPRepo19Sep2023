@@ -115,7 +115,7 @@ export class EventListComponent {
 
   categoriesChartData: any;
   minmaxChartData: any[] = []; //min max chart data array
-  pageSizeOption = [5, 10, 20, 30];
+  pageSizeOption = [10, 20, 30];
   ids: number[];
   respdata: any;
   todayDate: Date = new Date();
@@ -147,6 +147,8 @@ export class EventListComponent {
   }
 
   ngOnInit(): void {
+    this.GetEventListWithFilters();
+
     this.treeviewService.selectedNodes.subscribe((x) => {
       console.log(x);
       if (
@@ -158,8 +160,8 @@ export class EventListComponent {
           .filter((m) => m.type == NodeType.Wells)
           .map((m) => m.nodeId);
       } else this.ids = [];
+      this.GetEventListWithFilters();
     });
-    this.GetEventListWithFilters();
   }
 
   GetEventListWithFilters() {
@@ -202,7 +204,9 @@ export class EventListComponent {
   }
 
   bindDataSource(response) {
-    this.pageSizeOption = [10, 15, 20];
+    if (response.totalcount > 30) {
+      this.pageSizeOption = [10, 20, 30, response.totalcount];
+    }
     this.eventList = response.events;
     this.dataSource = new MatTableDataSource<EventList>(this.eventList);
     setTimeout(() => {
@@ -309,7 +313,7 @@ export class EventListComponent {
     this.searchText = '';
     this.ids = [];
     (this.startDate = ''), (this.endDate = ''), this.GetEventListWithFilters();
-    // this.GetEventListWithFilters();
+    this.GetEventListWithFilters();
   }
   applyDateRangeFilter() {
     let fromDate = this.selectedRangeValue.start;
