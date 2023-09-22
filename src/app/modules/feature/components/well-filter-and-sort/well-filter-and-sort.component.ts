@@ -165,6 +165,42 @@ rodStress:false
   {
     const test=this.DynamicColumn.map(ele=>ele.accessor)
     this.ColumnList=test;
+    let effectiveRuntime = this.ColumnList.find((e: any) => e.value === "effectiveRuntime");
+    if(!effectiveRuntime)
+    {
+      this.effectiveRuntimeSlider.start=0;
+      this.effectiveRuntimeSlider.end=100;
+    }
+    let cycleToday = this.ColumnList.find((e: any) => e.value === "cycleToday");
+    if(!cycleToday)
+    {
+      this.cyclesTodaySlider.start=0;
+      this.cyclesTodaySlider.end=100;
+    }
+    let structuralLoad = this.ColumnList.find((e: any) => e.value === "structuralLoad");
+    if(!structuralLoad)
+    {
+      this.structuralLoadSlider.start=0;
+      this.structuralLoadSlider.end=100;
+    }
+    let minMaxLoad = this.ColumnList.find((e: any) => e.value === "minMaxLoad");
+    if(!minMaxLoad)
+    {
+      this.minMaxLoadSlider.start=0;
+      this.minMaxLoadSlider.end=100;
+    }
+    let gearboxLoad = this.ColumnList.find((e: any) => e.value === "gearboxLoad");
+    if(!gearboxLoad)
+    {
+      this.gearboxLoadSlider.start=0;
+      this.gearboxLoadSlider.end=100;
+    }
+    let rodStress = this.ColumnList.find((e: any) => e.value === "rodStress");
+    if(!rodStress)
+    {
+      this.rodStressSlider.start=0;
+      this.rodStressSlider.end=100;
+    }
   }
 
 
@@ -381,7 +417,9 @@ rodStress:false
             start: this.inferredProductionSlider.start,
             end: this.inferredProductionSlider.end
           },
+          
           "effectiveRuntime": {
+         
             start: this.effectiveRuntimeSlider.start,
             end: this.effectiveRuntimeSlider.end
           },
