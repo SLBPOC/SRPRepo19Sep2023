@@ -25,7 +25,7 @@ export class DynacardModel2 {
     confidence: string
 }
 
-export class CardDetailsModel {
+export interface CardDetailsModel extends FramesDynameter {
     id: string;
     pumpFillage_per: number;
     SPM: number;
@@ -33,7 +33,9 @@ export class CardDetailsModel {
     peakPolishedRodLoad_lbs: number;
     surfaceStrokeLength_in: number;
     downholeStrokeLength_in: number;
-    totalFluid_in: number
+    totalFluid_in: number;
+    notes: string;
+    cardName:string;
 }
 
 export interface Classification {

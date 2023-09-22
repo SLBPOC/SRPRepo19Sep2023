@@ -14,7 +14,7 @@ export class DynacardService {
 
   detailsForATime = "dynameter/timeframes/";
 
-  selectedTime: Subject<{ selected: string, addedOrRemoved }> = new Subject();
+  selectedTime: Subject<{ selected: any, addedOrRemoved }> = new Subject();
 
   selectedTimeInGraph = new Subject<string>();
 
@@ -22,9 +22,9 @@ export class DynacardService {
 
   constructor(private client: HttpClient) { }
 
-  getListOfTime(classfication: string, startDate: string, endDate: string): Observable<FramesDynameter[]> {
+  getListOfTime(classfication: string, startDate: string, endDate: string): Observable<CardDetailsModel[]> {
     var url = this.baseUrl + `dynameter/classfications/${classfication}/timeframes/from/${startDate}/to/${endDate}`;
-    return this.client.get<FramesDynameter[]>(url);
+    return this.client.get<CardDetailsModel[]>(url);
   }
 
   getDynaCardDetailsForATime(time: string): Observable<DynacardModel2[]> {

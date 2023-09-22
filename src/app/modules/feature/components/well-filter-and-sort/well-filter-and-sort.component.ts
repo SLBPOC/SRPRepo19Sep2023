@@ -273,6 +273,7 @@ rodStress:false
   }
 
   onWellSelection(selectedWellNamesArray: any) {
+    this.selectedWells = selectedWellNamesArray;
     this.filtersApplied.wellNames = selectedWellNamesArray.length > 0;
     this.updateAppliedFilter();
   }
