@@ -8,8 +8,10 @@ import { environment } from '@environments/environment';
   providedIn: 'root',
 })
 export class EventListService {
-  private apiUrl: string = environment.srp_microservice_url;
-  _apiUrl: string = 'https://localhost:52906/';
+  // private apiUrl: string = environment.srp_microservice_url;
+  private _apiUrl: string = environment.srp_microservice_url;
+
+  // _apiUrl: string = 'https://localhost:52906/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -31,15 +33,12 @@ export class EventListService {
   }
 
   getEventList(SearchModel: any): Observable<any> {
-    return this.http.post<EventList[]>(
-      this._apiUrl + 'api/Event/Get',
-      SearchModel
-    );
+    return this.http.post<EventList[]>(this._apiUrl + 'Event/Get', SearchModel);
   }
 
   getDefaultEvents(payload?: null): Observable<any> {
     return this.http.post<EventList[]>(
-      this._apiUrl + 'api/Event/GetDefaultValues',
+      this._apiUrl + 'Event/GetDefaultValues',
       payload
     );
   }
