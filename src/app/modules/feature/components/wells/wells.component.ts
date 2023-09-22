@@ -140,7 +140,7 @@ export class WellsComponent implements OnInit {
         this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = response.totalCount;
+          this.paginator.length =response.pumpingDetails.totalCount;
         });
 
         this.TotalCount = response.pumpingDetails.totalCount;
