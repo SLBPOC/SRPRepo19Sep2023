@@ -193,7 +193,7 @@ export class UiDynacardInfoComponent {
   }
 
   getTableData(startDate: string, classfication: string, endDate: string) {
-    this.listOfTime = this.dynaService.getListOfTime(classfication, startDate, endDate);
+    this.listOfTime = this.dynaService.getListOfCategory(classfication, startDate, endDate);
   }
 
   onClassficationLegendClick(classfication: string) {
