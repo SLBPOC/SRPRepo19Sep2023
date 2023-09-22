@@ -264,7 +264,142 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
+  <div *ngFor="let column of ColumnList">
+  <div class="row pt-2 pb-2" *ngIf=" column== 'effectiveRunTime'">
+    <mat-accordion>
+      <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
+                           [expanded]="true">
+        <mat-expansion-panel-header class="pb-2">
+          <mat-panel-title>
+            <h4 style="font-size: 12px;">Effective Runtime (%)</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row mt-4 mb-4">
+          <mat-slider min="{{effectiveRuntimeSlider.min}}" max="{{effectiveRuntimeSlider.max}}" discrete
+                      [displayWith]="formatLabel">
+            <input (change)="filtersApplied.effectiveRuntime = true" name="effectiveRuntimeStart"
+                   value="{{effectiveRuntimeSlider.start}}" [(ngModel)]="effectiveRuntimeSlider.start"
+                   matSliderStartThumb>
+            <input (change)="filtersApplied.effectiveRuntime = true" name="effectiveRuntimeEnd"
+                   value="{{effectiveRuntimeSlider.end}}" [(ngModel)]="effectiveRuntimeSlider.end" matSliderEndThumb>
+          </mat-slider>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 
+  <div class="row pt-2 pb-2"*ngIf="column == 'cyclesToday'">
+    <mat-accordion>
+      <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
+                           [expanded]="true">
+        <mat-expansion-panel-header class="pb-2">
+          <mat-panel-title>
+            <h4 style="font-size: 12px;">Cycles Today</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row mt-4 mb-4">
+          <mat-slider min="{{cyclesTodaySlider.min}}" max="{{cyclesTodaySlider.max}}" discrete
+                      [displayWith]="formatLabel">
+            <input (change)="filtersApplied.cyclesToday = true" name="cyclesTodayStart"
+                   value="{{cyclesTodaySlider.start}}" [(ngModel)]="cyclesTodaySlider.start"
+                   matSliderStartThumb>
+            <input (change)="filtersApplied.cyclesToday = true" name="cyclesTodayEnd"
+                   value="{{cyclesTodaySlider.end}}" [(ngModel)]="cyclesTodaySlider.end" matSliderEndThumb>
+          </mat-slider>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="row pt-2 pb-2"*ngIf="column == 'structuralLoad'">
+    <mat-accordion>
+      <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
+                           [expanded]="true">
+        <mat-expansion-panel-header class="pb-2">
+          <mat-panel-title>
+            <h4 style="font-size: 12px;">Structural Load (%)</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row mt-4 mb-4">
+          <mat-slider min="{{structuralLoadSlider.min}}" max="{{structuralLoadSlider.max}}" discrete
+                      [displayWith]="formatLabel">
+            <input (change)="filtersApplied.structuralLoad = true" name="structuralLoadStart"
+                   value="{{structuralLoadSlider.start}}" [(ngModel)]="structuralLoadSlider.start"
+                   matSliderStartThumb>
+            <input (change)="filtersApplied.structuralLoad = true" name="structuralLoadEnd"
+                   value="{{structuralLoadSlider.end}}" [(ngModel)]="structuralLoadSlider.end" matSliderEndThumb>
+          </mat-slider>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div class="row pt-2 pb-2"*ngIf="column == 'minMaxLoad'">
+    <mat-accordion>
+      <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
+                           [expanded]="true">
+        <mat-expansion-panel-header class="pb-2">
+          <mat-panel-title>
+            <h4 style="font-size: 12px;">MinMax Load (%)</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row mt-4 mb-4">
+          <mat-slider min="{{minMaxLoadSlider.min}}" max="{{minMaxLoadSlider.max}}" discrete
+                      [displayWith]="formatLabel">
+            <input (change)="filtersApplied.minMaxLoad = true" name="minMaxLoadStart"
+                   value="{{minMaxLoadSlider.start}}" [(ngModel)]="minMaxLoadSlider.start"
+                   matSliderStartThumb>
+            <input (change)="filtersApplied.minMaxLoad = true" name="minMaxLoadEnd"
+                   value="{{minMaxLoadSlider.end}}" [(ngModel)]="minMaxLoadSlider.end" matSliderEndThumb>
+          </mat-slider>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="row pt-2 pb-2"*ngIf="column == 'gearboxLoad'">
+    <mat-accordion>
+      <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
+                           [expanded]="true">
+        <mat-expansion-panel-header class="pb-2">
+          <mat-panel-title>
+            <h4 style="font-size: 12px;">Gearbox Load (%)</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row mt-4 mb-4">
+          <mat-slider min="{{gearboxLoadSlider.min}}" max="{{gearboxLoadSlider.max}}" discrete
+                      [displayWith]="formatLabel">
+            <input (change)="filtersApplied.gearboxLoad = true" name="gearboxLoadStart"
+                   value="{{gearboxLoadSlider.start}}" [(ngModel)]="gearboxLoadSlider.start"
+                   matSliderStartThumb>
+            <input (change)="filtersApplied.gearboxLoad = true" name="gearboxLoadEnd"
+                   value="{{gearboxLoadSlider.end}}" [(ngModel)]="gearboxLoadSlider.end" matSliderEndThumb>
+          </mat-slider>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="row pt-2 pb-2" *ngIf="column == 'rodStress'">
+    <mat-accordion>
+      <mat-expansion-panel class="bg-transparent" (opened)="panelOpenState7 = true" (closed)="panelOpenState7 = false"
+                           [expanded]="true">
+        <mat-expansion-panel-header class="pb-2">
+          <mat-panel-title>
+            <h4 style="font-size: 12px;">Rod Stress (%)</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row mt-4 mb-4">
+          <mat-slider min="{{rodStressSlider.min}}" max="{{rodStressSlider.max}}" discrete
+                      [displayWith]="formatLabel">
+            <input (change)="filtersApplied.rodStress = true" name="rodStressStart"
+                   value="{{rodStressSlider.start}}" [(ngModel)]="rodStressSlider.start"
+                   matSliderStartThumb>
+            <input (change)="filtersApplied.rodStress = true" name="rodStressEnd"
+                   value="{{rodStressSlider.end}}" [(ngModel)]="rodStressSlider.end" matSliderEndThumb>
+          </mat-slider>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
   <div class="row pt-2 pb-2 margin0 applyfilterBtn">
     <button class="filterapplyBtn" mat-raised-button (click)="submitAppliedFilters()">
       <div>Apply Filter</div>
