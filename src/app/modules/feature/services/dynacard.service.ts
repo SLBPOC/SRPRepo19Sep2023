@@ -27,6 +27,11 @@ export class DynacardService {
     return this.client.get<CardDetailsModel[]>(url);
   }
 
+  getListOfCategory(classfication: string, startDate: string, endDate: string): Observable<CardDetailsModel[]> {
+    var url = this.baseUrl + `dynameter/dynacards/${classfication}/timeframes/from/${startDate}/to/${endDate}`;
+    return this.client.get<CardDetailsModel[]>(url);
+  }
+
   getDynaCardDetailsForATime(time: string): Observable<DynacardModel2[]> {
     var url = this.baseUrl + this.detailsForATime + time;
     return this.client.get<DynacardModel2[]>(url);
