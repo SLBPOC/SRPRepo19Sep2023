@@ -56,7 +56,7 @@ export class WellsComponent implements OnInit {
   searchText: string = "";
   sortDirection: string = "";
   sortColumn: string = "";
-  pageSize: number = 5;
+  pageSize: number = 10;
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
@@ -133,7 +133,7 @@ export class WellsComponent implements OnInit {
     this.service.getWellDetailsWithFilters(SearchModel).subscribe(response => {
         if (response.status != 404) { 
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.pumpingDetails.totalCount]
+        this.pageSizeOption = [10, 20, 30, response.pumpingDetails.totalCount]
         // this.getPageSizeOptions();
         this.WellList = response.wellDtos;
         this.WellList.forEach(x => this.prepareChart(x));

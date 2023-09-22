@@ -248,13 +248,12 @@ rodStress:false
       this.spmSlider = response.spmSlider;
       this.pumpFillageSlider = response.pumpFillageSlider;
       this.inferredProductionSlider = response.inferredProductionSlider;
-    //  this.effectiveRuntimeSlider = response.effectiveRuntimeSlider;
-      this.effectiveRuntimeSlider={min:0,max:100,start:0,end:100}
-      this.cyclesTodaySlider={min:0,max:100,start:0,end:100}
-      this.structuralLoadSlider={min:0,max:100,start:0,end:100}
-      this.minMaxLoadSlider={min:0,max:100,start:0,end:100}
-      this.gearboxLoadSlider={min:0,max:100,start:0,end:100}
-      this.gearboxLoadSlider={min:0,max:100,start:0,end:100}
+   this.effectiveRuntimeSlider = response.effectiveRuntimeSlider;
+      this.cyclesTodaySlider=response.cyclesTodaySlider;
+      this.structuralLoadSlider=response.structuralLoadSlider;
+      this.minMaxLoadSlider=response.minMaxLoadSlider
+      this.gearboxLoadSlider=response.gearboxLoadSlider;
+      this.gearboxLoadSlider=response.rodStressSlider;
       this.wellList = response.wellNames;
     })
   }
