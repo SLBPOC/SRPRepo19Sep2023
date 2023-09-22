@@ -313,7 +313,7 @@ export class EventListComponent {
     this.searchText = '';
     this.ids = [];
     (this.startDate = ''), (this.endDate = ''), this.GetEventListWithFilters();
-    // this.GetEventListWithFilters();
+    this.GetEventListWithFilters();
   }
   applyDateRangeFilter() {
     let fromDate = this.selectedRangeValue.start;
