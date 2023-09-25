@@ -1,4 +1,14 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  EventEmitter,
+  Output,
+  OnChanges
+} from '@angular/core';
+//import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import * as Highcharts from 'highcharts';
 import { AlertListService } from '../../services/alert-list.service';
@@ -14,6 +24,7 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
   dataSource: any = [];
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options;
+  @Output() GetAlertListWithFilters = new EventEmitter<boolean>();
 
   loading = true;
   pageSize: number = 5; 
@@ -161,8 +172,13 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
     let Alertid = el.alertid;
     let Updatedby=1
     this.alertService.clearSnoozeBy(Alertid,Updatedby).subscribe((data: any) => {
-      if(data.success == true)
+      if(data== true)
       {
+        let wellName ="Apache 24 FED 12" ;
+        this.alertService.getSnoozeByWellName(wellName).subscribe((data: any) => {
+          this.snoozeData = data;
+        })
+        this.GetAlertListWithFilters.emit(true);
        //this.GetAlertListWithFilters();
         this.loading = false;
       }

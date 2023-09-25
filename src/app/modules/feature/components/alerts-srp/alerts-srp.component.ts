@@ -332,35 +332,8 @@ export class AlertsSrpComponent implements OnInit {
   }
 
   legendFilter(priority: any) {
-    // this.searchText = priority
-    // this.GetAlertListWithFilters();
-    let priorityList: AlertList[];
-    switch (priority) {
-      case 'High':
-        priorityList = this.alertList.filter(
-          (alert) => alert.alertLevel === 'High'
-        );
-        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
-        break;
-      case 'Medium':
-        priorityList = this.alertList.filter(
-          (alert) => alert.alertLevel === 'Medium'
-        );
-        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
-        break;
-      case 'Low':
-        priorityList = this.alertList.filter(
-          (alert) => alert.alertLevel === 'Low'
-        );
-        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
-        break;
-      case 'Cleared':
-        priorityList = this.alertList.filter(
-          (alert) => alert.alertLevel === 'Cleared'
-        );
-        this.dataSource = new MatTableDataSource<AlertList>(priorityList);
-        break;
-    }
+    this.searchText = priority
+     this.GetAlertListWithFilters();
   }
 
   filterGridByCategory(category: any) {

@@ -28,7 +28,7 @@
     <td mat-cell *matCellDef="let element" class="align-col">
       <!-- snooze popup start -->
       
-      <button class="button-type-none" *ngIf="element.snoozAlertCount > 0" (click)="getSnoozeByWellName(element)" [matMenuTriggerFor]="snoozedAlert">{{ element.snoozAlertCount}} </button>
+      <button class="button-type-none"  (click)="getSnoozeByWellName(element)" [matMenuTriggerFor]="snoozedAlert">{{ element.snoozAlertCount}} </button>
       <mat-menu #snoozedAlert="matMenu" class="filter-container">
          <div class="align-center">
            <div class="alrt-filter newalertfilter">
