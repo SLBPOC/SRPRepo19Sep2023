@@ -420,8 +420,8 @@ export class EventListComponent {
   }
   EventDownLoadReport() {
     this.loading = true;
-    var SearchModel = this.createModelReport();
-    this.service.getEventList(SearchModel).subscribe((respince) => {
+    var SearchModel = this.createModel();
+    this.service.getEventList(SearchModel).subscribe((response) => {
       this.dataSource = new MatTableDataSource<EventList>(this.eventList);
       this.exportToXls(this.dataSource);
     });
