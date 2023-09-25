@@ -155,8 +155,25 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
       this.snoozeData = data;
     })
   }
+  ClearSnooze(el: any) {
+    // wellName = 'W012';
+  debugger;
+    let Alertid = el.alertid;
+    let Updatedby=1
+    this.alertService.clearSnoozeBy(Alertid,Updatedby).subscribe((data: any) => {
+      if(data.success == true)
+      {
+       //this.GetAlertListWithFilters();
+        this.loading = false;
+      }
+    })
+  }
+
+ 
 
 }
+
+
 export interface PeriodicElement {
   wellname: string;
   noofalerts: number;

@@ -28,7 +28,7 @@
     <td mat-cell *matCellDef="let element" class="align-col">
       <!-- snooze popup start -->
       
-      <button class="button-type-none" (click)="getSnoozeByWellName(element)" [matMenuTriggerFor]="snoozedAlert">{{ element.snoozAlertCount}} </button>
+      <button class="button-type-none" *ngIf="element.snoozAlertCount > 0" (click)="getSnoozeByWellName(element)" [matMenuTriggerFor]="snoozedAlert">{{ element.snoozAlertCount}} </button>
       <mat-menu #snoozedAlert="matMenu" class="filter-container">
          <div class="align-center">
            <div class="alrt-filter newalertfilter">
@@ -56,7 +56,7 @@
                <ul>
                  <li><div class="filter-list">Description</div> <div class="filter-action">Clear</div></li>
                  <li *ngFor = "let data of snoozeData; let i = index">
-                  <div class="filter-list">{{data?.desc}}</div> <div class="filter-action"><svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <div class="filter-list">{{data?.desc}}</div> <div class="filter-action" (click)="ClearSnooze(data)"><svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.4375 2.375L2.34375 10.5L8.4375 18.625H23.125V2.375H8.4375ZM7.5 0.5H25V20.5H7.5L0 10.5L7.5 0.5ZM15 9.17417L18.0871 6.08709L19.4129 7.41291L16.3258 10.5L19.4129 13.5871L18.0871 14.9129L15 11.8258L11.9129 14.9129L10.5871 13.5871L13.6742 10.5L10.5871 7.41291L11.9129 6.08709L15 9.17417Z" fill="#D11F1F"/>
                    </svg>
                   </div>

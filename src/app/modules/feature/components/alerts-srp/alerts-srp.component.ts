@@ -58,6 +58,7 @@ export class AlertsSrpComponent implements OnInit {
   snoozeByTime: number = 1;
   clearAlertsComments!: string;
   selectedColumn: string[] = [];
+  
   displayedColumns: string[] = ['stat', 'wellName', 'date', 'category', 'desc', 'action'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -77,7 +78,7 @@ export class AlertsSrpComponent implements OnInit {
   model: any = {};
   seachByStatus: string = "";
   loading = true;
-
+  maxDate: Date;
   //filter variables;
   wellNames: any[];
   startDate: any;
@@ -140,6 +141,7 @@ export class AlertsSrpComponent implements OnInit {
     this.ids = [];
     this.TotalCount = 0;
     this.alertList = [];
+    this.maxDate = new Date();
     this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
   }
 
@@ -229,6 +231,7 @@ export class AlertsSrpComponent implements OnInit {
   //Create Model for search
   createModel(this: any) {
     let dateObj = {
+      
       "fromDate": this.startDate ? this.startDate : "",
       "toDate": this.endDate ? this.endDate : ""
     }
@@ -261,7 +264,7 @@ export class AlertsSrpComponent implements OnInit {
     this.ids = [];
     this.GetAlertListWithFilters();
   }
-
+  
   RefreshGrid() {
     this.searchText = "";
     const payload = {

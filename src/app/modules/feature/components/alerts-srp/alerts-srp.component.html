@@ -102,7 +102,7 @@
                            <div class="calender-alrt-filter-date-range-title">Select Data Range</div>
                            <div class="alrt-filter-section-colender">
                                  <mat-calendar [selected]="selectedRangeValue" (click)="$event.stopPropagation()"
-                                   (selectedChange)="selectedChange($event)">
+                                   (selectedChange)="selectedChange($event)" [maxDate]="maxDate">
                                </mat-calendar>
                            </div>
                        </div>

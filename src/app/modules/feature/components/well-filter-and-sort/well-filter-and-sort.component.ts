@@ -287,6 +287,8 @@ rodStress:false
     this.clearInferredProduction();
     this.clearPumpFillage();
     this.updateAppliedFilter();
+    this.clearCategories();
+    
     this.filterRefresh.emit({
       "pageSize": 5,
       "pageNumber": 1,
@@ -296,7 +298,11 @@ rodStress:false
       "searchStatus": ""
     })
   }
+  clearCategories(){
 
+    this.selectedCategories.setValue([]);
+
+  }
   clearCommStatus() {
     this.commsStatusOptions.map((element: any) => element.checked = false);
     this.filtersApplied.commsStatus = false;

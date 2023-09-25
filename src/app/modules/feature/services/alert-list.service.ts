@@ -64,4 +64,7 @@ export class AlertListService {
   snoozeBy(id: number, time: number, payload?: any): Observable<any> {
     return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/SnoozeBy?alertId=${id}&snoozeBy=${time}`,payload);
   }
+  clearSnoozeBy(id: number, snoozeBy: number, payload?: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}Alerts/ClearSnooze?alertId=${id}&snoozeBy=${snoozeBy}`,payload);
+  }
 }
