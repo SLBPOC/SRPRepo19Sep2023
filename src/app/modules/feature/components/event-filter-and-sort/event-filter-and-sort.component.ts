@@ -128,7 +128,6 @@ export class EventFilterAndSortComponent {
   }
 
   onWellSelectionEvents(selectedWellNamesArray: any) {
-    debugger;
     this.eventSelectedWells = selectedWellNamesArray;
     this.filtersApplied.wellNames = selectedWellNamesArray.length > 0;
     // this.updateAppliedFilter();
