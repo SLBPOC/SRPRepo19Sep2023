@@ -1,18 +1,32 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
-import { AlertList } from '../../model/alert-list'
+import { AlertList } from '../../model/alert-list';
 import { AlertListService } from '../../services/alert-list.service';
-import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs'
+import { fromEvent, map, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
 import { TreeViewService } from '../../services/tree-view.service';
 import { NodeType } from '../../services/models';
 import { DateRange } from '@angular/material/datepicker';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { CustomAlertComponent } from '../custom-alert/custom-alert.component';
 import * as XLSX from 'xlsx';
 import { DatePipe } from '@angular/common';
@@ -34,19 +48,20 @@ enum DateRanges {
   styleUrls: ['./alerts-srp.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
     ]),
   ],
 })
-
 export class AlertsSrpComponent implements OnInit {
-
   foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' },
   ];
 
   @Input() selectedRangeValue: DateRange<Date> | undefined;
@@ -58,7 +73,6 @@ export class AlertsSrpComponent implements OnInit {
   snoozeByTime: number = 1;
   clearAlertsComments!: string;
   selectedColumn: string[] = [];
-  
   displayedColumns: string[] = ['stat', 'wellName', 'date', 'category', 'desc', 'action'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -68,15 +82,15 @@ export class AlertsSrpComponent implements OnInit {
 
   HighCharts: typeof HighCharts = HighCharts;
 
-  searchText: string = "";
-  sortDirection: string = "";
-  sortColumn: string = "";
-  pageSize: number = 5; 
+  searchText: string = '';
+  sortDirection: string = '';
+  sortColumn: string = '';
+  pageSize: number = 5;
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
   model: any = {};
-  seachByStatus: string = "";
+  seachByStatus: string = '';
   loading = true;
   maxDate: Date;
   //filter variables;
@@ -94,50 +108,60 @@ export class AlertsSrpComponent implements OnInit {
 
   barChartData: any;
   categoriesChartData: any;
-  minmaxChartData: any[] = [];  //min max chart data array
-  pageSizeOption = [10, 20, 30]
+  minmaxChartData: any[] = []; //min max chart data array
+  pageSizeOption = [10, 20, 30];
   ids: number[];
-  respdata: any
-  todayDate : Date = new Date();
-  dateString:string
+  respdata: any;
+  todayDate: Date = new Date();
+  dateString: string;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private service: AlertListService, private router: Router
-    , public treeviewService: TreeViewService
-    ,public customDialog: MatDialog
-    ,private datePipe: DatePipe) { }
-
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private service: AlertListService,
+    private router: Router,
+    public treeviewService: TreeViewService,
+    public customDialog: MatDialog,
+    private datePipe: DatePipe
+  ) {}
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
-    fromEvent<any>(this.searchInput.nativeElement, 'keyup').pipe(
-      map(event => event.target.value),
-      debounceTime(500),
-      distinctUntilChanged(),
-      tap(x => this.searchText = x)
-    ).subscribe(x => {
-      if (x != undefined && x.trim() != "") {
-        this.GetAlertListWithFilters();
-      }
-    });
+    fromEvent<any>(this.searchInput.nativeElement, 'keyup')
+      .pipe(
+        map((event) => event.target.value),
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((x) => (this.searchText = x))
+      )
+      .subscribe((x) => {
+        if (x != undefined && x.trim() != '') {
+          this.GetAlertListWithFilters();
+        }
+      });
   }
 
   ngOnInit(): void {
     // this.GetAlertListWithFilters();
-    this.treeviewService.selectedNodes.subscribe(x => {
-      if (x != undefined && x.length > 0 && x.some(m => m.type == NodeType.Wells)) {
-        this.ids = x.filter(m => m.type == NodeType.Wells).map(m => m.nodeId);
-      }
-      else
-        this.ids = [];
+    debugger;
+    this.treeviewService.selectedNodes.subscribe((x) => {
+      if (
+        x != undefined &&
+        x.length > 0 &&
+        x.some((m) => m.type == NodeType.Wells)
+      ) {
+        this.ids = x
+          .filter((m) => m.type == NodeType.Wells)
+          .map((m) => m.nodeId);
+      } else this.ids = [];
       this.GetAlertListWithFilters();
-    })
+    });
   }
 
   errorHandling() {
     this.loading = false;
     this.pageNumber = 1;
-    this.seachByStatus = "";
-    this.searchText = "";
+    this.seachByStatus = '';
+    this.searchText = '';
     this.ids = [];
     this.TotalCount = 0;
     this.alertList = [];
@@ -146,11 +170,18 @@ export class AlertsSrpComponent implements OnInit {
   }
 
   GetAlertListWithFilters() {
-    this.loading = true; 
+    this.loading = true;
     var SearchModel = this.createModel();
-    this.service.getAlertList(SearchModel).subscribe(response => {
+    this.service.getAlertList(SearchModel).subscribe(
+      (response) => {
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount]
+      //  this.pageSizeOption = [10, 20, 30, response.alertsLevelDto.totalCount];
+        if (response.totalcount > 30) {
+
+          this.pageSizeOption = [10, 20, 30, response.totalcount];
+    
+        }
+        
         // this.getPageSizeOptions();
         this.alertList = response.alerts;
         this.legendCount = response.alertsLevelDto;
@@ -170,20 +201,21 @@ export class AlertsSrpComponent implements OnInit {
         // this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
 
-      // }
-
-    },
-    (err) => {
-      this.errorHandling();
-    });
+        // }
+      },
+      (err) => {
+        this.errorHandling();
+      }
+    );
   }
 
   GetAlertListWithSortFilters(payload: any) {
-    this.loading = true; 
+    this.loading = true;
     // var SearchModel = this.createModel();
-    this.service.getAlertList(payload).subscribe(response => {
+    this.service.getAlertList(payload).subscribe(
+      (response) => {
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount]
+        this.pageSizeOption = [10, 15, 20, response.alertsLevelDto.totalCount];
         this.alertList = response.alerts;
         this.legendCount = response.alertsLevelDto;
         this.refreshAlertCategory(response);
@@ -199,18 +231,19 @@ export class AlertsSrpComponent implements OnInit {
         // this.Low = response.alertsLevelDto.totalLow;
         // this.Clear = response.alertsLevelDto.totalCleared;
         this.dataSource.paginator = this.paginator;
-    },
-    (err) => {
-      this.errorHandling();
-    });
+      },
+      (err) => {
+        this.errorHandling();
+      }
+    );
   }
 
   refreshAlertCategory(response: any) {
-  this.categoriesChartData = response.alertcategory;
-  this.barChartData = response.alertcount;
+    this.categoriesChartData = response.alertcategory;
+    this.barChartData = response.alertcount;
   }
 
-  filterAndSortAlerts(payload: any){
+  filterAndSortAlerts(payload: any) {
     this.GetAlertListWithSortFilters(payload);
   }
 
@@ -231,24 +264,25 @@ export class AlertsSrpComponent implements OnInit {
   //Create Model for search
   createModel(this: any) {
     let dateObj = {
-      
       "fromDate": this.startDate ? this.startDate : "",
       "toDate": this.endDate ? this.endDate : ""
     }
     this.model.pageSize = this.pageSize;
     this.model.pageNumber = this.pageNumber;
-    this.model.searchText = this.searchText ? this.searchText : "";
-    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
-    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
-    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
+    this.model.searchText = this.searchText ? this.searchText : '';
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : '';
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : '';
+    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : '';
     this.model.dateRange = dateObj;
-    // this.model.wellNames = this.selectedWells ? this.selectedWells : [];
-    // this.model.wellNames = this.selectedCategory ? this.selectedCategory : [];
+    this.model.wellNames = this.selectedWells ? this.selectedWells : [];
+    this.model.category = this.category ? this.category : [];
+
+    this.model.ids = this.ids ? this.ids : [];
 
     return this.model;
   }
 
-  getWellTreeSearch(searchTxt: string){
+  getWellTreeSearch(searchTxt: string) {
     this.searchText = searchTxt;
     this.GetAlertListWithFilters();
   }
@@ -259,26 +293,27 @@ export class AlertsSrpComponent implements OnInit {
 
   ClearSearch() {
     this.pageNumber = 1;
-    this.seachByStatus = "";
-    this.searchText = "";
+    this.seachByStatus = '';
+    this.searchText = '';
     this.ids = [];
     this.GetAlertListWithFilters();
   }
   
   RefreshGrid() {
-    this.searchText = "";
+    this.searchText = '';
     const payload = {
-      "pageSize": 5,
-      "pageNumber": 1,
-      "searchText": "",
-      "sortColumn": "",
-      "sortDirection": "",
-      "searchStatus": ""
-    }
+      pageSize: 5,
+      pageNumber: 1,
+      searchText: '',
+      sortColumn: '',
+      sortDirection: '',
+      searchStatus: '',
+    };
 
-    this.service.getAlertList(payload).subscribe((response: any) => {
+    this.service.getAlertList(payload).subscribe(
+      (response: any) => {
         this.loading = false;
-        this.pageSizeOption = [10, 15, 20, response.totalCount]
+        this.pageSizeOption = [10, 15, 20, response.totalCount];
         this.alertList = response.alerts;
         this.refreshAlertCategory(response);
         this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
@@ -289,11 +324,11 @@ export class AlertsSrpComponent implements OnInit {
         this.TotalCount = response.alertsLevelDto.totalCount;
         this.getLegendCount(this.alertList);
         this.dataSource.paginator = this.paginator;
-
-    },
-    (err) => {
-      this.errorHandling();
-    })
+      },
+      (err) => {
+        this.errorHandling();
+      }
+    );
   }
 
   legendFilter(priority: any) {
@@ -338,7 +373,9 @@ export class AlertsSrpComponent implements OnInit {
   }
 
   snoozeBy(snoozeTime: any, snoozeByTime: number) {
-    this.service.snoozeBy(snoozeTime.alertId, snoozeByTime).subscribe((data: any) => {
+    this.service
+      .snoozeBy(snoozeTime.alertId, snoozeByTime)
+      .subscribe((data: any) => {
         this.GetAlertListWithFilters();
       });
   }
@@ -411,8 +448,8 @@ export class AlertsSrpComponent implements OnInit {
 
   resetDateRangeFilters() {
     // this.dataSource.filter = '';
-    this.startDate = "";
-    this.endDate = "";
+    this.startDate = '';
+    this.endDate = '';
     this.RefreshGrid();
     let todaysDate = new Date();
     this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
@@ -443,25 +480,25 @@ export class AlertsSrpComponent implements OnInit {
       this.getSelectedMonth(toDate?.getMonth()) +
       '-' +
       this.getSelectedDay(toDate?.getDate());
-    this.startDate = startDate
-    this.endDate = endDate
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.GetAlertListWithFilters();
   }
 
   selectedChange(m: any) {
     if (!this.selectedRangeValue?.start || this.selectedRangeValue?.end) {
-        this.selectedRangeValue = new DateRange<Date>(m, null);
+      this.selectedRangeValue = new DateRange<Date>(m, null);
     } else {
-        const start = this.selectedRangeValue.start;
-        const end = m;
-        if (end < start) {
-            this.selectedRangeValue = new DateRange<Date>(end, start);
-        } else {
-            this.selectedRangeValue = new DateRange<Date>(start, end);
-        }
+      const start = this.selectedRangeValue.start;
+      const end = m;
+      if (end < start) {
+        this.selectedRangeValue = new DateRange<Date>(end, start);
+      } else {
+        this.selectedRangeValue = new DateRange<Date>(start, end);
+      }
     }
     this.selectedRangeValueChange.emit(this.selectedRangeValue);
-}
+  }
 
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
@@ -474,7 +511,8 @@ export class AlertsSrpComponent implements OnInit {
     this.pageNumber = this.pageNumber;
     this.pageSize = this.pageSize;
     this.sortDirection = this.sort.direction;
-    this.sortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
+    this.sortColumn =
+      typeof this.sort.active !== 'undefined' ? this.sort.active : '';
     this.GetAlertListWithFilters();
   }
 
@@ -496,28 +534,32 @@ export class AlertsSrpComponent implements OnInit {
     debugger;
     this.model.pageSize = this.TotalCount;
     this.model.pageNumber = 1;
-    this.model.searchText = this.searchText ? this.searchText : "";
-    this.model.sortColumn = this.sortColumn ? this.sortColumn : "";
-    this.model.sortDirection = this.sortDirection ? this.sortDirection : "";
-    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : "";
+    this.model.searchText = this.searchText ? this.searchText : '';
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : '';
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : '';
+    this.model.searchStatus = this.seachByStatus ? this.seachByStatus : '';
 
     return this.model;
   }
   AlertsDownloadExcel() {
-    debugger;
     this.loading = true;
     var payload = this.createModelReport();
-    this.service.getAlertListFilters(payload).subscribe(response => {
+    this.service.getAlertListFilters(payload).subscribe((response) => {
       this.dataSource = new MatTableDataSource<AlertList>(this.alertList);
-     this.exportToXls(this.dataSource);
-      })
+      this.exportToXls(this.dataSource);
+    });
   }
-  exportToXls(list:any){
+  exportToXls(list: any) {
     debugger;
-    this.dateString = this.datePipe.transform(this.todayDate, 'dd_MM_YYYY_hh_mm');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.TABLE.nativeElement); 
-    const wb: XLSX.WorkBook = XLSX.utils.book_new(); 
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); 
-    XLSX.writeFile(wb, 'AlertList_'+this.dateString +'.xlsx');
+    this.dateString = this.datePipe.transform(
+      this.todayDate,
+      'dd_MM_YYYY_hh_mm'
+    );
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(
+      this.TABLE.nativeElement
+    );
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'AlertList_' + this.dateString + '.xlsx');
   }
 }
