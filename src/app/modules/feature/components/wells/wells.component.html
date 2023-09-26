@@ -318,9 +318,9 @@
                <!-- <mat-paginator  [length]="12" showFirstLastButtons="true" [pageSizeOptions]="[3,5, 10, 20]"   (page)="handlePage($event)" >
             </mat-paginator> -->
                <mat-paginator #paginator style-paginator (page)="pageChanged($event)" [length]="TotalCount"
-                  [pageIndex]="pageNumber" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption"
-                  showFirstLastButtons>
-               </mat-paginator>
+               [pageIndex]="pageNumber" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption"
+               showFirstLastButtons>
+            </mat-paginator>
             </div>
          </div>
       </div>
