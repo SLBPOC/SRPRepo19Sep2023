@@ -248,7 +248,7 @@
                                                                     <div class="tableContainer p-0"
                                                                         [ngClass]="{tableHeight:oncheckboxClick}">
                                                                         <table mat-table
-                                                                            [dataSource]="listOfTime | async">
+                                                                            [dataSource]="listOfTime">
                                                                             <!--matSort-->
                                                                             <!-- Position Column -->
                                                                             <ng-container matColumnDef="index">
@@ -318,7 +318,7 @@
                                                                                     SPM</th>
                                                                                 <!--mat-sort-header="SPM"-->
                                                                                 <td mat-cell *matCellDef="let element">
-                                                                                    H </td>
+                                                                                    {{ element.spm }} </td>
                                                                             </ng-container>
 
 
@@ -327,7 +327,7 @@
                                                                                     %</th>
                                                                                 <!--mat-sort-header="PF%"-->
                                                                                 <td mat-cell *matCellDef="let element">
-                                                                                    23% </td>
+                                                                                    {{ element.pumpFillage }}% </td>
                                                                             </ng-container>
 
                                                                             <tr mat-header-row

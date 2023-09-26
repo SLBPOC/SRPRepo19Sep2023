@@ -8,7 +8,7 @@ import { AlgorithmsAndMitigationsService } from '../../services/algorithms-and-m
 import { DynacardService } from '../../services/dynacard.service';
 import { BehaviorSubject, Observable, Subject, Subscription, map, of, switchMap, takeUntil, tap } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import { CardDetailsModel, ClassficationInfo, Classification, DateRangeBubbleChart, DynacardModel2, FramesDynameter } from '../../model/dyna-card.model';
+import { CardDetailsModel, ClassficationInfo, Classification, DateRangeBubbleChart, DynacardModel2, FramesDynameter, DynaCardDetailsModel } from '../../model/dyna-card.model';
 
 @Component({
   selector: 'app-ui-dynacard-info',
@@ -34,13 +34,13 @@ export class UiDynacardInfoComponent {
   ]
 
   dynamicRowsForSelectedStagedTimeFrames = [
-    "pumpFillage_per",
-    "SPM",
-    "minPolishedRodLoad_lbs",
-    "peakPolishedRodLoad_lbs",
-    "surfaceStrokeLength_in",
-    "downholeStrokeLength_in",
-    "totalFluid_in"
+    "pumpFillage",
+    "spm",
+    "minPublishedRodLoad",
+    "pickPublishedRodLoad",
+    "surfaceStrokeLength",
+    "downloadStroke",
+    "totalFluid"
   ]
 
   pinnedFrames: Date[] = [];
@@ -193,7 +193,9 @@ export class UiDynacardInfoComponent {
   }
 
   getTableData(startDate: string, classfication: string, endDate: string) {
-    this.listOfTime = this.dynaService.getListOfTime(classfication, startDate, endDate);
+    this.dynaService.getListOfCategory(classfication, startDate, endDate).subscribe((res) => {
+      this.listOfTime = res;
+    })
   }
 
   onClassficationLegendClick(classfication: string) {
@@ -389,7 +391,7 @@ export class UiDynacardInfoComponent {
 
   stagedTableColumns: string[] = ['index', '#', 'pin', 'time', 'primary_classification', 'secondary_classification', 'SPM', 'PF%'];
 
-  listOfTime: Observable<CardDetailsModel[]>;
+  listOfTime: DynaCardDetailsModel[];
   // selectedClassification = new BehaviorSubject<number>(-1);
   selectionTimeModel = new SelectionModel<string>(true);
   selectionTimeStagedModel = new SelectionModel<string>(true);
@@ -418,12 +420,15 @@ export class UiDynacardInfoComponent {
     this.selectionTimeStagedModel.toggle(timeFrame.frame);
     if (this.selectionTimeStagedModel.isSelected(timeFrame.frame)) {
       this.stagedTimeFrames.set(timeFrame.frame, timeFrame);
-      this.dynaService.getDetailsAboutTime(timeFrame.frame).subscribe(y => {
+      let data = this.listOfTime.find((time: any) => {
+        return timeFrame.frame == time.frame;
+      })
+      // this.dynaService.getDetailsAboutTime(timeFrame.frame).subscribe(y => {
         // console.log(y, x.selected);
         this.cardInfoTableColumns.push(timeFrame.frame);
         //console.log(this.cardInfoTableColumns);
-        this.selectedTimeDetails.set(timeFrame.frame, y);
-      });
+        this.selectedTimeDetails.set(timeFrame.frame, data);
+      // });
     }
     else {
       this.selectionTimeModel.deselect(timeFrame.frame);
@@ -461,7 +466,7 @@ export class UiDynacardInfoComponent {
   updateDynaHighChartFlag: boolean = false;
   updateDynaQuickViewHighChartFlag: boolean = false;
 
-  selectedTimeDetails = new Map<string, CardDetailsModel>();
+  selectedTimeDetails = new Map<string, DynaCardDetailsModel>();
 
 
   // updateChart(event: any) {
@@ -651,13 +656,13 @@ export class UiDynacardInfoComponent {
 
 
   mappingOfFields = {
-    pumpFillage_per: 'Pump Fillage(%) ',
-    SPM: 'SPM',
-    minPolishedRodLoad_lbs: 'Min.Polished Rod Load(lbs)',
-    peakPolishedRodLoad_lbs: 'Peak Polished Rod Load(lbs)',
-    surfaceStrokeLength_in: 'Surface Stroke Length (in)',
-    downholeStrokeLength_in: 'Downhole Stroke Length (in)',
-    totalFluid_in: 'Total Fluid (in)',
+    pumpFillage: 'Pump Fillage(%) ',
+    spm: 'SPM',
+    minPublishedRodLoad: 'Min.Polished Rod Load(lbs)',
+    pickPublishedRodLoad: 'Peak Polished Rod Load(lbs)',
+    surfaceStrokeLength: 'Surface Stroke Length (in)',
+    downloadStroke: 'Downhole Stroke Length (in)',
+    totalFluid: 'Total Fluid (in)',
   };
 
   classficationListdata: { value, viewValue }[] = [

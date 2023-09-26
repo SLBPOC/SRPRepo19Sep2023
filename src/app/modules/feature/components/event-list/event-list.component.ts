@@ -115,13 +115,22 @@ export class EventListComponent {
 
   categoriesChartData: any;
   minmaxChartData: any[] = []; //min max chart data array
-  pageSizeOption = [5, 10, 20, 30];
-  ids: number[];
+  pageSizeOption = [10, 20, 30];
   respdata: any;
   todayDate: Date = new Date();
   dateString: string;
   startDate: string;
   endDate: string;
+
+  apiRequestParams: {
+    wellNames: string[];
+    eventTypes: string[];
+    ids: number[];
+  } = {
+    wellNames: [],
+    eventTypes: [],
+    ids: [],
+  };
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -147,6 +156,8 @@ export class EventListComponent {
   }
 
   ngOnInit(): void {
+    this.GetEventListWithFilters();
+
     this.treeviewService.selectedNodes.subscribe((x) => {
       console.log(x);
       if (
@@ -154,17 +165,18 @@ export class EventListComponent {
         x.length > 0 &&
         x.some((m) => m.type == NodeType.Wells)
       ) {
-        this.ids = x
+        this.apiRequestParams.ids = x
           .filter((m) => m.type == NodeType.Wells)
           .map((m) => m.nodeId);
-      } else this.ids = [];
+      } else this.apiRequestParams.ids = [];
+      this.GetEventListWithFilters();
     });
-    this.GetEventListWithFilters();
   }
 
   GetEventListWithFilters() {
     this.loading = true;
     var SearchModel = this.createModel();
+    console.log(SearchModel, 'Subhash-2');
     this.service.getEventList(SearchModel).subscribe(
       (response) => {
         this.loading = false;
@@ -179,16 +191,16 @@ export class EventListComponent {
 
   GetEventListWithSortFilters(payload: any) {
     this.loading = true;
-    var SearchModel = this.createModel();
-    // selectedWells: this.eventSelectedWells,
-    // selectedCategory: this.providers.value,
-    console.log(payload, 'payloaddddddddddddddddd');
     if (payload) {
-      SearchModel.wellNames = payload.selectedWells
+      this.apiRequestParams.wellNames = payload.selectedWells
         ? payload.selectedWells
         : [];
-      SearchModel.eventTypes = payload.eventType ? payload.eventType : [];
+      this.apiRequestParams.eventTypes = payload.eventType
+        ? payload.eventType
+        : [];
     }
+    var SearchModel = this.createModel();
+    console.log(SearchModel, 'Subhash-1');
     this.service.getEventList(SearchModel).subscribe(
       (response) => {
         this.loading = false;
@@ -202,7 +214,9 @@ export class EventListComponent {
   }
 
   bindDataSource(response) {
-    this.pageSizeOption = [10, 15, 20];
+    if (response.totalcount > 30) {
+      this.pageSizeOption = [10, 20, 30, response.totalcount];
+    }
     this.eventList = response.events;
     this.dataSource = new MatTableDataSource<EventList>(this.eventList);
     setTimeout(() => {
@@ -224,7 +238,7 @@ export class EventListComponent {
     // this.dataSource.filter = '';
     this.pageNumber = this.pageNumber;
     this.seachByStatus = '';
-    this.searchText = '';
+    // this.searchText = '';
     let todaysDate = new Date();
     this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
     this.selectedRangeValueChange.emit(this.selectedRangeValue);
@@ -274,7 +288,7 @@ export class EventListComponent {
   }
 
   //Create Model for search
-  createModel(this: any) {
+  createModel() {
     let dateObj = {
       fromDate: this.startDate ? this.startDate : '',
       toDate: this.endDate ? this.endDate : '',
@@ -286,11 +300,13 @@ export class EventListComponent {
     this.model.sortDirection = this.sortDirection ? this.sortDirection : '';
     this.model.searchStatus = this.seachByStatus ? this.seachByStatus : '';
     this.model.dateRange = dateObj;
-    this.model.wellNames = this.selectedWells ? this.selectedWells : [];
-    this.model.eventTypes = this.selectedEventType
-      ? this.selectedEventType
+    this.model.wellNames = this.apiRequestParams.wellNames
+      ? this.apiRequestParams.wellNames
       : [];
-    this.model.ids = this.ids ? this.ids : [];
+    this.model.eventTypes = this.apiRequestParams.eventTypes
+      ? this.apiRequestParams.eventTypes
+      : [];
+    this.model.ids = this.apiRequestParams.ids ? this.apiRequestParams.ids : [];
 
     return this.model;
   }
@@ -299,17 +315,11 @@ export class EventListComponent {
     this.pageNumber = 1;
     this.seachByStatus = '';
     this.searchText = '';
-    this.ids = [];
-    (this.startDate = ''), (this.endDate = ''), this.GetEventListWithFilters();
+    this.GetEventListWithFilters();
   }
 
   RefreshGrid() {
-    this.pageNumber = 1;
-    this.seachByStatus = '';
-    this.searchText = '';
-    this.ids = [];
-    (this.startDate = ''), (this.endDate = ''), this.GetEventListWithFilters();
-    // this.GetEventListWithFilters();
+    this.GetEventListWithFilters();
   }
   applyDateRangeFilter() {
     let fromDate = this.selectedRangeValue.start;
@@ -335,10 +345,10 @@ export class EventListComponent {
     this.dataSource.filter = '';
     this.startDate = '';
     this.endDate = '';
-    this.RefreshGrid();
     let todaysDate = new Date();
     this.selectedRangeValue = new DateRange<Date>(todaysDate, null);
     this.selectedRangeValueChange.emit(this.selectedRangeValue);
+    this.GetEventListWithFilters();
   }
 
   getSelectedMonth(month: any) {
@@ -410,8 +420,8 @@ export class EventListComponent {
   }
   EventDownLoadReport() {
     this.loading = true;
-    var SearchModel = this.createModelReport();
-    this.service.getEventList(SearchModel).subscribe((respince) => {
+    var SearchModel = this.createModel();
+    this.service.getEventList(SearchModel).subscribe((response) => {
       this.dataSource = new MatTableDataSource<EventList>(this.eventList);
       this.exportToXls(this.dataSource);
     });
