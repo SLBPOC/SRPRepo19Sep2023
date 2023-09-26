@@ -29,7 +29,7 @@
                            ({{OverPumping}})
                         </li>
                         <li class="button-type-none priority medium" (click)="SeachByStatus('Optimum Pumping')">
-                           Optimal
+                           Optimum
                            Pumping ({{OptimalPumping}})</li>
                         <li class="button-type-none priority low" (click)="SeachByStatus('Under Pumping')">Under
                            Pumping
@@ -43,11 +43,11 @@
                         [(ngModel)]="searchText" placeholder="Search By Well Name">
                      <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit"
                         (click)="GetWellDetailsWithFilters()">
-                        <!-- <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg"
-                           (click)="ClearSearch()"> -->
-                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z" fill="#EDDEDE" (click)="ClearSearch()" />
-                          </svg>
+                        <img matbuttonicon="" alt="" class="" src="./assets/images/close-icon.svg"
+                           (click)="ClearSearch()">
+                           <!-- <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z" fill="#EDDEDE" />
+                          </svg> -->
                      </button>
                   </div>
                   <div class="headIcons">
@@ -318,9 +318,9 @@
                <!-- <mat-paginator  [length]="12" showFirstLastButtons="true" [pageSizeOptions]="[3,5, 10, 20]"   (page)="handlePage($event)" >
             </mat-paginator> -->
                <mat-paginator #paginator style-paginator (page)="pageChanged($event)" [length]="TotalCount"
-                  [pageIndex]="pageNumber" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption"
-                  showFirstLastButtons>
-               </mat-paginator>
+               [pageIndex]="pageNumber" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption"
+               showFirstLastButtons>
+            </mat-paginator>
             </div>
          </div>
       </div>
