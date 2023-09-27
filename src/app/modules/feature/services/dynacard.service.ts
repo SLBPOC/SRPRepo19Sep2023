@@ -23,13 +23,18 @@ export class DynacardService {
   constructor(private client: HttpClient) { }
 
   getListOfTime(classfication: string, startDate: string, endDate: string): Observable<CardDetailsModel[]> {
-    var url = this.baseUrl + `dynameter/classfications/${classfication}/timeframes/from/${startDate}/to/${endDate}`;
+    var url = this.baseUrl + `dynameter/classifications/${classfication}/timeframes/from/${startDate}/to/${endDate}`;
     return this.client.get<CardDetailsModel[]>(url);
   }
 
   getListOfCategory(classfication: string, startDate: string, endDate: string): Observable<DynaCardDetailsModel[]> {
-    var url = this.baseUrl + `dynameter/dynacards/${classfication}/timeframes/from/${startDate}/to/${endDate}`;
+    var url = this.baseUrl + `dynameter/classifications/${classfication}/timeframes/from/${startDate}/to/${endDate}`;
     return this.client.get<DynaCardDetailsModel[]>(url);
+  }
+
+  getDynacardList(classfication: string, startDate: string, endDate: string, searchModel: any): Observable<DynaCardDetailsModel[]> {
+    var url = this.baseUrl + `dynameter/classifications/${classfication}/timeframes/from/${startDate}/to/${endDate}/SortPagination` ;
+    return this.client.post<DynaCardDetailsModel[]>(url, searchModel);
   }
 
   getDynaCardDetailsForATime(time: string): Observable<DynacardModel2[]> {

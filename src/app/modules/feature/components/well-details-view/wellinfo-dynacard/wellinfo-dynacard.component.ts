@@ -242,7 +242,7 @@ export class WellinfoDynacardComponent implements OnInit {
       this.bubbleChartUpdate = true;
       this.bubbleChartInfo[this.bubbleChartInfo.length -1].value = 0;
       this.bubbleChartInfo.forEach(x=>{
-        var updateObj = data.classfication.find(y=> y.name.trim().toLocaleLowerCase() == x.type.trim().toLocaleLowerCase());
+        var updateObj = data.classification.find(y=> y.name.trim().toLocaleLowerCase() == x.type.trim().toLocaleLowerCase());
         if(updateObj != undefined)
             x.value = updateObj.count;
             // this.bubbleChartInfo[this.bubbleChartInfo.length -1 ].value  += .count;
@@ -255,7 +255,7 @@ export class WellinfoDynacardComponent implements OnInit {
     const transformedDataMap: Map<string, any> = new Map();
 
     data.forEach((entry) => {
-      entry.classfications.forEach((classification) => {
+      entry.classifications.forEach((classification) => {
         if (transformedDataMap.has(classification.name)) {
           const existingEntry = transformedDataMap.get(classification.name);
           var existingDate = (<[]>existingEntry.data).findIndex(x => x[0] == entry.from);

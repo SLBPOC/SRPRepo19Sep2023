@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { EventEmitter, Input, Output, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { DateRange } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import * as Highcharts from 'highcharts';
@@ -17,6 +19,20 @@ import { CardDetailsModel, ClassficationInfo, Classification, DateRangeBubbleCha
 })
 
 export class UiDynacardInfoComponent {
+  fromDate: any;
+  toDate: any;
+  sortDirection: string = "";
+  sortColumn: string = "Frame";
+  pageSize: number = 5; 
+  pageNumber = 1;
+  currentPage = 0;
+  totalCount = 0;
+  TotalCount: number = 0;
+  pageSizeOption = [10, 20, 30]
+  model: any = {};
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   oncheckboxClick: boolean = false;
   cardInfoTableColumns = ['stickyRow']
 
@@ -47,7 +63,7 @@ export class UiDynacardInfoComponent {
 
   pinnedFrameKey = "pinned-frame-key";
 
-  pinnedFramesDetails = new Map<Date, CardDetailsModel>();
+  pinnedFramesDetails = new Map<Date, DynaCardDetailsModel>();
 
   selectedDynamicRowsForSelectedStagedTimeFrames = Array.from(Array(this.dynamicRowsForSelectedStagedTimeFrames.length).keys());
 
@@ -125,13 +141,13 @@ export class UiDynacardInfoComponent {
     this.dynaService
       .getListOfTime("all", '2023-01-01', (new Date()).toISOString())
       .pipe(takeUntil(this.$takUntil))
-      .subscribe(y => y.filter(x => id == null ? this.pinnedFrames.findIndex(z => z == x.frame) > -1 : id == x.frame).forEach(x => this.pinnedFramesDetails.set(x.frame, x)));
+      .subscribe(y => y.filter(x => id == null ? this.pinnedFrames.findIndex(z => z == x.frame) > -1 : id == x.frame).forEach((x: any) => this.pinnedFramesDetails.set(x.frame, x)));
     // }
     // else
     // this.dynaService.getListOfTime("all",id.toISOString()).pipe(takeUntil(this.$takUntil)).subscribe(y => this.pinnedFramesDetails.set(id, y));
   }
 
-  pinTheFramePlease(frame: CardDetailsModel) {
+  pinTheFramePlease(frame: DynaCardDetailsModel) {
     if (this.pinnedFramesDetails.has(frame.frame))
       return;
     this.pinnedFrames.push(frame.frame);
@@ -145,6 +161,23 @@ export class UiDynacardInfoComponent {
     this.pinnedFramesDetails.delete(frame.frame);
     localStorage.removeItem(this.pinnedFrameKey);
     localStorage.setItem(this.pinnedFrameKey, JSON.stringify(this.pinnedFrames));
+  }
+
+
+
+  onTimeFrameSelection(option: any){
+    switch(option) {
+      case 'Day':
+        let today = new Date().toISOString();
+        let d = new Date();
+        let yesterDay = new Date();
+        yesterDay.setDate(d.getDate() - 1);
+        let yesterDayStr = yesterDay.toISOString();
+        this.fromDate = yesterDayStr;
+        this.toDate = today;
+        // this.GetAlertListWithFilters();
+        break;
+    }
   }
 
   // ngAfterViewInit(): void {
@@ -192,10 +225,53 @@ export class UiDynacardInfoComponent {
     return this.stagedTimeFrames.get(frame);
   }
 
+  getChangedTableData(){
+    this.dynaService.selectedClassification.subscribe(
+      (x) => {
+        this.getTableData(x.startDate, x.classfication, x.endDate);
+        this.searchText = '';
+        this.searchTextObseravale.next('');
+      }
+    );
+  }
+
+  createModel(this: any) {
+    this.model.pageSize = this.pageSize;
+    this.model.pageNumber = this.pageNumber;
+    this.model.sortColumn = this.sortColumn ? this.sortColumn : "Frame";
+    this.model.sortDirection = this.sortDirection ? this.sortDirection : "desc";
+
+    return this.model;
+  }
+
   getTableData(startDate: string, classfication: string, endDate: string) {
-    this.dynaService.getListOfCategory(classfication, startDate, endDate).subscribe((res) => {
-      this.listOfTime = res;
+    var SearchModel = this.createModel();
+    this.dynaService.getDynacardList(classfication, startDate, endDate, SearchModel).subscribe((res: any) => {
+      this.pageSizeOption = [10, 15, 20, res.totalCount]
+      this.listOfTime = res.dynameterTimeFrames;
+      setTimeout(() => {
+        this.paginator.pageIndex = this.currentPage;
+        this.paginator.length = res.totalCount;
+      });
     })
+  }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.pageNumber = event.pageIndex + 1;
+    this.dynaService.selectedClassification.next(
+      { classfication: 'all', startDate: this.selectedRangeValue.start.toISOString(), endDate: this.selectedRangeValue.end.toISOString() }
+    );
+    this.bubbleChartTimeSelection('3m');
+  }
+
+  public onSortChanged(e: any) {
+    this.pageNumber = this.pageNumber;
+    this.pageSize = this.pageSize;
+    this.sortDirection = this.sort.direction;
+    this.sortColumn = (typeof this.sort.active !== "undefined") ? this.sort.active : "";
+    this.bubbleChartTimeSelection('3m');
   }
 
   onClassficationLegendClick(classfication: string) {
@@ -206,8 +282,8 @@ export class UiDynacardInfoComponent {
     this.bubbleChartSubscription = this.service.getBubbleChartDataV2(this.selectedRangeValue.start, this.selectedRangeValue.end).subscribe((data) => {
       this.bubbleChartOptions.series = this.mapToHighchartObject(data.cards);
       this.bubbleChartUpdate = true;
-      this.bubbleClassficationInfo = data.classfication;
-      this.classification.filter(x => !data.classfication.some(y => y.name == x)).forEach(x => this.bubbleClassficationInfo.push({ name: x, count: 0 }))
+      this.bubbleClassficationInfo = data.classification;
+      this.classification.filter(x => !data.classification.some(y => y.name == x)).forEach(x => this.bubbleClassficationInfo.push({ name: x, count: 0 }))
       // this.bubbleClassficationInfo.forEach(x => {
       //   var updateObj = data.classfication.find(y => y.name.trim().toLocaleLowerCase() == x.type.trim().toLocaleLowerCase());
       //   if (updateObj != undefined)
@@ -222,7 +298,7 @@ export class UiDynacardInfoComponent {
     const transformedDataMap: Map<string, any> = new Map();
 
     data.forEach((entry) => {
-      entry.classfications.forEach((classification) => {
+      entry.classifications.forEach((classification) => {
         if (transformedDataMap.has(classification.name)) {
           const existingEntry = transformedDataMap.get(classification.name);
           var existingDate = (<[]>existingEntry.data).findIndex(x => x[0] == entry.from);
@@ -377,9 +453,16 @@ export class UiDynacardInfoComponent {
     // else if (type == 'cal') {
     //   this.getBubbleChartData();
     // };
-    const endDate = new Date();
-    const startDate = new Date(2023, 2, 1);
-    this.selectedRangeValue = new DateRange<Date>(startDate, endDate);
+    // TBD - Shivangi
+    let curr = new Date(); // get current date
+    let first = curr.getDate(); // First day is the day of the month - the day of the week
+    let last = first - 6; // last day is the first day + 6
+    let today = new Date(curr.setDate(first));
+    let fromday = new Date(curr.setDate(last));
+    this.selectedRangeValue = new DateRange<Date>(fromday, today);
+    // const endDate = new Date();
+    // const startDate = new Date(2023, 2, 1);
+    // this.selectedRangeValue = new DateRange<Date>(startDate, endDate);
     this.getBubbleChartData();
     this.dynaService.selectedClassification.next(
       { classfication: 'all', startDate: this.selectedRangeValue.start.toISOString(), endDate: this.selectedRangeValue.end.toISOString() }
@@ -387,7 +470,7 @@ export class UiDynacardInfoComponent {
   }
 
 
-  displayedColumnsOld: string[] = ['index', '#', 'card', 'time', 'SPM', 'PF%'];
+  displayedColumnsOld: string[] = ['index', '#', 'Classification', 'Frame', 'SPM', 'PumpFillage'];
 
   stagedTableColumns: string[] = ['index', '#', 'pin', 'time', 'primary_classification', 'secondary_classification', 'SPM', 'PF%'];
 
