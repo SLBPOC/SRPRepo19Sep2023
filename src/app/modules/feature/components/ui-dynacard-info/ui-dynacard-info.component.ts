@@ -19,8 +19,6 @@ import { CardDetailsModel, ClassficationInfo, Classification, DateRangeBubbleCha
 })
 
 export class UiDynacardInfoComponent {
-  fromDate: any;
-  toDate: any;
   sortDirection: string = "";
   sortColumn: string = "Frame";
   pageSize: number = 5; 
@@ -168,14 +166,42 @@ export class UiDynacardInfoComponent {
   onTimeFrameSelection(option: any){
     switch(option) {
       case 'Day':
-        let today = new Date().toISOString();
+        let today = new Date();
         let d = new Date();
         let yesterDay = new Date();
         yesterDay.setDate(d.getDate() - 1);
-        let yesterDayStr = yesterDay.toISOString();
-        this.fromDate = yesterDayStr;
-        this.toDate = today;
+        this.selectedRangeValue = new DateRange<Date>(yesterDay, today);
+        this.dynaService.selectedClassification.next(
+          { classfication: 'all', startDate: this.selectedRangeValue.start.toISOString(), endDate: this.selectedRangeValue.end.toISOString() }
+        );
+        this.bubbleChartTimeSelection('3m');
         // this.GetAlertListWithFilters();
+        break;
+        case 'Week':
+          let curr = new Date(); // get current date
+          let first = curr.getDate(); // First day is the day of the month - the day of the week
+          let last = first - 6; // last day is the first day + 6
+          let currentDay = new Date(curr.setDate(first));
+          let fromday = new Date(curr.setDate(last));
+          this.selectedRangeValue = new DateRange<Date>(fromday, currentDay);
+          // this.getBubbleChartData();
+          this.dynaService.selectedClassification.next(
+            { classfication: 'all', startDate: this.selectedRangeValue.start.toISOString(), endDate: this.selectedRangeValue.end.toISOString() }
+          );
+          this.bubbleChartTimeSelection('3m');
+        break;
+        case 'Month':
+          let presentDay = new Date(); // get current date
+          let presentDate = presentDay.getDate(); // First day is the day of the month - the day of the week
+          let lastDate = presentDate - 30; // last day is the first day + 6
+          let presentDateTime = new Date(presentDay.setDate(presentDate));
+          let fromDateTime = new Date(presentDay.setDate(lastDate));
+          this.selectedRangeValue = new DateRange<Date>(fromDateTime, presentDateTime);
+          // this.getBubbleChartData();
+          this.dynaService.selectedClassification.next(
+            { classfication: 'all', startDate: this.selectedRangeValue.start.toISOString(), endDate: this.selectedRangeValue.end.toISOString() }
+          );
+          this.bubbleChartTimeSelection('3m');
         break;
     }
   }
