@@ -43,13 +43,13 @@
                 type="text"
                 name="searchQueryInput"
                 [(ngModel)]="searchText"
-                placeholder="Search By Well Name"
+                placeholder="Search"
               />
               <button
                 id="searchQuerySubmit"
                 type="submit"
                 name="searchQuerySubmit"
-                (click)="GetEventListWithFilters()"
+                (click)="ClearSearch()"
               >
                 <svg
                   width="12"
@@ -63,7 +63,6 @@
                     clip-rule="evenodd"
                     d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z"
                     fill="#EDDEDE"
-                    (click)="RefreshGrid()"
                   />
                 </svg>
               </button>
@@ -110,6 +109,41 @@
                       />
                     </svg>
                   </button>
+                </li>
+                <li style="cursor: pointer" (click)="EventDownLoadReport()">
+                  <svg
+                    width="38"
+                    height="38"
+                    viewBox="0 0 38 38"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="1"
+                      y="1"
+                      width="36"
+                      height="36"
+                      rx="18"
+                      fill="#000B9E"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M27.5 10.499H10.5V20.1035H14.1318V21.6016H9V8.99951H29V21.6016H23.8691V20.1035H27.5V10.499ZM19.7515 12.6304V24.002H24.002L19.002 29L14.002 24.002H18.2524V12.6304H19.7515Z"
+                      fill="white"
+                    />
+                    <rect
+                      x="1"
+                      y="1"
+                      width="36"
+                      height="36"
+                      rx="18"
+                      stroke="#FABB42"
+                      stroke-width="2"
+                      stroke-miterlimit="0"
+                      stroke-linejoin="bevel"
+                    />
+                  </svg>
                 </li>
               </ul>
             </div>
@@ -202,10 +236,21 @@
           <div class="col-md-12 p-0 filterborder">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
               <mat-tab label="Well List">
-                <app-well-tree-list
-                  (searchStr)="getWellTreeSearch($event)"
-                ></app-well-tree-list
-                >>
+                <!--<app-well-tree-list></app-well-tree-list>-->
+                <div class="block-bg-border padding-15 well-list-section">
+                  <app-well-tree-search
+                    (userChanged)="userSearchChange($event)"
+                  ></app-well-tree-search>
+                  <div class="devider"></div>
+                  <div class="well-check-list">
+                    <app-well-tree-view
+                      [searchObj]="searchObjC"
+                    ></app-well-tree-view>
+                    <!-- <app-tree-checklist></app-tree-checklist> -->
+                  </div>
+                </div>
+                <!-- <h4 class="text-gray m-4 text-secondary">History Visualization</h4> -->
+                <!--Well List goes here.  -->
               </mat-tab>
               <mat-tab label="Filter & Sort">
                 <!-- <app-well-filter-and-sort
@@ -283,7 +328,9 @@
                     *matCellDef="let element"
                     class="align-col"
                   >
-                    {{ element.creationDateTime }}
+                    {{
+                      element.creationDateTime | date : "yyyy-MM-dd HH:MM:ss"
+                    }}
                   </td>
                 </ng-container>
 
