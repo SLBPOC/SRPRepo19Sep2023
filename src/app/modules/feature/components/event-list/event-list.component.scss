@@ -224,7 +224,10 @@
           color: #fff;
         }
 
-        .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+        .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
+            .mdc-text-field--textarea
+          )
+          .mat-mdc-form-field-infix {
           padding-top: 1px;
           padding-bottom: 1px;
           padding-left: 2px;

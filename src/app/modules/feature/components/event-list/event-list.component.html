@@ -49,7 +49,7 @@
                 id="searchQuerySubmit"
                 type="submit"
                 name="searchQuerySubmit"
-                (click)="GetEventListWithFilters()"
+                (click)="ClearSearch()"
               >
                 <svg
                   width="12"
@@ -63,7 +63,6 @@
                     clip-rule="evenodd"
                     d="M12 0.851953L11.1498 0L6 5.16094L0.850195 0L0 0.851953L5.14981 6.01289L0.0257813 11.148L0.875977 12L6 6.86484L11.124 12L11.9742 11.148L6.8502 6.01289L12 0.851953Z"
                     fill="#EDDEDE"
-                    (click)="ClearSearch()"
                   />
                 </svg>
               </button>
@@ -110,6 +109,41 @@
                       />
                     </svg>
                   </button>
+                </li>
+                <li style="cursor: pointer" (click)="EventDownLoadReport()">
+                  <svg
+                    width="38"
+                    height="38"
+                    viewBox="0 0 38 38"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="1"
+                      y="1"
+                      width="36"
+                      height="36"
+                      rx="18"
+                      fill="#000B9E"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M27.5 10.499H10.5V20.1035H14.1318V21.6016H9V8.99951H29V21.6016H23.8691V20.1035H27.5V10.499ZM19.7515 12.6304V24.002H24.002L19.002 29L14.002 24.002H18.2524V12.6304H19.7515Z"
+                      fill="white"
+                    />
+                    <rect
+                      x="1"
+                      y="1"
+                      width="36"
+                      height="36"
+                      rx="18"
+                      stroke="#FABB42"
+                      stroke-width="2"
+                      stroke-miterlimit="0"
+                      stroke-linejoin="bevel"
+                    />
+                  </svg>
                 </li>
               </ul>
             </div>
@@ -294,7 +328,9 @@
                     *matCellDef="let element"
                     class="align-col"
                   >
-                    {{ element.creationDateTime }}
+                    {{
+                      element.creationDateTime | date : "yyyy-MM-dd HH:MM:ss"
+                    }}
                   </td>
                 </ng-container>
 

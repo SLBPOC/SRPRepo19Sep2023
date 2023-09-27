@@ -39,7 +39,7 @@ export class WellsComponent implements OnInit {
     { label: 'Effective Runtime(%)', accessor: 'effectiveRunTime', header: 'EffectiveRunTime.value' },
     { label: 'Cycles Today', accessor: 'cyclesToday', header: 'CyclesToday.value' },
     { label: 'Structural Load(%)', accessor: 'structuralLoad', header: 'StructuralLoad.value' },
-    { label: 'MinMax Load(%)', accessor: 'minMaxLoad', header: 'MinMaxLoad.value' },
+    { label: 'MinMax Load(lbs)', accessor: 'minMaxLoad', header: 'MinMaxLoad.value' },
     { label: 'Gearbox Load(%)', accessor: 'gearboxLoad', header: 'GearboxLoad.value' },
     { label: 'Rod Stress(%)', accessor: 'rodStress', header: 'RodStress.value' }
   ];
@@ -140,7 +140,9 @@ export class WellsComponent implements OnInit {
         this.dataSource = new MatTableDataSource<WellModel>(this.WellList);
         setTimeout(() => {
           this.paginator.pageIndex = this.currentPage;
+
           this.paginator.length =response.pumpingDetails.totalCount;
+
         });
 
         this.TotalCount = response.pumpingDetails.totalCount;
