@@ -59,16 +59,16 @@ export interface Classification {
 export interface DateRangeBubbleChart {
     from: string;
     to: string;
-    classfications: Classification[];
+    classifications: Classification[];
 }
 
 export interface BubbleChartInfo {
     cards: DateRangeBubbleChart[];
-    classfication: Classification[];
+    classification: Classification[];
 }
 
 export interface FramesDynameter {
-    classfication: string,
+    classification: string,
     frame: Date
 }
 
