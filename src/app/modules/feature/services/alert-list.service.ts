@@ -42,15 +42,21 @@ export class AlertListService {
   }
 
   getAlertList(payload: any): Observable<any> {
-    return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/Get`,payload);
+    return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/Get`, payload);
   }
 
   getSnoozeByWellName(wellName: string) {
-    return this.http.post<any>(`${this.baseUrl}Alerts/GetSnoozbyWells?WellName=${wellName}`,wellName);
+    return this.http.post<any>(
+      `${this.baseUrl}Alerts/GetSnoozbyWells?WellName=${wellName}`,
+      wellName
+    );
   }
 
   getDefaultAlertCategory(payload?: any): Observable<any> {
-    return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/GetDefaultValues`,payload);
+    return this.http.post<AlertList[]>(
+      `${this.baseUrl}Alerts/GetDefaultValues`,
+      payload
+    );
   }
 
   getDefaultEventCategory(payload?: any): Observable<any> {
@@ -58,10 +64,23 @@ export class AlertListService {
   }
 
   clearAlert(id: number, comments: string, payload?: any): Observable<any> {
-    return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/ClearAlert?alertId=${id}&comment=${comments}`,payload);
+    return this.http.post<AlertList[]>(
+      `${this.baseUrl}Alerts/ClearAlert?alertId=${id}&comment=${comments}`,
+      payload
+    );
   }
 
   snoozeBy(id: number, time: number, payload?: any): Observable<any> {
-    return this.http.post<AlertList[]>(`${this.baseUrl}Alerts/SnoozeBy?alertId=${id}&snoozeBy=${time}`,payload);
+    return this.http.post<AlertList[]>(
+      `${this.baseUrl}Alerts/SnoozeBy?alertId=${id}&snoozeBy=${time}`,
+      payload
+    );
+  }
+
+  clearSnoozeBy(id: number, snoozeBy: number, payload?: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}Alerts/ClearSnooze?alertId=${id}&snoozeBy=${snoozeBy}`,
+      payload
+    );
   }
 }

@@ -6,65 +6,80 @@ import { AlertListService } from '../../services/alert-list.service';
 @Component({
   selector: 'app-alert-categories-table',
   templateUrl: './alert-categories-table.component.html',
-  styleUrls: ['./alert-categories-table.component.scss']
+  styleUrls: ['./alert-categories-table.component.scss'],
 })
 export class AlertCategoriesTableComponent implements OnInit, OnChanges {
-
   displayedColumns = ['wellname', 'alertCount', 'snoozAlertCount', 'priority'];
   dataSource: any = [];
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options;
 
   loading = true;
-  pageSize: number = 5; 
+  pageSize: number = 5;
   pageNumber = 1;
   currentPage = 0;
   totalCount = 0;
-  pageSizeOption = [10, 20, 30]
+  pageSizeOption = [10, 20, 30];
 
   @Input() barChartData: any;
   snoozeData!: any[];
 
   constructor(private alertService: AlertListService) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.loading = true;
     this.loadChartData();
     this.loadTable();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.loadChartData();
     this.loadTable();
   }
 
-  loadTable(){ 
-        this.loading = false;
-        this.dataSource = new MatTableDataSource<any>(this.barChartData);
+  loadTable() {
+    this.loading = false;
+    this.dataSource = new MatTableDataSource<any>(this.barChartData);
   }
 
-  loadChartData(){
-    let chartSeriesArr = []
-    let high = {}
-    let medium = {}
-    let low = {}
+  ClearSnooze(el: any) {
+    let Alertid = el.alertid;
+
+    let Updatedby = 1;
+    let dialog: any;
+    this.alertService
+      .clearSnoozeBy(Alertid, Updatedby)
+      .subscribe((data: any) => {
+        if (data == true) {
+          dialog.close.emit();
+          //  this.dialogRef.close();
+          this.loadTable();
+        }
+      });
+  }
+
+  loadChartData() {
+    let chartSeriesArr = [];
+    let high = {};
+    let medium = {};
+    let low = {};
     for (let i = 0; i < this.barChartData?.length; i++) {
       high = {
         name: '',
         y: this.barChartData[i].high,
-        color: '#D11F1F'
-      }
+        color: '#D11F1F',
+      };
       medium = {
         name: '',
         y: this.barChartData[i].medium,
-        color: '#FABB42'
-      }
+        color: '#FABB42',
+      };
       low = {
         name: '',
         y: this.barChartData[i].low,
-        color: '#28A228'
-      }
-      chartSeriesArr.push(high,medium,low);
+        color: '#28A228',
+      };
+      chartSeriesArr.push(high, medium, low);
       // this.chartOptions.series[i].data
     }
     // this.chartOptions.series[0].data
@@ -73,47 +88,44 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
         type: 'pie',
         renderTo: 'container',
         margin: 0,
-        spacing: [0,0,0,0],
-        backgroundColor: undefined
+        spacing: [0, 0, 0, 0],
+        backgroundColor: undefined,
       },
       exporting: { enabled: false },
-      legend : {enabled: false},
-      
+      legend: { enabled: false },
+
       yAxis: {
         labels: {
-          enabled: false
+          enabled: false,
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible: false,
       },
       xAxis: {
         labels: {
-          enabled: false
+          enabled: false,
         },
         tickAmount: 6,
         gridLineWidth: 1,
-        visible: false
+        visible: false,
       },
       title: {
-        text: ''
+        text: '',
       },
-     plotOptions: {
-          bar: {
-              dataLabels: {
-                  enabled: true,
-                  inside: true,
-                  align: 'left',
-                  x: -40
-              },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true,
+            inside: true,
+            align: 'left',
+            x: -40,
           },
-          series: {
-           
-        }
-  
+        },
+        series: {},
       },
-      
-      series: [ 
+
+      series: [
         {
           type: 'bar',
           // data: chartSeriesArr
@@ -121,28 +133,26 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
             {
               name: '',
               y: 10,
-              color: '#D11F1F'
+              color: '#D11F1F',
             },
-            
+
             {
               name: '',
               y: 25,
-              color: '#FABB42'
+              color: '#FABB42',
             },
             {
               name: '',
               y: 50,
-              color: '#28A228'
+              color: '#28A228',
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     };
   }
 
-  onSortChanged(event:any){
-
-  }
+  onSortChanged(event: any) {}
 
   closeDialog(dialog: any) {
     dialog.close.emit();
@@ -153,93 +163,71 @@ export class AlertCategoriesTableComponent implements OnInit, OnChanges {
     let wellName = el.wellname;
     this.alertService.getSnoozeByWellName(wellName).subscribe((data: any) => {
       this.snoozeData = data;
-    })
+    });
   }
-
 }
 export interface PeriodicElement {
   wellname: string;
   noofalerts: number;
   snoozedalerts: number;
-  
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {
-   
     wellname: 'well-001',
     noofalerts: 100,
     snoozedalerts: 35,
-    
   },
   {
-   
     wellname: 'well-002',
     noofalerts: 90,
     snoozedalerts: 20,
-    
   },
   {
-   
     wellname: 'well-003',
     noofalerts: 80,
     snoozedalerts: 20,
-    
-    
   },
   {
-   
     wellname: 'well-004',
     noofalerts: 70,
     snoozedalerts: 30,
-   
   },
-  {
-   
-    wellname: 'well-005',
-    noofalerts: 60,
-    snoozedalerts: 40,
-    
-  },
-  {
-   
-    wellname: 'well-005',
-    noofalerts: 60,
-    snoozedalerts: 40,
-    
-  },
-  {
-   
-    wellname: 'well-005',
-    noofalerts: 60,
-    snoozedalerts: 40,
-   
-  },
-  {
-   
-    wellname: 'well-005',
-    noofalerts: 60,
-    snoozedalerts: 40,
-    
-  },
-  {
-   
-    wellname: 'well-005',
-    noofalerts: 60,
-    snoozedalerts: 40,
-  
-  },
-  
   {
     wellname: 'well-005',
     noofalerts: 60,
     snoozedalerts: 40,
   },
-    
   {
-   
     wellname: 'well-005',
     noofalerts: 60,
-    snoozedalerts: 40
+    snoozedalerts: 40,
   },
-]
+  {
+    wellname: 'well-005',
+    noofalerts: 60,
+    snoozedalerts: 40,
+  },
+  {
+    wellname: 'well-005',
+    noofalerts: 60,
+    snoozedalerts: 40,
+  },
+  {
+    wellname: 'well-005',
+    noofalerts: 60,
+    snoozedalerts: 40,
+  },
+
+  {
+    wellname: 'well-005',
+    noofalerts: 60,
+    snoozedalerts: 40,
+  },
+
+  {
+    wellname: 'well-005',
+    noofalerts: 60,
+    snoozedalerts: 40,
+  },
+];
