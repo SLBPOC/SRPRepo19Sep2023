@@ -79,6 +79,7 @@ export class EventFilterAndSortComponent {
   ) {}
 
   ngOnInit(): void {
+
     this.getEventDetails();
 
     this.isEvent;
@@ -94,6 +95,11 @@ export class EventFilterAndSortComponent {
       this.evnts = response.events;
       this.wellNames = response.wellNames;
       this.eventType = response.eventTypes;
+      this.eventSelectedWells = this.eventService.selectedWellNames;
+      this.eventTypesWell = this.eventService.eventTypesWell ;
+      if(this.eventSelectedWells || this.eventTypesWell){
+        this.submitAppliedFilters();
+      }
     });
   }
 
@@ -145,7 +151,7 @@ export class EventFilterAndSortComponent {
     // this.eventTypesWell = [];
     this.providers = new FormControl();
     this.wellFormControl = new FormControl();
-
+    this.updateSortFields();
     this.filterRefresh.emit({
       pageSize: 5,
       pageNumber: 1,
@@ -156,7 +162,13 @@ export class EventFilterAndSortComponent {
     });
   }
 
+  updateSortFields(){
+    this.eventService.selectedWellNames = this.eventSelectedWells;
+    this.eventService.eventTypesWell = this.eventTypesWell;
+  }
+
   submitAppliedFilters() {
+    this.updateSortFields();
     let payload = {};
     if (this.isEvent) {
       payload = {
@@ -190,6 +202,7 @@ export class EventFilterAndSortComponent {
     this.filterRefresh.emit(payload);
   }
   clearWellNames() {
+    this.eventSelectedWells = [];
     this.selectedWellNames.setValue([]);
     this.filtersApplied.wellNames = false;
     this.filtersApplied.eventType = false;

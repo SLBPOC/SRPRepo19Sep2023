@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import {
   MatPaginator,
+  MatPaginatorIntl,
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
@@ -137,8 +138,12 @@ export class EventListComponent {
     private service: EventListService,
     private router: Router,
     public treeviewService: TreeViewService,
-    private datePipe: DatePipe
-  ) {}
+    private datePipe: DatePipe,
+    private matPaginatorIntl: MatPaginatorIntl
+  ) {
+    this.matPaginatorIntl.nextPageLabel = '';
+    this.matPaginatorIntl.lastPageLabel = '';
+  }
 
   ngAfterViewInit() {
     fromEvent<any>(this.searchInput.nativeElement, 'keyup')
