@@ -10,7 +10,8 @@ import { environment } from '@environments/environment';
 export class EventListService {
   // private apiUrl: string = environment.srp_microservice_url;
   private _apiUrl: string = environment.srp_microservice_url;
-
+ public selectedWellNames :any;
+ public eventTypesWell :any;
   // _apiUrl: string = 'https://localhost:52906/';
 
   httpOptions = {

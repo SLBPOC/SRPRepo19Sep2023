@@ -61,7 +61,7 @@
             <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
             <mat-select
               multiple
-              [formControl]="providers"
+              [value]="eventSelectedWells"
               (valueChange)="onWellSelectionEvents($event)"
             >
               <input
@@ -107,6 +107,7 @@
             <!-- (openedChange)="onOpenChange(multiUserSearch)" (valueChange)="onWellSelection($event)" -->
             <mat-select
               multiple
+              [value]="eventTypesWell"
               [formControl]="providers"
               (valueChange)="onWellSelectionEventType($event)"
             >
